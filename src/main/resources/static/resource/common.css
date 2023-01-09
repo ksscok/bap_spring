@@ -1,0 +1,113 @@
+/* 폰트 */
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+html> body {
+	font-family: 'S-CoreDream-3Light';
+}
+
+.table-box-type-1 > table th,
+.table-box-type-1 > table td {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+.table-box-type-2 > table th,
+.table-box-type-2 > table td {
+	border: 1px solid #c9c8c5;
+	
+	padding: 15px;
+	padding-left: 20px;
+}
+
+.table-box-type-2 > table tr:first-child th,
+.table-box-type-2 > table tr:first-child td {
+	border-top: 1px solid #525151;
+}
+
+.table-box-type-2 > table tr:last-child th,
+.table-box-type-2 > table tr:last-child td {
+	border-bottom: 1px solid #525151;
+}
+
+.table-box-type-2 > table th,
+.table-box-type-2 > table td {
+	border-left: 0px solid black;
+	border-right: 0px solid black;
+}
+
+.table-box-type-2 > table th {
+	text-align: left;
+	background-color: #ebe9e6;
+}
+
+/* 커스텀 */
+.con-1 {
+	max-width: 950px;
+}
+
+.con-2 {
+	max-width: 900px;
+}
+
+.con-3 {
+	max-width: 1000px;
+}
+
+.con-min-width {
+	min-width: 400px;
+}
+
+.page-1 {
+	display: block;
+	position: relative;
+	height: 400px;
+	background-image:url(https://www.hotelsinheaven.com/wp-content/uploads/2020/11/riffelalp-resort-hotel-exterior-1500x842.jpg);
+	background-size: cover;
+}
+
+.product-link-box {
+	height: 200px;
+}
+
+.product-link-box > div > ul > li{
+	width: 25%;
+}
+
+.img-box-1 > img {
+	max-width: 100%;
+	height: auto;
+}
+
+.search-box {
+	width: 800px;
+	height: 150px;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 5px 30px black;
+}
+
+.bgc-303640 {
+	background-color: #303640;
+}
+
+.bgc-1F293733 {
+	background-color: #1F293733;
+}
+
+.side-bar-1 {
+	width: 230x;
+	height: auto;
+}
+
+* > .border-gray {
+	border: 1px solid rgba(0,0,0,0.08);
+}
+
+* > .border-bt-gray {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}

@@ -1,0 +1,292 @@
+DROP DATABASE IF EXISTS BAP_spring;
+CREATE DATABASE BAP_spring;
+USE BAP_spring;
+SHOW TABLES;
+
+#host 테이블 생성
+CREATE TABLE `host` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId CHAR(20) NOT NULL,
+	loginPw CHAR(20) NOT NULL,
+	memberType CHAR(20) NOT NULL,
+	`name` CHAR(20) NOT NULL,
+	cellphoneNo CHAR(20) NOT NULL,
+	email CHAR(50) NOT NULL,
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
+	delDate DATETIME COMMENT '탈퇴날짜'
+);
+
+# host 테스트 데이터 생성
+INSERT INTO `host`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'host1',
+loginPw = 'host1',
+memberType = 'host',
+`name` = '호스트1',
+cellphoneNo = '010-1234-5678',
+email = 'host1@gmail.com';
+
+INSERT INTO `host`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'host2',
+loginPw = 'host2',
+memberType = 'host',
+`name` = '호스트2',
+cellphoneNo = '010-1234-5678',
+email = 'host2@gmail.com';
+
+INSERT INTO `host`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'host3',
+loginPw = 'host3',
+memberType = 'host',
+`name` = '호스트3',
+cellphoneNo = '010-1234-5678',
+email = 'host3@gmail.com';
+
+SELECT * FROM `host`;
+
+
+# company 테이블 생성
+CREATE TABLE company (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(50) NOT NULL,
+	address CHAR(50) NOT NULL
+);
+
+# company 테스트 데이터 생성
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '신라호텔',
+address = '서울시 중구 동호로249';
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '롯데시티호텔',
+address = '대전 유성구 엑스포로123번길';
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '호텔 오노마 대전 오토그래프 컬렉션',
+address = '대전 유성구 도룡동 3-1';
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '양평 로즈데일',
+address = '경기 양평군 단월면 명성리 162';
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '청주 브라운도트',
+address = '충북 청주시 상당구 북문로2가 106-1';
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '청주',
+address = '충북';
+
+# product 테이블 생성
+CREATE TABLE product (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	companyId INT(10) UNSIGNED NOT NULL,
+	accommodationType CHAR(20) NOT NULL,
+	roomType CHAR(20) NOT NULL,
+	image_path VARCHAR (255) NOT NULL,
+	numberOfRooms INT(10) NOT NULL,
+	hostId INT(10) NOT NULL,
+	fee INT(100) NOT NULL
+);
+
+# product 테스트 데이터 생성
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '1',
+accommodationType = '호텔',
+roomType = '스탠다드',
+numberOfRooms = 7,
+hostId = 1,
+fee = 100000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '2',
+accommodationType = '호텔',
+roomType = '디럭스',
+numberOfRooms = 4,
+hostId = 2,
+fee = 70000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '2',
+accommodationType = '호텔',
+roomType = '스탠다드',
+numberOfRooms = 1,
+hostId = 2,
+fee = 50000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '2',
+accommodationType = '호텔',
+roomType = '스위트',
+numberOfRooms = 3,
+hostId = 2,
+fee = 90000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '3',
+accommodationType = '호텔',
+roomType = '디럭스',
+numberOfRooms = 2,
+hostId = 3,
+fee = 239000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '4',
+accommodationType = '펜션',
+roomType = '스탠다드',
+numberOfRooms = 1,
+hostId = 4,
+fee = 125000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '5',
+accommodationType = '모텔',
+roomType = '스위트',
+numberOfRooms = 4,
+hostId = 5,
+fee = 65000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '5',
+accommodationType = '모텔',
+roomType = '디럭스',
+numberOfRooms = 6,
+hostId = 5,
+fee = 50000;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '5',
+accommodationType = '모텔',
+roomType = '스탠다드',
+numberOfRooms = 2,
+hostId = 5,
+fee = 35000;
+
+SELECT * FROM product;
+
+SELECT p.*, MIN(fee) AS extra__minFee
+FROM product AS p
+GROUP BY NAME, address
+ORDER BY
+extra__minFee ASC;
+
+#회원 테이블 생성
+CREATE TABLE `member` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId CHAR(20) NOT NULL,
+    loginPw CHAR(60) NOT NULL,
+    `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반, 7=관리자)',
+    `name` CHAR(20) NOT NULL,
+    cellphoneNo CHAR(20) NOT NULL,
+    email CHAR(50) NOT NULL,
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
+    delDate DATETIME COMMENT '탈퇴날짜'
+);
+
+# 회원 테스트 데이터 생성
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'admin',
+loginPw = 'admin',
+`authLevel` = 7,
+`name` = '관리자',
+cellphoneNo = '01012345678',
+email = 'admin@gmail.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user1',
+loginPw = 'user1',
+`authLevel` = 3,
+`name` = '사용자1',
+cellphoneNo = '01012345678',
+email = 'user1@gmail.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user2',
+loginPw = 'user2',
+`authLevel` = 3,
+`name` = '사용자2',
+cellphoneNo = '01012345678',
+email = 'user2@gmail.com';
+
+SELECT * FROM `member`;
+
+# 쿼리 테스트(jh)
+SELECT P.*,
+		C.name AS comName, 
+		C.address AS comAddr
+FROM product AS P
+INNER JOIN company AS C
+ON P.companyId = C.id
+GROUP BY P.companyId;
+
+SELECT *
+				FROM product
+				WHERE companyId = 2;
+
+# 쿼리 테스트(ss)	
+SELECT p.*,
+MIN(fee) AS extra__minFee
+FROM product AS p
+WHERE 1
+AND (NAME LIKE '%롯데시티호텔%' OR address LIKE '%대전%')
+AND fee >= 50000
+AND fee <= 100000
+GROUP BY NAME, address
+ORDER BY extra__minFee ASC;
+
+SELECT p.*,
+MIN(fee) AS extra__minFee
+FROM product AS p
+WHERE 1
+AND accommodationType = '호텔' OR accommodationType = '모텔'
+GROUP BY NAME, address
+ORDER BY extra__minFee ASC;
