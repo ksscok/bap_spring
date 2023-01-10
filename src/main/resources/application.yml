@@ -1,6 +1,10 @@
 server:
   port: 8082
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -14,6 +18,8 @@ spring:
 mybatis:
   type-aliases-package: com.KoreaIT.project.BAP.vo
 custom:
+  # 이미지 저장폴더 경로
+  genFileDirPath: C:\workspace_kss\sts-4.16.0.RELEASE-workspace\BAP_spring1\image
   logging:
     dir: log
     level: debug 
