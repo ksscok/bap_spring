@@ -1,20 +1,29 @@
 package com.KoreaIT.project.BAP.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.KoreaIT.project.BAP.interceptor.BeforeActionInterceptor;
 import com.KoreaIT.project.BAP.interceptor.NeedLoginInterceptor;
-import com.KoreaIT.project.BAP.interceptor.NeedLogoutInterceptor;
 
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	// beforeActionInterceptor 인터셉터 불러오기
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
+	
+	@Value("${custom.genFileDirPath}")
+	private String genFileDirPath;
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/gen/**").addResourceLocations("file:///" + genFileDirPath + "/")
+				.setCachePeriod(20);
+	}
 	
 	// needLoginInterceptor 인터셉터 불러오기
 	@Autowired
