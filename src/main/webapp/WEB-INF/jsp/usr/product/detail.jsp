@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="상세보기237" />
+<c:set var="pageTitle" value="상세보기" />
 <%@ include file="../common/head.jspf"%>
 
 <c:set var="pageBaseUri" value="${pageBaseUri}?searchKeyword=${param.searchKeyword}" />
@@ -20,10 +20,11 @@
 		alert(changeSaving);
 	}
 	
-	$('.modal').click(function(){
+	$('.dt-modal').click(function(){
 		  // $('.layer').show(); 
-		  $('.layer').css('display','block'); 
-		  $('.layer-bg').css('display','block'); 
+		  alert("안녕");
+// 		  $('.layer').css('display','block'); 
+// 		  $('.layer-bg').css('display','block'); 
 		});
 
 		$('.close-btn').click(function(){
@@ -39,17 +40,100 @@
 </script>
 
 <section class="my-20">
-	<div class="con-3 flex flex-row mx-auto px-3 bg-red-200">
-		<div class="left side-bar-1 bg-green-200 mr-6">
-			<form action="../product/list">
-				<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
+	<div class="con-3 flex flex-row mx-auto px-3">
+		<form action="../product/detail">
+			<div class="side-bar-1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
+				<div class="text-base font-semibold mb-4">날짜 변경</div>
+				
+				<div>
+					<span class="mr-4">체크인</span>
+					<input name="Start_date" type="date" class="mx-2 input input-bordered" />
+				</div>
+				<div class="my-1">
+					<span>체크아웃</span>
+					<input name="end_date"  type="date" class="mx-2 input input-bordered"/>
+				</div>
+				<div class="">
+					<span>객실</span>
+					<span class="mx-14">성인</span>
+					<span>아동</span>
+				</div>
+				<div>
+					<select name="countOfRoom" class="select select-bordered">
+						<c:forEach begin="1" end="10" var="i">
+							<option value="${i }">${i }</option>
+						</c:forEach>
+					</select>
+					<select name="countOfAdult" class="mx-2 select select-bordered">
+						<c:forEach begin="1" end="10" var="i">
+							<option value="${i }">${i }</option>
+						</c:forEach>
+					</select>
+					<select name="countOfChild" class="select select-bordered">
+						<c:forEach begin="1" end="10" var="i">
+							<option value="${i }">${i }</option>
+						</c:forEach>
+					</select>
+				</div>
+				
+				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
+			</div>
+		
+			<div class="side-bar-2 mr-6 p-5 border border-gray-300 rounded-md">
+				<span class="text-base font-semibold">상세조건</span>
+			
 				<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
 				<input type="hidden" name="order_by" value="${param.order_by}" />
-				<input type="text" name="low_price" class="input input-bordered" />
-				<input type="text" name="high_price" class="input input-bordered" />
-				<button type="submit" class="btn btn-primary">적용</button>
-			</form>
-		</div>
+				
+				<div class="accommodationType-box flex flex-col mt-5">
+					<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" />
+				    <span class="text-sm ml-2">식사 불포함</span> 
+				  </label>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="hotelType" class="checkbox checkbox-sm"/>
+				    <span class="text-sm ml-2">조식 포함</span> 
+				  </label>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="pensionType" class="checkbox checkbox-sm" />
+				    <span class="text-sm ml-2">석식 포함</span> 
+				  </label>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="geusthouseType" class="checkbox checkbox-sm" />
+				    <span class="text-sm ml-2">조식・석식포함</span> 
+				  </label>
+		  		</div>
+		  		
+				<div class="accommodationType-box flex flex-col mt-5">
+					<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" />
+				    <span class="text-sm ml-2">흡연</span> 
+				  </label>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="hotelType" class="checkbox checkbox-sm"/>
+				    <span class="text-sm ml-2">금연</span> 
+				  </label>
+		  		</div>
+				
+				<div class="pricing-box flex flex-col mt-5">
+					<span class="text-sm font-semibold text-gray-500 mb-2">가격</span>
+					<ul>
+						<li>
+							<input type="text" name="low_price" class="input input-bordered input-sm" placeholder="최소"/>
+						</li>
+					</ul>
+					<ul class="mt-1">
+						<li>
+							<input type="text" name="high_price" class="input input-bordered input-sm" placeholder="최대"/>
+						</li>
+					</ul>
+				</div>
+				
+				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
+			</div>
+		</form>
 		<div class="right mt-2 bg-blue-400 w-4/6">
 			<input type="hidden" name="id" value="${product.id}" />
 			<div class="flex justify-between">
@@ -74,7 +158,7 @@
 							<div class="text-base font-bold">가격</div>
 							<div class="text-lg">${product.fee}</div>
 						</div>
-						<button class="modal flex justify-between w-full my-4">
+						<button class="dt-modal flex justify-between w-full my-4">
 							<div class="">객실 이용 안내</div>
 							<div class="">&gt;</div>
 						</button>
