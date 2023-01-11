@@ -13,6 +13,7 @@ public interface ProductRepository {
 	@Select("""
 			<script>
 			SELECT P.*,
+			C.id AS comId,
 			C.name AS comName,
 			C.address AS comAddr,
 			MIN(fee) AS extra__minFee

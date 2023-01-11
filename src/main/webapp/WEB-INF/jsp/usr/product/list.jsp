@@ -86,7 +86,7 @@
 							<td>${product.comAddr}</td>
 							<td>${product.extra__minFee}</td>
 							<td>
-	              <img class="w-40 h-40 object-cover" src="${rq.getProductListImgUri()}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+	              <img class="w-40 h-40 object-cover" src="${rq.getCompanyProfileImgUri(product.comId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 	              <span>상품 이미지</span>
            		</td>
 						</tr>

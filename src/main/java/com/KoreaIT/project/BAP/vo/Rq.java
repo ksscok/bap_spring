@@ -107,12 +107,8 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 	}
 	
-	public String getProfileImgUri(int membeId) {
-		return "/common/genFile/file/member/" + membeId + "/extra/profileImg/1";
-	}
-	
-	public String getProductListImgUri() {
-		return "/common/genFile/file/1";
+	public String getCompanyProfileImgUri(int companyId) {
+		return "/common/genFile/file/company/" + companyId + "/extra/profileImg/1";
 	}
 
 	public String getProfileFallbackImgUri() {
