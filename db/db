@@ -205,11 +205,11 @@ fee = 35000;
 
 SELECT * FROM product;
 
-SELECT p.*, MIN(fee) AS extra__minFee
-FROM product AS p
-GROUP BY NAME, address
-ORDER BY
-extra__minFee ASC;
+-- SELECT p.*, MIN(fee) AS extra__minFee
+-- FROM product AS p
+-- GROUP BY NAME, address
+-- ORDER BY
+-- extra__minFee ASC;
 
 #회원 테이블 생성
 CREATE TABLE `member` (
@@ -261,32 +261,61 @@ SELECT * FROM `member`;
 
 # 쿼리 테스트(jh)
 SELECT P.*,
-		C.name AS comName, 
-		C.address AS comAddr
+C.name AS comName, 
+C.address AS comAddr
 FROM product AS P
 INNER JOIN company AS C
 ON P.companyId = C.id
 GROUP BY P.companyId;
 
 SELECT *
-				FROM product
-				WHERE companyId = 2;
+FROM product
+WHERE companyId = 2;
 
-# 쿼리 테스트(ss)	
+# 쿼리 테스트(ss)
+	
 SELECT p.*,
+C.name,
+C.address,
 MIN(fee) AS extra__minFee
-FROM product AS p
-WHERE 1
-AND (NAME LIKE '%롯데시티호텔%' OR address LIKE '%대전%')
-AND fee >= 50000
-AND fee <= 100000
-GROUP BY NAME, address
+FROM product AS P
+INNER JOIN company AS C
+ON P.companyId = C.id
+GROUP BY C.NAME, C.address
 ORDER BY extra__minFee ASC;
+-- 
+-- SELECT p.*,
+-- MIN(fee) AS extra__minFee
+-- FROM product AS p
+-- WHERE 1
+-- AND accommodationType = '호텔' OR accommodationType = '모텔'
+-- GROUP BY NAME, address
+-- ORDER BY extra__minFee ASC;
 
-SELECT p.*,
-MIN(fee) AS extra__minFee
-FROM product AS p
-WHERE 1
-AND accommodationType = '호텔' OR accommodationType = '모텔'
-GROUP BY NAME, address
-ORDER BY extra__minFee ASC;
+SHOW TABLES;
+SELECT * FROM product;
+SELECT * FROM company;
+
+# genFile 테이블 추가
+CREATE TABLE genFile (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
+  regDate DATETIME DEFAULT NULL, # 작성날짜
+  updateDate DATETIME DEFAULT NULL, # 갱신날짜
+  delDate DATETIME DEFAULT NULL, # 삭제날짜
+  delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0, # 삭제상태(0:미삭제,1:삭제)
+  relTypeCode CHAR(50) NOT NULL, # 관련 데이터 타입(article, member)
+  relId INT(10) UNSIGNED NOT NULL, # 관련 데이터 번호
+  originFileName VARCHAR(100) NOT NULL, # 업로드 당시의 파일이름
+  fileExt CHAR(10) NOT NULL, # 확장자
+  typeCode CHAR(20) NOT NULL, # 종류코드 (common)
+  type2Code CHAR(20) NOT NULL, # 종류2코드 (attatchment)
+  fileSize INT(10) UNSIGNED NOT NULL, # 파일의 사이즈
+  fileExtTypeCode CHAR(10) NOT NULL, # 파일규격코드(img, video)
+  fileExtType2Code CHAR(10) NOT NULL, # 파일규격2코드(jpg, mp4)
+  fileNo SMALLINT(2) UNSIGNED NOT NULL, # 파일번호 (1)
+  fileDir CHAR(20) NOT NULL, # 파일이 저장되는 폴더명
+  PRIMARY KEY (id),
+  KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
+);
+
+SELECT * FROM genFile;
