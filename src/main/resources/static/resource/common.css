@@ -108,6 +108,7 @@ html> body {
 	border: 1px solid rgba(0,0,0,0.08);
 }
 
+<<<<<<< HEAD
 .layer {
   display: none; 
   width: 500px;
@@ -147,3 +148,8 @@ html> body {
   z-index: 50;
 }
 
+=======
+* > .border-bt-gray {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+>>>>>>> dddb5071e3081ffcbe454fb2cb2a6f1930d22e6f

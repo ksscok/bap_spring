@@ -78,7 +78,7 @@
 				
 				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 			</div>
-		
+<!-- 			폼만 제작 / 변수 수정해야 함 -->
 			<div class="side-bar-2 mr-6 p-5 border border-gray-300 rounded-md">
 				<span class="text-base font-semibold">상세조건</span>
 			
