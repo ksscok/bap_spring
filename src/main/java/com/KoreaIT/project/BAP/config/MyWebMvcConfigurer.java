@@ -16,6 +16,10 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
 	
+	// needLoginInterceptor 인터셉터 불러오기
+	@Autowired
+	NeedLoginInterceptor needLoginInterceptor;
+	
 	@Value("${custom.genFileDirPath}")
 	private String genFileDirPath;
 
@@ -25,9 +29,6 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				.setCachePeriod(20);
 	}
 	
-	// needLoginInterceptor 인터셉터 불러오기
-	@Autowired
-	NeedLoginInterceptor needLoginInterceptor;
 	// 이 함수는 인터셉터를 적용하는 역할을 합니다.
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
