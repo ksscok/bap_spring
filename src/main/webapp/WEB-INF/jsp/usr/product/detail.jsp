@@ -42,7 +42,7 @@
 <section class="my-20">
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<form action="../product/detail">
-			<div class="side-bar-1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
+			<div class="left side-bar-1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
 				<div class="text-base font-semibold mb-4">날짜 변경</div>
 				
 				<div>
@@ -79,7 +79,7 @@
 				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 			</div>
 <!-- 			폼만 제작 / 변수 수정해야 함 -->
-			<div class="side-bar-2 mr-6 p-5 border border-gray-300 rounded-md">
+			<div class="left side-bar-2 mr-6 p-5 border border-gray-300 rounded-md">
 				<span class="text-base font-semibold">상세조건</span>
 			
 				<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
@@ -88,19 +88,19 @@
 				<div class="accommodationType-box flex flex-col mt-5">
 					<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" />
+				    <input type="checkbox" name="withoutMeals" class="checkbox checkbox-sm" />
 				    <span class="text-sm ml-2">식사 불포함</span> 
 				  </label>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="hotelType" class="checkbox checkbox-sm"/>
+				    <input type="checkbox" name="withBreakfast" class="checkbox checkbox-sm"/>
 				    <span class="text-sm ml-2">조식 포함</span> 
 				  </label>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="pensionType" class="checkbox checkbox-sm" />
+				    <input type="checkbox" name="withDinner" class="checkbox checkbox-sm" />
 				    <span class="text-sm ml-2">석식 포함</span> 
 				  </label>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="geusthouseType" class="checkbox checkbox-sm" />
+				    <input type="checkbox" name="withBreakfastAndDinner" class="checkbox checkbox-sm" />
 				    <span class="text-sm ml-2">조식・석식포함</span> 
 				  </label>
 		  		</div>
@@ -108,11 +108,11 @@
 				<div class="accommodationType-box flex flex-col mt-5">
 					<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" />
+				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" value="smoking" />
 				    <span class="text-sm ml-2">흡연</span> 
 				  </label>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="hotelType" class="checkbox checkbox-sm"/>
+				    <input type="checkbox" name="hotelType" class="checkbox checkbox-sm" value="noSmoking"/>
 				    <span class="text-sm ml-2">금연</span> 
 				  </label>
 		  		</div>
@@ -134,6 +134,8 @@
 				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 			</div>
 		</form>
+		
+<!-- 		오른쪽 시작 -->
 		<div class="right mt-2 bg-blue-400 w-4/6">
 			<input type="hidden" name="id" value="${product.id}" />
 			<div class="flex justify-between">

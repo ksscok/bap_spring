@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<<<<<<< HEAD
-<c:set var="pageTitle" value="test1135" />
-=======
 <c:set var="pageTitle" value="메인페이지" />
->>>>>>> dddb5071e3081ffcbe454fb2cb2a6f1930d22e6f
 
 <%@ include file="../common/head.jspf" %>
 
