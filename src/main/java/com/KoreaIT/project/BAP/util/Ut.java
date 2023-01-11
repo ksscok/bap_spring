@@ -75,7 +75,6 @@ public class Ut {
 						</script>
 						""",msg, uri);
 	}
-	
 	public static Map<String, Object> mapOf(Object... args) {
 		if (args.length % 2 != 0) {
 			throw new IllegalArgumentException("인자를 짝수개 입력해주세요.");
