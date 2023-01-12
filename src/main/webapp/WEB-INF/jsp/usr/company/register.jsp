@@ -11,22 +11,12 @@
 				<ul>
 					<li><a href="../member/myPage">개인정보수정</a></li>
 				</ul>
-				<c:if test="${rq.loginedMember.memberType.equals('guest')}">
-					<ul>
-						<li><a href="../member/coupon">쿠폰함</a></li>
-					</ul>
-					<ul>
-						<li><a href="../member/reservations">예약내역</a></li>
-					</ul>
-				</c:if>
-				<c:if test="${rq.loginedMember.memberType.equals('host')}">
-					<ul>
-						<li><a href="../company/register">사업장 등록</a></li>
-					</ul>
-					<ul>
-						<li><a href="../company/management">사업장 관리</a></li>
-					</ul>
-				</c:if>
+				<ul>
+					<li><a href="../company/register">사업장 등록</a></li>
+				</ul>
+				<ul>
+					<li><a href="../company/management">사업장 관리</a></li>
+				</ul>
 			</div>
 		</div>
 		<div class="table-box-type-2 company-list mt-0 flex flex-col text-sm">
@@ -54,11 +44,28 @@
 						<tr>
 							<th>시설 유형</th>
 							<td>
-								<input name="accommodationType" placeholder="시설 유형을 입력해주세요.(수정 예정)" type="text" class="input input-bordered w-64"/>
-							</td>
+							<div class="flex">
+								<label class="cursor-pointer flex items-center">
+							    <input type="radio" name="accommodationType" value="hotel" checked/>
+							    <span class="text-sm ml-2">호텔</span> 
+							  </label>
+							  <label class="cursor-pointer flex items-center ml-5">
+							    <input type="radio" name="accommodationType" value="motel"/>
+							    <span class="text-sm ml-2">모텔</span> 
+							  </label>
+							  <label class="cursor-pointer flex items-center ml-5">
+							    <input type="radio" name="accommodationType" value="pension"/>
+							    <span class="text-sm ml-2">펜션</span> 
+							  </label>
+							  <label class="cursor-pointer flex items-center ml-5">
+							    <input type="radio" name="accommodationType" value="guesthouse"/>
+							    <span class="text-sm ml-2">게스트하우스</span> 
+							  </label>
+							</div>
+						</td>
 						</tr>
 						<tr>
-							<th>사업장 대표 이미지 등록</th>
+							<th>사업장 프로필 <br /> 이미지 등록</th>
 							<td>
 								<input name="file__company__0__extra__profileImg__1" placeholder="사업장 대표 이미지" type="file" />
 							</td>

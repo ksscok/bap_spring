@@ -306,32 +306,32 @@ ALTER TABLE company ADD COLUMN accommodationType CHAR(10) NOT NULL;
 ALTER TABLE company ADD COLUMN host_id INT(10) UNSIGNED NOT NULL;
 
 UPDATE company
-SET accommodationType = '호텔',
+SET accommodationType = 'hotel',
 host_id = 1
 WHERE id = 1;
 
 UPDATE company
-SET accommodationType = '호텔',
+SET accommodationType = 'hotel',
 host_id = 2
 WHERE id = 2;
 
 UPDATE company
-SET accommodationType = '호텔',
+SET accommodationType = 'hotel',
 host_id = 3
 WHERE id = 3;
 
 UPDATE company
-SET accommodationType = '펜션',
+SET accommodationType = 'pension',
 host_id = 4
 WHERE id = 4;
 
 UPDATE company
-SET accommodationType = '모텔',
+SET accommodationType = 'motel',
 host_id = 5
 WHERE id = 5;
 
 UPDATE company
-SET accommodationType = '게스트하우스',
+SET accommodationType = 'geusthouse',
 host_id = 6,
 `name` = '제주 쉬멍놀멍 게스트하우스',
 address = '제주특별자치도 제주시 한림읍 협재리 2557-1'
@@ -353,3 +353,4 @@ ON c.id = p.comp_id
 GROUP BY c.id;
 
 SELECT * FROM MEMBER;
+SELECT * FROM company;
