@@ -15,6 +15,19 @@
 				</colgroup>
 				<tbody>
 					<tr>
+						<th>회원 구분</th>
+						<td class="flex">
+							<label class="cursor-pointer flex items-center">
+						    <input type="radio" name="memberType" value="guest" checked/>
+						    <span class="text-sm ml-2">일반회원</span> 
+						  </label>
+						  <label class="cursor-pointer flex items-center ml-5">
+						    <input type="radio" name="memberType" value="host"/>
+						    <span class="text-sm ml-2">사업자</span> 
+						  </label>
+						</td>
+					</tr>
+					<tr>
 						<th>아이디</th>
 						<td>
 							<input name="loginId" type="text" class="input input-bordered w-64" placeholder="아이디를 입력해주세요."/>

@@ -74,7 +74,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String loginPwConfirm, String name, String email, String cellphoneNo) {
+	public String doJoin(String memberType, String loginId, String loginPw, String loginPwConfirm, String name, String email, String cellphoneNo) {
 		
 		if(Ut.empty(loginId)) {
 			return rq.jsHistoryBack("아이디를 입력해주세요.");
@@ -95,7 +95,7 @@ public class UsrMemberController {
 			return rq.jsHistoryBack("핸드폰 번호를 입력해주세요.");
 		}
 		
-		memberService.join(loginId, loginPw, name, email, cellphoneNo);
+		memberService.join(memberType, loginId, loginPw, name, email, cellphoneNo);
 		
 		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", "/");
 	}

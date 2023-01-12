@@ -13,12 +13,6 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<td class="flex justify-center items-center text-2xl font-semibold mb-6">
-							<a href="../member/login">개인회원</a>
-							<a href="../host/login" class="ml-5">기업회원</a>
-						</td>
-					</tr>
-					<tr>
 						<td>
 							<div>
 								<input name="loginId" type="text" class="input input-bordered w-full " placeholder="🤵  아이디"/>

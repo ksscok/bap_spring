@@ -5,16 +5,19 @@
 
 <%@ include file="../common/head.jspf" %>
 
-<section class="page-1 con-min-width bg-red-200">
+<section class="page-1 con-min-width">
 	<div class="con-1 flex h-full justify-center mx-auto px-3">
 		<div class="img-box-1 flex h-full items-center justify-center ">
 			<div class="absolute search-box flex justify-center items-center" >
-				<form action="../company/list">
+				<form action="../company/list" class="flex">
 					<input name="Start_date" type="date" />
 					<input name="end_date"  type="date" class="mx-2"/>
-					<input name="searchKeyword" value="${param.searchKeyword}" type="text" placeholder="지역, 숙소명" maxlength="20" 
-					class="w-72 input input-info"/>
-					<button type="submit" class="ml-2 btn btn-accent">검색</button>
+					<div class="input-group w-full">
+				    <input placeholder="지역, 숙소명" type="text" maxlength="20" class="input input-bordered w-full" />
+				    <button class="btn btn-square">
+				      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+				    </button>
+				  </div>
 				</form>
 			</div>
 		</div>

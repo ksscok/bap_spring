@@ -22,12 +22,12 @@
 				<div class="accommodationType-box flex flex-col mt-5">
 					<span class="text-sm font-semibold text-gray-500 mb-2">숙소 유형</span>
 				  <label class="cursor-pointer flex items-center h-8">
-				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" />
-				    <span class="text-sm ml-2">모텔</span> 
-				  </label>
-				  <label class="cursor-pointer flex items-center h-8">
 				    <input type="checkbox" name="hotelType" class="checkbox checkbox-sm"/>
 				    <span class="text-sm ml-2">호텔</span> 
+				  </label>
+				  <label class="cursor-pointer flex items-center h-8">
+				    <input type="checkbox" name="motelType" class="checkbox checkbox-sm" />
+				    <span class="text-sm ml-2">모텔</span> 
 				  </label>
 				  <label class="cursor-pointer flex items-center h-8">
 				    <input type="checkbox" name="pensionType" class="checkbox checkbox-sm" />

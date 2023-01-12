@@ -22,13 +22,14 @@ public interface MemberRepository {
 			INSERT into `member`
 			SET regDate = NOW(),
 			updateDate = NOW(),
+			memberType = #{memberType},
 			loginId = #{loginId},
 			loginPw = #{loginPw},
 			name = #{name},
 			email = #{email},
 			cellphoneNo = #{cellphoneNo}
 			""")
-	public void join(String loginId, String loginPw, String name, String email, String cellphoneNo);
+	public void join(String memberType, String loginId, String loginPw, String name, String email, String cellphoneNo);
 
 
 	@Select("""
