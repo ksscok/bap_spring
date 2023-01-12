@@ -13,6 +13,12 @@
 				</colgroup>
 				<tbody>
 					<tr>
+						<td class="flex justify-center items-center text-2xl font-semibold mb-6">
+							<a href="../member/login">개인회원</a>
+							<a href="../host/login" class="ml-5">기업회원</a>
+						</td>
+					</tr>
+					<tr>
 						<td>
 							<div>
 								<input name="loginId" type="text" class="input input-bordered w-full " placeholder="🤵  아이디"/>
@@ -27,6 +33,13 @@
 					<tr>
 						<td>
 							<input type="submit" class="btn btn-primary w-full mt-4" value="로그인"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="flex justify-around items-center text-sm font-semibold mt-4">
+							<a href="usr/member/findLoginId">아이디 찾기</a>
+							<a href="usr/member/findLoginPw">비밀번호 찾기</a>
+							<a href="usr/member/join">회원가입</a>
 						</td>
 					</tr>
 				</tbody>
