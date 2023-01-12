@@ -203,13 +203,15 @@ numberOfRooms = 2,
 hostId = 5,
 fee = 35000;
 
-SELECT * FROM product;
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '6',
+roomtype = '트윈룸',
+numberOfRooms = 2,
+fee = 72000;
 
--- SELECT p.*, MIN(fee) AS extra__minFee
--- FROM product AS p
--- GROUP BY NAME, address
--- ORDER BY
--- extra__minFee ASC;
+SELECT * FROM product;
 
 #회원 테이블 생성
 CREATE TABLE `member` (
@@ -318,4 +320,46 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
-SELECT * FROM genFile;
+# company 테이블 수정
+ALTER TABLE company ADD COLUMN accommodationType CHAR(10) NOT NULL;
+ALTER TABLE company ADD COLUMN host_id INT(10) UNSIGNED NOT NULL;
+
+UPDATE company
+SET accommodationType = '호텔',
+host_id = 1
+WHERE id = 1;
+
+UPDATE company
+SET accommodationType = '호텔',
+host_id = 2
+WHERE id = 2;
+
+UPDATE company
+SET accommodationType = '호텔',
+host_id = 3
+WHERE id = 3;
+
+UPDATE company
+SET accommodationType = '펜션',
+host_id = 4
+WHERE id = 4;
+
+UPDATE company
+SET accommodationType = '모텔',
+host_id = 5
+WHERE id = 5;
+
+UPDATE company
+SET accommodationType = '게스트하우스',
+host_id = 6,
+`name` = '제주 쉬멍놀멍 게스트하우스',
+address = '제주특별자치도 제주시 한림읍 협재리 2557-1'
+WHERE id = 6;
+
+SELECT * FROM company;
+
+# product 테이블 수정
+ALTER TABLE product DROP COLUMN accommodationType;
+ALTER TABLE product DROP COLUMN hostId;
+ALTER TABLE product CHANGE COLUMN companyId comp_id INT(10) UNSIGNED NOT NULL;
+SELECT * FROM product;
