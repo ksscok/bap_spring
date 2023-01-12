@@ -4,11 +4,37 @@
 <c:set var="pageTitle" value="메인" />
 <%@ include file="../common/head.jspf" %>
 
-<section class="mt-14">
-	<div class="con-2 mx-auto px-3">
-		<div class="text-xl">마이페이지</div>
-		<div class="table-box-type-2 flex justify-center flex-col mt-5 text-sm">
-			<table>
+<section class="mt-20">
+	<div class="con-3 flex flex-row mx-auto px-3 ">
+		<div class="side-bar-myPage mr-6">
+			<div class="p-5 pt-0">
+				<ul>
+					<li><a href="../member/myPage">개인정보수정</a></li>
+				</ul>
+				<c:if test="${rq.loginedMember.memberType.equals('guest')}">
+					<ul>
+						<li><a href="../member/coupon">쿠폰함</a></li>
+					</ul>
+					<ul>
+						<li><a href="../member/point">포인트</a></li>
+					</ul>
+					<ul>
+						<li><a href="../member/reservations">예약내역</a></li>
+					</ul>
+				</c:if>
+				<c:if test="${rq.loginedMember.memberType.equals('host')}">
+					<ul>
+						<li><a href="../company/register">사업장 등록</a></li>
+					</ul>
+					<ul>
+						<li><a href="../company/management">사업장 관리</a></li>
+					</ul>
+				</c:if>
+			</div>
+		</div>
+		<div class="table-box-type-2 company-list mt-0 flex flex-col text-sm">
+			<div class="text-xl">개인정보수정</div>
+			<table class="mt-5">
 				<colgroup>
 					<col width="200"/>
 					<col width="700"/>

@@ -16,15 +16,17 @@
 				<tbody>
 					<tr>
 						<th>회원 구분</th>
-						<td class="flex">
-							<label class="cursor-pointer flex items-center">
-						    <input type="radio" name="memberType" value="guest" checked/>
-						    <span class="text-sm ml-2">일반회원</span> 
-						  </label>
-						  <label class="cursor-pointer flex items-center ml-5">
-						    <input type="radio" name="memberType" value="host"/>
-						    <span class="text-sm ml-2">사업자</span> 
-						  </label>
+						<td>
+							<div class="flex">
+								<label class="cursor-pointer flex items-center">
+							    <input type="radio" name="memberType" value="guest" checked/>
+							    <span class="text-sm ml-2">일반회원</span> 
+							  </label>
+							  <label class="cursor-pointer flex items-center ml-5">
+							    <input type="radio" name="memberType" value="host"/>
+							    <span class="text-sm ml-2">사업자</span> 
+							  </label>
+							</div>
 						</td>
 					</tr>
 					<tr>

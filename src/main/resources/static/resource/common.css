@@ -19,7 +19,6 @@ html> body {
 .table-box-type-2 > table th,
 .table-box-type-2 > table td {
 	border: 1px solid #c9c8c5;
-	
 	padding: 15px;
 	padding-left: 20px;
 }
@@ -99,8 +98,16 @@ html> body {
 }
 
 .side-bar-1 {
-	width: 230x;
+	width: 230px;
 	height: 430px;
+}
+
+.side-bar-myPage {
+	width: 180px;
+}
+
+.side-bar-myPage > div > ul {
+	padding: 10px 0;
 }
 
 .company-list {

@@ -11,10 +11,10 @@ public class Member {
 	private int id;
 	private String regDate;
 	private String updateDate;
+	private String memberType;
 	private String loginId;
 	private String loginPw;
 	private int authLevel;
-	private String memberType;
 	private String name;
 	private String cellphoneNo;
 	private String email;
