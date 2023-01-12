@@ -13,4 +13,9 @@ public class Company {
 	private String updateDate;
 	private String name;
 	private String address;
+	private String accommodationType;
+	private int host_id;
+	
+	private int extra__productFee;
+	private int extra__minFee;
 }

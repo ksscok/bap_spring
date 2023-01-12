@@ -19,24 +19,6 @@ public class UsrProductController {
 		this.productService = productService;
 	}
 	
-	@RequestMapping("/usr/product/list")
-	public String showList(Model model,
-			@RequestParam(defaultValue="") String searchKeyword,
-			@RequestParam(defaultValue="") String order_by,
-			@RequestParam(defaultValue="") String motelType,
-			@RequestParam(defaultValue="") String hotelType,
-			@RequestParam(defaultValue="") String pensionType,
-			@RequestParam(defaultValue="") String geusthouseType,
-			@RequestParam(defaultValue="1") int low_price,
-			@RequestParam(defaultValue="999999999") int high_price) {
-		
-		List<Product> products = productService.getForPrintProducts(searchKeyword, order_by, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
-		
-		model.addAttribute("products", products);
-		
-		return "usr/product/list";
-	}
-	
 	@RequestMapping("/usr/product/detail")
 	public String showDetail(Model model, int companyId,
 			@RequestParam(defaultValue="") String searchKeyword,

@@ -16,10 +16,6 @@ public class ProductService {
 		this.productRepository = productRepository;
 	}
 
-	public List<Product> getForPrintProducts(String searchKeyword, String order_by, String motelType, String hotelType, String pensionType, String geusthouseType, int low_price, int high_price) {
-		return productRepository.getForPrintProducts(searchKeyword, order_by, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
-	}
-	
 	public Product getForPrintproduct(int id) {
 		return productRepository.getForPrintproduct(id);
 	}
