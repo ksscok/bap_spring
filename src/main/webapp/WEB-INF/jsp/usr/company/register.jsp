@@ -27,6 +27,19 @@
 						</td>
 					</tr>
 					<tr>
+						<th>시설 유형</th>
+						<td>
+							<input name="accommodationType" placeholder="시설 유형을 입력해주세요.(수정 예정)" type="text" class="input input-bordered w-64"/>
+						</td>
+					</tr>
+					<tr>
+					<tr>
+						<th>host_id</th>
+						<td>
+							<input name="host_id" placeholder="host_id를 입력해주세요.(수정 예정)" type="text" class="input input-bordered w-64"/>
+						</td>
+					</tr>
+					<tr>
 						<th>사업장 대표 이미지 등록</th>
 						<td>
 							<input name="file__company__0__extra__profileImg__1" placeholder="사업장 대표 이미지" type="file" />

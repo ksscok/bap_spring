@@ -13,7 +13,7 @@
 <section class="mt-20">
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="side-bar-1 mr-6 p-5 border border-gray-300 rounded-md">
-			<form action="../product/list">
+			<form action="../company/list">
 				<span class="text-base font-semibold">상세조건</span>
 			
 				<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
@@ -64,23 +64,23 @@
 					<button onclick="location.href='${pageBaseUri}&order_by=a'" class="btn ${order_by.equals('a') ? 'orderby-btn-active' : '' } btn-outline " >후기 많은순</button>
 					<button onclick="location.href='${pageBaseUri}&order_by=b'" class="btn ${order_by.equals('b') ? 'orderby-btn-active' : '' } btn-outline ">평점 높은순</button>
 				</div>
-				<c:forEach var="product" items="${products}">
+				<c:forEach var="company" items="${companies}">
 					<div class="company-contents-wrapper flex p-4 border-gray-300">
 						<div>
-		          <img class="company-image object-cover" src="${rq.getCompanyProfileImgUri(product.comId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+		          <img class="company-image object-cover" src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 						</div>
 						<div class="company-info-wrapper">
 							<div>
-								<a href="../product/detail?companyId=${product.companyId}" class="text-2xl font-bold">${product.comName}</a>
+								<a href="../product/detail?companyId=${company.id}" class="text-2xl font-bold">${company.name}</a>
 							</div>
 							<div class="flex mt-1">
 								⭐ 
 								<div class="font-semibold">4.9&nbsp;</div>
 								(2,645) 
 							</div> 
-							<div class="font-semibold mt-1">${product.comAddr}</div>
+							<div class="font-semibold mt-1">${company.address}</div>
 							<div class="company-info-price flex items-end justify-end">
-								<div class="text-2xl font-bold">${product.extra__minFee}</div>
+								<div class="text-2xl font-bold">${company.extra__minFee}</div>
 								<div class="text-xl font-semibold won">원</div>
 							</div>
 						</div>
