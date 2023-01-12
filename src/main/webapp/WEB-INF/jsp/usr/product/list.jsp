@@ -56,43 +56,37 @@
 				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 			</form>
 		</div>
-		<div class="table table-fixed">
-			<div class="btn-group">
-				<button onclick="location.href='${pageBaseUri}&order_by=lowPrice'" class="btn ${order_by.equals('lowPrice') ? 'btn-active' : '' }">낮은 가격순</button>
-				<button onclick="location.href='${pageBaseUri}&order_by=highPrice'" class="btn ${order_by.equals('highPrice') ? 'btn-active' : '' }" >높은 가격순</button>
+		<div>
+			<div class="company-list">
+				<div class="btn-group">
+					<button onclick="location.href='${pageBaseUri}&order_by=lowPrice'" class="btn ${order_by.equals('lowPrice') ? 'orderby-btn-active' : '' } btn-outline">낮은 가격순</button>
+					<button onclick="location.href='${pageBaseUri}&order_by=highPrice'" class="btn ${order_by.equals('highPrice') ? 'orderby-btn-active' : '' }  btn-outline" >높은 가격순</button>
+					<button onclick="location.href='${pageBaseUri}&order_by=a'" class="btn ${order_by.equals('a') ? 'orderby-btn-active' : '' } btn-outline " >후기 많은순</button>
+					<button onclick="location.href='${pageBaseUri}&order_by=b'" class="btn ${order_by.equals('b') ? 'orderby-btn-active' : '' } btn-outline ">평점 높은순</button>
+				</div>
+				<c:forEach var="product" items="${products}">
+					<div class="company-contents-wrapper flex p-4 border-gray-300">
+						<div>
+		          <img class="company-image object-cover" src="${rq.getCompanyProfileImgUri(product.comId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+						</div>
+						<div class="company-info-wrapper">
+							<div>
+								<a href="../product/detail?companyId=${product.companyId}" class="text-2xl font-bold">${product.comName}</a>
+							</div>
+							<div class="flex mt-1">
+								⭐ 
+								<div class="font-semibold">4.9&nbsp;</div>
+								(2,645) 
+							</div> 
+							<div class="font-semibold mt-1">${product.comAddr}</div>
+							<div class="company-info-price flex items-end justify-end">
+								<div class="text-2xl font-bold">${product.extra__minFee}</div>
+								<div class="text-xl font-semibold won">원</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-			<table class="w-full mt-5">
-      	<colgroup>
-          <col width="50" />
-          <col width="150" />
-          <col width="150" />
-          <col />
-        </colgroup>
-        <thead>
-        	<tr>	
-						<th>번호</th>
-						<th>숙소 이름</th>
-						<th>주소</th>
-						<th>가격</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="product" items="${products}">
-						<tr>
-							<td>${product.id}</td>
-							<td>
-								<a href="../product/detail?companyId=${product.companyId}">${product.comName}</a>
-							</td>
-							<td>${product.comAddr}</td>
-							<td>${product.extra__minFee}</td>
-							<td>
-	              <img class="w-40 h-40 object-cover" src="${rq.getCompanyProfileImgUri(product.comId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
-	              <span>상품 이미지</span>
-           		</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
 		</div>
 	</div>
 </section>

@@ -55,7 +55,7 @@ html> body {
 }
 
 .con-3 {
-	max-width: 1000px;
+	max-width: 930px;
 }
 
 .con-min-width {
@@ -101,9 +101,49 @@ html> body {
 
 .side-bar-1 {
 	width: 230x;
-	height: auto;
+	height: 430px;
 }
 
+.company-list {
+	width: 650px;
+}
+
+.company-contents-wrapper {
+	height: auto;
+	border-bottom-width: 1px;
+}
+
+.company-image {
+	width: 250px;
+	height: 200px;
+}
+
+.btn-group > button {
+	width: 25%;
+}
+
+.orderby-btn-active {
+	color: #570DF8;
+}
+
+.company-info-wrapper {
+	padding-left: 10px;
+	padding-top: 5px;
+	width: 375px;
+	position: relative;
+}
+
+.won {
+	padding-left: 1px;
+	padding-bottom: 1px;
+}
+
+.company-info-price {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding: 5px;
+}
 * > .border-gray {
 	border: 1px solid rgba(0,0,0,0.08);
 }
