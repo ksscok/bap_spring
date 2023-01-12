@@ -17,7 +17,7 @@ public interface CompanyRepository {
 			p.fee AS extra__productFee,
 			MIN(fee) AS extra__minFee
 			FROM company AS c
-			INNER JOIN product AS p
+			LEFT JOIN product AS p
 			ON c.id = p.comp_id
 			WHERE 1
 			<if test="searchKeyword != ''">
