@@ -11,13 +11,11 @@ public class Product {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private int companyId;
+	private int comp_id;
 	private String roomType;
 	private int numberOfRooms;
-	private int hostId;
 	private int fee;
 	
-	private int comId;
 	private String comName;
 	private String comAddr;
 	private int extra__minFee;

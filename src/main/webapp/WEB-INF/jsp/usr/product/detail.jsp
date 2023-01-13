@@ -43,7 +43,7 @@
 	<form action="book">
 		<div class="con-3 flex flex-row mx-auto px-3">
 			<div class="left">
-				<div class="side-bar-1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
+				<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
 					<div class="text-base font-semibold mb-4">날짜 변경</div>
 					
 					<div>
@@ -80,7 +80,7 @@
 					<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 				</div>
 	<!-- 			폼만 제작 / 변수 수정해야 함 -->
-				<div class="left side-bar-2 mr-6 p-5 border border-gray-300 rounded-md">
+				<div class="left side-bar-d2 mr-6 p-5 border border-gray-300 rounded-md">
 					<span class="text-base font-semibold">상세조건</span>
 				
 					<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
@@ -138,11 +138,11 @@
 		
 <!-- 		오른쪽 시작 -->
 			<div class="right mt-2 bg-blue-400 w-4/6">
-				<input type="hidden" name="id" value="${product.id}" />
+				<input type="hidden" name="id" value="${product.comp_id}" />
 				<div class="flex justify-between">
 					<div class="company-body">
-						<div class="text-3xl">${product.comName}</div>
-						<div class="text-lg my-2">${product.comAddr}</div>
+						<div class="text-3xl">${company.name}</div>
+						<div class="text-lg my-2">${company.address}</div>
 					</div>
 					<div class="flex bg-red-400 my-2">
 						<div>찜하기</div>

@@ -4,13 +4,14 @@ USE BAP_spring;
 SHOW TABLES;
 
 #host 테이블 생성
-CREATE TABLE `host` (
+CREATE TABLE `member` (
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
+	memberType CHAR(20) NOT NULL,
 	loginId CHAR(20) NOT NULL,
 	loginPw CHAR(20) NOT NULL,
-	memberType CHAR(20) NOT NULL,
+	`authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반, 7=관리자)',
 	`name` CHAR(20) NOT NULL,
 	cellphoneNo CHAR(20) NOT NULL,
 	email CHAR(50) NOT NULL,
@@ -19,38 +20,66 @@ CREATE TABLE `host` (
 );
 
 # host 테스트 데이터 생성
-INSERT INTO `host`
+INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+memberType = 'host',
 loginId = 'host1',
 loginPw = 'host1',
-memberType = 'host',
 `name` = '호스트1',
 cellphoneNo = '010-1234-5678',
 email = 'host1@gmail.com';
 
-INSERT INTO `host`
+INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+memberType = 'host',
 loginId = 'host2',
 loginPw = 'host2',
-memberType = 'host',
 `name` = '호스트2',
 cellphoneNo = '010-1234-5678',
 email = 'host2@gmail.com';
 
-INSERT INTO `host`
+INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+memberType = 'host',
 loginId = 'host3',
 loginPw = 'host3',
-memberType = 'host',
 `name` = '호스트3',
 cellphoneNo = '010-1234-5678',
 email = 'host3@gmail.com';
 
-SELECT * FROM `host`;
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberType = 'guest',
+loginId = 'admin',
+loginPw = 'admin',
+`authLevel` = 7,
+`name` = '관리자',
+cellphoneNo = '010-1234-5678',
+email = 'admin@gmail.com';
 
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberType = 'guest',
+loginId = 'guest1',
+loginPw = 'guest1',
+`name` = '게스트1',
+cellphoneNo = '010-1234-5678',
+email = 'guest1@gmail.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberType = 'guest',
+loginId = 'guest2',
+loginPw = 'guest2',
+`name` = '게스트2',
+cellphoneNo = '010-1234-5678',
+email = 'guest2@gmail.com';
 
 # company 테이블 생성
 CREATE TABLE company (
@@ -203,61 +232,15 @@ numberOfRooms = 2,
 hostId = 5,
 fee = 35000;
 
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = '6',
+roomtype = '트윈룸',
+numberOfRooms = 2,
+fee = 72000;
+
 SELECT * FROM product;
-
--- SELECT p.*, MIN(fee) AS extra__minFee
--- FROM product AS p
--- GROUP BY NAME, address
--- ORDER BY
--- extra__minFee ASC;
-
-#회원 테이블 생성
-CREATE TABLE `member` (
-    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    loginId CHAR(20) NOT NULL,
-    loginPw CHAR(60) NOT NULL,
-    `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반, 7=관리자)',
-    `name` CHAR(20) NOT NULL,
-    cellphoneNo CHAR(20) NOT NULL,
-    email CHAR(50) NOT NULL,
-    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
-    delDate DATETIME COMMENT '탈퇴날짜'
-);
-
-# 회원 테스트 데이터 생성
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = 'admin',
-loginPw = 'admin',
-`authLevel` = 7,
-`name` = '관리자',
-cellphoneNo = '01012345678',
-email = 'admin@gmail.com';
-
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = 'user1',
-loginPw = 'user1',
-`authLevel` = 3,
-`name` = '사용자1',
-cellphoneNo = '01012345678',
-email = 'user1@gmail.com';
-
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = 'user2',
-loginPw = 'user2',
-`authLevel` = 3,
-`name` = '사용자2',
-cellphoneNo = '01012345678',
-email = 'user2@gmail.com';
-
-SELECT * FROM `member`;
 
 # 쿼리 테스트(jh)
 SELECT P.*,
@@ -318,4 +301,56 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
-SELECT * FROM genFile;
+# company 테이블 수정
+ALTER TABLE company ADD COLUMN accommodationType CHAR(10) NOT NULL;
+ALTER TABLE company ADD COLUMN host_id INT(10) UNSIGNED NOT NULL;
+
+UPDATE company
+SET accommodationType = 'hotel',
+host_id = 1
+WHERE id = 1;
+
+UPDATE company
+SET accommodationType = 'hotel',
+host_id = 2
+WHERE id = 2;
+
+UPDATE company
+SET accommodationType = 'hotel',
+host_id = 3
+WHERE id = 3;
+
+UPDATE company
+SET accommodationType = 'pension',
+host_id = 4
+WHERE id = 4;
+
+UPDATE company
+SET accommodationType = 'motel',
+host_id = 5
+WHERE id = 5;
+
+UPDATE company
+SET accommodationType = 'geusthouse',
+host_id = 6,
+`name` = '제주 쉬멍놀멍 게스트하우스',
+address = '제주특별자치도 제주시 한림읍 협재리 2557-1'
+WHERE id = 6;
+
+SELECT * FROM company;
+
+# product 테이블 수정
+ALTER TABLE product DROP COLUMN accommodationType;
+ALTER TABLE product DROP COLUMN hostId;
+ALTER TABLE product CHANGE COLUMN companyId comp_id INT(10) UNSIGNED NOT NULL;
+SELECT * FROM product;
+
+SELECT c.*,
+MIN(fee) AS extra_minFee
+FROM company AS c
+LEFT JOIN product AS p
+ON c.id = p.comp_id
+GROUP BY c.id;
+
+SELECT * FROM MEMBER;
+SELECT * FROM company;

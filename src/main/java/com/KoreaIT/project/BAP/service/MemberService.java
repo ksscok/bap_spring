@@ -15,8 +15,8 @@ public class MemberService {
 	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
-	public void join(String loginId, String loginPw, String name, String email, String cellphoneNo) {
-		memberRepository.join(loginId, loginPw, name, email, cellphoneNo);
+	public void join(String memberType, String loginId, String loginPw, String name, String email, String cellphoneNo) {
+		memberRepository.join(memberType, loginId, loginPw, name, email, cellphoneNo);
 		
 	}
 	public Member getMemberById(int id) {
