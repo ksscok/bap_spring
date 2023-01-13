@@ -75,13 +75,13 @@ public interface ProductRepository {
 
 	@Select("""
 			SELECT p.*,
-					c.name AS comName, 
-					c.address AS comAddr
-				FROM product AS p
-				INNER JOIN company AS c
-				ON p.companyId = c.id
-				WHERE p.companyId = #{companyId}
-				GROUP BY p.companyId
+					C.name AS comName, 
+					C.address AS comAddr
+				FROM product AS P
+				INNER JOIN company AS C
+				ON P.companyId = C.id
+				WHERE P.companyId = #{companyId}
+				GROUP BY P.companyId
 			""")
 	Product getForPrintproduct(int companyId);
 
