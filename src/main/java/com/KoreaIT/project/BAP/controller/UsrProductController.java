@@ -42,14 +42,9 @@ public class UsrProductController {
 		return "usr/product/detail";
 	}
 	
-	@RequestMapping("/usr/product/book")
-	public String showBook(Model model,
-			@RequestParam(defaultValue="") String searchKeyword,
-			@RequestParam(defaultValue="") String order_by,
-			@RequestParam(defaultValue="1") int low_price,
-			@RequestParam(defaultValue="999999999") int high_price) {
-		
-		return "usr/product/book";
+	@RequestMapping("/usr/payment/complete")
+	public String showComplete() {
+		return "usr/payment/complete";
 	}
 	
 }
