@@ -42,7 +42,6 @@
 					</c:if>
 					<li><a href="/" class="h-full flex items-center px-2"><span>고객센터</span></a></li>
 					<li><a href="/usr/payment/complete" class="h-full flex items-center px-2"><span>결제</span></a></li>
-					<li><a href="/usr/payment/exam" class="h-full flex items-center px-2"><span>결제2</span></a></li>
 				</ul>
 			</div>
 		</div>
