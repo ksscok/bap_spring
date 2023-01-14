@@ -7,6 +7,7 @@
 <section class="mt-60">
 	<div class="con-1 mx-auto px-3">
 		<form class="flex justify-center" method="POST" action="../member/doLogin">
+		<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
 			<table>
 				<colgroup>
 					<col width="350"/>

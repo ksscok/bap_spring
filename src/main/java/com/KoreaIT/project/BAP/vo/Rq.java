@@ -119,5 +119,18 @@ public class Rq {
 		return "this.src = '" + getProfileFallbackImgUri() + "'";
 	}
 	
-	
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+        String queryString = req.getQueryString();
+
+        if (queryString != null && queryString.length() > 0) {
+            currentUri += "?" + queryString;
+        }
+
+        return currentUri;
+	}
+
+	public String getEncodedCurrentUri() {
+		return Ut.getUriEncoded(getCurrentUri());
+	}
 }

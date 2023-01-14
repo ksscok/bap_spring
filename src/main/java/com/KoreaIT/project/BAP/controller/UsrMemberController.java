@@ -2,6 +2,7 @@ package com.KoreaIT.project.BAP.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.MemberService;
@@ -27,7 +28,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw) {
+	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
 		
 		if(Ut.empty(loginId)) {
 			return rq.jsHistoryBack("아이디를 입력해주세요.");
@@ -51,7 +52,7 @@ public class UsrMemberController {
 		
 		String msg = Ut.f("%s님 환영합니다.", member.getName());
 		
-		return rq.jsReplace(msg, "/");
+		return rq.jsReplace(msg, afterLoginUri);
 	}
 	
 	@RequestMapping("/usr/member/doLogout")
