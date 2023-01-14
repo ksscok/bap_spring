@@ -32,9 +32,9 @@
 					</tr>
 					<tr>
 						<td class="flex justify-around items-center text-sm font-semibold mt-4">
-							<a href="usr/member/findLoginId">아이디 찾기</a>
-							<a href="usr/member/findLoginPw">비밀번호 찾기</a>
-							<a href="usr/member/join">회원가입</a>
+							<a href="../member/findLoginId">아이디 찾기</a>
+							<a href="../member/findLoginPw">비밀번호 찾기</a>
+							<a href="../member/join">회원가입</a>
 						</td>
 					</tr>
 				</tbody>
