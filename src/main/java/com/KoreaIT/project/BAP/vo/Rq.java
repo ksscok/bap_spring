@@ -84,11 +84,6 @@ public class Rq {
 		return Ut.jsReplace(msg, uri);
 	}
 
-//	public String getAfterLoginUri() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 	public void printReplaceJs(String msg, String uri) {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, uri));
@@ -141,6 +136,7 @@ public class Rq {
 	public String getAfterLoginUri() {
 		String requestUri = req.getRequestURI();
 
+		// 로그인 후 돌아가면 안되는 페이지 URL 들을 적으시면 됩니다.
 		switch (requestUri) {
 		case "/usr/member/login":
 		case "/usr/member/join":
@@ -152,7 +148,24 @@ public class Rq {
 		return getEncodedCurrentUri();
 	}
 	
+	public String getAfterLogoutUri() {
+		String requestUri = req.getRequestURI();
+		
+		// 로그아웃 후 돌아가면 안되는 페이지 URL 들을 적으시면 됩니다.
+		switch (requestUri) {
+		case "/usr/member/logout":
+		case "/usr/member/myPage":
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLogoutUri", ""));
+		}
+		
+		return getEncodedCurrentUri();
+	}
+	
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+	
+	public String getLogoutUri() {
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 }
