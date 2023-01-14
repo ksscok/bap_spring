@@ -102,6 +102,11 @@ html> body {
 	height: 430px;
 }
 
+.side-bar-d1, .side-bar-d2 {
+	width: 300px;
+	height: auto;
+}
+
 .side-bar-myPage {
 	width: 180px;
 }

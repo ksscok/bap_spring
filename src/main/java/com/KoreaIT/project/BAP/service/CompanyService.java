@@ -24,5 +24,10 @@ public class CompanyService {
 	public List<Company> getForPrintCompanies(String searchKeyword, String order_by, String motelType, String hotelType, String pensionType, String geusthouseType, int low_price, int high_price) {
 		return companyRepository.getForPrintCompanies(searchKeyword, order_by, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
 	}
+
+	public Company getCompanyByComp_id(int comp_id) {
+		return companyRepository.getCompanyByComp_id(comp_id);
+	}
+
 	
 }

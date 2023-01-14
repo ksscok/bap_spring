@@ -71,7 +71,7 @@ public interface CompanyRepository {
 			</script>
 			""")
 	List<Company> getForPrintCompanies(String searchKeyword, String order_by, String motelType, String hotelType, String pensionType, String geusthouseType, int low_price, int high_price);
-
+	
 	@Insert("""
 			INSERT into company
 			SET regDate = NOW(),
@@ -85,5 +85,12 @@ public interface CompanyRepository {
 
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
+
+	@Select("""
+			SELECT *
+				FROM company
+				WHERE id = #{comp_id}
+			""")
+	Company getCompanyByComp_id(int comp_id);
 
 }

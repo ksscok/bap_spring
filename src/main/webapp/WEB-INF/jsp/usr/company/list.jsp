@@ -67,11 +67,11 @@
 				<c:forEach var="company" items="${companies}">
 					<div class="company-contents-wrapper flex p-4 border-gray-300">
 						<div>
-		          <img class="company-image object-cover" src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+		        		  <img class="company-image object-cover" src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 						</div>
 						<div class="company-info-wrapper">
 							<div>
-								<a href="../product/detail?companyId=${company.id}" class="text-2xl font-bold">${company.name}</a>
+								<a href="../product/detail?comp_id=${company.id}" class="text-2xl font-bold">${company.name}</a>
 							</div>
 							<div class="flex mt-1">
 								⭐ 
