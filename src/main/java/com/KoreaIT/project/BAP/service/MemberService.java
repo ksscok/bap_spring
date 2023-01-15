@@ -3,6 +3,7 @@ package com.KoreaIT.project.BAP.service;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.MemberRepository;
+import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Member;
 
 @Service
@@ -16,6 +17,9 @@ public class MemberService {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 	public void join(String memberType, String loginId, String loginPw, String name, String email, String cellphoneNo) {
+		
+		loginPw = Ut.sha256(loginPw);
+		
 		memberRepository.join(memberType, loginId, loginPw, name, email, cellphoneNo);
 		
 	}

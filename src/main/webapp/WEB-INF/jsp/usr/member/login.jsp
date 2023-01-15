@@ -22,7 +22,7 @@
 					</tr>
 					<tr>
 						<td>
-							<input name="loginPw" type="text" class="input input-bordered w-full mt-2" placeholder="🔒  비밀번호"/>
+							<input name="loginPw" type="password" class="input input-bordered w-full mt-2" placeholder="🔒  비밀번호"/>
 						</td>
 					</tr>
 					<tr>
