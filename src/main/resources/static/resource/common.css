@@ -160,45 +160,89 @@ html> body {
 	border: 1px solid rgba(0,0,0,0.08);
 }
 
-.layer {
-  display: none; 
-  width: 500px;
-  height: 500px;
-  background-color: pink;
-  border:5px solid black;
-  position:absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 100;
+* > .border-bt-gray {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
-.layer .title {
-  padding: 20px;
+.layer  {
+	display: none;
+	width: 600px;
+	height: 500px;
+	background-color: #fff;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 100;
+	overflow-x: auto;
+	overflow-y: scroll;
 }
 
-.layer .body {
-  padding: 20px;
+/* 스크롤바 */
+/*//Chrome, Safari용 스크롤 바*/
+::-webkit-scrollbar {width: 10px;height: 6px;}
+::-webkit-scrollbar-track {background: #e1e1e1;}
+::-webkit-scrollbar-thumb {background: #222;border-radius: 10px;border:1px #fff solid;opacity: .5;}
+::-webkit-scrollbar-thumb:hover {background: #999;opacity: 1;}
+::-webkit-scrollbar-track-piece {background: #fff;}
+/* 스크롤바 */
+
+.layer .md-title {
+ 	padding: 32px;
+ 	height: 64px;
+ 	border-bottom: 1px solid rgba(0,0,0,0.08);
+ 	color: rgba(0,0,0,.87);
 }
 
-.layer .close-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 2rem;
+.layer .md-body {
+ 	width:90%;
+ 	padding: 17px 32px;
+ 	color: rgba(0,0,0,0.56);
+}
+
+.layer .md-body ul ul > li {
+	list-style: inside;
+	font-size: 0.9rem;
+	line-height: 1.5rem;
+	margin-bottom: 7px;
+}
+
+.layer .md-body ul ul > li > a {
+	pointer-events : none;
+}
+
+
+.toggle-btn {
+	width: 18px;
+	height: 18px;
+	top: 25px;
+	right: 25px;
+	position: absolute;
+}
+
+.toggle-btn > div {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 10%;
+	background-color: rgba(0,0,0,0.6);
+	transition: transform .3s cubic-bezier(1, -0.96, .03, 1.35), top .3s cubic-bezier(1, .09, 0, 1.25);
+	transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.toggle-btn > div:last-child {
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%) rotate(-45deg);
 }
 
 .layer-bg {
-  display: none;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,.3);
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 50;
-}
-
-* > .border-bt-gray {
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.3);
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 50;
 }
