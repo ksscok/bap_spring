@@ -21,7 +21,7 @@
 					<tr>
 						<th>비밀번호</th>
 						<td>
-							<input name="loginPw" class="input input-bordered w-64" type="text" placeholder="비밀번호를 입력해주세요."/>
+							<input name="loginPw" class="input input-bordered w-64" type="password" placeholder="비밀번호를 입력해주세요."/>
 						</td>
 					</tr>
 				</tbody>
