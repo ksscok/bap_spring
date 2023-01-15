@@ -218,6 +218,7 @@ html> body {
 	top: 25px;
 	right: 25px;
 	position: absolute;
+	cursor: pointer;
 }
 
 .toggle-btn > div {

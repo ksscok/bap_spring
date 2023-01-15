@@ -220,7 +220,7 @@
 		$('.layer-bg').css('display', 'block');
 	});
 
-	$('.close-btn').click(function() {
+	$('.toggle-btn').click(function() {
 		// $('.layer').hide(); 
 		$('.layer').css('display', 'none');
 		$('.layer-bg').css('display', 'none');
