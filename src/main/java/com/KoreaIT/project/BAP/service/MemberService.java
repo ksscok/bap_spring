@@ -27,6 +27,9 @@ public class MemberService {
 		return memberRepository.getMemberById(id);
 	}
 	public void modify(int id, String loginPw, String email, String cellphoneNo) {
+		
+		loginPw = Ut.sha256(loginPw);
+		
 		memberRepository.modify(id, loginPw, email, cellphoneNo);
 		
 	}
