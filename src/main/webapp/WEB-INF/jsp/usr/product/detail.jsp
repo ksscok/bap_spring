@@ -7,7 +7,6 @@
 <c:set var="pageBaseUri" value="${pageBaseUri}?searchKeyword=${param.searchKeyword}" />
 <c:set var="pageBaseUri" value="${pageBaseUri}&low_price=${param.low_price}" />
 <c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}" />
-<c:set var="today" value="${today}" />
 <c:set var="start_date" value="${start_date}" />
 <c:set var="end_date" value="${end_date}" />
 
@@ -16,7 +15,7 @@
 		<div class="left">
 			<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
 				<div class="text-base font-semibold mb-4">날짜 변경</div>
-					<input id="today" name="today" type="hidden" value="${today }" />
+				
 				<div>
 					<span class="mr-4">체크인</span>
 					<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
