@@ -331,7 +331,7 @@ host_id = 5
 WHERE id = 5;
 
 UPDATE company
-SET accommodationType = 'geusthouse',
+SET accommodationType = 'guesthouse',
 host_id = 6,
 `name` = '제주 쉬멍놀멍 게스트하우스',
 address = '제주특별자치도 제주시 한림읍 협재리 2557-1'
@@ -363,3 +363,4 @@ UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
 
 SELECT * FROM `member`;
+SELECT * FROM product;
