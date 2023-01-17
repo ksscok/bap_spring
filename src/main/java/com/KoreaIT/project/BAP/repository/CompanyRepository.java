@@ -36,25 +36,25 @@ public interface CompanyRepository {
 			<if test="motelType != '' || hotelType != '' || pensionType != '' || geusthouseType != ''">
 				AND
 				<if test="motelType != ''">
-					c.accommodationType = '모텔'
+					c.accommodationType = 'motel'
 				</if>
 				<if test="hotelType != ''">
 					<if test="motelType != ''">
 					OR
 					</if>
-					c.accommodationType = '호텔'
+					c.accommodationType = 'hotel'
 				</if>
 				<if test="pensionType != ''">
 					<if test="motelType != '' || hotelType != ''">
 					OR
 					</if>
-					c.accommodationType = '펜션'
+					c.accommodationType = 'pension'
 				</if>
 				<if test="geusthouseType != ''">
 					<if test="motelType != '' || hotelType != '' || pensionType != ''">
 					OR
 					</if>
-					c.accommodationType = '게스트하우스'
+					c.accommodationType = 'guesthouse'
 				</if>
 			</if>
 			GROUP BY c.id
