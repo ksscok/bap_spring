@@ -221,8 +221,9 @@
 						</div>
 
 						<div class="layer-bg"></div>
-
-						<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
+						<form action="../booking/book" method="POST">
+							<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
+						</form>
 					</div>
 				</div>
 			</c:forEach>
