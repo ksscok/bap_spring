@@ -152,6 +152,16 @@ html> body {
   border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
+/* 스크롤바 */
+/*//Chrome, Safari용 스크롤 바*/
+::-webkit-scrollbar {width: 10px;height: 6px;}
+::-webkit-scrollbar-track {background: #e1e1e1;}
+::-webkit-scrollbar-thumb {background: #222;border-radius: 10px;border:1px #fff solid;opacity: .5;}
+::-webkit-scrollbar-thumb:hover {background: #999;opacity: 1;}
+::-webkit-scrollbar-track-piece {background: #fff;}
+/* 스크롤바 */
+
+/* detail 페이지 시작 */
 .layer  {
 	display: none;
 	width: 600px;
@@ -165,15 +175,6 @@ html> body {
 	overflow-x: auto;
 	overflow-y: scroll;
 }
-
-/* 스크롤바 */
-/*//Chrome, Safari용 스크롤 바*/
-::-webkit-scrollbar {width: 10px;height: 6px;}
-::-webkit-scrollbar-track {background: #e1e1e1;}
-::-webkit-scrollbar-thumb {background: #222;border-radius: 10px;border:1px #fff solid;opacity: .5;}
-::-webkit-scrollbar-thumb:hover {background: #999;opacity: 1;}
-::-webkit-scrollbar-track-piece {background: #fff;}
-/* 스크롤바 */
 
 .layer .md-title {
  	padding: 32px;
@@ -236,4 +237,19 @@ html> body {
 	z-index: 50;
 }
 
+/* detail 페이지 끝 */
 
+/* book 페이지 시작 */
+.left_book {
+	width: 564px;
+}
+
+.guest_login {
+	background: #C20095 url(//image.goodchoice.kr/images/web_v3/bg_login_m.png);
+	color: #fff;
+}
+
+.info_chkin {
+	color: rgba(0,0,0,0.56);
+}
+/* book 페이지 끝 */
