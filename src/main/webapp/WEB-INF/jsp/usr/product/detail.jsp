@@ -12,10 +12,11 @@
 <c:set var="withBreakfastType" value="${withBreakfastType}" />
 <c:set var="withDinnerType" value="${withDinnerType}" />
 <c:set var="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType}" />
+<c:set var="smokingType" value="${smokingType}" />
 <c:set var="start_date" value="${start_date}" />
 <c:set var="end_date" value="${end_date}" />
-<c:set var="pageBaseUri" value="${pageBaseUri}&low_price=${param.low_price}" />
-<c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}" />
+<c:set var="low_price" value="${low_price}" />
+<c:set var="high_price" value="${high_price}" />
 
 <script>
 	var data = ${withoutMealsType};
@@ -30,6 +31,9 @@
 				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" />
 				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" />
 				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" />
+				<input type="hidden" name="smokingType" value="${smokingType }" />
+				<input type="hidden" name="low_price" value="${low_price }" />
+				<input type="hidden" name="high_price" value="${high_price }" />
 				<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
 					<div class="text-base font-semibold mb-4">날짜 변경</div>
 					
@@ -102,12 +106,12 @@
 					<div class="smokinType-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="smokinType" class="checkbox checkbox-sm" value="smoking" />
-							<span class="text-sm ml-2">흡연</span>
+							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="noSmoking" />
+							<span class="text-sm ml-2">금연</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="smokinType" class="checkbox checkbox-sm" value="noSmoking" />
-							<span class="text-sm ml-2">금연</span>
+							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="smoking" />
+							<span class="text-sm ml-2">흡연</span>
 						</label>
 					</div>
 	

@@ -37,14 +37,12 @@ public class UsrProductController {
 			@RequestParam(defaultValue="") String withoutMealsType,
 			@RequestParam(defaultValue="") String withBreakfastType,
 			@RequestParam(defaultValue="") String withDinnerType,
-			@RequestParam(defaultValue="") String withBreakfastAndDinnerType) {
+			@RequestParam(defaultValue="") String withBreakfastAndDinnerType,
+			@RequestParam(defaultValue="noSmoking") String smokingType,
+			@RequestParam(defaultValue="1") int low_price,
+			@RequestParam(defaultValue="999999999") int high_price) {
 		
 		int comp_id = Integer.parseInt(compId);
-		
-		System.out.println("withoutMealsType : " + withoutMealsType);
-		System.out.println("withBreakfastType : " + withBreakfastType);
-		System.out.println("withDinnerType : " + withDinnerType);
-		System.out.println("withBreakfastAndDinnerType : " + withBreakfastAndDinnerType);
 		
 		// 파라미터 입력용 테스트 데이터 - 나중에 리스트에서부터 받아오거나 리스트에서 안할 경우를 생각해서 디폴트 값으로 그냥 넣어도 될듯(대신 이때는 Ut클래스에 생성해야 할 듯)
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,7 +68,7 @@ public class UsrProductController {
 		
 		Company company = companyService.getCompanyByComp_id(comp_id);
 		
-		List<Product> products = productService.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType);
+		List<Product> products = productService.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType, low_price, high_price);
 		
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("countOfRoom", countOfRoom);
@@ -80,6 +78,9 @@ public class UsrProductController {
 		model.addAttribute("withBreakfastType", withBreakfastType);
 		model.addAttribute("withDinnerType", withDinnerType);
 		model.addAttribute("withBreakfastAndDinnerType", withBreakfastAndDinnerType);
+		model.addAttribute("smokingType", smokingType);
+		model.addAttribute("low_price", low_price);
+		model.addAttribute("high_price", high_price);
 		model.addAttribute("company", company);
 		model.addAttribute("products", products);
 		

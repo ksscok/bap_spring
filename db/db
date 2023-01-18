@@ -142,7 +142,8 @@ CREATE TABLE product (
 	countOfRoom INT(100) UNSIGNED NOT NULL,
 	countOfAdult INT(100) UNSIGNED NOT NULL,
 	countOfChild INT(100) UNSIGNED NOT NULL,
-	includeMeals CHAR(20) NOT NULL
+	includeMeals CHAR(20) NOT NULL,
+	smokingType CHAR(20) NOT NULL
 );
 
 # product 테스트 데이터 생성
@@ -158,7 +159,8 @@ fee = 100000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '조식, 석식';
+includeMeals = '조식, 석식',
+smokingType = 'noSmoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -172,7 +174,8 @@ fee = 70000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '조식';
+includeMeals = '조식',
+smokingType = 'noSmoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -186,7 +189,8 @@ fee = 50000,
 countOfRoom = 1,
 countOfAdult = 4,
 countOfChild = 1,
-includeMeals = '조식';
+includeMeals = '조식',
+smokingType = 'noSmoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -200,7 +204,8 @@ fee = 90000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '식사불포함';
+includeMeals = '식사불포함',
+smokingType = 'smoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -214,7 +219,8 @@ fee = 239000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '조식, 석식';
+includeMeals = '조식, 석식',
+smokingType = 'smoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -228,7 +234,8 @@ fee = 125000,
 countOfRoom = 1,
 countOfAdult = 4,
 countOfChild = 4,
-includeMeals = '식사불포함';
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -242,7 +249,8 @@ fee = 65000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '식사불포함';
+includeMeals = '식사불포함',
+smokingType = 'smoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -256,7 +264,8 @@ fee = 50000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '식사불포함';
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -270,7 +279,8 @@ fee = 35000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
-includeMeals = '식사불포함';
+includeMeals = '식사불포함',
+smokingType = 'smoking';
 
 INSERT INTO product
 SET regDate = NOW(),
@@ -283,7 +293,8 @@ fee = 72000,
 countOfRoom = 1,
 countOfAdult = 3,
 countOfChild = 0,
-includeMeals = '조식';
+includeMeals = '조식',
+smokingType = 'noSmoking';
 
 SELECT * FROM product;
 
@@ -408,7 +419,6 @@ UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
 
 SELECT * FROM `member`;
-SELECT * FROM product;
 
 SELECT *
 FROM product
@@ -430,3 +440,6 @@ LEFT JOIN product AS pc
 ON `PI`.id = PC.id
 WHERE PC.comp_id = 2;
 					
+SELECT *
+FROM product
+WHERE smokingType = 'smoking';

@@ -66,8 +66,15 @@ public interface ProductRepository {
 				<if test="countOfChild != '' and countOfChild != 0">
 					AND PC.countOfChild = #{countOfChild}
 				</if>
+				AND PC.smokingType = #{smokingType}
+				<if test="low_price != 1">
+					AND PC.fee <![CDATA[>=]]> #{low_price}
+				</if>
+				<if test="high_price != 999999999">
+					AND PC.fee <![CDATA[<=]]> #{high_price}
+				</if>
 				GROUP BY `PI`.id
 			</script>
 			""")
-	List<Product> getProductsByCompanyId(int comp_id, String countOfRoom, String countOfAdult, String countOfChild, String withoutMealsType, String withBreakfastType, String withDinnerType, String withBreakfastAndDinnerType);
+	List<Product> getProductsByCompanyId(int comp_id, String countOfRoom, String countOfAdult, String countOfChild, String withoutMealsType, String withBreakfastType, String withDinnerType, String withBreakfastAndDinnerType, String smokingType, int low_price, int high_price);
 }
