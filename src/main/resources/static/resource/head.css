@@ -1,0 +1,10 @@
+#logo {
+	max-width: 150px;
+	overflow: hidden;
+}
+
+#logo > img {
+	max-width: initial;
+	margin-left: -40%;
+	height: 180px;
+}

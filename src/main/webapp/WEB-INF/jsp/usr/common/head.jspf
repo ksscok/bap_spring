@@ -16,8 +16,10 @@
 <link href="https://cdn.jsdelivr.net/npm/daisyui@2.19.0/dist/full.css" rel="stylesheet" type="text/css" />
 <!-- 폰트어썸 불러오기 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-<!-- 사이트 공통 CSS -->
+<!-- 사이트 CSS -->
 <link rel="stylesheet" href="/resource/common.css" />
+<link rel="stylesheet" href="/resource/main.css" />
+<link rel="stylesheet" href="/resource/head.css" />
 <!-- 사이트 공통 JS -->
 <script src="resource/common.js" defer="defer"></script>
 
@@ -27,8 +29,7 @@
 	<header>
 		<div class="h-16 con-min-width">
 			<div class="flex h-full con-1 mx-auto">
-				<a href="/" class="flex h-full items-center px-3"><span>로고</span></a>		
-				
+				<a id="logo" href="/" class="flex h-full items-center px-3"><img src="https://dynamic.brandcrowd.com/asset/logo/0eaba85b-19e1-45c5-ae7b-8043f22b5ae3/logo-search-grid-1x?v=637015517546430000&text=gabojaGo" alt="" /></a>		
 				<div class="flex-grow"></div>
 				<ul class="flex">
 					<li><a href="/" class="h-full flex items-center mx-2 px-2"><i class="fa-solid fa-magnifying-glass"></i></a></li>
