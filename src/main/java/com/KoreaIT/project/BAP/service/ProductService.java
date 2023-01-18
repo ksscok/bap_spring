@@ -22,7 +22,7 @@ public class ProductService {
 		return productRepository.getForPrintproduct(id);
 	}
 
-	public List<Product> getProductsByCompanyId(int comp_id) {
-		return productRepository.getProductsByCompanyId(comp_id);
+	public List<Product> getProductsByCompanyId(int comp_id, String countOfRoom, String countOfAdult, String countOfChild, String withoutMealsType, String withBreakfastType, String withDinnerType, String withBreakfastAndDinnerType) {
+		return productRepository.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType);
 	}
 }

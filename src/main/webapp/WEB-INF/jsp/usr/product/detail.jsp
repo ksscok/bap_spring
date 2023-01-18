@@ -4,108 +4,131 @@
 <c:set var="pageTitle" value="상세보기" />
 <%@ include file="../common/head.jspf"%>
 
-<c:set var="pageBaseUri" value="${pageBaseUri}?searchKeyword=${param.searchKeyword}" />
-<c:set var="pageBaseUri" value="${pageBaseUri}&low_price=${param.low_price}" />
-<c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}" />
+<c:set var="comp_id" value="${comp_id}" />
+<c:set var="countOfRoom" value="${countOfRoom}" />
+<c:set var="countOfAdult" value="${countOfAdult}" />
+<c:set var="countOfChild" value="${countOfChild}" />
+<c:set var="withoutMealsType" value="${withoutMealsType}" />
+<c:set var="withBreakfastType" value="${withBreakfastType}" />
+<c:set var="withDinnerType" value="${withDinnerType}" />
+<c:set var="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType}" />
 <c:set var="start_date" value="${start_date}" />
 <c:set var="end_date" value="${end_date}" />
+<c:set var="pageBaseUri" value="${pageBaseUri}&low_price=${param.low_price}" />
+<c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}" />
+
+<script>
+	var data = ${withoutMealsType};
+	console.log(typeof data);
+</script>
 
 <section class="my-20">
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left">
-			<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
-				<div class="text-base font-semibold mb-4">날짜 변경</div>
-				
-				<div>
-					<span class="mr-4">체크인</span>
-					<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
+			<form action="../product/detail?compId=${comp_id }" method="POST">
+				<input type="hidden" name="comp_id" value="${comp_id }" />
+				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" />
+				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" />
+				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" />
+				<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
+					<div class="text-base font-semibold mb-4">날짜 변경</div>
+					
+					<div>
+						<span class="mr-4">체크인</span>
+						<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
+					</div>
+					<div class="my-1">
+						<span>체크아웃</span>
+						<input id="end_date" name="end_date" type="date" class="mx-2 input input-bordered" value="${end_date }" />
+					</div>
+					<div class="">
+						<span>객실</span>
+						<span class="mx-14">성인</span>
+						<span>아동</span>
+					</div>
+					<div>
+						<select name="countOfRoom" class="select select-bordered" >
+							<c:forEach begin="1" end="10" var="i">
+								<option value="${i }" <c:if test="${i == countOfRoom}">selected</c:if> >${i }</option>
+							</c:forEach>
+						</select>
+						<select name="countOfAdult" class="mx-2 select select-bordered">
+							<c:forEach begin="0" end="10" var="i">
+								<option value="${i }" <c:if test="${i == countOfAdult}">selected</c:if> >${i }</option>
+							</c:forEach>
+							
+						</select>
+						<select name="countOfChild" class="select select-bordered">
+							<c:forEach begin="0" end="10" var="i">
+								<option value="${i }" <c:if test="${i == countOfChild}">selected</c:if> >${i }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate">적용</button>
 				</div>
-				<div class="my-1">
-					<span>체크아웃</span>
-					<input id="end_date" name="end_date" type="date" class="mx-2 input input-bordered" value="${end_date }" />
+			</form>
+			
+			<form action="../product/detail?compId=${comp_id }" method="POST"  onchange="chg_checked();" >
+				<input type="hidden" name="comp_id" value="${comp_id }" />
+				<input type="hidden" name="countOfRoom" value="${countOfRoom }" />
+				<input type="hidden" name="countOfAdult" value="${countOfAdult }" />
+				<input type="hidden" name="countOfChild" value="${countOfChild }" />
+				<!-- 			폼만 제작 / 변수 수정해야 함 -->
+				<div class="left side-bar-d2 mr-6 p-5 border border-gray-300 rounded-md">
+					<span class="text-base font-semibold">상세조건</span>
+	
+					<input type="hidden" name="order_by" value="${param.order_by}" />
+	
+					<div class="includeMeals-box flex flex-col mt-5">
+						<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
+						<label class="cursor-pointer flex items-center h-8">
+							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm" />
+							<span class="text-sm ml-2">식사 불포함</span>
+						</label>
+						<label class="cursor-pointer flex items-center h-8">
+							<input type="checkbox" name="withBreakfastType" value="withBreakfastType" class="checkbox checkbox-sm" />
+							<span class="text-sm ml-2">조식 포함</span>
+						</label>
+						<label class="cursor-pointer flex items-center h-8">
+							<input type="checkbox" name="withDinnerType" value="withDinnerType" class="checkbox checkbox-sm" />
+							<span class="text-sm ml-2">석식 포함</span>
+						</label>
+						<label class="cursor-pointer flex items-center h-8">
+							<input type="checkbox" name="withBreakfastAndDinnerType" value="withBreakfastAndDinnerType" class="checkbox checkbox-sm" />
+							<span class="text-sm ml-2">조식・석식포함</span>
+						</label>
+					</div>
+	
+					<div class="smokinType-box flex flex-col mt-5">
+						<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
+						<label class="cursor-pointer flex items-center h-8">
+							<input type="checkbox" name="smokinType" class="checkbox checkbox-sm" value="smoking" />
+							<span class="text-sm ml-2">흡연</span>
+						</label>
+						<label class="cursor-pointer flex items-center h-8">
+							<input type="checkbox" name="smokinType" class="checkbox checkbox-sm" value="noSmoking" />
+							<span class="text-sm ml-2">금연</span>
+						</label>
+					</div>
+	
+					<div class="pricing-box flex flex-col mt-5">
+						<span class="text-sm font-semibold text-gray-500 mb-2">가격</span>
+						<ul>
+							<li>
+								<input type="text" name="low_price" class="input input-bordered input-sm" placeholder="최소" />
+							</li>
+						</ul>
+						<ul class="mt-1">
+							<li>
+								<input type="text" name="high_price" class="input input-bordered input-sm" placeholder="최대" />
+							</li>
+						</ul>
+					</div>
+	
+					<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 				</div>
-				<div class="">
-					<span>객실</span>
-					<span class="mx-14">성인</span>
-					<span>아동</span>
-				</div>
-				<div>
-					<select name="countOfRoom" class="select select-bordered">
-						<c:forEach begin="1" end="10" var="i">
-							<option value="${i }">${i }</option>
-						</c:forEach>
-					</select>
-					<select name="countOfAdult" class="mx-2 select select-bordered">
-						<c:forEach begin="1" end="10" var="i">
-							<option value="${i }">${i }</option>
-						</c:forEach>
-					</select>
-					<select name="countOfChild" class="select select-bordered">
-						<c:forEach begin="1" end="10" var="i">
-							<option value="${i }">${i }</option>
-						</c:forEach>
-					</select>
-				</div>
-
-				<button type="button" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate">적용</button>
-			</div>
-			<!-- 			폼만 제작 / 변수 수정해야 함 -->
-			<div class="left side-bar-d2 mr-6 p-5 border border-gray-300 rounded-md">
-				<span class="text-base font-semibold">상세조건</span>
-
-				<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
-				<input type="hidden" name="order_by" value="${param.order_by}" />
-
-				<div class="accommodationType-box flex flex-col mt-5">
-					<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
-					<label class="cursor-pointer flex items-center h-8">
-						<input type="checkbox" name="withoutMeals" class="checkbox checkbox-sm" />
-						<span class="text-sm ml-2">식사 불포함</span>
-					</label>
-					<label class="cursor-pointer flex items-center h-8">
-						<input type="checkbox" name="withBreakfast" class="checkbox checkbox-sm" />
-						<span class="text-sm ml-2">조식 포함</span>
-					</label>
-					<label class="cursor-pointer flex items-center h-8">
-						<input type="checkbox" name="withDinner" class="checkbox checkbox-sm" />
-						<span class="text-sm ml-2">석식 포함</span>
-					</label>
-					<label class="cursor-pointer flex items-center h-8">
-						<input type="checkbox" name="withBreakfastAndDinner" class="checkbox checkbox-sm" />
-						<span class="text-sm ml-2">조식・석식포함</span>
-					</label>
-				</div>
-
-				<div class="accommodationType-box flex flex-col mt-5">
-					<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
-					<label class="cursor-pointer flex items-center h-8">
-						<input type="checkbox" name="motelType" class="checkbox checkbox-sm" value="smoking" />
-						<span class="text-sm ml-2">흡연</span>
-					</label>
-					<label class="cursor-pointer flex items-center h-8">
-						<input type="checkbox" name="hotelType" class="checkbox checkbox-sm" value="noSmoking" />
-						<span class="text-sm ml-2">금연</span>
-					</label>
-				</div>
-
-				<div class="pricing-box flex flex-col mt-5">
-					<span class="text-sm font-semibold text-gray-500 mb-2">가격</span>
-					<ul>
-						<li>
-							<input type="text" name="low_price" class="input input-bordered input-sm" placeholder="최소" />
-						</li>
-					</ul>
-					<ul class="mt-1">
-						<li>
-							<input type="text" name="high_price" class="input input-bordered input-sm" placeholder="최대" />
-						</li>
-					</ul>
-				</div>
-
-				<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
-			</div>
+			</form>
 		</div>
-
 		<!-- 		오른쪽 시작 -->
 		<div class="right mt-2 bg-blue-400 w-4/6">
 			<input type="hidden" name="id" value="${product.comp_id}" />
@@ -204,9 +227,8 @@
 </section>
 
 <script>
-
+// 체크인, 체크아웃 유효성 체크 시작
 	$('#btnToApplyDate').click(function(){
-// 		alert("날짜");
 	  var dateFrom = document.getElementById('start_date');	//시작일
 	  var dateTo = document.getElementById('end_date');	//종료일
 	  var today = new Date();				//오늘 날짜
@@ -252,7 +274,29 @@
 	 	 alert("해당 기간의 조회가 불가능합니다.");
 	  }
 	});//click() end
+// 체크인, 체크아웃 유효성 체크 끝
+	
+// 상세조건 checked로 변환 시작
+	function chg_checked(){
+// 		$("input:checkbox[id='withoutMeals']").prop("checked", true);
+		
+// 		$('input:checkbox[name="withoutMealsType"]').each(function() {
 
+// 		      this.checked = true; //checked 처리
+
+// 		      if(this.checked){//checked 처리된 항목의 값
+
+// 		            alert(this.value); 
+
+// 		      }
+
+// 		 });
+	}
+	
+	 
+// 상세조건 checked로 변환 끝
+	
+// 찜하기 ajax 추가예정 시작(76일차 테마 적용/다크모드 보고 참고하면 될 듯)
 	let changeSaving = false;
 
 	function change_bgc() {
@@ -268,7 +312,9 @@
 // 		}
 		alert(changeSaving);
 	}
+	// 찜하기 ajax 추가예정 시작
 
+// 객실 이용 안내 modal창 시작
 	$('.dt-modal').click(function() {
 		// $('.layer').show(); 
 		$('.layer').css('display', 'block');
@@ -285,6 +331,7 @@
 		$('.layer').css('display', 'none');
 		$('.layer-bg').css('display', 'none');
 	});
+// 객실 이용 안내 modal창 끝
 </script>
 
 
