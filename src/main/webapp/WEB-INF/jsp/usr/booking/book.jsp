@@ -4,6 +4,9 @@
 <c:set var="pageTitle" value="예약" />
 <%@ include file="../common/head.jspf"%>
 
+<!-- 토스페이먼츠 -->
+<script src="https://js.tosspayments.com/v1/payment"></script>
+
 <section class="">
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left left_book mr-14">
@@ -60,6 +63,7 @@
 </section>
 
 <script>
+// 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 시작
 	function requiredData(el) {
 		$(".required-msg").empty();
 		const form = $(el).closest('form').get(0);
@@ -68,8 +72,26 @@
 			$(".required-msg").html('휴대폰 번호를 확인해주세요.');
 		}
 	}
+// 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 끝
 	
-	requiredData(el);
+// 	토스페이먼츠 결제창 불러오는 함수 시작
+		var clientKey = 'test_ck_Lex6BJGQOVDyvaadL5nrW4w2zNbg'
+	    var tossPayments = TossPayments(clientKey)
+
+	    var button = document.getElementById('payment-button') // 결제하기 버튼
+
+	    button.addEventListener('click', function () {
+	      tossPayments.requestPayment('카드', {
+	        amount: 15000,
+	        // 주문번호를 계속 바꿔야 계속 실행됨. DB에서 테이블 생성하고 규칙을 정해서 난수 발생 등으로 들어가게 해야할 듯
+	        orderId: 'rp2EgdCu0A-iQ5CvL-Mqq',
+	        orderName: '토스 티셔츠 외 2건',
+	        customerName: '박토스',
+	        successUrl: 'http://localhost:8082/success',
+	        failUrl: 'http://localhost:8082/fail',
+	      })
+	    })
+// 	토스페이먼츠 결제창 불러오는 함수 끝
 </script>
 
 <%@ include file="../common/foot.jspf"%>

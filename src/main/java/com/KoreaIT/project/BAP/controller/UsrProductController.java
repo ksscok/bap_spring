@@ -87,9 +87,4 @@ public class UsrProductController {
 		return "usr/product/detail";
 	}
 	
-	@RequestMapping("/usr/payment/complete")
-	public String showComplete() {
-		return "usr/payment/complete";
-	}
-	
 }
