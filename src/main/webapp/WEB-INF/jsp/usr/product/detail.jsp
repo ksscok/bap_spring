@@ -18,10 +18,8 @@
 <c:set var="low_price" value="${low_price}" />
 <c:set var="high_price" value="${high_price}" />
 
-<script>
-	var data = ${withoutMealsType};
-	console.log(typeof data);
-</script>
+<!-- detail css -->
+<link rel="stylesheet" href="/resource/detail.css" />
 
 <section class="my-20">
 	<div class="con-3 flex flex-row mx-auto px-3">

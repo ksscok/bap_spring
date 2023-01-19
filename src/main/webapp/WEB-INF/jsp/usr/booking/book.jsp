@@ -6,6 +6,8 @@
 
 <!-- 토스페이먼츠 -->
 <script src="https://js.tosspayments.com/v1/payment"></script>
+<!-- book css -->
+<link rel="stylesheet" href="/resource/book.css" />
 
 <section class="">
 	<div class="con-3 flex flex-row mx-auto px-3">
@@ -23,7 +25,6 @@
 <!-- 				휴대폰번호 11자리 입력 안하면 활성화 안되게 막아놓음/앞자리가 0으로 시작 안해도 활성화 안되게 막아놓음 -->
 						<button type="submit" class="text-center btn btn-active btn-secondary">인증번호 전송</button>
 						<div class="required-msg text-sm mt-2 h-5 text-red-500"></div>
-<!-- 				밑에 ajax로 입력 안된 상태면 계속 떠있게 함 -->
 					</div>
 				</form>
 				<div class="guest_login text-center w-full h-28 flex justify-center items-center">
