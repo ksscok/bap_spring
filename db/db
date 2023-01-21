@@ -87,7 +87,11 @@ CREATE TABLE company (
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	`name` CHAR(50) NOT NULL,
-	address CHAR(50) NOT NULL
+	address CHAR(50) NOT NULL,
+	timeChkin CHAR(20) NOT NULL,
+    timeChkout CHAR(20) NOT NULL,
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
+	delDate DATETIME COMMENT '탈퇴날짜'
 );
 
 # company 테스트 데이터 생성
@@ -95,37 +99,49 @@ INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '신라호텔',
-address = '서울시 중구 동호로249';
+address = '서울시 중구 동호로249',
+timeChkin = '14:00',
+timeChkout = '11:00';
 
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '롯데시티호텔',
-address = '대전 유성구 엑스포로123번길';
+address = '대전 유성구 엑스포로123번길',
+timeChkin = '17:00',
+timeChkout = '11:00';
 
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '호텔 오노마 대전 오토그래프 컬렉션',
-address = '대전 유성구 도룡동 3-1';
+address = '대전 유성구 도룡동 3-1',
+timeChkin = '18:00',
+timeChkout = '10:00';
 
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '양평 로즈데일',
-address = '경기 양평군 단월면 명성리 162';
+address = '경기 양평군 단월면 명성리 162',
+timeChkin = '15:00',
+timeChkout = '10:00';
 
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '청주 브라운도트',
-address = '충북 청주시 상당구 북문로2가 106-1';
+address = '충북 청주시 상당구 북문로2가 106-1',
+timeChkin = '17:00',
+timeChkout = '12:00';
 
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = '제주 쉬멍놀멍 게스트하우스',
-address = '제주특별자치도 제주시 한림읍 협재리 2557-1';
+address = '제주특별자치도 제주시 한림읍 협재리 2557-1',
+timeChkin = '20:00',
+timeChkout = '08:00';
 
 # product 테이블 생성
 CREATE TABLE product (
@@ -420,26 +436,38 @@ SET loginPw = SHA2(loginPw, 256);
 
 SELECT * FROM `member`;
 
-SELECT *
-FROM product
-WHERE comp_id = 2;
+CREATE TABLE booking
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    orderId    VARCHAR(100)     NOT NULL    COMMENT '주문번호', 
+    comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호', 
+    prod_id    INT UNSIGNED    NOT NULL    COMMENT '객실번호', 
+    member_id  INT UNSIGNED    NOT NULL    COMMENT '예약자 번호', 
+    start_date      VARCHAR(100)        NOT NULL    COMMENT '체크인', 
+    end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃'
+);
 
-SELECT *
-FROM  product
-WHERE includeMeals = '식사불포함'
-OR includeMeals = '조식';
+SELECT * FROM booking;
 
-SELECT *
-FROM (SELECT *
-		FROM  product
-		WHERE includeMeals = '식사불포함'
-		OR includeMeals = '조식'
-		OR includeMeals = '석식'
-		OR includeMeals = '조식, 석식') AS `PI`
-LEFT JOIN product AS pc
-ON `PI`.id = PC.id
-WHERE PC.comp_id = 2;
-					
-SELECT *
-FROM product
-WHERE smokingType = 'smoking';
+# booking 테스트 데이터 생성
+# 호텔타입으로 게스트1이 대전 롯데시티호텔 1번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1"),
+comp_id = 2,
+prod_id = 1,
+member_id = 5,
+start_date = "2023-02-01",
+end_date = "2023-02-28";
+
+# 현재날짜(today)를 "-" 제외한 값 구하기
+SELECT  REPLACE(CURRENT_DATE(), "-", "");
+
+# "-"를 제외한 현재날짜 + 숙박타입코드 + 예약번호 합친 값 예시
+SELECT CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1");
+
+SELECT * FROM Orders
+WHERE OrderDate BETWEEN DATE('1997-1-1') AND DATE('1997-01-31');

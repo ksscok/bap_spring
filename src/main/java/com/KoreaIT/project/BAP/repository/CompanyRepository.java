@@ -78,10 +78,12 @@ public interface CompanyRepository {
 			updateDate = NOW(),
 			`name` = #{name},
 			address = #{address},
+			timeChkin = #{timeChkin},
+			timeChkout = #{timeChkout},
 			accommodationType = #{accommodationType},
 			host_id = #{host_id}
 			""")
-	void register(String name, String address, String accommodationType, int host_id);
+	void register(String name, String address, String timeChkin, String timeChkout, String accommodationType, int host_id);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();

@@ -11,16 +11,11 @@ import com.KoreaIT.project.BAP.vo.Product;
 public interface ProductRepository {
 
 	@Select("""
-			SELECT p.*,
-					C.name AS comName, 
-					C.address AS comAddr
+			SELECT *
 				FROM product AS P
-				INNER JOIN company AS C
-				ON P.companyId = C.id
-				WHERE P.companyId = #{companyId}
-				GROUP BY P.companyId
+				WHERE id = #{companyId}
 			""")
-	Product getForPrintproduct(int companyId);
+	Product getForPrintproduct(int id);
 
 	@Select("""
 			<script>
@@ -66,7 +61,9 @@ public interface ProductRepository {
 				<if test="countOfChild != '' and countOfChild != 0">
 					AND PC.countOfChild = #{countOfChild}
 				</if>
-				AND PC.smokingType = #{smokingType}
+				<if test="smokingType != ''">
+					AND PC.smokingType = #{smokingType}
+				</if>
 				<if test="low_price != 1">
 					AND PC.fee <![CDATA[>=]]> #{low_price}
 				</if>

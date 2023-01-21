@@ -5,11 +5,15 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -420,4 +424,24 @@ public class Ut {
         }
     }
 
+	// 날짜 데이터를 '월.일 요일'의 형태로 가져오기 위한 함수
+	public static String getDateAndDayOfTheWeek(String check_date) {
+		String dataOfChkin = check_date.replace("-", ".").substring(5);
+		
+		String[] str = check_date.split("-");
+		int[] chkin = {Integer.parseInt(str[0]), Integer.parseInt(str[1]), Integer.parseInt(str[2])};
+		
+		// 1. LocalDate 생성
+		LocalDate date = LocalDate.of(chkin[0],chkin[1],chkin[2]);
+        
+        // 2. DayOfWeek 객체 구하기
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+		
+        // 3. 텍스트 요일 구하기 (한글)
+        String dayOfTheWeek = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN);		
+        
+        return dataOfChkin + " " + dayOfTheWeek;
+	}
+
+	
 }
