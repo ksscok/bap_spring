@@ -16,12 +16,12 @@
 <link href="https://cdn.jsdelivr.net/npm/daisyui@2.19.0/dist/full.css" rel="stylesheet" type="text/css" />
 <!-- 폰트어썸 불러오기 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-<!-- 사이트 CSS -->
+<!-- 사이트 공통 CSS -->
 <link rel="stylesheet" href="/resource/common.css" />
-<link rel="stylesheet" href="/resource/main.css" />
-<link rel="stylesheet" href="/resource/head.css" />
 <!-- 사이트 공통 JS -->
 <script src="resource/common.js" defer="defer"></script>
+<!-- head CSS -->
+<link rel="stylesheet" href="/resource/head.css" />
 
 </head>
 <body>
@@ -42,6 +42,7 @@
 						<li><a href="/usr/member/myPage" class="h-full flex items-center mx-2 px-2"><span>마이페이지</span></a></li>
 					</c:if>
 					<li><a href="/" class="h-full flex items-center px-2"><span>고객센터</span></a></li>
+					<li><a href="/usr/payment/complete" class="h-full flex items-center px-2"><span>결제</span></a></li>
 				</ul>
 			</div>
 		</div>

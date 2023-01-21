@@ -4,6 +4,8 @@
 <c:set var="pageTitle" value="메인페이지" />
 
 <%@ include file="../common/head.jspf" %>
+<!-- main css -->
+<link rel="stylesheet" href="/resource/main.css" />
 
 <div class="main-page">
 
@@ -23,7 +25,8 @@
 				<div class="m-1">
 					<h2 class="font-bold mb-2 pl-1">인원</h2>
 					<select class="select select-bordered">
-					  <option disabled selected>2</option>
+					  <option>1</option>
+					  <option selected>2</option>
 					  <option>3</option>
 					  <option>4</option>
 					  <option>5</option>

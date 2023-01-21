@@ -12,8 +12,6 @@ html> body {
 
 /* ----커스텀---- */
 
-/* 공통 */
-
 .table-box-type-1 > table th,
 .table-box-type-1 > table td {
 	border: 1px solid black;
@@ -103,45 +101,9 @@ html> body {
 	padding: 10px 0;
 }
 
-.company-list {
-	width: 650px;
-}
-
-.company-contents-wrapper {
-	height: auto;
-	border-bottom-width: 1px;
-}
-
-.company-image {
-	width: 250px;
-	height: 200px;
-}
-
-.btn-group > button {
-	width: 25%;
-}
-
-.orderby-btn-active {
-	color: #570DF8;
-}
-
-.company-info-wrapper {
-	padding-left: 10px;
-	padding-top: 5px;
-	width: 375px;
-	position: relative;
-}
-
 .won {
 	padding-left: 1px;
 	padding-bottom: 1px;
-}
-
-.company-info-price {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	padding: 5px;
 }
 
 * > .border-gray {
