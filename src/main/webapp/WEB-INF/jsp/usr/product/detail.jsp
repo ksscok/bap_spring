@@ -4,20 +4,26 @@
 <c:set var="pageTitle" value="상세보기" />
 <%@ include file="../common/head.jspf"%>
 
+<c:set var="pageBaseUri" value="${PageBaseUri }&start_date=${param.start_date}"/>
+<c:set var="pageBaseUri" value="${PageBaseUri }&end_date=${param.end_date}"/>
+<c:set var="pageBaseUri" value="${PageBaseUri }&countOfRoom=${param.countOfRoom}"/>
+<c:set var="pageBaseUri" value="${PageBaseUri }&countOfAdult=${param.countOfAdult}"/>
+<c:set var="pageBaseUri" value="${PageBaseUri }&countOfChild=${param.countOfChild}"/>
 <c:set var="comp_id" value="${comp_id}" />
-<c:set var="countOfRoom" value="${countOfRoom}" />
-<c:set var="countOfAdult" value="${countOfAdult}" />
-<c:set var="countOfChild" value="${countOfChild}" />
+<%-- <c:set var="start_date" value="${start_date}" /> --%>
+<%-- <c:set var="end_date" value="${end_date}" /> --%>
+<%-- <c:set var="countOfRoom" value="${countOfRoom}" /> --%>
+<%-- <c:set var="countOfAdult" value="${countOfAdult}" /> --%>
+<%-- <c:set var="countOfChild" value="${countOfChild}" /> --%>
 <c:set var="withoutMealsType" value="${withoutMealsType}" />
 <c:set var="withBreakfastType" value="${withBreakfastType}" />
 <c:set var="withDinnerType" value="${withDinnerType}" />
 <c:set var="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType}" />
 <c:set var="smokingType" value="${smokingType}" />
-<c:set var="start_date" value="${start_date}" />
-<c:set var="end_date" value="${end_date}" />
 <c:set var="low_price" value="${low_price}" />
 <c:set var="high_price" value="${high_price}" />
 <c:set var="accommodationTypeCode" value="${accommodationTypeCode}" />
+<%-- <c:set var="afterPageBaseUri" value="&withoutMealsType=${withoutMealsType}&withBreakfastType=${withBreakfastType}&withDinnerType=${withDinnerType}&withBreakfastAndDinnerType=${withBreakfastAndDinnerType}&smokingType=${smokingType}"/> --%>
 
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
@@ -26,13 +32,20 @@
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left">
 			<form action="../product/detail?compId=${comp_id }" method="POST">
+<%-- 				<input type="hidden" name="comp_id" value="${comp_id }" /> --%>
+<%-- 				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" /> --%>
+<%-- 				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" /> --%>
+<%-- 				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" /> --%>
+<%-- 				<input type="hidden" name="smokingType" value="${smokingType }" /> --%>
+<%-- 				<input type="hidden" name="low_price" value="${low_price }" /> --%>
+<%-- 				<input type="hidden" name="high_price" value="${high_price }" /> --%>
 				<input type="hidden" name="comp_id" value="${comp_id }" />
-				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" />
-				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" />
-				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" />
-				<input type="hidden" name="smokingType" value="${smokingType }" />
-				<input type="hidden" name="low_price" value="${low_price }" />
-				<input type="hidden" name="high_price" value="${high_price }" />
+				<input type="hidden" name="withoutMealsType" value="${param.withoutMealsType }" />
+				<input type="hidden" name="withBreakfastType" value="${param.withBreakfastType }" />
+				<input type="hidden" name="withBreakfastAndDinnerType" value="${param.withBreakfastAndDinnerType }" />
+				<input type="hidden" name="smokingType" value="${param.smokingType }" />
+				<input type="hidden" name="low_price" value="${param.low_price }" />
+				<input type="hidden" name="high_price" value="${param.high_price }" />
 				<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
 					<div class="text-base font-semibold mb-4">날짜 변경</div>
 					
@@ -50,7 +63,8 @@
 						<span>아동</span>
 					</div>
 					<div>
-						<select name="countOfRoom" class="select select-bordered" >
+<!-- 					js로도 쓸 수 있다는 걸 같이 적어둔 것/성인, 아동처럼 data-value안 넣어도 됨 -->
+						<select data-value="${countOfRoom }" name="countOfRoom" class="select select-bordered" >
 							<c:forEach begin="1" end="10" var="i">
 								<option value="${i }" <c:if test="${i == countOfRoom}">selected</c:if> >${i }</option>
 							</c:forEach>
@@ -67,7 +81,8 @@
 							</c:forEach>
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate" >적용</button>
+<!-- 					<button type="submit" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate" >적용</button> -->
+					<button  onclick="location.href='${pageBaseUri}&start_date=${start_date}&end_date=${param.end_date}&countOfRoom=${param.countOfRoom}&countOfAdult=${param.countOfAdult}&countOfChild=${param.countOfChild}'" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate" >적용</button>
 				</div>
 			</form>
 			
@@ -105,11 +120,11 @@
 					<div class="smokinType-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="noSmoking" />
+							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="noSmoking" <c:if test="${smokingType eq noSmoking}">checked</c:if> />
 							<span class="text-sm ml-2">금연</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="smoking" />
+							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="smoking" <c:if test="${smokingType eq smoking}">checked</c:if> />
 							<span class="text-sm ml-2">흡연</span>
 						</label>
 					</div>

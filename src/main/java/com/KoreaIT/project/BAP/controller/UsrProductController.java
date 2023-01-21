@@ -31,11 +31,11 @@ public class UsrProductController {
 	
 	@RequestMapping("/usr/product/detail")
 	public String showDetail(Model model, String compId,
-			@RequestParam(defaultValue="") String countOfRoom,
 			@RequestParam(defaultValue="") String start_date,
 			@RequestParam(defaultValue="") String end_date,
-			@RequestParam(defaultValue="") String countOfAdult,
-			@RequestParam(defaultValue="") String countOfChild,
+			@RequestParam(defaultValue="1") String countOfRoom,
+			@RequestParam(defaultValue="2") String countOfAdult,
+			@RequestParam(defaultValue="0") String countOfChild,
 			@RequestParam(defaultValue="") String withoutMealsType,
 			@RequestParam(defaultValue="") String withBreakfastType,
 			@RequestParam(defaultValue="") String withDinnerType,
