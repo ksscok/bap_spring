@@ -27,15 +27,17 @@
 						<div class="required-msg text-sm mt-2 h-5 text-red-500"></div>
 					</div>
 				</form>
-				<div class="guest_login text-center w-full h-28 flex justify-center items-center">
-					<a href="../member/login" class="text-xs">
-						로그인 후 예약하시면
-						<br />
-						할인 쿠폰과 추가 혜택을 받을 수 있어요
-						<br />
-						<span class="text-sm">로그인&nbsp;></span>
-					</a>
-				</div>
+				<c:if test="${rq.getLoginedMemberId() == 0}">
+					<div class="guest_login text-center w-full h-28 flex justify-center items-center">
+						<a href="../member/login" >
+							로그인 후 예약하시면
+							<br />
+							할인 쿠폰과 추가 혜택을 받을 수 있어요
+							<br />
+							<span class="text-sm">로그인&nbsp;></span>
+						</a>
+					</div>
+				</c:if>
 			</div>
 		</div>
 		
@@ -43,19 +45,30 @@
 			<div class="accomInfor border-bt-gray">
 				<div class="bookingInfor">
 					<div class="info_chkin mb-2 mt-16">숙소이름</div>
-					<div class="text-xl font-bold mb-7">숙소 이름들어올 자리</div>
+					<div class="text-xl font-bold mb-7">${company.name }</div>
 					<div class="info_chkin mb-2">객실타입/기간</div>
 <!-- 			몇박인지는 (체크인-체크아웃)으로 가져와야할 듯?/근데 날짜가 28~31까지라서 이렇게 계산하면 길게 계산했을때 무조건 오륜데.. -->
-					<div class="text-xl font-bold mb-7">스탠다드/1박</div>
+					<div class="text-xl font-bold mb-7">${product.roomType }/${diff }박</div>
 					<div class="info_chkin mb-2">체크인</div>
-					<div class="text-xl font-bold mb-7">01.18 수 15:00</div>
+					<div class="text-xl font-bold mb-7">${DateAndDayOfTheWeekOfChkin }  ${company.timeChkin }</div>
 					<div class="info_chkin mb-2">체크아웃</div>
-					<div class="text-xl font-bold mb-9">01.19 목 13:00</div>
+					<div class="text-xl font-bold mb-9">${DateAndDayOfTheWeekOfChkout } ${company.timeChkout }</div>
 				</div>
 			</div>
 			<div class="payment">
 				<div class="font-extrabold mt-9">총 결제 금액</div>
-				<div class="my-4 text-2xl font-extrabold text-red-600">69,000원</div>
+				<div class="my-4 text-2xl font-extrabold text-red-600">${price }원</div>
+				<ul>
+					<li>
+						<a href="#">
+							결제완료 후
+							<span class="text-red-600">예약자 이름</span> 
+							으로 바로
+							<span class="text-red-600">체크인</span> 
+							하시면 됩니다
+						</a>
+					</li>
+				</ul>
 				<button id="payment-button" class="text-center btn btn-active btn-secondary w-full mt-4">결제하기</button>
 <!-- 				결제하기 눌렀을 때 예약자 이름이 적혀있지 않다면 모달창으로 입력해달라고 보여주기 -->
 			</div>

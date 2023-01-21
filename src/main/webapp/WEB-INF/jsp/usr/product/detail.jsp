@@ -17,6 +17,7 @@
 <c:set var="end_date" value="${end_date}" />
 <c:set var="low_price" value="${low_price}" />
 <c:set var="high_price" value="${high_price}" />
+<c:set var="accommodationTypeCode" value="${accommodationTypeCode}" />
 
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
@@ -66,7 +67,7 @@
 							</c:forEach>
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate">적용</button>
+					<button type="submit" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate" >적용</button>
 				</div>
 			</form>
 			
@@ -220,6 +221,11 @@
 
 						<div class="layer-bg"></div>
 						<form action="../booking/book" method="POST">
+							<input type="hidden" name="comp_id" value="${comp_id }" />
+							<input type="hidden" name="prod_id" value="${product.id }" />
+							<input type="hidden" name="accommodationTypeCode" value="${accommodationTypeCode }" />
+							<input type="hidden" name="start_date" value="${start_date }" />
+							<input type="hidden" name="end_date" value="${end_date }" />
 							<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
 						</form>
 					</div>
@@ -278,7 +284,7 @@
 	  }
 	});//click() end
 // 체크인, 체크아웃 유효성 체크 끝
-	
+
 // 상세조건 checked로 변환 시작
 	function chg_checked(){
 // 		$("input:checkbox[id='withoutMeals']").prop("checked", true);

@@ -7,17 +7,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Company {
+public class Booking {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private String name;
-	private String address;
-	private String timeChkin;
-	private String timeChkout;
-	private String accommodationType;
-	private int host_id;
+	private String orderId;
+	private int comp_id;
+	private int prod_id;
+	private int member_id;
+	private String start_date;
+	private String end_date;
 	
-	private int extra__productFee;
-	private int extra__minFee;
 }
+

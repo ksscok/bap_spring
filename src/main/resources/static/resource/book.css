@@ -2,9 +2,30 @@
 	width: 564px;
 }
 
+.right_side_bar {
+	width: 231px;
+}
+
+.right_side_bar > .payment > ul > li {
+	list-style: inside;
+	font-size: 14px;
+	line-height: 26px;
+	padding-left: 14px;
+}
+
+.right_side_bar > .payment > ul > li > a {
+	pointer-events : none;
+	margin-left: -10px;
+}
+
 .guest_login {
 	background: #C20095 url(//image.goodchoice.kr/images/web_v3/bg_login_m.png);
 	color: #fff;
+}
+
+.guest_login > a {
+	line-height: 22px;
+	font-size: 13px;
 }
 
 .info_chkin {

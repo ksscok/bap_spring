@@ -42,6 +42,18 @@
 							</td>
 						</tr>
 						<tr>
+							<th>체크인 시간</th>
+							<td>
+								<input name="timeChkin" placeholder="체크인 시간을 입력해주세요." type="text" class="input input-bordered w-64"/>
+							</td>
+						</tr>
+						<tr>
+							<th>체크아웃 시간</th>
+							<td>
+								<input name="timeChkout" placeholder="체크아웃 시간을 입력해주세요." type="text" class="input input-bordered w-64"/>
+							</td>
+						</tr>
+						<tr>
 							<th>시설 유형</th>
 							<td>
 							<div class="flex">
