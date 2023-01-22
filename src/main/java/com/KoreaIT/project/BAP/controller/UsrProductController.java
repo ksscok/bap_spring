@@ -30,7 +30,7 @@ public class UsrProductController {
 	}
 	
 	@RequestMapping("/usr/product/detail")
-	public String showDetail(Model model, String compId,
+	public String showDetail(Model model, int comp_id,
 			@RequestParam(defaultValue="") String start_date,
 			@RequestParam(defaultValue="") String end_date,
 			@RequestParam(defaultValue="1") String countOfRoom,
@@ -44,7 +44,7 @@ public class UsrProductController {
 			@RequestParam(defaultValue="1") int low_price,
 			@RequestParam(defaultValue="999999999") int high_price) {
 		
-		int comp_id = Integer.parseInt(compId);
+//		int comp_id = Integer.parseInt(compId);
 		
 		// 파라미터 입력용 테스트 데이터 - 나중에 리스트에서부터 받아오거나 리스트에서 안할 경우를 생각해서 디폴트 값으로 그냥 넣어도 될듯(대신 이때는 Ut클래스에 생성해야 할 듯)
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

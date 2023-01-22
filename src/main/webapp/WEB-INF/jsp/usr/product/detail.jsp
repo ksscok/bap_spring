@@ -4,26 +4,12 @@
 <c:set var="pageTitle" value="상세보기" />
 <%@ include file="../common/head.jspf"%>
 
-<c:set var="pageBaseUri" value="${PageBaseUri }&start_date=${param.start_date}"/>
-<c:set var="pageBaseUri" value="${PageBaseUri }&end_date=${param.end_date}"/>
-<c:set var="pageBaseUri" value="${PageBaseUri }&countOfRoom=${param.countOfRoom}"/>
-<c:set var="pageBaseUri" value="${PageBaseUri }&countOfAdult=${param.countOfAdult}"/>
-<c:set var="pageBaseUri" value="${PageBaseUri }&countOfChild=${param.countOfChild}"/>
-<c:set var="comp_id" value="${comp_id}" />
-<%-- <c:set var="start_date" value="${start_date}" /> --%>
-<%-- <c:set var="end_date" value="${end_date}" /> --%>
-<%-- <c:set var="countOfRoom" value="${countOfRoom}" /> --%>
-<%-- <c:set var="countOfAdult" value="${countOfAdult}" /> --%>
-<%-- <c:set var="countOfChild" value="${countOfChild}" /> --%>
-<c:set var="withoutMealsType" value="${withoutMealsType}" />
-<c:set var="withBreakfastType" value="${withBreakfastType}" />
-<c:set var="withDinnerType" value="${withDinnerType}" />
-<c:set var="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType}" />
-<c:set var="smokingType" value="${smokingType}" />
-<c:set var="low_price" value="${low_price}" />
-<c:set var="high_price" value="${high_price}" />
-<c:set var="accommodationTypeCode" value="${accommodationTypeCode}" />
-<%-- <c:set var="afterPageBaseUri" value="&withoutMealsType=${withoutMealsType}&withBreakfastType=${withBreakfastType}&withDinnerType=${withDinnerType}&withBreakfastAndDinnerType=${withBreakfastAndDinnerType}&smokingType=${smokingType}"/> --%>
+<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&comp_id=${param.comp_id}"/> --%>
+<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&start_date=${param.start_date}"/> --%>
+<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&end_date=${param.end_date}"/> --%>
+<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&countOfRoom=${param.countOfRoom}"/> --%>
+<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&countOfAdult=${param.countOfAdult}"/> --%>
+<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&countOfChild=${param.countOfChild}"/> --%>
 
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
@@ -31,21 +17,14 @@
 <section class="my-20">
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left">
-			<form action="../product/detail?compId=${comp_id }" method="POST">
-<%-- 				<input type="hidden" name="comp_id" value="${comp_id }" /> --%>
-<%-- 				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" /> --%>
-<%-- 				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" /> --%>
-<%-- 				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" /> --%>
-<%-- 				<input type="hidden" name="smokingType" value="${smokingType }" /> --%>
-<%-- 				<input type="hidden" name="low_price" value="${low_price }" /> --%>
-<%-- 				<input type="hidden" name="high_price" value="${high_price }" /> --%>
+			<form>
 				<input type="hidden" name="comp_id" value="${comp_id }" />
-				<input type="hidden" name="withoutMealsType" value="${param.withoutMealsType }" />
-				<input type="hidden" name="withBreakfastType" value="${param.withBreakfastType }" />
-				<input type="hidden" name="withBreakfastAndDinnerType" value="${param.withBreakfastAndDinnerType }" />
-				<input type="hidden" name="smokingType" value="${param.smokingType }" />
-				<input type="hidden" name="low_price" value="${param.low_price }" />
-				<input type="hidden" name="high_price" value="${param.high_price }" />
+				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" />
+				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" />
+				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" />
+				<input type="hidden" name="smokingType" value="${smokingType }" />
+				<input type="hidden" name="low_price" value="${low_price }" />
+				<input type="hidden" name="high_price" value="${high_price }" />
 				<div class="side-bar-d1 mr-6 p-5 border border-gray-300 rounded-md mb-2">
 					<div class="text-base font-semibold mb-4">날짜 변경</div>
 					
@@ -81,12 +60,11 @@
 							</c:forEach>
 						</select>
 					</div>
-<!-- 					<button type="submit" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate" >적용</button> -->
-					<button  onclick="location.href='${pageBaseUri}&start_date=${start_date}&end_date=${param.end_date}&countOfRoom=${param.countOfRoom}&countOfAdult=${param.countOfAdult}&countOfChild=${param.countOfChild}'" class="btn btn-primary w-full mt-5" name="btnToApplyDate" id="btnToApplyDate" >적용</button>
+					<button type="submit" class="btn btn-primary w-full mt-5" id="btnToApplyDate" >적용</button>
 				</div>
 			</form>
 			
-			<form action="../product/detail?compId=${comp_id }" method="POST"  onchange="chg_checked();" >
+			<form onchange="chg_checked();" >
 				<input type="hidden" name="comp_id" value="${comp_id }" />
 				<input type="hidden" name="countOfRoom" value="${countOfRoom }" />
 				<input type="hidden" name="countOfAdult" value="${countOfAdult }" />

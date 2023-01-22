@@ -17,9 +17,9 @@
 				<div class="info_chkin mb-2 font-semibold">예약자 이름</div>
 				<input type="text" class="input input-bordered w-full" placeholder="체크인시 필요한 정보입니다." maxlength="20" />
 				<div class="mt-9 info_chkin mb-2 font-semibold">휴대폰 번호</div>
-				<div class="info_chkin text-xs mb-10">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</div>
+				<div class="info_chkin text-xs mb-8">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</div>
 				<form action="">
-					<div class="guestCellPhoneNum-box mb-20 w-full">
+					<div class="guestCellPhoneNum-box mb-16 w-full">
 <!-- 				로그인시 고객의 번호를 가져오는 칸 -->
 						<input type="text" class="input input-bordered input-md" style="width:440px;" placeholder="체크인시 필요한 정보입니다." maxlength="13" name="guestCellphoneNum" onblur="requiredData(this);"/>
 <!-- 				휴대폰번호 11자리 입력 안하면 활성화 안되게 막아놓음/앞자리가 0으로 시작 안해도 활성화 안되게 막아놓음 -->
