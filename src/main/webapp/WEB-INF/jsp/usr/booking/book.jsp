@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/resource/book.css" />
 
 <section class="">
+<%-- 	<input type="hidden" name="comp_id" value="${comp_id }"/> --%>
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left left_book mr-14">
 			<div class="guestInfor">
@@ -29,7 +30,7 @@
 				</form>
 				<c:if test="${rq.getLoginedMemberId() == 0}">
 					<div class="guest_login text-center w-full h-28 flex justify-center items-center">
-						<a href="../member/login" >
+						<a href="${rq.loginUri}" >
 							로그인 후 예약하시면
 							<br />
 							할인 쿠폰과 추가 혜택을 받을 수 있어요

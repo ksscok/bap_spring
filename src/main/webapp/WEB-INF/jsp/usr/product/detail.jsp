@@ -213,7 +213,7 @@
 						</div>
 
 						<div class="layer-bg"></div>
-						<form action="../booking/book" method="POST">
+						<form action="../booking/book" >
 							<input type="hidden" name="comp_id" value="${comp_id }" />
 							<input type="hidden" name="prod_id" value="${product.id }" />
 							<input type="hidden" name="accommodationTypeCode" value="${accommodationTypeCode }" />
