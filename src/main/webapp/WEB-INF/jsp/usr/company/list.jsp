@@ -112,7 +112,7 @@
 								<div class="mt-1">${company.address}</div>
 								<div class="flex flex-grow"></div>
 								<div class="item-info-price">
-									<div class="text-2xl font-bold">${company.extra__minFee}</div>
+									<div class="text-2xl font-bold"><fmt:formatNumber value="${company.extra__minFee}" pattern="#,###"/></div>
 									<div class="text-xl font-semibold won">원</div>
 								</div>
 							</div>
