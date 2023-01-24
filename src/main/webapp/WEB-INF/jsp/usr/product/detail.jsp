@@ -86,7 +86,7 @@
 				</div>
 			</form>
 			
-			<form action="../product/detail?compId=${comp_id }" method="POST"  onchange="chg_checked();" >
+			<form action="../product/detail?compId=${comp_id }" onchange="chg_checked();" >
 				<input type="hidden" name="comp_id" value="${comp_id }" />
 				<input type="hidden" name="countOfRoom" value="${countOfRoom }" />
 				<input type="hidden" name="countOfAdult" value="${countOfAdult }" />

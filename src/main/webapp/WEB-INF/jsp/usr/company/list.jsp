@@ -19,6 +19,7 @@
 				<span>체크인: 2023-01-20</span>
 				<span>체크아웃: 2023-01-21</span>
 				<span>인원: 2</span>
+<!-- 				※키워드 칸을 많이 확보하도록 -->
 				<span>키워드: '대전'</span>
 			</div>
 		</div>
@@ -69,23 +70,29 @@
 			</section>
 			
 			<section class="list-company-list">
-				<div class="company-list-orderby">
-					<button onclick="location.href='${pageBaseUri}&order_by=lowPrice'" class="${order_by.equals('lowPrice') ? 'orderby-btn-active' : '' }">
-						<div>✔</div>
-						<span>낮은 가격순</span>
-					</button>
-					<button onclick="location.href='${pageBaseUri}&order_by=highPrice'" class="${order_by.equals('highPrice') ? 'orderby-btn-active' : '' }" >
-						<div>✔</div>
-						<span>높은 가격순</span>
-					</button>
-					<button onclick="location.href='${pageBaseUri}&order_by=a'" class="${order_by.equals('a') ? 'orderby-btn-active' : '' }" >
-						<div>✔</div>
-						<span>후기 많은순</span>
-					</button>
-					<button onclick="location.href='${pageBaseUri}&order_by=b'" class="${order_by.equals('b') ? 'orderby-btn-active' : '' }">
-						<div>✔</div>
-						<span>평점 높은순</span>
-					</button>
+				<div class="list-company-list-top">
+					<div class="company-list-searchCount">
+						<span class="font-bold">${companiesCount}</span>개의 검색결과
+					</div>
+					<div class="flex-grow"></div>
+					<div class="company-list-orderby">
+						<button onclick="location.href='${pageBaseUri}&order_by=lowPrice'" class="${order_by.equals('lowPrice') ? 'orderby-btn-active' : '' }">
+							<div>✔</div>
+							<span>낮은 가격순</span>
+						</button>
+						<button onclick="location.href='${pageBaseUri}&order_by=highPrice'" class="${order_by.equals('highPrice') ? 'orderby-btn-active' : '' }" >
+							<div>✔</div>
+							<span>높은 가격순</span>
+						</button>
+						<button onclick="location.href='${pageBaseUri}&order_by=a'" class="${order_by.equals('a') ? 'orderby-btn-active' : '' }" >
+							<div>✔</div>
+							<span>후기 많은순</span>
+						</button>
+						<button onclick="location.href='${pageBaseUri}&order_by=b'" class="${order_by.equals('b') ? 'orderby-btn-active' : '' }">
+							<div>✔</div>
+							<span>평점 높은순</span>
+						</button>
+					</div>
 				</div>
 				<div class="company-list">
 					<c:forEach var="company" items="${companies}">
@@ -97,12 +104,12 @@
 								<div>
 									<a href="../product/detail?compId=${company.id}" class="text-2xl font-bold">${company.name}</a>
 								</div>
-								<div class="flex mt-1">
-									⭐ 
+								<div class="score">
+									<span>★</span>
 									<div class="font-semibold">4.9&nbsp;</div>
 									(2,645) 
 								</div> 
-								<div class="font-semibold mt-1">${company.address}</div>
+								<div class="mt-1">${company.address}</div>
 								<div class="flex flex-grow"></div>
 								<div class="item-info-price">
 									<div class="text-2xl font-bold">${company.extra__minFee}</div>

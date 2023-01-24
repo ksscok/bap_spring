@@ -29,5 +29,11 @@ public class CompanyService {
 		return companyRepository.getCompanyByComp_id(comp_id);
 	}
 
+	public int getCompainesCount(String searchKeyword, String motelType, String hotelType,
+			String pensionType, String geusthouseType, int low_price, int high_price) {
+		return companyRepository.getCompainesCount(searchKeyword, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
+	}
+
+
 	
 }

@@ -95,4 +95,57 @@ public interface CompanyRepository {
 			""")
 	Company getCompanyByComp_id(int comp_id);
 
+	@Select("""
+			<script>
+			SELECT COUNT(c.id) AS cnt
+			FROM (
+			SELECT c.id, COUNT(c.id)
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE 1
+			<if test="searchKeyword != ''">
+				AND (
+					c.name LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR
+					c.address LIKE CONCAT('%', #{searchKeyword}, '%')
+				)
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			<if test="motelType != '' || hotelType != '' || pensionType != '' || geusthouseType != ''">
+				AND
+				<if test="motelType != ''">
+					c.accommodationType = 'motel'
+				</if>
+				<if test="hotelType != ''">
+					<if test="motelType != ''">
+					OR
+					</if>
+					c.accommodationType = 'hotel'
+				</if>
+				<if test="pensionType != ''">
+					<if test="motelType != '' || hotelType != ''">
+					OR
+					</if>
+					c.accommodationType = 'pension'
+				</if>
+				<if test="geusthouseType != ''">
+					<if test="motelType != '' || hotelType != '' || pensionType != ''">
+					OR
+					</if>
+					c.accommodationType = 'guesthouse'
+				</if>
+			</if>
+			GROUP BY c.id
+			) AS c;
+			</script>
+			""")
+	int getCompainesCount(String searchKeyword, String motelType, String hotelType, String pensionType,
+			String geusthouseType, int low_price, int high_price);
+
 }

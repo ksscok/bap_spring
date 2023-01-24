@@ -82,7 +82,10 @@ public class UsrCompanyController {
 			@RequestParam(defaultValue="999999999") int high_price) {
 		
 		List<Company> companies = companyService.getForPrintCompanies(searchKeyword, order_by, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
+		int companiesCount = companyService.getCompainesCount(searchKeyword, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
 		
+		
+		model.addAttribute("companiesCount", companiesCount);
 		model.addAttribute("companies", companies);
 		
 		return "usr/company/list";

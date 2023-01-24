@@ -20,12 +20,17 @@
 .list-top > div {
 	display: flex;
 	justify-content: space-around;
+	text-align: center;
+	padding: 20px;
 }
 
 .list-top > div > span {
-	padding: 20px;
 	width: 100%;
-	border-left: 1px solid black;
+	border-left: 1px solid #cfcfcf
+}
+
+.list-top > div > span:first-child {
+	border-left: none;
 }
 
 .list-body {
@@ -42,13 +47,24 @@
 
 .company-list-item {
 	display: flex;
-	margin: 15px 0;
+	margin: 20px 0;
 	background-color: white;
-	padding: 10px;
+	padding: 15px;
+}
+
+.list-company-list-top {
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: -12px;
+	
 }
 
 .list-company-list {
 	width: 100%;
+}
+
+.company-list-searchCount {
+	font-size: 12px;
 }
 
 .company-list-orderby {
@@ -76,11 +92,16 @@
 	color: black;
 }
 
+.company-list-item > .img-box {
+	width: 300px;
+	height: 200px;
+}
+
 .company-list-item > .img-box > img {
 	border-radius: 5px;
 	object-fit: cover;
-	width: 300px;
-	height: 200px;
+	width: 100%;
+	height: 100%;
 }
 
 .company-list-item > .item-info {
@@ -88,6 +109,17 @@
 	flex-direction: column;
 	width: 100%;
 	margin-left: 10px;
+}
+
+.company-list-item > .item-info > .score {
+	display: flex;
+	align-items: center;
+}
+
+.company-list-item > .item-info > .score > span {
+	color: #fcc40a;
+	font-size: 15px;
+	margin-right: 2px;
 }
 
 .item-info-price {
