@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/resource/book.css" />
 
 <section class="">
+<%-- 	<input type="hidden" name="comp_id" value="${comp_id }"/> --%>
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left left_book mr-14">
 			<div class="guestInfor">
@@ -17,9 +18,9 @@
 				<div class="info_chkin mb-2 font-semibold">예약자 이름</div>
 				<input type="text" class="input input-bordered w-full" placeholder="체크인시 필요한 정보입니다." maxlength="20" />
 				<div class="mt-9 info_chkin mb-2 font-semibold">휴대폰 번호</div>
-				<div class="info_chkin text-xs mb-10">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</div>
+				<div class="info_chkin text-xs mb-8">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</div>
 				<form action="">
-					<div class="guestCellPhoneNum-box mb-20 w-full">
+					<div class="guestCellPhoneNum-box mb-16 w-full">
 <!-- 				로그인시 고객의 번호를 가져오는 칸 -->
 						<input type="text" class="input input-bordered input-md" style="width:440px;" placeholder="체크인시 필요한 정보입니다." maxlength="13" name="guestCellphoneNum" onblur="requiredData(this);"/>
 <!-- 				휴대폰번호 11자리 입력 안하면 활성화 안되게 막아놓음/앞자리가 0으로 시작 안해도 활성화 안되게 막아놓음 -->
@@ -29,7 +30,7 @@
 				</form>
 				<c:if test="${rq.getLoginedMemberId() == 0}">
 					<div class="guest_login text-center w-full h-28 flex justify-center items-center">
-						<a href="../member/login" >
+						<a href="${rq.loginUri}" >
 							로그인 후 예약하시면
 							<br />
 							할인 쿠폰과 추가 혜택을 받을 수 있어요

@@ -102,7 +102,7 @@
 							</div>
 							<div class="item-info">
 								<div>
-									<a href="../product/detail?compId=${company.id}" class="text-2xl font-bold">${company.name}</a>
+									<a href="../product/detail?comp_id=${company.id}" class="text-2xl font-bold">${company.name}</a>
 								</div>
 								<div class="score">
 									<span>★</span>
