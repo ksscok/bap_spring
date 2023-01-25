@@ -222,5 +222,59 @@ public interface CompanyRepository {
 			""")
 	int getCompainesCount(String searchKeyword1, String searchKeyword2, String searchKeyword3, String searchKeyword4, String searchKeyword5, String searchKeyword6, 
 			String motelType, String hotelType, String pensionType,	String geusthouseType, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT c.*,
+			p.fee AS extra__productFee,
+			MIN(fee) AS extra__minFee
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.accommodationType = 'hotel'
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			<if test="order_by == ''">
+				ORDER BY extra__minFee ASC
+			</if>
+			<if test="order_by != ''">
+				<choose>
+					<when test="order_by == 'lowPrice'">
+						ORDER BY extra__minFee ASC
+					</when>
+					<when test="order_by == 'highPrice'">
+						ORDER BY extra__minFee DESC
+					</when>
+				</choose>
+			</if>
+			</script>
+			""")
+	List<Company> getForPrintHotels(String order_by, int low_price, int high_price);
+
+	@Select("""
+			<script>
+			SELECT COUNT(c.id) AS cnt
+			FROM (
+			SELECT c.id, COUNT(c.id)
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.accommodationType = 'hotel'
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			) AS c;
+			</script>
+			""")
+	int getHotelsCount(int low_price, int high_price);
 
 }

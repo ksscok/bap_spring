@@ -170,7 +170,7 @@ public class Rq {
 		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 	
-	public String afterSearchUri(String start_date, String end_date, int persons, String searchKeyword) {
-		return "../company/list?start_date=" + start_date + "&end_date=" + end_date + "&persons=" + persons+ "&searchKeyword=" + searchKeyword;
+	public String afterSearchUri(String start_date, String end_date, int countOfAdult, int countOfChild, String searchKeyword) {
+		return "../company/list?start_date=" + start_date + "&end_date=" + end_date + "&countOfAdult=" + countOfAdult + "&countOfChild=" + countOfChild + "&searchKeyword=" + searchKeyword;
 	}
 }

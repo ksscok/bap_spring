@@ -131,6 +131,14 @@ public class CompanyService {
 		return companyRepository.getCompainesCount(searchKeyword1, searchKeyword2, searchKeyword3, searchKeyword4, searchKeyword5, searchKeyword6, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
 	}
 
+	public List<Company> getForPrintHotels(String order_by, int low_price, int high_price) {
+		return companyRepository.getForPrintHotels(order_by, low_price, high_price);
+	}
+
+	public int getHotelsCount(int low_price, int high_price) {
+		return companyRepository.getHotelsCount(low_price, high_price);
+	}
+
 
 	
 }

@@ -89,5 +89,20 @@ public class UsrCompanyController {
 		
 		return "usr/company/list";
 	}
+	
+	@RequestMapping("/usr/company/hotel")
+	public String showHotel(Model model,
+			@RequestParam(defaultValue="") String order_by,
+			@RequestParam(defaultValue="1") int low_price,
+			@RequestParam(defaultValue="999999999") int high_price) {
+		
+		List<Company> hotels = companyService.getForPrintHotels(order_by,low_price, high_price);
+		int hotelsCount = companyService.getHotelsCount(low_price, high_price);
+		
+		model.addAttribute("hotelsCount", hotelsCount);
+		model.addAttribute("hotels", hotels);
+		
+		return "usr/company/hotel";
+	}
 }
 
