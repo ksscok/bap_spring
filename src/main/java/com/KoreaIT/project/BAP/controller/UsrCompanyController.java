@@ -84,7 +84,6 @@ public class UsrCompanyController {
 		List<Company> companies = companyService.getForPrintCompanies(searchKeyword, order_by, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
 		int companiesCount = companyService.getCompainesCount(searchKeyword, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
 		
-		
 		model.addAttribute("companiesCount", companiesCount);
 		model.addAttribute("companies", companies);
 		

@@ -12,7 +12,7 @@
 	<section class="main-product-search">
 		<h1 class="title">전국 숙박업소 실시간 예약</h1>
 		<h1 class="sub-title">호텔부터 펜션까지, 다양한 숙소가 한곳에!</h1>
-		<form action="../company/list" class="search-container">
+		<form action="../home/doSearch" class="search-container">
 			<div class="search-box" >
 				<div class="m-1">
 					<h2 class="font-bold mb-2 pl-1">체크인</h2>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="m-1">
 					<h2  class="font-bold mb-2 pl-1">지역, 숙소명</h2>
-			    <input placeholder="예) 서울, oo호텔" type="text" maxlength="20" name="searchKeyword" class="search-keyword-input input input-bordered" />
+			    <input placeholder="예) 서울, oo호텔" type="text" maxlength="30" name="searchKeyword" class="search-keyword-input input input-bordered" />
 				</div>
 			</div>
 			<div>

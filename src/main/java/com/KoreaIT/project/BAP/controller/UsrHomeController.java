@@ -9,9 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.KoreaIT.project.BAP.util.Ut;
+import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
 public class UsrHomeController {
+	
+	private Rq rq;
+	
+	UsrHomeController(Rq rq) {
+		this.rq = rq;
+	}
 	
 	@RequestMapping("/usr/home/main")
 	public String showMain(Model model,			
@@ -43,6 +53,26 @@ public class UsrHomeController {
 		model.addAttribute("end_date", end_date);
 		
 		return "usr/home/main";
+	}
+	
+	@RequestMapping("usr/home/doSearch")
+	@ResponseBody()
+	public String doSearch(String start_date, String end_date, int persons, String searchKeyword) {
+		
+		if(Ut.empty(start_date)) {
+			return rq.jsHistoryBack("체크인 날짜를 선택해주세요.");
+		}
+		if(Ut.empty(end_date)) {
+			return rq.jsHistoryBack("체크아웃 날짜를 선택해주세요.");
+		}
+		if(Ut.empty(persons)) {
+			return rq.jsHistoryBack("인원을 선택해주세요.");
+		}
+		if(Ut.empty(searchKeyword)) {
+			return rq.jsHistoryBack("검색어를 입력해주세요.");
+		}
+		
+		return rq.jsReplace("", rq.afterSearchUri(start_date, end_date, persons, searchKeyword));
 	}
 	
 	@RequestMapping("/")
