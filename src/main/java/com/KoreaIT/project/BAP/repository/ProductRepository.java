@@ -13,7 +13,7 @@ public interface ProductRepository {
 	@Select("""
 			SELECT *
 				FROM product AS P
-				WHERE id = #{companyId}
+				WHERE id = #{id}
 			""")
 	Product getForPrintproduct(int id);
 

@@ -107,7 +107,7 @@
 	        orderId: $orderId,
 	        orderName: $orderName,
 	        customerName: $customerName,
-	        successUrl: 'http://localhost:8082/success?orderName=${orderName}',
+	        successUrl: 'http://localhost:8082/success',
 	        failUrl: 'http://localhost:8082/fail',
 	      })
 	    })

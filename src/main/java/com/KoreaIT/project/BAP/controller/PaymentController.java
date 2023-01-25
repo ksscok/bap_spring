@@ -50,14 +50,10 @@ public class PaymentController {
 
     private final String SECRET_KEY = "test_sk_qLlDJaYngroLjgD9Gmx8ezGdRpXx";
 
-    @RequestMapping("/success")
-    public String confirmPayment( @PathVariable String orderName,
-            @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount, Model model
-            ) throws Exception {
+    @RequestMapping("/success2")
+    public String confirmPayment(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount, Model model) throws Exception {
 
 //    	bookingService.doWrite(orderId, );
-    	
-    	System.out.println(orderName);
     	
         HttpHeaders headers = new HttpHeaders();
         // headers.setBasicAuth(SECRET_KEY, ""); // spring framework 5.2 이상 버전에서 지원
@@ -81,7 +77,7 @@ public class PaymentController {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("orderId", successNode.get("orderId").asText());
             model.addAttribute("amount", amount);
-            model.addAttribute("orderName", orderName);
+//            model.addAttribute("orderName", orderName);
 //            model.addAttribute("customerName", customerName);
             String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
             return "/usr/payment/success";
@@ -93,7 +89,7 @@ public class PaymentController {
         }
     }
 
-    @RequestMapping("/fail")
+    @RequestMapping("/fail2")
     public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
     	
     	// 해당 Booking 테이블 삭제하기 
