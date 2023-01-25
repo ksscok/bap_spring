@@ -78,7 +78,7 @@
 					<div class="includeMeals-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm" />
+							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  ${param.withoutMealsType eq on ? 'checked' : ''} />
 							<span class="text-sm ml-2">식사 불포함</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">

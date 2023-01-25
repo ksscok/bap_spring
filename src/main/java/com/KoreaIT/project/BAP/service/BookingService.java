@@ -45,4 +45,8 @@ public class BookingService {
 		  
 		return betweenDays;
 	}
+
+	public Long getBookingByorderId(String orderId) {
+		return bookingRepository.getBookingByorderId(orderId);
+	}
 }
