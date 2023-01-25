@@ -82,14 +82,14 @@
 								<span id="high_price"></span>
 						</div>
 						<ul>
-							<li>
+							<li class="flex">
 								<input type="range" name="low_price" min="10000" max="250000" step="10000" class="range range-sm"
 								oninput="document.getElementById('low_price').innerHTML=this.value;"
 								value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}"/>
 							</li>
 						</ul>
 						<ul class="mt-1">
-							<li>
+							<li class="flex">
 								<input type="range" name="high_price" min="250000" max="500000" step="10000" class="range range-sm"
 								oninput="document.getElementById('high_price').innerHTML=this.value;"
 								value="${param.high_price == null || param.high_price.equals('') ? '250000' : param.high_price}"/>
