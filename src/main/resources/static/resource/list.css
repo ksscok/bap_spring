@@ -75,8 +75,14 @@
 	margin-right: 30px;
 	background-color: white;
 	height: 0%;
+	width: 400px;
 	border-radius: 10px;
 	box-shadow: 0 2px 10px #c4c4c4;
+}
+
+.list-side-bar .pricing-box > div {
+	font-size: 14px;
+	color: #404040;
 }
 
 .company-list-item {

@@ -34,7 +34,7 @@ public interface CompanyRepository {
 				AND p.fee <![CDATA[<=]]> #{high_price}
 			</if>
 			<if test="motelType != '' || hotelType != '' || pensionType != '' || geusthouseType != ''">
-				AND
+				AND (
 				<if test="motelType != ''">
 					c.accommodationType = 'motel'
 				</if>
@@ -56,6 +56,7 @@ public interface CompanyRepository {
 					</if>
 					c.accommodationType = 'guesthouse'
 				</if>
+				)
 			</if>
 			GROUP BY c.id
 			<if test="order_by == ''">
