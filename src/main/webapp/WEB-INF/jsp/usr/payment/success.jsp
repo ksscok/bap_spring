@@ -7,7 +7,7 @@
 <c:set var="paymentKey" value="${paymentKey}" />
 <c:set var="orderId" value="${orderId}" />
 <c:set var="amount" value="${amount}" />
-<c:set var="orderName" value="${orderName}" />
+<%-- <c:set var="orderName" value="${orderName}" /> --%>
 <c:set var="customerName" value="${customerName}" />
 
 <script src="https://js.tosspayments.com/v1/payment"></script>

@@ -328,16 +328,23 @@ FROM product
 WHERE companyId = 2;
 
 # 쿼리 테스트(ss)
-	
-SELECT p.*,
-C.name,
-C.address,
-MIN(fee) AS extra__minFee
-FROM product AS P
-INNER JOIN company AS C
-ON P.companyId = C.id
-GROUP BY C.NAME, C.address
-ORDER BY extra__minFee ASC;
+-- SELECT count(c.id) as cnt
+-- from(
+-- select c.id, count(c.id)
+-- FROM company AS c
+-- LEFT JOIN product AS p
+-- ON c.id = p.comp_id
+-- GROUP BY c.id
+-- ) as c;
+-- 
+-- SELECT c.*,
+-- p.fee AS extra__productFee,
+-- MIN(fee) AS extra__minFee
+-- FROM company AS c
+-- LEFT JOIN product AS p
+-- ON c.id = p.comp_id
+-- GROUP BY c.id;
+
 -- 
 -- SELECT p.*,
 -- MIN(fee) AS extra__minFee
@@ -469,5 +476,96 @@ SELECT  REPLACE(CURRENT_DATE(), "-", "");
 # "-"를 제외한 현재날짜 + 숙박타입코드 + 예약번호 합친 값 예시
 SELECT CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1");
 
-SELECT * FROM Orders
-WHERE OrderDate BETWEEN DATE('1997-1-1') AND DATE('1997-01-31');
+# 사업장 대표 이미지 테스트 데이터
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 1,
+originFileName = '1.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61186,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 2,
+originFileName = '2.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 43119,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 3,
+originFileName = '3.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 40085,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 4,
+originFileName = '4.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 49812,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 5,
+originFileName = '5.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 55482,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 6,
+originFileName = '6.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+SELECT * FROM genFile;
+

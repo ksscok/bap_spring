@@ -87,5 +87,5 @@ public class UsrBookingController {
 		
 		return "usr/booking/book";
 	}
-
+	
 }

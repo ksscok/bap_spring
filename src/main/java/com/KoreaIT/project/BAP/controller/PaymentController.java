@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,10 +51,14 @@ public class PaymentController {
     private final String SECRET_KEY = "test_sk_qLlDJaYngroLjgD9Gmx8ezGdRpXx";
 
     @RequestMapping("/success")
-    public String confirmPayment(
-            @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount,
-            Model model) throws Exception {
+    public String confirmPayment( @PathVariable String orderName,
+            @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount, Model model
+            ) throws Exception {
 
+//    	bookingService.doWrite(orderId, );
+    	
+    	System.out.println(orderName);
+    	
         HttpHeaders headers = new HttpHeaders();
         // headers.setBasicAuth(SECRET_KEY, ""); // spring framework 5.2 이상 버전에서 지원
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
@@ -62,6 +67,7 @@ public class PaymentController {
         Map<String, String> payloadMap = new HashMap<>();
         payloadMap.put("orderId", orderId);
         
+        // 추후에 amount 위조 체크 구현예졍 = 더블체크
         Long chkAmount = bookingService.getBookingByorderId(orderId);
         
         payloadMap.put("amount", String.valueOf(amount));
@@ -74,6 +80,9 @@ public class PaymentController {
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("orderId", successNode.get("orderId").asText());
+            model.addAttribute("amount", amount);
+            model.addAttribute("orderName", orderName);
+//            model.addAttribute("customerName", customerName);
             String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
             return "/usr/payment/success";
         } else {

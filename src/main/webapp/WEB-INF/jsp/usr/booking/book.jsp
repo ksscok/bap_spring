@@ -50,7 +50,6 @@
 					<div class="info_chkin mb-2 mt-16">숙소이름</div>
 					<div class="text-xl font-bold mb-7">${company.name }</div>
 					<div class="info_chkin mb-2">객실타입/기간</div>
-<!-- 			몇박인지는 (체크인-체크아웃)으로 가져와야할 듯?/근데 날짜가 28~31까지라서 이렇게 계산하면 길게 계산했을때 무조건 오륜데.. -->
 					<div class="text-xl font-bold mb-7">${product.roomType }/${diff }박</div>
 					<div class="info_chkin mb-2">체크인</div>
 					<div class="text-xl font-bold mb-7">${DateAndDayOfTheWeekOfChkin }  ${company.timeChkin }</div>
@@ -108,7 +107,7 @@
 	        orderId: $orderId,
 	        orderName: $orderName,
 	        customerName: $customerName,
-	        successUrl: 'http://localhost:8082/success',
+	        successUrl: 'http://localhost:8082/success?orderName=${orderName}',
 	        failUrl: 'http://localhost:8082/fail',
 	      })
 	    })

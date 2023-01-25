@@ -3,7 +3,7 @@
 }
 
 .list-page {
-	padding-top: 20px;
+	padding-top: 40px;
 /* 	background-color: #b8e6f2; */
 	display: flex;
 	flex-direction: column;
@@ -15,40 +15,100 @@
 .list-top {
 	background-color: white;
 	width: 100%;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px #c4c4c4;
 }
 
 .list-top > div {
 	display: flex;
 	justify-content: space-around;
+	text-align: center;
+	padding: 20px;
 }
 
-.list-top > div > span {
-	padding: 20px;
-	width: 100%;
-	border-left: 1px solid black;
+.list-top > div > div {
+	display: flex;
+	flex-direction: column;
+/* 	border-left: 1px solid #cfcfcf; */
+	text-align: left;
+/* 	background-color: green; */
+	padding-left: 20px;
+}
+
+.list-top > div > div:first-child {
+	flex-grow: 1;
+	border-left: none;
+}
+
+.list-top > div > div:nth-child(2) {
+	flex-grow: 1;
+}
+
+.list-top > div > div:nth-child(3) {
+	flex-grow: 1;
+}
+
+.list-top > div > div:last-child {
+	display: flex;
+	flex-grow: 3;
+}
+
+.list-top > div > div > span:first-child {
+	color: #606060;
+/* 	background-color: green; */
+	font-size: 13px;
+}
+
+.list-top > div > div > span:nth-child(2),
+.list-top > div > div > div {
+/* 	background-color: yellow; */
+	font-weight: 700;
 }
 
 .list-body {
 	display: flex;
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 .list-side-bar {
 	padding: 20px;
-	margin-right: 20px;
+	margin-right: 30px;
 	background-color: white;
 	height: 0%;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px #c4c4c4;
 }
 
 .company-list-item {
 	display: flex;
-	margin: 15px 0;
+	margin: 20px 0;
 	background-color: white;
-	padding: 10px;
+	padding: 15px;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px #c4c4c4;
+}
+
+.list-company-list-top {
+	padding: 15px;
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 20px;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px #c4c4c4;
 }
 
 .list-company-list {
 	width: 100%;
+}
+
+.company-list-searchCount {
+	font-size: 13px;
+	color: #808080;
+}
+
+.company-list-searchCount > span {
+	color: #570DF8;
 }
 
 .company-list-orderby {
@@ -59,9 +119,9 @@
 .company-list-orderby > button {
 	display: flex;
 	margin-left: 8px;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 600;
-	color: #a8a8a8
+	color: #808080;
 }
 
 .company-list-orderby > button > span {
@@ -73,14 +133,19 @@
 }
 
 .company-list-orderby > .orderby-btn-active > span {
-	color: black;
+	color: #404040;
+}
+
+.company-list-item > .img-box {
+	width: 300px;
+	height: 200px;
 }
 
 .company-list-item > .img-box > img {
 	border-radius: 5px;
 	object-fit: cover;
-	width: 300px;
-	height: 200px;
+	width: 100%;
+	height: 100%;
 }
 
 .company-list-item > .item-info {
@@ -88,6 +153,21 @@
 	flex-direction: column;
 	width: 100%;
 	margin-left: 10px;
+}
+
+.company-list-item > .item-info > .score {
+	display: flex;
+	align-items: center;
+	font-size: 17px;
+}
+
+.company-list-item > .item-info > .score > span:first-child {
+	color: #fcc40a;
+	margin-right: 2px;
+}
+
+.company-list-item > .item-info > .score > span:last-child {
+	color: #505050;
 }
 
 .item-info-price {
