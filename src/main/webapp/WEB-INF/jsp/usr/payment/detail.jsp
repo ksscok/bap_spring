@@ -18,15 +18,15 @@
 
 <section class="my-20">
 		<div class="con-3 mx-auto px-3">
+			<input type="hidden" name="orderName" value="${orderName}"/>
+			<input type="hidden" name="customerName" value="${customerName}"/>
 			<h1> 결제 성공! </h1>
 			<div>결제 키 : ${paymentKey}</div>
 			<div>주문번호 : ${orderId}</div>
 			<div>가격 : ${amount}</div>
 			<div>상품명 : ${orderName}</div>
 			<div>예약자명 : ${customerName}</div>
-			<div>
-				<a href="payment/detail">결제 확인</a>
-			</div>
+			<a href="detail"></a>
 		</div>
 </section>
 

@@ -43,15 +43,15 @@ public class UsrBookingController {
 			@RequestParam(defaultValue="-1") String accommodationTypeCode) {
 		
 		// 오늘 날짜(예약을 실행한 날짜) - 주문번호를 위한 날짜정보
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmss");
 		Date now = new Date();
 		String today = format.format(now);
 		
 		// 예약번호
 		int resev_id =  (bookingService.getLastInsertId() + 1);
 		
-		// 주문번호 = 예약날짜 + 숙박타입코드 + 예약번호
-		String orderId = today + accommodationTypeCode + resev_id;
+		// 주문번호 = 예약날짜 + 숙박타입코드 + comp_id + prod_id + 예약번호
+		String orderId = today + "a" + accommodationTypeCode + "c" + comp_id + "p" + prod_id + resev_id;
 		
 		Company company = companyService.getCompanyByComp_id(comp_id);
 		
@@ -76,6 +76,7 @@ public class UsrBookingController {
 		int diff = bookingService.getDiffBetweenChkinChkout(start_date, end_date);
         
 		model.addAttribute("comp_id", comp_id);
+		model.addAttribute("orderId", orderId);
 		model.addAttribute("company", company);
 		model.addAttribute("product", product);
 		model.addAttribute("price", price);

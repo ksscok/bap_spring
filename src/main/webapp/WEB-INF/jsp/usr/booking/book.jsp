@@ -10,13 +10,15 @@
 <link rel="stylesheet" href="/resource/book.css" />
 
 <section class="">
-<%-- 	<input type="hidden" name="comp_id" value="${comp_id }"/> --%>
+	<input id="fee" type="hidden" name="fee" value="${product.fee }" />
+	<input id="orderId" type="hidden" name="orderId" value="${orderId }" />
+	<input id="orderName" type="hidden" name="orderName" value="${company.name }/${product.roomType } " />
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left left_book mr-14">
 			<div class="guestInfor">
 				<div class="font-bold my-8">예약자 정보</div>
 				<div class="info_chkin mb-2 font-semibold">예약자 이름</div>
-				<input type="text" class="input input-bordered w-full" placeholder="체크인시 필요한 정보입니다." maxlength="20" />
+				<input id="customerName" type="text" class="input input-bordered w-full" placeholder="체크인시 필요한 정보입니다." maxlength="20" />
 				<div class="mt-9 info_chkin mb-2 font-semibold">휴대폰 번호</div>
 				<div class="info_chkin text-xs mb-8">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</div>
 				<form action="">
@@ -88,7 +90,12 @@
 		}
 	}
 // 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 끝
-	
+		
+		let $orderId = document.getElementById('orderId').value;
+		let $fee = document.getElementById('fee').value;
+		let $orderName = document.getElementById('orderName').value;
+		let $customerName = document.getElementById('customerName').value;
+		
 // 	토스페이먼츠 결제창 불러오는 함수 시작
 		var clientKey = 'test_ck_Lex6BJGQOVDyvaadL5nrW4w2zNbg'
 	    var tossPayments = TossPayments(clientKey)
@@ -97,11 +104,10 @@
 
 	    button.addEventListener('click', function () {
 	      tossPayments.requestPayment('카드', {
-	        amount: 15000,
-	        // 주문번호를 계속 바꿔야 계속 실행됨. DB에서 테이블 생성하고 규칙을 정해서 난수 발생 등으로 들어가게 해야할 듯
-	        orderId: 'rp2EgdCu0A-iQ5CvL-Mqq',
-	        orderName: '토스 티셔츠 외 2건',
-	        customerName: '박토스',
+	        amount: $fee,
+	        orderId: $orderId,
+	        orderName: $orderName,
+	        customerName: $customerName,
 	        successUrl: 'http://localhost:8082/success',
 	        failUrl: 'http://localhost:8082/fail',
 	      })
