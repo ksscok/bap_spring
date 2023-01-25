@@ -6,11 +6,17 @@
 <!-- list css -->
 <link rel="stylesheet" href="/resource/list.css" />
 
-<c:set var="pageBaseUri" value="${pageBaseUri}?searchKeyword=${param.searchKeyword}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}?start_date=${param.start_date}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&end_date=${param.end_date}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&persons=${param.persons}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&low_price=${param.low_price}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&hotelType=${param.hotelType}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&motelType=${param.motelType}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&geusthouseType=${param.geusthouseType}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&pensionType=${param.pensionType}"/>
 <c:set var="order_by" value="${param.order_by}"/>
-<c:set var="accommodationType1" value="${param.accommodationType1}"/>
 
 <div class="back-ground-page">
 	<div class="list-page">
@@ -42,6 +48,9 @@
 				<form action="../company/list">
 					<span class="text-base font-semibold">상세조건</span>
 				
+					<input type="hidden" name="start_date" value="${param.start_date}" />
+					<input type="hidden" name="end_date" value="${param.end_date}" />
+					<input type="hidden" name="persons" value="${param.persons}" />
 					<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
 					<input type="hidden" name="order_by" value="${param.order_by}" />
 					
@@ -90,7 +99,7 @@
 					</div>
 					<div class="flex-grow"></div>
 					<div class="company-list-orderby">
-						<button onclick="location.href='${pageBaseUri}&order_by=lowPrice'" class="${order_by.equals('lowPrice') ? 'orderby-btn-active' : '' }">
+						<button onclick="location.href='${pageBaseUri}&order_by=lowPrice'" class=" ${order_by == null || order_by.equals('') || order_by.equals('lowPrice') ? 'orderby-btn-active' : '' }">
 							<div>✔</div>
 							<span>낮은 가격순</span>
 						</button>

@@ -58,6 +58,9 @@ public interface CompanyRepository {
 				</if>
 			</if>
 			GROUP BY c.id
+			<if test="order_by == ''">
+				ORDER BY extra__minFee ASC
+			</if>
 			<if test="order_by != ''">
 				<choose>
 					<when test="order_by == 'lowPrice'">

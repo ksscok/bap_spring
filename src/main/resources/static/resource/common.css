@@ -33,6 +33,10 @@ html> body {
 
 /* ----커스텀---- */
 
+main {
+	padding-top: 64px;
+}
+
 .table-box-type-1 > table th,
 .table-box-type-1 > table td {
 	border: 1px solid black;
