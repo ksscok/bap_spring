@@ -16,15 +16,15 @@
 			<div class="search-box" >
 				<div class="m-1">
 					<h2 class="font-bold mb-2 pl-1">체크인</h2>
-					<input name="Start_date" type="date" class="input input-bordered"/>
+					<input id="start_date" name="start_date" type="date" value="${start_date}" class="input input-bordered"/>
 				</div>
 				<div class="m-1">
 					<h2 class="font-bold mb-2 pl-1">체크아웃</h2>
-					<input name="end_date"  type="date" class="input input-bordered"/>
+					<input id="end_date" name="end_date"  type="date" value="${end_date}" class="input input-bordered"/>
 				</div>
 				<div class="m-1">
 					<h2 class="font-bold mb-2 pl-1">인원</h2>
-					<select class="select select-bordered">
+					<select class="select select-bordered" name="persons">
 					  <option>1</option>
 					  <option selected>2</option>
 					  <option>3</option>
@@ -92,7 +92,10 @@
 
 </div>
 
-
+<script>
+//   document.getElementById('start_date').value = new Date().toISOString().substring(0, 10);
+//   document.getElementById('end_date').value = new Date().toISOString().substring(0, 10);
+</script>
 
 
 <%@ include file="../common/foot.jspf" %>

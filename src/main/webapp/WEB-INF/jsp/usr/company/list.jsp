@@ -16,11 +16,25 @@
 	<div class="list-page">
 		<div class="list-top">
 			<div>
-				<span>체크인: 2023-01-20</span>
-				<span>체크아웃: 2023-01-21</span>
-				<span>인원: 2</span>
-<!-- 				※키워드 칸을 많이 확보하도록 -->
-				<span>키워드: '대전'</span>
+				<div>
+					<span>체크인</span>
+					<span>${param.start_date}</span>
+				</div>
+				<div>
+					<span>체크아웃</span>
+					<span>${param.end_date}</span>
+				</div>
+				<div>
+					<span>인원</span>
+					<div>
+						<span>${param.persons}</span>
+						<span>명</span>
+					</div>
+				</div>
+				<div>
+					<span>키워드</span>
+					<span>${param.searchKeyword}</span>
+				</div>
 			</div>
 		</div>
 		<div class="list-body">
@@ -72,7 +86,7 @@
 			<section class="list-company-list">
 				<div class="list-company-list-top">
 					<div class="company-list-searchCount">
-						<span class="font-bold">${companiesCount}</span>개의 검색결과
+						총 <span class="font-bold">${companiesCount}</span>개의 숙소
 					</div>
 					<div class="flex-grow"></div>
 					<div class="company-list-orderby">
@@ -107,7 +121,7 @@
 								<div class="score">
 									<span>★</span>
 									<div class="font-semibold">4.9&nbsp;</div>
-									(2,645) 
+									<span>(2,645) </span>
 								</div> 
 								<div class="mt-1">${company.address}</div>
 								<div class="flex flex-grow"></div>
