@@ -1,5 +1,9 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -77,12 +81,12 @@ public class UsrCompanyController {
 			@RequestParam(defaultValue="") String motelType,
 			@RequestParam(defaultValue="") String hotelType,
 			@RequestParam(defaultValue="") String pensionType,
-			@RequestParam(defaultValue="") String geusthouseType,
+			@RequestParam(defaultValue="") String guesthouseType,
 			@RequestParam(defaultValue="1") int low_price,
 			@RequestParam(defaultValue="999999999") int high_price) {
 		
-		List<Company> companies = companyService.getForPrintCompanies(searchKeyword, order_by, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
-		int companiesCount = companyService.getCompainesCount(searchKeyword, motelType, hotelType, pensionType, geusthouseType, low_price, high_price);
+		List<Company> companies = companyService.getForPrintCompanies(searchKeyword, order_by, motelType, hotelType, pensionType, guesthouseType, low_price, high_price);
+		int companiesCount = companyService.getCompainesCount(searchKeyword, motelType, hotelType, pensionType, guesthouseType, low_price, high_price);
 		
 		model.addAttribute("companiesCount", companiesCount);
 		model.addAttribute("companies", companies);
@@ -92,13 +96,48 @@ public class UsrCompanyController {
 	
 	@RequestMapping("/usr/company/hotel")
 	public String showHotel(Model model,
+			@RequestParam(defaultValue="51") String area,
+			@RequestParam(defaultValue="") String start_date,
+			@RequestParam(defaultValue="") String end_date,
+			@RequestParam(defaultValue="1") String countOfRooms,
+			@RequestParam(defaultValue="2") String countOfAdult,
+			@RequestParam(defaultValue="0") String countOfChild,
 			@RequestParam(defaultValue="") String order_by,
-			@RequestParam(defaultValue="1") int low_price,
+			@RequestParam(defaultValue="0") int low_price,
 			@RequestParam(defaultValue="999999999") int high_price) {
 		
-		List<Company> hotels = companyService.getForPrintHotels(order_by,low_price, high_price);
-		int hotelsCount = companyService.getHotelsCount(low_price, high_price);
+		String areaInput = companyService.getAreaMap(area);
 		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		
+		if(start_date.equals("")) {
+			start_date = format.format(now);
+		}
+		
+		if(end_date.equals("")) {
+			try {
+				Date date = format.parse(start_date);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				
+				cal.add(Calendar.DATE, 1); // 다음날(1일 후)
+				
+				end_date = format.format(cal.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		List<Company> hotels = companyService.getForPrintHotels(area, order_by, low_price, high_price);
+		int hotelsCount = companyService.getHotelsCount(area, low_price, high_price);
+		
+		model.addAttribute("areaInput", areaInput);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
+		model.addAttribute("countOfRooms", countOfRooms);
+		model.addAttribute("countOfAdult", countOfAdult);
+		model.addAttribute("countOfChild", countOfChild);
 		model.addAttribute("hotelsCount", hotelsCount);
 		model.addAttribute("hotels", hotels);
 		

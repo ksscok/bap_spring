@@ -391,27 +391,27 @@ WHERE id = 1;
 
 UPDATE company
 SET accommodationType = 'hotel',
-host_id = 2
+host_id = 1
 WHERE id = 2;
 
 UPDATE company
 SET accommodationType = 'hotel',
-host_id = 3
+host_id = 2
 WHERE id = 3;
 
 UPDATE company
 SET accommodationType = 'pension',
-host_id = 4
+host_id = 2
 WHERE id = 4;
 
 UPDATE company
 SET accommodationType = 'motel',
-host_id = 5
+host_id = 3
 WHERE id = 5;
 
 UPDATE company
 SET accommodationType = 'guesthouse',
-host_id = 6,
+host_id = 3,
 `name` = '제주 쉬멍놀멍 게스트하우스',
 address = '제주특별자치도 제주시 한림읍 협재리 2557-1'
 WHERE id = 6;
@@ -477,8 +477,8 @@ SELECT  REPLACE(CURRENT_DATE(), "-", "");
 SELECT CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1");
 
 # 사업장 대표 이미지 테스트 데이터
-INSERT INTO genFile
-SET regDate = NOW(),
+insert into genFile
+set regDate = NOW(),
 updateDate = NOW(),
 relTypeCode = 'company',
 relId = 1,
@@ -567,5 +567,266 @@ fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
 
-SELECT * FROM genFile;
+# company 테이블에 area 컬럼 추가
+alter table company add column `area` char(20) not null after address;
 
+update company
+set `area` = '5'
+where id = 1;
+
+UPDATE company
+SET `area` = '51'
+WHERE id = 2;
+
+UPDATE company
+SET `area` = '51'
+WHERE id = 3;
+
+UPDATE company
+SET `area` = '28'
+WHERE id = 4;
+
+UPDATE company
+SET `area` = '55'
+WHERE id = 5;
+
+UPDATE company
+SET `area` = '16'
+WHERE id = 6;
+
+# company 테이블 테스트데이터 추가 생성
+insert into company
+set regDate = now(),
+updateDate = now(),
+`name` = '대전 룩',
+address = '대전 동구 용전동 72-11',
+`area` = '51',
+timeChkin = '18:00',
+timeChkout = '12:00',
+accommodationType = 'motel',
+host_id = 1;
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '대전 하늘정원 게스트하우스',
+address = '대전광역시 중구 대흥동 447-11',
+`area` = '51',
+timeChkin = '15:00',
+timeChkout = '11:00',
+accommodationType = 'guesthouse',
+host_id = 1;
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '호텔 스카이파크 대전 1호점',
+address = '대전 유성구 용산동 579',
+`area` = '51',
+timeChkin = '15:00',
+timeChkout = '11:00',
+accommodationType = 'hotel',
+host_id = 1;
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '라마다 바이 윈덤 대전',
+address = '대전 유성구 봉명동 548-13',
+`area` = '51',
+timeChkin = '15:00',
+timeChkout = '12:00',
+accommodationType = 'hotel',
+host_id = 1;
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '대전 풀내음쉼터펜션',
+address = '대전 서구 장안동 404',
+`area` = '51',
+timeChkin = '14:00',
+timeChkout = '11:00',
+accommodationType = 'pension',
+host_id = 1;
+
+INSERT INTO company
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '대흥 만월 호텔',
+address = '대전 중구 대흥동 142-1',
+`area` = '51',
+timeChkin = '18:00',
+timeChkout = '13:00',
+accommodationType = 'motel',
+host_id = 1;
+
+# 사업장 대표이미지 테스트데이터 추가 생성
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 7,
+originFileName = '7.jfif',
+fileExt = 'jfif',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jfif',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 8,
+originFileName = '8.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 9,
+originFileName = '9.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 10,
+originFileName = '10.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 11,
+originFileName = '11.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'company',
+relId = 12,
+originFileName = '12.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_01';
+
+# product 테스트데이터 추가 생성
+insert into product
+set regDate = now(),
+updateDate = now(),
+comp_id = 7,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 55000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 8,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 25000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 9,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 89000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 10,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 155000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 11,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 100000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 12,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 50000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';

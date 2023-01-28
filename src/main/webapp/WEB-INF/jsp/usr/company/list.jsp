@@ -15,7 +15,7 @@
 <c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&hotelType=${param.hotelType}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&motelType=${param.motelType}"/>
-<c:set var="pageBaseUri" value="${pageBaseUri}&geusthouseType=${param.geusthouseType}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&guesthouseType=${param.guesthouseType}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&pensionType=${param.pensionType}"/>
 <c:set var="order_by" value="${param.order_by}"/>
 
@@ -89,7 +89,7 @@
 					    <span class="ml-2">펜션</span> 
 					  </label>
 					  <label class="cursor-pointer flex items-center h-8">
-					    <input type="checkbox" name="geusthouseType" class="checkbox checkbox-sm" ${param.geusthouseType.equals('on') ? 'checked' : '' }/>
+					    <input type="checkbox" name="guesthouseType" class="checkbox checkbox-sm" ${param.guesthouseType.equals('on') ? 'checked' : '' }/>
 					    <span class="ml-2">게스트하우스</span> 
 					  </label>
 			  	</div>

@@ -68,7 +68,7 @@ public interface CompanyRepository {
 			<if test="high_price != 999999999">
 				AND p.fee <![CDATA[<=]]> #{high_price}
 			</if>
-			<if test="motelType != '' || hotelType != '' || pensionType != '' || geusthouseType != ''">
+			<if test="motelType != '' || hotelType != '' || pensionType != '' || guesthouseType != ''">
 				AND (
 				<if test="motelType != ''">
 					c.accommodationType = 'motel'
@@ -85,7 +85,7 @@ public interface CompanyRepository {
 					</if>
 					c.accommodationType = 'pension'
 				</if>
-				<if test="geusthouseType != ''">
+				<if test="guesthouseType != ''">
 					<if test="motelType != '' || hotelType != '' || pensionType != ''">
 					OR
 					</if>
@@ -110,7 +110,7 @@ public interface CompanyRepository {
 			</script>
 			""")
 	List<Company> getForPrintCompanies(String searchKeyword1, String searchKeyword2, String searchKeyword3, String searchKeyword4, String searchKeyword5, String searchKeyword6,
-			String order_by, String motelType, String hotelType, String pensionType, String geusthouseType, int low_price, int high_price);
+			String order_by, String motelType, String hotelType, String pensionType, String guesthouseType, int low_price, int high_price);
 	
 	@Insert("""
 			INSERT into company
@@ -192,7 +192,7 @@ public interface CompanyRepository {
 			<if test="high_price != 999999999">
 				AND p.fee <![CDATA[<=]]> #{high_price}
 			</if>
-			<if test="motelType != '' || hotelType != '' || pensionType != '' || geusthouseType != ''">
+			<if test="motelType != '' || hotelType != '' || pensionType != '' || guesthouseType != ''">
 				AND
 				<if test="motelType != ''">
 					c.accommodationType = 'motel'
@@ -209,7 +209,7 @@ public interface CompanyRepository {
 					</if>
 					c.accommodationType = 'pension'
 				</if>
-				<if test="geusthouseType != ''">
+				<if test="guesthouseType != ''">
 					<if test="motelType != '' || hotelType != '' || pensionType != ''">
 					OR
 					</if>
@@ -221,7 +221,7 @@ public interface CompanyRepository {
 			</script>
 			""")
 	int getCompainesCount(String searchKeyword1, String searchKeyword2, String searchKeyword3, String searchKeyword4, String searchKeyword5, String searchKeyword6, 
-			String motelType, String hotelType, String pensionType,	String geusthouseType, int low_price, int high_price);
+			String motelType, String hotelType, String pensionType,	String guesthouseType, int low_price, int high_price);
 	
 	@Select("""
 			<script>
@@ -232,6 +232,9 @@ public interface CompanyRepository {
 			LEFT JOIN product AS p
 			ON c.id = p.comp_id
 			WHERE c.accommodationType = 'hotel'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
 			<if test="low_price != 1">
 				AND p.fee <![CDATA[>=]]> #{low_price}
 			</if>
@@ -254,7 +257,7 @@ public interface CompanyRepository {
 			</if>
 			</script>
 			""")
-	List<Company> getForPrintHotels(String order_by, int low_price, int high_price);
+	List<Company> getForPrintHotels(String area, String order_by, int low_price, int high_price);
 
 	@Select("""
 			<script>
@@ -265,6 +268,9 @@ public interface CompanyRepository {
 			LEFT JOIN product AS p
 			ON c.id = p.comp_id
 			WHERE c.accommodationType = 'hotel'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
 			<if test="low_price != 1">
 				AND p.fee <![CDATA[>=]]> #{low_price}
 			</if>
@@ -275,6 +281,6 @@ public interface CompanyRepository {
 			) AS c;
 			</script>
 			""")
-	int getHotelsCount(int low_price, int high_price);
+	int getHotelsCount(String area, int low_price, int high_price);
 
 }
