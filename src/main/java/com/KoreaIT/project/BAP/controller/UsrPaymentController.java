@@ -6,16 +6,18 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UsrPaymentController {
 	
 	@RequestMapping("/success")
-	public String showPaymentSuccess(Model model, String paymentKey, String orderId, String amount) throws IOException, InterruptedException {
+	public String showPaymentSuccess(Model model, String paymentKey, String orderId, String amount) throws IOException, InterruptedException, ParseException {
 		
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
@@ -26,14 +28,19 @@ public class UsrPaymentController {
 			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 			System.out.println(response.body());
 		
-//		System.out.println("orderName : " + orderName);
-//		System.out.println("customerName : " + customerName);
-			
+		// json 파싱
+		JSONParser jsonParser = new JSONParser();
+	      
+	    JSONObject jsonObj = (JSONObject) jsonParser.parse(response.body());
+	    System.out.println("=====================" + jsonObj);
+	      
+	    String orderName = (String) jsonObj.get("orderName");
+	    System.out.println("=====================" + orderName);
+		
 		model.addAttribute("paymentKey", paymentKey);
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("amount", amount);
-//		model.addAttribute("orderName", orderName);
-//		model.addAttribute("customerName", customerName);
+		model.addAttribute("orderName", orderName);
 	
 		return "/usr/payment/success";
 	}
@@ -42,22 +49,6 @@ public class UsrPaymentController {
 	public String showPaymentFail() {
 		return "/usr/payment/fail";
 	}
-	
-	@RequestMapping("/payment/detail")
-	@ResponseBody
-	public String showDetail(String paymentKey) throws IOException, InterruptedException {
-		
-		HttpRequest request = HttpRequest.newBuilder()
-			    .uri(URI.create("https://api.tosspayments.com/v1/payments/5R6k3cy8XhGjakmbPt1Vr"))
-			    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
-			    .method("GET", HttpRequest.BodyPublishers.noBody())
-			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
-		
-		return response.body();
-	}
-
 	
 }
 

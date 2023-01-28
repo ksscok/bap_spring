@@ -13,24 +13,63 @@
 <script src="https://js.tosspayments.com/v1/payment"></script>
 
 <script>
+	if(sessionStorage.getItem('customerName')){
+	 var customerName = sessionStorage.getItem('customerName')
+	}
 	
 </script>
 
+
+<!-- 결제에 대한 정보를 결제 테이블에 넘겨줘야 함 -->
 <section class="my-20">
 		<div class="con-3 mx-auto px-3">
-			<h1> 결제 성공! </h1>
-			<div>결제 키 : ${paymentKey}</div>
-			<div>주문번호 : ${orderId}</div>
-			<div>가격 : ${amount}</div>
-			<div>상품명 : ${orderName}</div>
-			<div>예약자명 : ${customerName}</div>
+			<form>
+				<h1> 결제 성공! </h1>
+				
+				<table>
+					<tr>
+						<th>결제 키 : </th>
+						<td>${paymentKey}</td>
+					</tr>				
+					<tr>
+						<th>주문번호 : </th>
+						<td>${orderId}</td>
+					</tr>				
+					<tr>
+						<th>가격 : </th>
+						<td>${amount}</td>
+					</tr>				
+					<tr>
+						<th>상품명 : </th>
+						<td>${orderName}</td>
+					</tr>				
+					<tr>
+						<th>예약자명 : </th>
+						<td><div id="customerName"></div></td>
+					</tr>				
+				</table>
+				
+				<div>결제 키 : ${paymentKey}</div>
+				<div>주문번호 : ${orderId}</div>
+				<div>가격 : ${amount}</div>
+				<div>상품명 : ${orderName}</div>
+				<div id="customerName">예약자명 : </div>
+			</form>
 			<div>
-				<a href="payment/detail">결제 확인</a>
+				<a href="booking/detail">예약 확인</a>
 			</div>
 		</div>
 </section>
 
+<script>
 
+	if(sessionStorage.getItem('customerName') != 0){
+		// div에 글자를 추가할 때
+	 document.getElementById('customerName').append(customerName);
+	 alert(customerName);
+	}
+	
+</script>
 
 
 

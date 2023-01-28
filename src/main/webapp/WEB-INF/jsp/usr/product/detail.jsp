@@ -78,7 +78,9 @@
 					<div class="includeMeals-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  ${param.withoutMealsType eq on ? 'checked' : ''} />
+<!-- 						localstorage에 저장하는 거 생각해봐야할 듯 -->
+<%-- 							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  ${param.withoutMealsType eq on ? 'checked' : ''} /> --%>
+							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  />
 							<span class="text-sm ml-2">식사 불포함</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
@@ -273,12 +275,13 @@
 	  if(dateFrom >= today && dateTo >= dateFrom){
 	  	return true;
 	  } else {
-	 	 alert("해당 기간의 조회가 불가능합니다.");
+	 	 alert("해당 기간의 조회가 불가능합니다." + today);
+	 	 return false;
 	  }
 	});//click() end
 // 체크인, 체크아웃 유효성 체크 끝
 
-// 상세조건 checked로 변환 시작
+// 상세조건 checked로 변환 시작 - ajax로 리스트 갱신해야할 듯?
 	function chg_checked(){
 // 		$("input:checkbox[id='withoutMeals']").prop("checked", true);
 		
