@@ -8,8 +8,7 @@
 
 <c:set var="pageBaseUri" value="${pageBaseUri}?start_date=${param.start_date}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&end_date=${param.end_date}"/>
-<c:set var="pageBaseUri" value="${pageBaseUri}&countOfAdult=${param.countOfAdult}"/>
-<c:set var="pageBaseUri" value="${pageBaseUri}&countOfChild=${param.countOfChild}"/>
+<c:set var="pageBaseUri" value="${pageBaseUri}&persons=${param.persons}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&low_price=${param.low_price}"/>
 <c:set var="pageBaseUri" value="${pageBaseUri}&high_price=${param.high_price}"/>
@@ -21,47 +20,29 @@
 
 <div class="back-ground-page">
 	<div class="list-page">
-		<form action="" class="list-top-box">
-			<div class="list-top">
+		<div class="list-top">
+			<div>
 				<div>
 					<span>체크인</span>
-					<input name="start_date" type="date" value="${param.start_date}" class="input input-bordered"/>
+					<span>${param.start_date}</span>
 				</div>
 				<div>
 					<span>체크아웃</span>
-					<input name="end_date"  type="date" value="${param.end_date}" class="input input-bordered"/>
+					<span>${param.end_date}</span>
 				</div>
 				<div>
-					<span>성인</span>
+					<span>인원</span>
 					<div>
-						<select class="select select-bordered" name="countOfAdult">
-							<c:forEach begin="0" end="10" var="i">
-								<option value="${i}" <c:if test="${i == param.countOfAdult}">selected</c:if> >${i}</option>
-							</c:forEach>
-						</select>	
+						<span>${param.persons}</span>
+						<span>명</span>
 					</div>
 				</div>
 				<div>
-					<span>아동</span>
-					<div>
-						<select class="select select-bordered" name="countOfChild"">
-							<c:forEach begin="0" end="10" var="i">
-								<option value="${i}" <c:if test="${i == param.countOfChild}">selected</c:if> >${i}</option>
-							</c:forEach>
-						</select>	
-					</div>
-				</div>
-				<div>
-					<span>지역, 숙소명</span>
-					 <input placeholder="예) 서울, oo호텔" type="text" maxlength="30" name="searchKeyword" value="${param.searchKeyword}" class="search-keyword-input input input-bordered" />
+					<span>키워드</span>
+					<span>${param.searchKeyword}</span>
 				</div>
 			</div>
-			<div>
-				<button type="submit" class="search-btn">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</button>
-			</div>
-		</form>
+		</div>
 		<div class="list-body">
 			<section class="list-side-bar">
 				<form action="../company/list">
@@ -69,8 +50,7 @@
 				
 					<input type="hidden" name="start_date" value="${param.start_date}" />
 					<input type="hidden" name="end_date" value="${param.end_date}" />
-					<input type="hidden" name="countOfAdult" value="${param.countOfAdult}" />
-					<input type="hidden" name="countOfChild" value="${param.countOfChild}" />
+					<input type="hidden" name="persons" value="${param.persons}" />
 					<input type="hidden" name="searchKeyword" value="${param.searchKeyword}" />
 					<input type="hidden" name="order_by" value="${param.order_by}" />
 					
@@ -118,7 +98,7 @@
 					</div>
 					
 					<div class="flex justify-between mt-5">
-						<a href="../company/list?start_date=${param.start_date}&end_date=${param.end_date}&countOfAdult=${param.countOfAdult}&countOfChild=${param.countOfChild}&searchKeyword=${param.searchKeyword}&order_by=${param.order_by}" class="btn btn-primary btn-outline w-28">초기화</a>
+						<a href="../company/list?start_date=${param.start_date}&end_date=${param.end_date}&persons=${param.persons}&searchKeyword=${param.searchKeyword}&order_by=${param.order_by}" class="btn btn-primary btn-outline w-28">초기화</a>
 						<button type="submit" class="btn btn-primary w-28">적용</button>
 					</div>
 					
