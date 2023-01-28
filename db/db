@@ -451,12 +451,16 @@ CREATE TABLE booking
     orderId    VARCHAR(100)     NOT NULL    COMMENT '주문번호', 
     comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호', 
     prod_id    INT UNSIGNED    NOT NULL    COMMENT '객실번호', 
-    member_id  INT UNSIGNED    NOT NULL    COMMENT '예약자 번호', 
+    customerName  VARCHAR(100)    NOT NULL    COMMENT '예약자 번호', 
     start_date      VARCHAR(100)        NOT NULL    COMMENT '체크인', 
-    end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃'
+    end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃',
+    countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
+    countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수'
 );
+## cellphoneNum 추가 예정 (API 연동 후)
 
 SELECT * FROM booking;
+SELECT LAST_INSERT_ID();
 
 # booking 테스트 데이터 생성
 # 호텔타입으로 게스트1이 대전 롯데시티호텔 1번방을 예약
@@ -466,9 +470,11 @@ updateDate = NOW(),
 orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1"),
 comp_id = 2,
 prod_id = 1,
-member_id = 5,
+customerName = 'test1',
 start_date = "2023-02-01",
-end_date = "2023-02-28";
+end_date = "2023-02-28",
+countOfAdult = 2,
+countOfChild = 0;
 
 # 현재날짜(today)를 "-" 제외한 값 구하기
 SELECT  REPLACE(CURRENT_DATE(), "-", "");

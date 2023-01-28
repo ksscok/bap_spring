@@ -3,7 +3,6 @@ package com.KoreaIT.project.BAP.service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,5 +47,9 @@ public class BookingService {
 
 	public Long getBookingByorderId(String orderId) {
 		return bookingRepository.getBookingByorderId(orderId);
+	}
+
+	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String start_date, String end_date, int countOfAdult, int countOfChild) {
+		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, start_date, end_date, countOfAdult, countOfChild);
 	}
 }
