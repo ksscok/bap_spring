@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.BookingRepository;
+import com.KoreaIT.project.BAP.vo.Booking;
 
 @Service
 public class BookingService {
@@ -45,11 +46,15 @@ public class BookingService {
 		return betweenDays;
 	}
 
-	public Long getBookingByorderId(String orderId) {
-		return bookingRepository.getBookingByorderId(orderId);
+	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int countOfAdult, int countOfChild) {
+		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, countOfAdult, countOfChild);
 	}
 
-	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String start_date, String end_date, int countOfAdult, int countOfChild) {
-		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, start_date, end_date, countOfAdult, countOfChild);
+	public Booking getBookingByOrderId(String orderId) {
+		return bookingRepository.getBookingByOrderId(orderId);
+	}
+
+	public Booking getBookingByCellphoneNo(String cellphoneNo) {
+		return bookingRepository.getBookingByCellphoneNo(cellphoneNo);
 	}
 }
