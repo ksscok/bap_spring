@@ -4,85 +4,102 @@
 <c:set var="pageTitle" value="예약 상세보기" />
 <%@ include file="../common/head.jspf"%>
 
-<!-- 토스페이먼츠 -->
-<script src="https://js.tosspayments.com/v1/payment"></script>
-<!-- book css -->
-<link rel="stylesheet" href="/resource/book.css" />
+<!-- bookingDetail css -->
+<link rel="stylesheet" href="/resource/bookingDetail.css" />
 
 <section class="">
-	<input id="orderId" type="hidden" name="orderId" value="${orderId }" />
-	<div class="con-3 flex flex-row mx-auto px-3">
-		<div>예약 상세보기</div>
+	<input id="booking" type="hidden" name="booking" value="${booking }" />
+	<div class="con-3 mx-auto px-3">
+		<div class="my-12 text-3xl font-extrabold">예약 상세보기</div>
+		<div class="table-box-type-1">
+			<div class="text-2xl font-extrabold mb-6 ml-2">예약 날짜</div>
+			<div class="period-inform flex justify-around items-center w-full">
+				<div class="chkin-inform text-xl">
+					<span class="text-gray-400">체크인</span>
+					&nbsp;&nbsp;&nbsp;
+					<span>${DateAndDayOfTheWeekOfChkin }</span>
+					&nbsp;
+					<span>${TimeChkin }</span>
+				</div>
+				<div class="text-xl"><i class="fa-solid fa-circle-right"></i></div>
+				<div class="chkout-inform text-xl">
+					<span class="text-gray-400">체크아웃</span>
+					&nbsp;&nbsp;&nbsp;
+					<span>${DateAndDayOfTheWeekOfChkout }</span>
+					&nbsp;
+					<span>${TimeChkout }</span>
+				</div>
+			</div>
+		
+			<table class="mt-10">
+				<colgroup>
+					<col width="300" />
+				</colgroup>
+				
+				<thead>
+					<tr>
+						<th colspan="2"><div class="text-2xl">예약 정보</div></th>
+					</tr>
+				</thead>				
+				<tbody>
+					<tr>
+						<th>예약번호</th>
+						<td>${booking.id }</td>
+					</tr>
+					<tr>
+						<th>예약자 이름</th>
+						<td>${booking.customerName }</td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td>010-1212-3434</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table class="mt-10">
+				<colgroup>
+					<col width="300" />
+				</colgroup>
+				
+				<thead>
+					<tr>
+						<th colspan="2"><div class="text-3xl">결제 정보</div></th>
+					</tr>
+				</thead>				
+				<tbody>
+					<tr>
+						<th>결제일시</th>
+						<td>2023.02.01 목 11:14</td>
+					</tr>
+					<tr>
+						<th>상품가격(1박)</th>
+						<td>70,000원</td>
+					</tr>
+					<tr>
+						<th>결제 시 포인트 사용</th>
+						<td>- 0P</td>
+					</tr>
+					<tr>
+						<th>결제 시 쿠폰 사용</th>
+						<td>- 0P</td>
+					</tr>
+					<tr>
+						<th>실 결제 금액</th>
+						<td>70,000원</td>
+					</tr>
+					<tr>
+						<th>결제수단</th>
+						<td>토스페이</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </section>
 
 <script>
-// 예약자 이름칸에 숫자, 한글, 영어, 스페이스, 백스페이스만 사용 가능하도록 하는 함수 시작(입력키 제한)
-	// 추후에 스페이스 횟수 제한 찾아보기
-	function chkCharCode(event) {
-		  const keyCode = event.keyCode;
-		  const isValidKey = (
-		    (keyCode >= 48 && keyCode <= 57) || // Numbers
-		    (keyCode >= 97 && keyCode <= 122) || // Numbers, Keypad
-		    (keyCode >= 65 && keyCode <= 90) || // Alphabet
-		    (keyCode === 32) || // Space
-		    (keyCode === 8) || // BackSpace
-		    (keyCode === 189) // Dash
-		  );
-		  if (!isValidKey) {
-		    event.preventDefault();
-		    return false;
-		  }
-		};
-// 예약자 이름칸에 숫자, 한글, 영어, 스페이스, 백스페이스만 사용 가능하도록 하는 함수 끝
 
-// 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 시작
-	function requiredData(el) {
-		$(".required-msg").empty();
-		const form = $(el).closest('form').get(0);
-		
-		if (form.guestCellphoneNum.value.length <= 8) {
-			$(".required-msg").html('휴대폰 번호를 확인해주세요.');
-			}
-		};
-// 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 끝
-		
-		let $orderId = document.getElementById('orderId').value;
-		let $fee = document.getElementById('fee').value;
-		let $orderName = document.getElementById('orderName').value;
-		let $customerName = document.getElementById('customerName').value;
-		
-// 	토스페이먼츠 결제창 불러오는 함수 시작
-		var clientKey = 'test_ck_Lex6BJGQOVDyvaadL5nrW4w2zNbg'
-	    var tossPayments = TossPayments(clientKey)
-
-	    var button = document.getElementById('payment-button') // 결제하기 버튼
-	    button.addEventListener('click', function () {
-	    	
-	    	if(document.getElementById('customerName').value.length == 0){
-		    	alert('예약자 이름을 입력해주세요');
-		    	return;
-	    	}
-	    	
-	    	if(document.getElementById('customerName').value.length != 0){
-		    	alert(document.getElementById('customerName').value);
-		    	sessionStorage.setItem('customerName', document.getElementById('customerName').value);
-	    	}
-	    	
-// 	    	var form = document.getElementById('customerName').value;
-// 			form.action = "/success";
-// 			form.submit();
-	    	
-	      tossPayments.requestPayment('카드', {
-	        amount: $fee,
-	        orderId: $orderId,
-	        orderName: $orderName,
-	        customerName: $customerName,
-	        successUrl: 'http://localhost:8082/success',
-	        failUrl: 'http://localhost:8082/fail'
-	      })
-	    })
-// 	토스페이먼츠 결제창 불러오는 함수 끝
 </script>
 
 <%@ include file="../common/foot.jspf"%>

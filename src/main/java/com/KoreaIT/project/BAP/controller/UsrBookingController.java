@@ -15,6 +15,7 @@ import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.util.Ut;
+import com.KoreaIT.project.BAP.vo.Booking;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.KoreaIT.project.BAP.vo.Product;
@@ -45,11 +46,11 @@ public class UsrBookingController {
 			@RequestParam(defaultValue="-1") String accommodationTypeCode) {
 		
 		if(Ut.empty(comp_id)) {
-			return rq.jsHistoryBack("사업장번호를 선택해주세요.");
+			return rq.jsHistoryBack("사업장번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(prod_id)) {
-			return rq.jsHistoryBack("상품번호를 선택해주세요.");
+			return rq.jsHistoryBack("상품번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(start_date)) {
@@ -143,8 +144,8 @@ public class UsrBookingController {
 		return "/usr/payment/pay";
 	}
 	
-	@RequestMapping("/usr/booking/showBookingList")
-	public String showBookingList(Model model, String orderId, int comp_id, int prod_id, String customerName, String start_date, String end_date, 
+	@RequestMapping("/usr/booking/list")
+	public String showList(Model model, String orderId, int comp_id, int prod_id, String customerName, String start_date, String end_date, 
 			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, String orderName, String isWrite) {
 		
 		
@@ -159,7 +160,34 @@ public class UsrBookingController {
 		model.addAttribute("amount", amount);
 		model.addAttribute("orderName", orderName);
 		
-		return "/usr/booking/showBooking";
+		return "/usr/booking/list";
+	}
+	
+	@RequestMapping("/usr/booking/detail")
+	public String showDetail(Model model, String orderId) {
+		
+		Booking booking = bookingService.getBookingByOrderId(orderId);
+		String start_date = booking.getStart_date();
+		String end_date = booking.getEnd_date();
+		
+		// 예약 상세보기페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
+		String DateAndDayOfTheWeekOfChkin = Ut.getDateAndDayOfTheWeek(start_date);
+		String DateAndDayOfTheWeekOfChkout = Ut.getDateAndDayOfTheWeek(end_date);
+		
+		Company company = companyService.getCompanyByComp_id(booking.getComp_id());
+		String TimeChkin = company.getTimeChkin();
+		String TimeChkout = company.getTimeChkout();
+		
+		Product product = productService.getForPrintproduct(booking.getProd_id());
+		
+		
+		model.addAttribute("booking", booking);
+		model.addAttribute("DateAndDayOfTheWeekOfChkin", DateAndDayOfTheWeekOfChkin);
+		model.addAttribute("DateAndDayOfTheWeekOfChkout", DateAndDayOfTheWeekOfChkout);
+		model.addAttribute("TimeChkin", TimeChkin);
+		model.addAttribute("TimeChkout", TimeChkout);
+		
+		return "/usr/booking/detail";
 	}
 	
 }

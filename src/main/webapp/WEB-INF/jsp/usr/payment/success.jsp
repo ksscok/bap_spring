@@ -56,7 +56,7 @@
 				<div id="customerName">예약자명 : </div>
 			</form>
 			<div>
-				<a href="booking/detail">예약 확인</a>
+				<a href="../usr/booking/detail?orderId=${orderId }">예약 확인</a>
 			</div>
 		</div>
 </section>
@@ -66,7 +66,6 @@
 	if(sessionStorage.getItem('customerName') != 0){
 		// div에 글자를 추가할 때
 	 document.getElementById('customerName').append(customerName);
-	 alert(customerName);
 	}
 	
 </script>

@@ -14,7 +14,7 @@ public class Booking {
 	private String orderId;
 	private int comp_id;
 	private int prod_id;
-	private int member_id;
+	private String customerName;
 	private String start_date;
 	private String end_date;
 	
