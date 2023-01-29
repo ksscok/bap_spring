@@ -28,15 +28,16 @@
 				<div class="guestInfor">
 					<div class="font-bold my-8">예약자 정보</div>
 					<div class="info_chkin mb-2 font-semibold">예약자 이름</div>
-					<input id="customerName" name="customerName" type="text" onkeypress="chkCharCode(event);" class="input input-bordered w-full" placeholder="체크인시 필요한 정보입니다." maxlength="20" />
+					<input id="customerName" name="customerName" type="text" onkeypress="chkCharCodeName(event);" class="input input-bordered w-full" placeholder="체크인시 필요한 정보입니다." maxlength="20" />
 					<div class="mt-9 info_chkin mb-2 font-semibold">휴대폰 번호</div>
 					<div class="info_chkin text-xs mb-8">개인 정보 보호를 위해 안심번호로 숙소에 전송됩니다.</div>
 	<!-- 				<form id="cellphoneNumConfirm"> -->
-						<div class="guestCellPhoneNum-box mb-16 w-full">
+						<div class="cellphoneNo-box mb-16 w-full">
 	<!-- 				로그인시 고객의 번호를 가져오는 칸 -->
-							<input type="text" class="input input-bordered input-md" style="width:440px;" placeholder="체크인시 필요한 정보입니다." maxlength="13" name="guestCellphoneNum" onblur="requiredData(this);"/>
+							<input id="cellphoneNo" name="cellphoneNo" onkeypress="chkCharCodeNum(event);" type="text" oninput="autoHyphen(this)" class="input input-bordered input-md" style="width:440px;" placeholder="체크인시 필요한 정보입니다." maxlength="13" onblur="requiredData(this);"/>
 	<!-- 				휴대폰번호 11자리 입력 안하면 활성화 안되게 막아놓음/앞자리가 0으로 시작 안해도 활성화 안되게 막아놓음 -->
 	<!-- 						<button type="submit" class="text-center btn btn-active btn-secondary">인증번호 전송</button> -->
+							<button class="text-center btn btn-active btn-secondary">인증번호 전송</button>
 							<div class="required-msg text-sm mt-2 h-5 text-red-500"></div>
 						</div>
 	<!-- 				</form> -->
@@ -82,7 +83,6 @@
 						</li>
 					</ul>
 					<button class="text-center btn btn-active btn-secondary w-full mt-4">결제하기</button>
-	<!-- 				결제하기 눌렀을 때 예약자 이름이 적혀있지 않다면 모달창으로 입력해달라고 보여주기 -->
 				</div>
 			</div>
 		</div>
@@ -92,7 +92,7 @@
 <script>
 // 예약자 이름칸에 숫자, 한글, 영어, 스페이스, 백스페이스만 사용 가능하도록 하는 함수 시작(입력키 제한)
 	// 추후에 스페이스 횟수 제한 찾아보기
-	function chkCharCode(event) {
+	function chkCharCodeName(event) {
 		  const keyCode = event.keyCode;
 		  const isValidKey = (
 		    (keyCode >= 48 && keyCode <= 57) || // Numbers
@@ -109,12 +109,31 @@
 		};
 // 예약자 이름칸에 숫자, 한글, 영어, 스페이스, 백스페이스만 사용 가능하도록 하는 함수 끝
 
+// 전화번호칸에 숫자만 사용 가능하도록 하는 함수 시작(입력키 제한)
+	function chkCharCodeNum(event) {
+		  const keyCode = event.keyCode;
+		  const isValidKey = (keyCode >= 48 && keyCode <= 57);
+		  if (!isValidKey) {
+		    event.preventDefault();
+		    return false;
+		  }
+		};
+// 전화번호칸에 숫자만 사용 가능하도록 하는 함수 끝
+
+// 전화번호칸에 숫자를 적어 나아가면 자동으로 하이픈 붙여주는 함수 시작
+	const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
+// 전화번호칸에 숫자를 적어 나아가면 자동으로 하이픈 붙여주는 함수 끝
+
 // 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 시작
 	function requiredData(el) {
 		$(".required-msg").empty();
 		const form = $(el).closest('form').get(0);
 		
-		if (form.guestCellphoneNum.value.length <= 8) {
+		if (form.cellphoneNo.value.length <= 8) {
 			$(".required-msg").html('휴대폰 번호를 확인해주세요.');
 			}
 		};
@@ -125,14 +144,24 @@
 		let $orderName = document.getElementById('orderName').value;
 		let $customerName = document.getElementById('customerName').value;
 		
-// write에 보내기 위한 form 함수
+// write에 보내기전에 입력 내용 체크하고, localStorage에 customerName 저장하기 위한 함수
 	function chkNull(event){
 		
 		if(document.getElementById('customerName').value.trim().length == 0){
 		    alert('예약자 이름을 입력해주세요');
 		    event.preventDefault(); // return false와 같은 역할
 	    }
-	    
+		
+		if(document.getElementById('cellphoneNo').value.trim().length == 0){
+		    alert('전화번호를 입력해주세요');
+		    event.preventDefault(); // return false와 같은 역할
+	    }
+		
+		if(document.getElementById('cellphoneNo').value.trim().length <= 10 && document.getElementById('cellphoneNo').value.trim().length != 0){
+		    alert('전화번호를 정확히 입력해주세요');
+		    event.preventDefault(); // return false와 같은 역할
+	    }
+		
 		// 결제성공창에서 customerName을 확인시켜주기 위한 작업
 	    if(document.getElementById('customerName').value.trim().length != 0){
 		    sessionStorage.setItem('customerName', document.getElementById('customerName').value);

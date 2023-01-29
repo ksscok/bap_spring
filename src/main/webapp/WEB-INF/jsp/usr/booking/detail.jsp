@@ -7,7 +7,7 @@
 <!-- bookingDetail css -->
 <link rel="stylesheet" href="/resource/bookingDetail.css" />
 
-<section class="">
+<section>
 	<input id="booking" type="hidden" name="booking" value="${booking }" />
 	<div class="con-3 mx-auto px-3">
 		<div class="my-12 text-3xl font-extrabold">예약 상세보기</div>

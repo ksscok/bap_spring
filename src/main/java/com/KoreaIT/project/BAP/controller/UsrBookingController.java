@@ -40,7 +40,7 @@ public class UsrBookingController {
 	}
 	
 	@RequestMapping("/usr/booking/book")
-	public String showBook(Model model, int comp_id, int prod_id, String start_date, String end_date, 
+	public String showBook(Model model, int comp_id, int prod_id, String start_date, String end_date,
 			@RequestParam(defaultValue="2") String countOfAdult, 
 			@RequestParam(defaultValue="0") String countOfChild,
 			@RequestParam(defaultValue="-1") String accommodationTypeCode) {
@@ -117,12 +117,12 @@ public class UsrBookingController {
 	}
 
 	@RequestMapping("/usr/booking/doBook")
-	public String doBook(Model model, String orderId, int comp_id, int prod_id, String customerName, String start_date, String end_date, 
+	public String doBook(Model model, String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, 
 			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, String orderName, String isWrite) {
 		
 		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기 (실패)
 		if(isWrite.trim().equals("notWrite")) {
-			bookingService.doWrite(orderId, comp_id, prod_id, customerName, start_date, end_date, countOfAdult, countOfChild);
+			bookingService.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, countOfAdult, countOfChild);
 			isWrite = "";
 		}
 		
@@ -145,22 +145,24 @@ public class UsrBookingController {
 	}
 	
 	@RequestMapping("/usr/booking/list")
-	public String showList(Model model, String orderId, int comp_id, int prod_id, String customerName, String start_date, String end_date, 
-			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, String orderName, String isWrite) {
+	public String showList(Model model, String cellphoneNo) {
 		
+		Booking booking = bookingService.getBookingByCellphoneNo(cellphoneNo);
 		
-		model.addAttribute("orderId", orderId);
-		model.addAttribute("customerName", customerName);
-		model.addAttribute("start_date", start_date);
-		model.addAttribute("end_date", end_date);
-		model.addAttribute("countOfAdult", countOfAdult);
-		model.addAttribute("countOfChild", countOfChild);
-		model.addAttribute("DateAndDayOfTheWeekOfChkin", DateAndDayOfTheWeekOfChkin);
-		model.addAttribute("DateAndDayOfTheWeekOfChkout", DateAndDayOfTheWeekOfChkout);
-		model.addAttribute("amount", amount);
-		model.addAttribute("orderName", orderName);
+		Company company = companyService.getCompanyByComp_id(booking.getComp_id());
+		Product product = productService.getForPrintproduct(booking.getProd_id());
+		
+		String orderName = company.getName() + "/" + product.getRoomType();
+		System.out.println("orderName : " + orderName);
+		
+		model.addAttribute("booking", booking);
 		
 		return "/usr/booking/list";
+	}
+	
+	@RequestMapping("/usr/booking/listConfirm")
+	public String showListConfirm() {
+		return "/usr/booking/listConfirm";
 	}
 	
 	@RequestMapping("/usr/booking/detail")
