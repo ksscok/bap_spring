@@ -17,8 +17,8 @@ public class CompanyService {
 		this.companyRepository = companyRepository;
 	}
 
-	public int register(String name, String address, String timeChkin, String timeChkout, String accommodationType, int host_id) {
-		companyRepository.register(name, address, timeChkin, timeChkout, accommodationType, host_id);
+	public int register(String name, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id) {
+		companyRepository.register(name, address, area, timeChkin, timeChkout, accommodationType, host_id);
 		return companyRepository.getLastInsertId();
 	}
 	

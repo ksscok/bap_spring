@@ -3,7 +3,6 @@
 
 <c:set var="pageTitle" value="상품 목록" />
 <%@ include file="../common/head.jspf" %>
-<!-- list css -->
 <link rel="stylesheet" href="/resource/hotel.css" />
 
 <c:set var="pageBaseUri" value="${pageBaseUri}?area=${param.area}"/>
@@ -183,7 +182,7 @@
 								<div>
 									<select class="select select-bordered" name="countOfRooms">
 										<c:forEach begin="0" end="10" var="i">
-											<option value="${i}" <c:if test="${i == countOfAdult}">selected</c:if> >${i}</option>
+											<option value="${i}" <c:if test="${i == countOfRooms}">selected</c:if> >${i}</option>
 										</c:forEach>
 									</select>	
 								</div>
