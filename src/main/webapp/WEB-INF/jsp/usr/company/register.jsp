@@ -280,7 +280,6 @@
 				</table>
 				<div class="mt-5 text-center">
 					<button type="submit" class="btn btn-active w-36 h-11">확인</button>
-					<button class="btn btn-active btn-ghost w-36 h-11">취소</button>
 				</div>
 			</form>
 		</div>

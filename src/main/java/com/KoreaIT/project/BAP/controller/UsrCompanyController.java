@@ -93,6 +93,16 @@ public class UsrCompanyController {
 		return "usr/company/managementList";
 	}
 	
+	@RequestMapping("/usr/company/managementDetail")
+	public String showManagementDetail(Model model, int id) {
+		
+		Company company = companyService.getCompanyByComp_id(id);
+		
+		model.addAttribute("company", company);
+		
+		return "usr/company/managementDetail";
+	}
+	
 	@RequestMapping("/usr/company/list")
 	public String showList(Model model,
 			@RequestParam(defaultValue="") String searchKeyword,

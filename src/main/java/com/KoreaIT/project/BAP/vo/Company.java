@@ -1,5 +1,9 @@
 package com.KoreaIT.project.BAP.vo;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.KoreaIT.project.BAP.service.CompanyService;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company {
+	
 	private int id;
 	private String regDate;
 	private String updateDate;
 	private String name;
 	private String address;
+	private String area;
 	private String timeChkin;
 	private String timeChkout;
 	private String accommodationType;
