@@ -1,38 +1,5 @@
-.table-box-type-1 {
-	width: 100%;
-}
-
-.table-box-type-1 .period-inform {
-	border: 1px solid rgba(31, 41, 55, 0.2);
-	border-radius: 1rem;
-	padding: 10px;
-	margin-bottom: 20px;
-}
-
-.table-box-type-1 > table {
-	width: 100%;
-/* 	table에 border-radius 적용 시작 */
-	border-collapse: collapse;
-	border-radius: 10px;
-	border-style: hidden;
-/* 	테이블 외부 테두리 표시o */
-/* 	box-shadow: 0 0 0 1px rgba(31, 41, 55, 0.2); */
-/* 	테이블 외부 테두리 표시x */
-	box-shadow: 0 0 0 1px #ffffff;
-/* 	table에 border-radius 적용 끝 */
-}
-
-.table-box-type-1 > table th, .table-box-type-1 > table td {
-/* 	테이블 내부 테두리 표시o */
-/* 	border: 1px solid rgba(31, 41, 55, 0.2); */
-/* 	테이블 내부 테두리 표시x */
-	border: 1px solid #ffffff;
-	padding: 10px;
-	text-align: left;
-	font-size: 1.25rem;
-}
-
-.table-box-type-1 > table tbody th {
-	font-weight: 600;
-	color: rgba(0, 0, 0, 0.6);
+.bookingList-box {
+	padding: 15px;
+	border: 1px solid rgba(0,0,0,0.08);
+	border-radius: 5px;
 }

@@ -3,11 +3,13 @@ package com.KoreaIT.project.BAP.service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.BookingRepository;
+import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
 
 @Service
@@ -56,5 +58,18 @@ public class BookingService {
 
 	public Booking getBookingByCellphoneNo(String cellphoneNo) {
 		return bookingRepository.getBookingByCellphoneNo(cellphoneNo);
+	}
+
+	public List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo) {
+		
+		List<Booking> bookings = bookingRepository.getForPrintBookingsByCellphoneNo(cellphoneNo);
+		
+		for (Booking booking : bookings) {
+			// 예약 리스트 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
+			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
+			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
+		}
+		
+		return bookings;
 	}
 }
