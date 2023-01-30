@@ -3,14 +3,13 @@
 
 <c:set var="pageTitle" value="사업장 정보" />
 <%@ include file="../common/head.jspf" %>
-<link rel="stylesheet" href="/resource/managementDetail.css" />
 
 <section class="mt-20">
 	<div class="con-3 flex flex-row mx-auto px-3 ">
 		<div class="side-bar-myPage mr-6">
 			<div class="p-5 pt-0">
 				<ul>
-					<li><a href="../company/managementList">사업장 정보</a></li>
+					<li><a href="../management/companyDetail?id=${param.id}">사업장 정보</a></li>
 				</ul>
 				<ul>
 					<li><a href="../product/management">예약 확인</a></li>
@@ -70,7 +69,7 @@
 			</table>
 			<div class="mt-5 text-center">
 				<a href="../member/checkPassword" class="btn btn-active w-36 h-11">정보수정</a>
-				<a href="../company/managementList" class="btn btn-active btn-ghost w-36 h-11">뒤로가기</a>
+				<a href="../management/companyList" class="btn btn-active btn-ghost w-36 h-11">뒤로가기</a>
 			</div>
 		</div>
 	</div>

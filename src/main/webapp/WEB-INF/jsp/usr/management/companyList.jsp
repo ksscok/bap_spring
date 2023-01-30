@@ -3,7 +3,7 @@
 
 <c:set var="pageTitle" value="사업장 관리" />
 <%@ include file="../common/head.jspf" %>
-<link rel="stylesheet" href="/resource/managementList.css" />
+<link rel="stylesheet" href="/resource/managementCompanyList.css" />
 
 <section class="mt-20">
 	<div class="con-3 flex flex-row mx-auto px-3 ">
@@ -16,7 +16,7 @@
 					<li><a href="../company/register">사업장 등록</a></li>
 				</ul>
 				<ul>
-					<li><a href="../company/managementList">사업장 관리</a></li>
+					<li><a href="../management/companyList">사업장 관리</a></li>
 				</ul>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 						<tr>	
 							<td>${company.id}</td>
 							<td>
-								<a href="../company/managementDetail?id=${company.id}">${company.name}</a>
+								<a href="../management/companyDetail?id=${company.id}">${company.name}</a>
 							</td>
 							<td>${company.getForPrintAccommodationType()}</td>
 							<td>${company.getForPrintRegDate()}</td>

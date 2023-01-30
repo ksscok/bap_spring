@@ -81,28 +81,6 @@ public class UsrCompanyController {
 		return rq.jsReplace(Ut.f("%d번 사업장이 등록되었습니다.", newCompanyId), "/");
 	}
 	
-	@RequestMapping("/usr/company/managementList")
-	public String showManagementList(Model model) {
-		
-		int hostId = rq.getLoginedMemberId();
-		
-		List<Company> companies = companyService.getCompanyByHostId(hostId);
-		
-		model.addAttribute("companies", companies);
-		
-		return "usr/company/managementList";
-	}
-	
-	@RequestMapping("/usr/company/managementDetail")
-	public String showManagementDetail(Model model, int id) {
-		
-		Company company = companyService.getCompanyByComp_id(id);
-		
-		model.addAttribute("company", company);
-		
-		return "usr/company/managementDetail";
-	}
-	
 	@RequestMapping("/usr/company/list")
 	public String showList(Model model,
 			@RequestParam(defaultValue="") String searchKeyword,
