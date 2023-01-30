@@ -149,9 +149,6 @@ public class UsrBookingController {
 	public String showList(Model model, String cellphoneNo) {
 		
 		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo);
-		for (Booking booking : bookings) {
-			System.out.println(booking.getExtra__compName());
-		}
 		
 		model.addAttribute("bookings", bookings);
 		

@@ -27,7 +27,7 @@ memberType = 'host',
 loginId = 'host1',
 loginPw = 'host1',
 `name` = '호스트1',
-cellphoneNo = '010-1212-2323',
+cellphoneNo = '010-1111-2222',
 email = 'host1@gmail.com';
 
 INSERT INTO `member`
