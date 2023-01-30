@@ -51,7 +51,7 @@
 					</tr>
 					<tr>
 						<th>지역</th>
-						<td>${company.area}</td>
+						<td>${rq.getAreaMap(company.area)}</td>
 					</tr>
 					<tr>
 						<th>체크인 시간</th>

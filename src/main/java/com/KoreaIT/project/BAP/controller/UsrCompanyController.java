@@ -113,7 +113,7 @@ public class UsrCompanyController {
 			@RequestParam(defaultValue="0") int low_price,
 			@RequestParam(defaultValue="999999999") int high_price) {
 		
-		String areaInput = companyService.getAreaMap(area);
+		String areaInput = rq.getAreaMap(area);
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
