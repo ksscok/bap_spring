@@ -12,7 +12,7 @@
 	<section class="main-product-search">
 		<h1 class="title">전국 숙박업소 실시간 예약</h1>
 		<h1 class="sub-title">호텔부터 펜션까지, 다양한 숙소가 한곳에!</h1>
-		<form action="../home/doSearch" class="search-container">
+		<form action="../home/doSearch" class="search-container" onsubmit="mainSearch__submit(this); return false;">
 			<div class="search-box" >
 				<div class="m-1">
 					<h2 class="font-bold mb-2 pl-1">체크인</h2>
@@ -110,8 +110,46 @@
 </div>
 
 <script>
-//   document.getElementById('start_date').value = new Date().toISOString().substring(0, 10);
-//   document.getElementById('end_date').value = new Date().toISOString().substring(0, 10);
+
+function mainSearch__submit(form) {
+	
+	form.start_date.value = form.start_date.value.trim();
+	if(form.start_date.value.length == 0) {
+		alert('체크인 날짜를 선택해주세요.');
+		form.start_date.focus();
+		
+		return;
+	}
+	
+	form.end_date.value = form.end_date.value.trim();
+	if(form.end_date.value.length == 0) {
+		alert('체크인 날짜를 선택해주세요.');
+		form.end_date.focus();
+		
+		return;
+	}
+	
+	form.countOfAdult.value = form.countOfAdult.value.trim();
+	form.countOfChild.value = form.countOfChild.value.trim();
+	if(form.countOfAdult.value == 0 && form.countOfChild.value == 0) {
+		alert('인원을 1명 이상 선택해주세요.');
+		form.countOfAdult.focus();
+		
+		return;
+	}
+	
+	form.searchKeyword.value = form.searchKeyword.value.trim();
+	if(form.searchKeyword.value.length == 0) {
+		alert('검색어를 입력해주세요.');
+		form.searchKeyword.focus();
+		
+		return;
+	}
+	
+	form.submit();
+
+}
+
 </script>
 
 
