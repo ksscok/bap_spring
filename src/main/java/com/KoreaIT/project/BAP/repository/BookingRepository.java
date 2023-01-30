@@ -1,5 +1,7 @@
 package com.KoreaIT.project.BAP.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -42,4 +44,19 @@ public interface BookingRepository {
 				WHERE cellphoneNo = #{cellphoneNo}
 			""")
 	Booking getBookingByCellphoneNo(String cellphoneNo);
+
+	@Select("""
+			SELECT b.*, 
+				c.name AS extra__compName,
+				p.roomType AS extra__prodRoomType,
+				p.fee AS extra__prodFee
+				FROM booking AS b
+				LEFT JOIN company AS c
+				ON b.comp_id = c.id
+				LEFT JOIN product AS p
+				ON b.prod_id = p.id
+				WHERE b.cellphoneNo = #{cellphoneNo}
+				GROUP BY b.id
+			""")
+	List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo);
 }

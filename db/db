@@ -27,7 +27,7 @@ memberType = 'host',
 loginId = 'host1',
 loginPw = 'host1',
 `name` = '호스트1',
-cellphoneNo = '010-1234-5678',
+cellphoneNo = '010-1212-2323',
 email = 'host1@gmail.com';
 
 INSERT INTO `member`
@@ -68,7 +68,7 @@ memberType = 'guest',
 loginId = 'guest1',
 loginPw = 'guest1',
 `name` = '게스트1',
-cellphoneNo = '010-1234-5678',
+cellphoneNo = '010-1212-3434',
 email = 'guest1@gmail.com';
 
 INSERT INTO `member`
@@ -78,7 +78,7 @@ memberType = 'guest',
 loginId = 'guest2',
 loginPw = 'guest2',
 `name` = '게스트2',
-cellphoneNo = '010-1234-5678',
+cellphoneNo = '010-3434-4545',
 email = 'guest2@gmail.com';
 
 # company 테이블 생성
@@ -458,13 +458,12 @@ CREATE TABLE booking
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수'
 );
-## cellphoneNo 추가 예정 (API 연동 후)
 
 SELECT * FROM booking;
 SELECT LAST_INSERT_ID();
 
 # booking 테스트 데이터 생성
-# 호텔타입으로 게스트1이 대전 롯데시티호텔 1번방을 예약
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -473,8 +472,78 @@ comp_id = 2,
 prod_id = 1,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
-start_date = "2023-02-01",
-end_date = "2023-02-28",
+start_date = "2023-02-13",
+end_date = "2023-02-15",
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트1(cellphoneNo)이 서울 신라호텔 1번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "1", "1"),
+comp_id = 1,
+prod_id = 1,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-03-01",
+end_date = "2023-04-28",
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test2',
+cellphoneNo = '010-3434-4545',
+start_date = "2023-04-13",
+end_date = "2023-04-20",
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "3", "1"),
+comp_id = 3,
+prod_id = 1,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-05-01",
+end_date = "2023-05-02",
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "6", "1"),
+comp_id = 6,
+prod_id = 1,
+customerName = 'test2',
+cellphoneNo = '010-3434-4545',
+start_date = "2023-04-13",
+end_date = "2023-04-20",
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-05-13",
+end_date = "2023-05-20",
 countOfAdult = 2,
 countOfChild = 0;
 

@@ -3,6 +3,7 @@ package com.KoreaIT.project.BAP.controller;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -147,15 +148,12 @@ public class UsrBookingController {
 	@RequestMapping("/usr/booking/list")
 	public String showList(Model model, String cellphoneNo) {
 		
-		Booking booking = bookingService.getBookingByCellphoneNo(cellphoneNo);
+		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo);
+		for (Booking booking : bookings) {
+			System.out.println(booking.getExtra__compName());
+		}
 		
-		Company company = companyService.getCompanyByComp_id(booking.getComp_id());
-		Product product = productService.getForPrintproduct(booking.getProd_id());
-		
-		String orderName = company.getName() + "/" + product.getRoomType();
-		System.out.println("orderName : " + orderName);
-		
-		model.addAttribute("booking", booking);
+		model.addAttribute("bookings", bookings);
 		
 		return "/usr/booking/list";
 	}
@@ -172,22 +170,22 @@ public class UsrBookingController {
 		String start_date = booking.getStart_date();
 		String end_date = booking.getEnd_date();
 		
-		// 예약 상세보기페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
-		String DateAndDayOfTheWeekOfChkin = Ut.getDateAndDayOfTheWeek(start_date);
-		String DateAndDayOfTheWeekOfChkout = Ut.getDateAndDayOfTheWeek(end_date);
+		// 예약 상세보기 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
+		String dateAndDayOfTheWeekOfChkin = Ut.getDateAndDayOfTheWeek(start_date);
+		String dateAndDayOfTheWeekOfChkout = Ut.getDateAndDayOfTheWeek(end_date);
 		
 		Company company = companyService.getCompanyByComp_id(booking.getComp_id());
-		String TimeChkin = company.getTimeChkin();
-		String TimeChkout = company.getTimeChkout();
+		String timeChkin = company.getTimeChkin();
+		String timeChkout = company.getTimeChkout();
 		
 		Product product = productService.getForPrintproduct(booking.getProd_id());
 		
 		
 		model.addAttribute("booking", booking);
-		model.addAttribute("DateAndDayOfTheWeekOfChkin", DateAndDayOfTheWeekOfChkin);
-		model.addAttribute("DateAndDayOfTheWeekOfChkout", DateAndDayOfTheWeekOfChkout);
-		model.addAttribute("TimeChkin", TimeChkin);
-		model.addAttribute("TimeChkout", TimeChkout);
+		model.addAttribute("dateAndDayOfTheWeekOfChkin", dateAndDayOfTheWeekOfChkin);
+		model.addAttribute("dateAndDayOfTheWeekOfChkout", dateAndDayOfTheWeekOfChkout);
+		model.addAttribute("timeChkin", timeChkin);
+		model.addAttribute("timeChkout", timeChkout);
 		
 		return "/usr/booking/detail";
 	}

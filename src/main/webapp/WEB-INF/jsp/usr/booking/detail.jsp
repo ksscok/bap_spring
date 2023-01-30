@@ -17,17 +17,17 @@
 				<div class="chkin-inform text-xl">
 					<span class="text-gray-400">체크인</span>
 					&nbsp;&nbsp;&nbsp;
-					<span>${DateAndDayOfTheWeekOfChkin }</span>
+					<span>${dateAndDayOfTheWeekOfChkin }</span>
 					&nbsp;
-					<span>${TimeChkin }</span>
+					<span>${timeChkin }</span>
 				</div>
 				<div class="text-xl"><i class="fa-solid fa-circle-right"></i></div>
 				<div class="chkout-inform text-xl">
 					<span class="text-gray-400">체크아웃</span>
 					&nbsp;&nbsp;&nbsp;
-					<span>${DateAndDayOfTheWeekOfChkout }</span>
+					<span>${dateAndDayOfTheWeekOfChkout }</span>
 					&nbsp;
-					<span>${TimeChkout }</span>
+					<span>${timeChkout }</span>
 				</div>
 			</div>
 		
@@ -64,7 +64,7 @@
 				
 				<thead>
 					<tr>
-						<th colspan="2"><div class="text-3xl">결제 정보</div></th>
+						<th colspan="2"><div class="text-2xl">결제 정보</div></th>
 					</tr>
 				</thead>				
 				<tbody>
