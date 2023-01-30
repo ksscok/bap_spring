@@ -7,7 +7,7 @@
 <section class="mt-14">
 	<div class="con-2 mx-auto px-3">
 		<div class="text-xl">회원가입</div>
-		<form class="table-box-type-2 flex justify-center flex-col mt-5 text-sm" method="POST" action="../member/doJoin">
+		<form class="table-box-type-2 flex justify-center flex-col mt-5 text-sm" method="POST" action="../member/doJoin" onsubmit="memberJoin__submit(this); return false;">
 			<table>
 				<colgroup>
 					<col width="200"/>
@@ -39,7 +39,7 @@
 					<tr>
 						<th>비밀번호</th>
 						<td>
-							<input name="loginPw" type="text" class="input input-bordered w-64" placeholder="비밀번호를 입력해주세요."/>
+							<input name="loginPw" type="password" class="input input-bordered w-64" placeholder="비밀번호를 입력해주세요."/>
 							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 8~16자의 영문, 숫자, 특수문자를 조합하시거나 10~16자의 영문, 숫자를 조합해서 입력해주세요.</div>
 							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 특수문자는 !@#$%^&*-= 만 사용 가능합니다.</div>
 							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 한글과 여백은 입력이 불가합니다.</div>
@@ -51,7 +51,7 @@
 					<tr>
 						<th>비밀번호 확인</th>
 						<td>
-							<input name="loginPwConfirm" type="text" class="input input-bordered w-64" placeholder="비밀번호를 다시 한번 입력해주세요."/>
+							<input name="loginPwConfirm" type="password" class="input input-bordered w-64" placeholder="비밀번호를 다시 한번 입력해주세요."/>
 						</td>
 					</tr>
 					<tr>
@@ -81,6 +81,76 @@
 		</form>
 	</div>
 </section>
+
+<script>
+	function memberJoin__submit(form) {
+		
+		form.memberType.value = form.memberType.value.trim();
+		if(form.memberType.value.length == 0) {
+			alert('회원 구분을 선택해주세요');
+			form.memberType.focus();
+			
+			return;
+		}
+		
+		form.loginId.value = form.loginId.value.trim();
+		if(form.loginId.value.length == 0) {
+			alert('아이디를 입력해주세요');
+			form.loginId.focus();
+			
+			return;
+		}
+		
+		form.loginPw.value = form.loginPw.value.trim();
+		if(form.loginPw.value.length == 0) {
+			alert('비밀번호를 입력해주세요');
+			form.loginPw.focus();
+			
+			return;
+		}
+		
+		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+		if(form.loginPwConfirm.value.length == 0) {
+			alert('비밀번호 확인을 입력해주세요');
+			form.loginPwConfirm.focus();
+			
+			return;
+		}
+		
+		if(form.loginPwConfirm.value != form.loginPw.value) {
+			alert('비밀번호를 다시 확인해주세요.');
+			form.loginPw.focus();
+			
+			return;
+		}
+		
+		form.name.value = form.name.value.trim();
+		if(form.name.value.length == 0) {
+			alert('이름을 입력해주세요');
+			form.name.focus();
+			
+			return;
+		}
+		
+		form.email.value = form.email.value.trim();
+		if(form.email.value.length == 0) {
+			alert('이메일을 입력해주세요');
+			form.email.focus();
+			
+			return;
+		}
+		
+		form.cellphoneNo.value = form.cellphoneNo.value.trim();
+		if(form.cellphoneNo.value.length == 0) {
+			alert('핸드폰 번호를 입력해주세요');
+			form.cellphoneNo.focus();
+			
+			return;
+		}
+		
+		form.submit();
+	}
+</script>
 
 
 <%@ include file="../common/foot.jspf" %>
