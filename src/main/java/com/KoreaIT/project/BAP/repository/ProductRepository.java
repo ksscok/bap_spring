@@ -2,6 +2,7 @@ package com.KoreaIT.project.BAP.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -74,4 +75,23 @@ public interface ProductRepository {
 			</script>
 			""")
 	List<Product> getProductsByCompanyId(int comp_id, String countOfRoom, String countOfAdult, String countOfChild, String withoutMealsType, String withBreakfastType, String withDinnerType, String withBreakfastAndDinnerType, String smokingType, int low_price, int high_price);
+
+	
+	
+	@Insert("""
+			INSERT into product
+			SET regDate = NOW(),
+			updateDate = NOW(),
+			comp_id = #{comp_id},
+			roomType = #{roomType},
+			numberOfRooms = #{numberOfRooms},
+			fee = #{fee},
+			countOfRoom = #{countOfRoom},
+			countOfAdult = #{countOfAdult},
+			countOfChild = #{countOfChild},
+			includeMeals = #{includeMeals},
+			smokingType = #{smokingType}
+			""")
+	int register(int comp_id, String roomType, int numberOfRooms, int fee, String countOfRoom, String countOfAdult, String countOfChild,
+			String includeMeals, String smokingType);
 }

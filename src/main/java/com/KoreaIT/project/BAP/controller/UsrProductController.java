@@ -5,28 +5,39 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.KoreaIT.project.BAP.service.CompanyService;
+import com.KoreaIT.project.BAP.service.GenFileService;
 import com.KoreaIT.project.BAP.service.ProductService;
+import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Product;
+import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
 public class UsrProductController {
 	
 	private ProductService productService;
 	private CompanyService companyService;
+	GenFileService genFileService;
+	Rq rq;
 	
 	@Autowired
-	public UsrProductController(ProductService productService, CompanyService companyService) {
+	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, Rq rq) {
 		this.productService = productService;
 		this.companyService = companyService;
+		this.genFileService = genFileService;
+		this.rq = rq;
 	}
 	
 	@RequestMapping("/usr/product/detail")
@@ -104,4 +115,54 @@ public class UsrProductController {
 		return "usr/product/detail";
 	}
 	
+	@RequestMapping("/usr/product/register")
+	public String showRegister() {
+		
+		return "usr/product/register";
+	}
+	
+	@RequestMapping("/usr/product/doRegister")
+	@ResponseBody
+	public String doRegister(int comp_id, String roomType, int numberOfRooms, int fee, String countOfRoom, 
+			String countOfAdult, String countOfChild, String includeMeals, 
+			String smokingType, MultipartRequest multipartRequest) {
+		
+		if(Ut.empty(roomType)) {
+			return rq.jsHistoryBack("객실 이름을 입력해주세요.");
+		}
+		if(Ut.empty(numberOfRooms)) {
+			return rq.jsHistoryBack("객실 개수를 입력해주세요.");
+		}
+		if(Ut.empty(fee)) {
+			return rq.jsHistoryBack("객실 요금을 입력해주세요.");
+		}
+		if(Ut.empty(countOfRoom)) {
+			return rq.jsHistoryBack("countOfRoom을 입력해주세요.");
+		}
+		if(Ut.empty(countOfAdult)) {
+			return rq.jsHistoryBack("성인 인원을 입력해주세요.");
+		}
+		if(Ut.empty(countOfChild)) {
+			return rq.jsHistoryBack("아동 인원을 입력해주세요.");
+		}
+		if(Ut.empty(includeMeals)) {
+			return rq.jsHistoryBack("식사 정보를 입력해주세요.");
+		}
+		if(Ut.empty(smokingType)) {
+			return rq.jsHistoryBack("흡연 가능 여부를 입력해주세요.");
+		}
+		
+		int newProductId = productService.register(comp_id, roomType, numberOfRooms, fee, countOfRoom, countOfAdult, countOfChild, includeMeals, smokingType);
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+            MultipartFile multipartFile = fileMap.get(fileInputName);
+            if ( multipartFile.isEmpty() == false ) {
+                genFileService.save(multipartFile, newProductId);
+            }
+        }
+		
+		return rq.jsReplace(Ut.f("%d번 객실이 등록되었습니다.", newProductId), "/");
+	}
 }
