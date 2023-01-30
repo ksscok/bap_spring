@@ -22,7 +22,7 @@
 					<li><a href="../product/register?id=${param.id}">객실 등록</a></li>
 				</ul>
 				<ul>
-					<li><a href="../product/management">객실 관리</a></li>
+					<li><a href="../management/productList?id=${param.id}">객실 관리</a></li>
 				</ul>
 			</div>
 		</div>

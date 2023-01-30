@@ -163,6 +163,6 @@ public class UsrProductController {
             }
         }
 		
-		return rq.jsReplace(Ut.f("%d번 객실이 등록되었습니다.", newProductId), "/");
+		return rq.jsReplace("객실이 등록되었습니다.", "../management/productList?id=" + comp_id);
 	}
 }

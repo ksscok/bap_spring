@@ -18,6 +18,8 @@ public class Product {
 	private String countOfRoom;
 	private String countOfAdult;
 	private String countOfChild;
+	private String includeMeals;
+	private String smokingType;
 	
 	private String comName;
 	private String comAddr;

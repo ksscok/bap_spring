@@ -31,4 +31,8 @@ public class ProductService {
 		return productRepository.register(comp_id, roomType, numberOfRooms, fee, countOfRoom, countOfAdult,
 				countOfChild, includeMeals, smokingType);
 	}
+
+	public List<Product> getProductsByCompId(int id) {
+		return productRepository.getProductsByCompId(id);
+	}
 }

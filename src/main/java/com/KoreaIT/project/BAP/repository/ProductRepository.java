@@ -75,8 +75,6 @@ public interface ProductRepository {
 			</script>
 			""")
 	List<Product> getProductsByCompanyId(int comp_id, String countOfRoom, String countOfAdult, String countOfChild, String withoutMealsType, String withBreakfastType, String withDinnerType, String withBreakfastAndDinnerType, String smokingType, int low_price, int high_price);
-
-	
 	
 	@Insert("""
 			INSERT into product
@@ -94,4 +92,11 @@ public interface ProductRepository {
 			""")
 	int register(int comp_id, String roomType, int numberOfRooms, int fee, String countOfRoom, String countOfAdult, String countOfChild,
 			String includeMeals, String smokingType);
+	
+	@Select("""
+			SELECT *
+			FROM product
+			WHERE comp_id = #{id}
+			""")
+	List<Product> getProductsByCompId(int id);
 }

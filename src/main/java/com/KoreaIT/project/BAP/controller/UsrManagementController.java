@@ -5,19 +5,24 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.KoreaIT.project.BAP.service.CompanyService;
+import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.vo.Company;
+import com.KoreaIT.project.BAP.vo.Product;
 import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
 public class UsrManagementController {
 	
 	private CompanyService companyService;
+	private ProductService productService;
 	private Rq rq;
 	
-	UsrManagementController(CompanyService companyService, Rq rq) {
+	UsrManagementController(CompanyService companyService, ProductService productService, Rq rq) {
 		this.companyService = companyService;
+		this.productService = productService;
 		this.rq = rq;
 	}
 	
@@ -42,5 +47,16 @@ public class UsrManagementController {
 		
 		return "usr/management/companyDetail";
 	}
+	
+	@RequestMapping("/usr/management/productList")
+	public String showproductList(Model model, @RequestParam(defaultValue = "") int id) {
+		
+		List<Product> products = productService.getProductsByCompId(id);
+		
+		model.addAttribute("products", products);
+		
+		return "usr/management/productList";
+	}
+
 }
 
