@@ -200,4 +200,8 @@ public class CompanyService {
 		
 		return map.get(area);
 	}
+
+	public List<Company> getCompanyByHostId(int hostId) {
+		return companyRepository.getCompanyByHostId(hostId);
+	}
 }
