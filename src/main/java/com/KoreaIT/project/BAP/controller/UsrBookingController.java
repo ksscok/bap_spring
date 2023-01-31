@@ -2,6 +2,10 @@ package com.KoreaIT.project.BAP.controller;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.MemberService;
+import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Member;
+import com.KoreaIT.project.BAP.vo.Payment;
 import com.KoreaIT.project.BAP.vo.Product;
 import com.KoreaIT.project.BAP.vo.Rq;
 
@@ -26,14 +32,16 @@ import com.KoreaIT.project.BAP.vo.Rq;
 public class UsrBookingController {
 	
 	private BookingService bookingService;
+	private PaymentService paymentService;
 	private ProductService productService;
 	private CompanyService companyService;
 	private MemberService memberService;
 	private Rq rq;
 	
 	@Autowired
-	public UsrBookingController(BookingService bookingService, ProductService productService, CompanyService companyService, MemberService memberService, Rq rq) {
+	public UsrBookingController(BookingService bookingService, PaymentService paymentService, ProductService productService, CompanyService companyService, MemberService memberService, Rq rq) {
 		this.bookingService = bookingService;
+		this.paymentService = paymentService;
 		this.productService = productService;
 		this.companyService = companyService;
 		this.memberService = memberService;
@@ -95,7 +103,7 @@ public class UsrBookingController {
 		// 예약페이지에서 몇박인지 보여주기 위한 (체크인-체크아웃)값 불러오는 코드
 		int diff = bookingService.getDiffBetweenChkinChkout(start_date, end_date);
 		
-		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기위한 코드
+		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기위한 코드 (실패)
 		String isWrite = "notWrite";
         
 		model.addAttribute("comp_id", comp_id);
@@ -119,11 +127,11 @@ public class UsrBookingController {
 
 	@RequestMapping("/usr/booking/doBook")
 	public String doBook(Model model, String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, 
-			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, String orderName, String isWrite) {
+			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, String orderName, int diff, String isWrite) {
 		
 		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기 (실패)
 		if(isWrite.trim().equals("notWrite")) {
-			bookingService.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, countOfAdult, countOfChild);
+			bookingService.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, diff, countOfAdult, countOfChild);
 			isWrite = "";
 		}
 		
@@ -177,12 +185,20 @@ public class UsrBookingController {
 		
 		Product product = productService.getForPrintproduct(booking.getProd_id());
 		
+		Payment payment = paymentService.getPaymentByBooking_id(booking.getId());
+		
+		String requestedAt = payment.getRequestedAt();
+		
+		LocalDateTime dateTime = LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(requestedAt)).atZone(ZoneId.of("Asia/Seoul")));
 		
 		model.addAttribute("booking", booking);
+		model.addAttribute("payment", payment);
 		model.addAttribute("dateAndDayOfTheWeekOfChkin", dateAndDayOfTheWeekOfChkin);
 		model.addAttribute("dateAndDayOfTheWeekOfChkout", dateAndDayOfTheWeekOfChkout);
 		model.addAttribute("timeChkin", timeChkin);
 		model.addAttribute("timeChkout", timeChkout);
+		model.addAttribute("requestedAt", requestedAt);
+		model.addAttribute("dateTime", dateTime);
 		
 		return "/usr/booking/detail";
 	}

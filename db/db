@@ -455,6 +455,7 @@ CREATE TABLE booking
     cellphoneNo  VARCHAR(100)    NOT NULL    COMMENT '예약자 번호', 
     start_date      VARCHAR(100)        NOT NULL    COMMENT '체크인', 
     end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃',
+    diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수'
 );
@@ -474,6 +475,7 @@ customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 start_date = "2023-02-13",
 end_date = "2023-02-15",
+diff = 2,
 countOfAdult = 2,
 countOfChild = 0;
 
@@ -488,6 +490,7 @@ customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 start_date = "2023-03-01",
 end_date = "2023-04-28",
+diff = 58,
 countOfAdult = 2,
 countOfChild = 0;
 
@@ -502,6 +505,7 @@ customerName = 'test2',
 cellphoneNo = '010-3434-4545',
 start_date = "2023-04-13",
 end_date = "2023-04-20",
+diff = 7,
 countOfAdult = 2,
 countOfChild = 0;
 
@@ -516,6 +520,7 @@ customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 start_date = "2023-05-01",
 end_date = "2023-05-02",
+diff = 1,
 countOfAdult = 2,
 countOfChild = 0;
 
@@ -530,6 +535,7 @@ customerName = 'test2',
 cellphoneNo = '010-3434-4545',
 start_date = "2023-04-13",
 end_date = "2023-04-20",
+diff = 7,
 countOfAdult = 2,
 countOfChild = 0;
 
@@ -544,8 +550,53 @@ customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 start_date = "2023-05-13",
 end_date = "2023-05-20",
+diff = 7,
 countOfAdult = 2,
 countOfChild = 0;
+
+CREATE TABLE payment
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+	paymentKey VARCHAR(200) NOT NULL    COMMENT '결제 키',
+    booking_id    INT UNSIGNED     NOT NULL    COMMENT '예약번호', 
+    `status`    VARCHAR(45)    NOT NULL    COMMENT '결제상태', 
+    method  VARCHAR(100)    NOT NULL    COMMENT '결제수단', 
+    bank  VARCHAR(100)    NOT NULL    COMMENT '결제 은행',  
+    requestedAt     VARCHAR(100)        NOT NULL    COMMENT '결제가 일어난 날짜, 시간',
+    approvedAt     VARCHAR(100)      NOT NULL    COMMENT '결제 승인 날짜, 시간',
+    `type` VARCHAR(100) NOT NULL COMMENT '결제 타입 정보 (NORMAL : 일반결제, BILLING : 자동결제, BRANDPAY : 브랜드페이)',
+    cancels VARCHAR(100) COMMENT '결제 취소 상태',
+    lastTransactionKey VARCHAR(200) NOT NULL COMMENT '마지막 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)',
+    totalAmount INT UNSIGNED NOT NULL COMMENT '총 결제 금액',
+    balanceAmount INT UNSIGNED NOT NULL COMMENT '취소할 수 있는 금액(잔고)',
+    suppliedAmount INT UNSIGNED NOT NULL COMMENT '공급가액',
+    vat INT UNSIGNED NOT NULL COMMENT '부가세 {결제 금액(amount) - 면세 금액(taxFreeAmount)//11후 소수점 첫째 자리에서 반올림'
+);
+
+# payment 테스트 데이터
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 4,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 70000,
+balanceAmount = 70000,
+suppliedAmount = 63636,
+vat = 6364;
+
+
+SELECT *
+FROM payment;
+
 
 # 현재날짜(today)를 "-" 제외한 값 구하기
 SELECT  REPLACE(CURRENT_DATE(), "-", "");
@@ -907,3 +958,7 @@ countOfAdult = 2,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
+SELECT *
+FROM booking
+WHERE orderId = '20230131110720a2c2p21';

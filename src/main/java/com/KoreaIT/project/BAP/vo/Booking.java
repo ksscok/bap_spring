@@ -18,6 +18,7 @@ public class Booking {
 	private String cellphoneNo;
 	private String start_date;
 	private String end_date;
+	private int diff;
 	
 	private String extra__compName;
 	private String extra__prodRoomType;

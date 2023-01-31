@@ -1,0 +1,14 @@
+input:focus {outline: none;}
+
+.table-box {
+	text-align: left;
+}
+
+.solid {
+	display: none;
+}
+
+/* transition 먹게하고싶은데 안먹네 */
+.regular > .fa-regular, .solid > .fa-solid {
+	transition: display 5s;
+}

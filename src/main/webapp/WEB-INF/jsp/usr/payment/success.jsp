@@ -12,6 +12,9 @@
 
 <script src="https://js.tosspayments.com/v1/payment"></script>
 
+<!-- success css -->
+<link rel="stylesheet" href="/resource/success.css" />
+
 <script>
 	if(sessionStorage.getItem('customerName')){
 	 var customerName = sessionStorage.getItem('customerName')
@@ -21,48 +24,61 @@
 
 
 <!-- 결제에 대한 정보를 결제 테이블에 넘겨줘야 함 -->
-<section class="my-20">
+<section class="mt-40">
 		<div class="con-3 mx-auto px-3">
 <!-- 			결제 테이블로 값을 넘길 수 있을까? -->
-			<form>
-				<h1> 결제 성공! </h1>
-				
-				<table>
-					<tr>
-						<th>결제 키 : </th>
-						<td>${paymentKey}</td>
-					</tr>				
-					<tr>
-						<th>주문번호 : </th>
-						<td>${orderId}</td>
-					</tr>				
-					<tr>
-						<th>가격 : </th>
-						<td>${amount}</td>
-					</tr>				
-					<tr>
-						<th>상품명 : </th>
-						<td>${orderName}</td>
-					</tr>				
-					<tr>
-						<th>예약자명 : </th>
-						<td><div id="customerName"></div></td>
-					</tr>				
-				</table>
-				
+			<form name="sendForm" action="usr/payment/doWrite">
+				<input type="hidden" name="paymentKey" value="${paymentKey}"/>
+				<input type="hidden" name="orderId" value="${orderId}"/>
+				<input type="hidden" name="amount" value="${amount}"/>
+				<input type="hidden" name="orderName" value="${orderName}"/>
+				<input type="hidden" name="customerName" value="${customerName}"/>
+				<input type="hidden" name="status" value="${status }"/>
+				<input type="hidden" name="method" value="${method }"/>
+				<input type="hidden" name="easyPay" value="${easyPay }"/>
+				<input type="hidden" name="requestedAt" value="${requestedAt }"/>
+				<input type="hidden" name="approvedAt" value="${approvedAt }"/>
+				<input type="hidden" name="type" value="${type }"/>
+				<input type="hidden" name="cancels" value="${cancels }"/>
+				<input type="hidden" name="lastTransactionKey" value="${lastTransactionKey }"/>
+				<input type="hidden" name="totalAmount" value="${totalAmount }"/>
+				<input type="hidden" name="balanceAmount" value="${balanceAmount }"/>
+				<input type="hidden" name="suppliedAmount" value="${suppliedAmount }"/>
+				<input type="hidden" name="vat" value="${vat }"/>
+				<div class="text-center font-extrabold text-4xl">
+					<div class="mb-2">
+						<span id="regular" class="regular"><i class="fa-regular fa-circle-check"></i></span>
+						<span id="solid" class="solid"><i class="fa-solid fa-circle-check"></i></span>
+					</div>
+					<h1> 결제가 완료 되었습니다. </h1>
+				</div>	
 			</form>
-			<div>
-				<a href="../usr/booking/detail?orderId=${orderId }">예약 확인</a>
-			</div>
 		</div>
 </section>
 
 <script>
 
 	if(sessionStorage.getItem('customerName') != 0){
-		// div에 글자를 추가할 때
-	 document.getElementById('customerName').append(customerName);
+		// 결제 DB에 넣을 값을 보내주기 위해
+	 $('input[name=customerName]').attr('value', customerName);
 	}
+	
+	
+	setTimeout(function() {
+		// 결제페이지에서 서클-체크가 시간(1초)이 지나서 바뀌도록 하는 함수
+		document.getElementById('regular').innerHTML= '<i class="fa-solid fa-circle-check">';
+	}, 1000)
+	
+		// 결제페이지에서 시간(2초)지나면 페이지가 자동으로 넘어가도록 하는 함수
+	setTimeout(function() {
+		document.sendForm.submit()
+	}, 2000);
+
+// 	 $(document).ready(function chgcircle() {
+// 		 document.getElementById('regular').style.display = 'none';
+// 		 document.getElementById('solid').style.display = 'block';
+// 		})
+		
 	
 </script>
 

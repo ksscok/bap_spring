@@ -52,7 +52,7 @@
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td>010-1212-3434</td>
+						<td>${booking.cellphoneNo }</td>
 					</tr>
 				</tbody>
 			</table>
@@ -70,11 +70,11 @@
 				<tbody>
 					<tr>
 						<th>결제일시</th>
-						<td>2023.02.01 목 11:14</td>
+						<td><input type="text" id="dateTime" name="dateTime" value="${dateTime }" readonly/></td>
 					</tr>
 					<tr>
-						<th>상품가격(1박)</th>
-						<td>70,000원</td>
+						<th>상품가격(${booking.diff }박)</th>
+						<td><fmt:formatNumber value="${payment.totalAmount}" pattern="#,###"/> 원</td>
 					</tr>
 					<tr>
 						<th>결제 시 포인트 사용</th>
@@ -90,7 +90,7 @@
 					</tr>
 					<tr>
 						<th>결제수단</th>
-						<td>토스페이</td>
+						<td>${easyPay }</td>
 					</tr>
 				</tbody>
 			</table>
@@ -99,7 +99,15 @@
 </section>
 
 <script>
-
+	// UTC를 Local로 변경하는 함수 시작
+	let date1 = document.getElementById('dateTime').value;
+	
+	const reqdate = new Date(date1).toISOString().replace('T', ' ').substring(0, 16);
+	$(document).ready(function chgUtcLocal(date){
+		$('input[name=dateTime]').attr('value', reqdate);
+	})
+	// UTC를 Local로 변경하는 함수 끝
+	
 </script>
 
 <%@ include file="../common/foot.jspf"%>

@@ -9,8 +9,9 @@
 <section class="my-20">
 		<div class="con-3 flex justify-between mx-auto px-3">
 			<h1>결제 실패</h1>
-		    <p>{{message}}</p>
-		    <span>에러코드: {{code}}</span>
+		    <div>에러 메세지 : ${message}</div>
+		    <div>에러코드: ${code}</div>
+		    <div>주문번호: ${orderId}</div>
 		</div>
 </section>
 

@@ -25,10 +25,11 @@ public interface BookingRepository {
 				cellphoneNo = #{cellphoneNo},
 				start_date = #{start_date},
 				end_date = #{end_date},
+				diff = #{diff},
 				countOfAdult = #{countOfAdult},
 				countOfChild = #{countOfChild}
 			""")
-	void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int countOfAdult, int countOfChild);
+	void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int diff, int countOfAdult, int countOfChild);
 
 	
 	@Select("""
