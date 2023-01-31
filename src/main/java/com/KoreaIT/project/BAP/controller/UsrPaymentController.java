@@ -83,10 +83,6 @@ public class UsrPaymentController {
 			return Ut.jsHistoryBack("결제 타입 정보를 입력해주세요");
 		}
 		
-		if(Ut.empty(cancels)) {
-			return Ut.jsHistoryBack("결제 취소 상태를 입력해주세요");
-		}
-		
 		if(Ut.empty(lastTransactionKey)) {
 			return Ut.jsHistoryBack("마지막 거래의 키 값을 입력해주세요");
 		}
