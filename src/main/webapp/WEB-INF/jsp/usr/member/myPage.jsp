@@ -33,7 +33,7 @@
 						<li><a href="../company/register">사업장 등록</a></li>
 					</ul>
 					<ul>
-						<li><a href="../company/management">사업장 관리</a></li>
+						<li><a href="../management/companyList">사업장 관리</a></li>
 					</ul>
 				</c:if>
 			</div>

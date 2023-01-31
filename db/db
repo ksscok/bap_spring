@@ -151,7 +151,7 @@ CREATE TABLE product (
 	companyId INT(10) UNSIGNED NOT NULL,
 	accommodationType CHAR(20) NOT NULL,
 	roomType CHAR(20) NOT NULL,
-	image_path VARCHAR (255) NOT NULL,
+	image_path VARCHAR (255) NOT NULL DEFAULT 0,
 	numberOfRooms INT(10) NOT NULL,
 	hostId INT(10) NOT NULL,
 	fee INT(100) NOT NULL,
@@ -303,7 +303,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 companyId = '6',
 accommodationType = '게스트하우스',
-roomtype = '트윈룸(3인타입)',
+roomType = '트윈룸(3인타입)',
 numberOfRooms = 2,
 fee = 72000,
 countOfRoom = 1,
@@ -452,7 +452,7 @@ CREATE TABLE booking
     comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호', 
     prod_id    INT UNSIGNED    NOT NULL    COMMENT '객실번호', 
     customerName  VARCHAR(100)    NOT NULL    COMMENT '예약자 이름', 
-    cellphoneNo  VARCHAR(100)    NOT NULL    COMMENT '예약자 번호', 
+    cellphoneNo  VARCHAR(100)    NOT NULL    COMMENT '예약자 번호',
     start_date      VARCHAR(100)        NOT NULL    COMMENT '체크인', 
     end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃',
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
@@ -959,6 +959,21 @@ countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
 
-SELECT *
-FROM booking
-WHERE orderId = '20230131110720a2c2p21';
+SELECT * FROM company;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 13,
+roomType = '스탠다드',
+numberOfRooms = 3,
+fee = 50000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfchild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+SELECT * FROM company;
+SELECT * FROM product;
+SELECT * FROM genFile;

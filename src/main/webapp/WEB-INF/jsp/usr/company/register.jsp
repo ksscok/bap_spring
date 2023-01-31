@@ -16,13 +16,13 @@
 					<li><a href="../company/register">사업장 등록</a></li>
 				</ul>
 				<ul>
-					<li><a href="../company/management">사업장 관리</a></li>
+					<li><a href="../management/companyList">사업장 관리</a></li>
 				</ul>
 			</div>
 		</div>
 		<div class="table-box-type-2 company-list mt-0 flex flex-col text-sm">
 			<div class="text-xl">사업장 등록</div>
-			<form class="table-box-type-2 flex justify-center flex-col mt-5 text-sm" method="POST" enctype="multipart/form-data" action="../company/doRegister">
+			<form class="table-box-type-2 flex justify-center flex-col mt-5 text-sm" method="POST" enctype="multipart/form-data" action="../company/doRegister" onsubmit="companyRegister__submit(this); return false;">
 				<input type="hidden" name="host_id" value="${rq.loginedMember.id}"/>
 				<input id="area" type="hidden" name="area"/>
 				<table>
@@ -185,7 +185,8 @@
 						<tr>
 							<th>체크인 시간</th>
 							<td>
-								<select name="timeChkin" class="select select-bordered">
+								<select name="timeChkin" class="timeChkin select select-bordered">
+									<option selected disabled></option>	
 									<option>00:00</option>
 									<option>01:00</option>
 									<option>02:00</option>
@@ -216,7 +217,8 @@
 						<tr>
 							<th>체크아웃 시간</th>
 							<td>
-								<select name="timeChkout" class="select select-bordered">
+								<select name="timeChkout" class="timeChkout select select-bordered">
+									<option selected disabled></option>
 									<option>00:00</option>
 									<option>00:00</option>
 									<option>01:00</option>
@@ -250,7 +252,7 @@
 							<td>
 							<div class="flex">
 								<label class="cursor-pointer flex items-center">
-							    <input type="radio" name="accommodationType" value="hotel" checked/>
+							    <input type="radio" name="accommodationType" value="hotel"/>
 							    <span class="text-sm ml-2">호텔</span> 
 							  </label>
 							  <label class="cursor-pointer flex items-center ml-5">
@@ -278,7 +280,6 @@
 				</table>
 				<div class="mt-5 text-center">
 					<button type="submit" class="btn btn-active w-36 h-11">확인</button>
-					<button class="btn btn-active btn-ghost w-36 h-11">취소</button>
 				</div>
 			</form>
 		</div>
@@ -286,6 +287,65 @@
 </section>
 
 <script>
+
+function companyRegister__submit(form) {
+	
+	form.name.value = form.name.value.trim();
+	if(form.name.value.length == 0) {
+		alert('상호를 입력해주세요');
+		form.name.focus();
+		
+		return;
+	}
+	
+	form.address.value = form.address.value.trim();
+	if(form.address.value.length == 0) {
+		alert('사업장 주소를 입력해주세요');
+		form.address.focus();
+		
+		return;
+	}
+	
+	form.area.value = form.area.value.trim();
+	if(form.area.value.length == 0) {
+		alert('사업장 지역을 선택해주세요');
+		form.area.focus();
+		
+		return;
+	}
+	
+	form.timeChkin.value = form.timeChkin.value.trim();
+	if(form.timeChkin.value.length == 0) {
+		alert('체크인 시간을 선택해주세요');
+		form.timeChkin.focus();
+		
+		return;
+	}
+	
+	form.timeChkout.value = form.timeChkout.value.trim();
+	if(form.timeChkout.value.length == 0) {
+		alert('체크아웃 시간을 선택해주세요');
+		form.timeChkout.focus();
+		
+		return;
+	}
+	
+	form.accommodationType.value = form.accommodationType.value.trim();
+	if(form.accommodationType.value.length == 0) {
+		alert('시설 유형을 선택해주세요');
+		
+		return;
+	}
+	
+	form.file__company__0__extra__profileImg__1.value = form.file__company__0__extra__profileImg__1.value.trim();
+	if(form.file__company__0__extra__profileImg__1.value.length == 0) {
+		alert('사업장 프로필 이미지를 등록해주세요.');
+		
+		return;
+	}
+	
+	form.submit();
+}
 
 function insert_area_param(areaNo) {
 	document.getElementById('area').setAttribute('value', areaNo);

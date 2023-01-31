@@ -1,0 +1,4 @@
+.table-box-type-2 > table > thead > tr > th,
+.table-box-type-2 > table > tbody {
+	text-align: center;
+}

@@ -73,6 +73,9 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doJoin(String memberType, String loginId, String loginPw, String loginPwConfirm, String name, String email, String cellphoneNo) {
 		
+		if(Ut.empty(memberType)) {
+			return rq.jsHistoryBack("회원 구분을 선택해주세요.");
+		}
 		if(Ut.empty(loginId)) {
 			return rq.jsHistoryBack("아이디를 입력해주세요.");
 		}
@@ -81,6 +84,9 @@ public class UsrMemberController {
 		}
 		if(Ut.empty(loginPwConfirm)) {
 			return rq.jsHistoryBack("비밀번호 확인을 입력해주세요.");
+		}
+		if(loginPw != loginPwConfirm) {
+			return rq.jsHistoryBack("비밀번호를 다시 확인해주세요.");
 		}
 		if(Ut.empty(name)) {
 			return rq.jsHistoryBack("이름을 입력해주세요.");

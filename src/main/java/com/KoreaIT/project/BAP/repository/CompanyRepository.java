@@ -284,4 +284,11 @@ public interface CompanyRepository {
 			""")
 	int getHotelsCount(String area, int low_price, int high_price);
 
+	@Select("""
+			SELECT *
+			FROM company
+			WHERE host_id = #{hostId}
+			""")
+	List<Company> getCompanyByHostId(int hostId);
+
 }

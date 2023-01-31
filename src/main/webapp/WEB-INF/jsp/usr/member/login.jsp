@@ -6,7 +6,7 @@
 
 <section class="mt-60">
 	<div class="con-1 mx-auto px-3">
-		<form class="flex justify-center" method="POST" action="../member/doLogin">
+		<form class="flex justify-center" method="POST" action="../member/doLogin" onsubmit="memberLogin__form(this); return false;">
 		<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
 			<table>
 				<colgroup>
@@ -42,6 +42,28 @@
 		</form>
 	</div>
 </section>
+
+<script>
+	function memberLogin__form(form) {
+		form.loginId.value = form.loginId.value.trim();
+		if(form.loginId.value.length == 0) {
+			alert('아이디를 입력해주세요');
+			form.loginId.focus();
+			
+			return;
+		}
+		
+		form.loginPw.value = form.loginPw.value.trim();
+		if(form.loginPw.value.length == 0) {
+			alert('비밀번호를 입력해주세요');
+			form.loginPw.focus();
+			
+			return;
+		}
+		
+		form.submit();
+	}
+</script>
 
 
 <%@ include file="../common/foot.jspf" %>
