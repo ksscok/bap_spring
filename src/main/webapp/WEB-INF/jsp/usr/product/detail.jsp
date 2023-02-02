@@ -4,13 +4,6 @@
 <c:set var="pageTitle" value="상세보기" />
 <%@ include file="../common/head.jspf"%>
 
-<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&comp_id=${param.comp_id}"/> --%>
-<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&start_date=${param.start_date}"/> --%>
-<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&end_date=${param.end_date}"/> --%>
-<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&countOfRoom=${param.countOfRoom}"/> --%>
-<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&countOfAdult=${param.countOfAdult}"/> --%>
-<%-- <c:set var="pageBaseUri" value="${PageBaseUri }&countOfChild=${param.countOfChild}"/> --%>
-
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
 
@@ -64,8 +57,10 @@
 				</div>
 			</form>
 			
-			<form onchange="chg_checked();" >
+<!-- 			<form> -->
 				<input type="hidden" name="comp_id" value="${comp_id }" />
+				<input type="hidden" name="start_date" value="${start_date }" />
+				<input type="hidden" name="end_date" value="${end_date }" />
 				<input type="hidden" name="countOfRoom" value="${countOfRoom }" />
 				<input type="hidden" name="countOfAdult" value="${countOfAdult }" />
 				<input type="hidden" name="countOfChild" value="${countOfChild }" />
@@ -78,8 +73,6 @@
 					<div class="includeMeals-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
 						<label class="cursor-pointer flex items-center h-8">
-<!-- 						localstorage에 저장하는 거 생각해봐야할 듯 -->
-<%-- 							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  ${param.withoutMealsType eq on ? 'checked' : ''} /> --%>
 							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  />
 							<span class="text-sm ml-2">식사 불포함</span>
 						</label>
@@ -123,9 +116,11 @@
 						</ul>
 					</div>
 	
-					<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
+<!-- 					<button type="submit" class="btn btn-primary w-full mt-5">적용</button> -->
+					<button onclick="Product__getList(${comp_id }, ${accommodationTypeCode }, ${start_date }, ${end_date }, ${countOfRoom }, ${countOfAdult }, ${countOfChild }, 
+					${withoutMealsType }, ${withBreakfastType}, ${withDinnerType}, ${withBreakfastAndDinnerType}, ${smokingType});" class="btn btn-primary w-full mt-5">적용</button>
 				</div>
-			</form>
+<!-- 			</form> -->
 		</div>
 		<!-- 		오른쪽 시작 -->
 		<div class="right mt-2 bg-blue-400 w-4/6">
@@ -146,86 +141,88 @@
 			<div>
 				<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2016/06/22/5769f8085f3a2.jpg" alt="" />
 			</div>
-			<c:forEach var="product" items="${products}" varStatus="status">
-				<div id="${status.count }" class="room-body flex border-gray rounded-lg p-6 my-4">
-					<div>
-						<img class="w-80" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" alt="" />
-					</div>
-					<div class="ml-4 w-6/12">
-						<div class="text-xl font-bold mb-10">${product.roomType }</div>
-						<div class="price flex justify-between w-full border-bt-gray pb-4">
-							<div class="text-base font-bold">가격</div>
-							<div class="text-lg">${product.fee}</div>
+			<div id="productList">
+				<c:forEach var="product" items="${products}" varStatus="status">
+					<div id="${status.count }" class="room-body flex border-gray rounded-lg p-6 my-4">
+						<div>
+							<img class="w-80" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" alt="" />
 						</div>
-						<button class="dt-modal flex justify-between w-full my-4">
-							<div>객실 이용 안내</div>
-							<div class="">&gt;</div>
-						</button>
-
-						<div class="layer">
-							<div class="relative-body">
-								<h2 class="md-title text-base font-extrabold flex items-center">객실 이용 안내</h2>
-								<div class="md-body border-bt-gray box-border">
-									<ul>
-										<li>
-											<div class="mt-4 mb-2 font-bold text-sm">기본정보</div>
-											<ul>
-												<li><a href="#">2인 기준 최대 4인 (유료)</a></li>
-												<li><a href="#">인원 추가시 비용이 발생되며, 현장에서 결제 바랍니다.</a></li>
-												<li><a href="#">객실+욕실/10.00평</a></li>
-											</ul>
-										</li>
-									</ul>
+						<div class="ml-4 w-6/12">
+							<div class="text-xl font-bold mb-10">${product.roomType }</div>
+							<div class="price flex justify-between w-full border-bt-gray pb-4">
+								<div class="text-base font-bold">가격</div>
+								<div class="text-lg">${product.fee}</div>
+							</div>
+							<button class="dt-modal flex justify-between w-full my-4">
+								<div>객실 이용 안내</div>
+								<div class="">&gt;</div>
+							</button>
+	
+							<div class="layer">
+								<div class="relative-body">
+									<h2 class="md-title text-base font-extrabold flex items-center">객실 이용 안내</h2>
+									<div class="md-body border-bt-gray box-border">
+										<ul>
+											<li>
+												<div class="mt-4 mb-2 font-bold text-sm">기본정보</div>
+												<ul>
+													<li><a href="#">2인 기준 최대 4인 (유료)</a></li>
+													<li><a href="#">인원 추가시 비용이 발생되며, 현장에서 결제 바랍니다.</a></li>
+													<li><a href="#">객실+욕실/10.00평</a></li>
+												</ul>
+											</li>
+										</ul>
+									</div>
+									<div class="md-body border-bt-gray box-border">
+										<ul>
+											<li>
+												<div class="mt-4 mb-2 font-bold text-sm">편의시설</div>
+												<ul>
+													<li><a href="#">TV,침대,식탁,에어컨,냉장고,드라이기,취사도구,전기밥솥,전자레인지,핫플레이트,욕실용품,객실샤워실</a></li>
+												</ul>
+											</li>
+										</ul>
+									</div>
+									<div class="md-body border-bt-gray box-border">
+										<ul>
+											<li>
+												<div class="mt-4 mb-2 font-bold text-sm">추가 정보</div>
+												<ul>
+													<li><a href="#">3층위치</a></li>
+												</ul>
+											</li>
+										</ul>
+									</div>
+									<div class="md-body border-bt-gray box-border">
+										<ul>
+											<li>
+												<div class="mt-4 mb-2 font-bold text-sm">선택 날짜</div>
+												<ul>
+													<li><a href="#">${start_date} ~ ${end_date}</a></li>
+												</ul>
+											</li>
+										</ul>
+									</div>
 								</div>
-								<div class="md-body border-bt-gray box-border">
-									<ul>
-										<li>
-											<div class="mt-4 mb-2 font-bold text-sm">편의시설</div>
-											<ul>
-												<li><a href="#">TV,침대,식탁,에어컨,냉장고,드라이기,취사도구,전기밥솥,전자레인지,핫플레이트,욕실용품,객실샤워실</a></li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<div class="md-body border-bt-gray box-border">
-									<ul>
-										<li>
-											<div class="mt-4 mb-2 font-bold text-sm">추가 정보</div>
-											<ul>
-												<li><a href="#">3층위치</a></li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<div class="md-body border-bt-gray box-border">
-									<ul>
-										<li>
-											<div class="mt-4 mb-2 font-bold text-sm">선택 날짜</div>
-											<ul>
-												<li><a href="#">01월 14일 ~ 01월 15일</a></li>
-											</ul>
-										</li>
-									</ul>
+								<div class="toggle-btn">
+									<div></div>
+									<div></div>
 								</div>
 							</div>
-							<div class="toggle-btn">
-								<div></div>
-								<div></div>
-							</div>
+	
+							<div class="layer-bg"></div>
+							<form action="../booking/book" >
+								<input type="hidden" name="comp_id" value="${comp_id }" />
+								<input type="hidden" name="prod_id" value="${product.id }" />
+								<input type="hidden" name="accommodationTypeCode" value="${accommodationTypeCode }" />
+								<input type="hidden" name="start_date" value="${start_date }" />
+								<input type="hidden" name="end_date" value="${end_date }" />
+								<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
+							</form>
 						</div>
-
-						<div class="layer-bg"></div>
-						<form action="../booking/book" >
-							<input type="hidden" name="comp_id" value="${comp_id }" />
-							<input type="hidden" name="prod_id" value="${product.id }" />
-							<input type="hidden" name="accommodationTypeCode" value="${accommodationTypeCode }" />
-							<input type="hidden" name="start_date" value="${start_date }" />
-							<input type="hidden" name="end_date" value="${end_date }" />
-							<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
-						</form>
 					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</div>
 		</div>
 	</div>
 </section>
@@ -281,25 +278,118 @@
 	});//click() end
 // 체크인, 체크아웃 유효성 체크 끝
 
-// 상세조건 checked로 변환 시작 - ajax로 리스트 갱신해야할 듯?
-	function chg_checked(){
-// 		$("input:checkbox[id='withoutMeals']").prop("checked", true);
+// ajax로 파라미터값 적용에 따른 product list 갱신 시작
+	function Product__getList(comp_id, accommodationTypeCode, start_date, end_date, countOfRoom, countOfAdult, countOfChild, 
+		withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType) {	
 		
-// 		$('input:checkbox[name="withoutMealsType"]').each(function() {
+		$.get('../product/ajaxDetail', {
+			comp_id : comp_id,
+			start_date : start_date,
+			end_date : end_date,
+			countOfRoom : countOfRoom,
+			countOfAdult : countOfAdult,
+			countOfChild : countOfChild,
+			withoutMealsType : withoutMealsType,
+			withBreakfastType : withBreakfastType,
+			withDinnerType : withDinnerType,
+			withBreakfastAndDinnerType : withBreakfastAndDinnerType,
+			smokingType : smokingType,
+			ajaxMode : 'Y'
+		}, function(data){
+			let productList = $('#productList');
+			
+			let addHtml = '';
+			
+			for(let i = 0; i < data.length; i++){
+				addHtml += `
+					<div>data[i]</div>
+// 					<div class="room-body flex border-gray rounded-lg p-6 my-4">
+// 					<div>
+// 						<img class="w-80" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" alt="" />
+// 					</div>
+// 					<div class="ml-4 w-6/12">
+// 						<div class="text-xl font-bold mb-10">\${data[i].roomType }</div>
+// 						<div class="price flex justify-between w-full border-bt-gray pb-4">
+// 							<div class="text-base font-bold">가격</div>
+// 							<div class="text-lg">\${data[i].fee}</div>
+// 						</div>
+// 						<button class="dt-modal flex justify-between w-full my-4">
+// 							<div>객실 이용 안내</div>
+// 							<div class="">&gt;</div>
+// 						</button>
 
-// 		      this.checked = true; //checked 처리
+// 						<div class="layer">
+// 							<div class="relative-body">
+// 								<h2 class="md-title text-base font-extrabold flex items-center">객실 이용 안내</h2>
+// 								<div class="md-body border-bt-gray box-border">
+// 									<ul>
+// 										<li>
+// 											<div class="mt-4 mb-2 font-bold text-sm">기본정보</div>
+// 											<ul>
+// 												<li><a href="#">2인 기준 최대 4인 (유료)</a></li>
+// 												<li><a href="#">인원 추가시 비용이 발생되며, 현장에서 결제 바랍니다.</a></li>
+// 												<li><a href="#">객실+욕실/10.00평</a></li>
+// 											</ul>
+// 										</li>
+// 									</ul>
+// 								</div>
+// 								<div class="md-body border-bt-gray box-border">
+// 									<ul>
+// 										<li>
+// 											<div class="mt-4 mb-2 font-bold text-sm">편의시설</div>
+// 											<ul>
+// 												<li><a href="#">TV,침대,식탁,에어컨,냉장고,드라이기,취사도구,전기밥솥,전자레인지,핫플레이트,욕실용품,객실샤워실</a></li>
+// 											</ul>
+// 										</li>
+// 									</ul>
+// 								</div>
+// 								<div class="md-body border-bt-gray box-border">
+// 									<ul>
+// 										<li>
+// 											<div class="mt-4 mb-2 font-bold text-sm">추가 정보</div>
+// 											<ul>
+// 												<li><a href="#">3층위치</a></li>
+// 											</ul>
+// 										</li>
+// 									</ul>
+// 								</div>
+// 								<div class="md-body border-bt-gray box-border">
+// 									<ul>
+// 										<li>
+// 											<div class="mt-4 mb-2 font-bold text-sm">선택 날짜</div>
+// 											<ul>
+// 												<li><a href="#">\${start_date} ~ \${end_date}</a></li>
+// 											</ul>
+// 										</li>
+// 									</ul>
+// 								</div>
+// 							</div>
+// 							<div class="toggle-btn">
+// 								<div></div>
+// 								<div></div>
+// 							</div>
+// 						</div>
 
-// 		      if(this.checked){//checked 처리된 항목의 값
-
-// 		            alert(this.value); 
-
-// 		      }
-
-// 		 });
-	}
-	
-	 
-// 상세조건 checked로 변환 끝
+// 						<div class="layer-bg"></div>
+// 						<form action="../booking/book" >
+// 							<input type="hidden" name="comp_id" value="\${comp_id }" />
+// 							<input type="hidden" name="prod_id" value="\${data[i].id }" />
+// 							<input type="hidden" name="accommodationTypeCode" value="\${accommodationTypeCode }" />
+// 							<input type="hidden" name="start_date" value="\${start_date }" />
+// 							<input type="hidden" name="end_date" value="\${end_date }" />
+// 							<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
+// 						</form>
+// 					</div>
+// 				</div>
+				`;
+			}
+				
+			productList.empty().html("");
+			productList.append(addHtml);
+			
+		}, 'json');
+	};
+// ajax로 파라미터값 적용에 따른 product list 갱신 끝
 	
 // 찜하기 ajax 추가예정 시작(76일차 테마 적용/다크모드 보고 참고하면 될 듯)
 	let changeSaving = false;
@@ -316,7 +406,7 @@
 // 			$('.saving').children().addClass(fa-regular);
 // 		}
 		alert(changeSaving);
-	}
+	};
 	// 찜하기 ajax 추가예정 시작
 
 // 객실 이용 안내 modal창 시작

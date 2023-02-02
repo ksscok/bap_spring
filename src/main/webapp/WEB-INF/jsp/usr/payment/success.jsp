@@ -17,7 +17,7 @@
 
 <script>
 	if(sessionStorage.getItem('customerName')){
-	 var customerName = sessionStorage.getItem('customerName')
+	 var customerName = sessionStorage.getItem('customerName');
 	}
 	
 </script>
@@ -26,7 +26,6 @@
 <!-- 결제에 대한 정보를 결제 테이블에 넘겨줘야 함 -->
 <section class="mt-40">
 		<div class="con-3 mx-auto px-3">
-<!-- 			결제 테이블로 값을 넘길 수 있을까? -->
 			<form name="sendForm" action="usr/payment/doWrite">
 				<input type="hidden" name="paymentKey" value="${paymentKey}"/>
 				<input type="hidden" name="orderId" value="${orderId}"/>

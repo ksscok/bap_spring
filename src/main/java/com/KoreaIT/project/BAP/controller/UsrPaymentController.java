@@ -122,8 +122,7 @@ public class UsrPaymentController {
 		model.addAttribute("customerName", customerName);
 		model.addAttribute("requestedAt", requestedAt);
 		
-//		return "/usr/payment/detail";
-		return Ut.jsReplace("결제가 완료 되었습니다.", Ut.f("/usr/booking/detail?orderId=%s", orderId));
+		return Ut.jsReplace("", Ut.f("/usr/booking/detail?orderId=%s", orderId));
 	}
 	
 	@RequestMapping("/success")

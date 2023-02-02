@@ -205,7 +205,7 @@ fee = 50000,
 countOfRoom = 1,
 countOfAdult = 4,
 countOfChild = 1,
-includeMeals = '조식',
+includeMeals = '석식',
 smokingType = 'noSmoking';
 
 INSERT INTO product
