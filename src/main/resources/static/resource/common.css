@@ -139,3 +139,11 @@ main {
 ::-webkit-scrollbar-thumb:hover {background: #999;opacity: 1;}
 ::-webkit-scrollbar-track-piece {background: #fff;}
 /* 스크롤바 */
+
+ul > .list-active {
+	list-style: inside;
+}
+
+ul > li > a {
+	margin-left: -10px;
+}

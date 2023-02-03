@@ -60,4 +60,11 @@ public interface BookingRepository {
 				GROUP BY b.id
 			""")
 	List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo);
+
+	@Select("""
+			SELECT *
+				FROM booking
+				WHERE id = #{id}
+			""")
+	Booking getBookingById(int id);
 }

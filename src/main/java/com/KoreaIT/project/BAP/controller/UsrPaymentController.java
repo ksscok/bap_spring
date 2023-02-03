@@ -19,6 +19,7 @@ import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
+import com.KoreaIT.project.BAP.vo.Payment;
 
 @Controller
 public class UsrPaymentController {
@@ -123,6 +124,39 @@ public class UsrPaymentController {
 		model.addAttribute("requestedAt", requestedAt);
 		
 		return Ut.jsReplace("", Ut.f("/usr/booking/detail?orderId=%s", orderId));
+	}
+	
+	@RequestMapping("/usr/payment/cancel")
+	public String showCancel(Model model, String paymentKey, int id) throws IOException, InterruptedException {
+		
+		Booking booking = bookingService.getBookingById(id);
+		Payment payment = paymentService.getPaymentByBooking_id(id);
+		
+		model.addAttribute("paymentKey", paymentKey);
+		model.addAttribute("payment", payment);
+		model.addAttribute("booking", booking);
+		
+		return "/usr/payment/cancel";
+	}
+	
+	@RequestMapping("/usr/payment/doCancel")
+	@ResponseBody
+	public String doCancel(Model model, String paymentKey, String body, int booking_id) throws IOException, InterruptedException {
+		
+		String cancelReason = body.trim();
+		
+		HttpRequest request = HttpRequest.newBuilder()
+			    .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
+			    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
+			    .header("Content-Type", "application/json")
+			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
+			    .build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+			
+		
+		
+		return Ut.jsReplace(Ut.f("예약번호 %d번 결제가 취소 되었습니다.", booking_id), "/");
 	}
 	
 	@RequestMapping("/success")

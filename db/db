@@ -576,11 +576,102 @@ CREATE TABLE payment
 );
 
 # payment 테스트 데이터
+# 폰번호 010-1212-2323(게스트1), 예약번호 1번, 결제 금액 10만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 1,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 100000,
+balanceAmount = 100000,
+suppliedAmount = 90909,
+vat = 9091;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 2번, 결제 금액 10만원(서울 신라)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 2,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 100000,
+balanceAmount = 100000,
+suppliedAmount = 90909,
+vat = 9091;
+
+# 폰번호 010-3434-4545(게스트2), 예약번호 3번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 3,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 70000,
+balanceAmount = 70000,
+suppliedAmount = 63636,
+vat = 6364;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 4번, 결제 금액 10만원(오노마)
 INSERT INTO payment
 SET regDate = NOW(),
 updateDate = NOW(),
 paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
 booking_id = 4,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 100000,
+balanceAmount = 100000,
+suppliedAmount = 90909,
+vat = 9091;
+
+# 폰번호 010-3434-4545(게스트2), 예약번호 5번, 결제 금액 10만원(제주 쉬멍)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 5,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 100000,
+balanceAmount = 100000,
+suppliedAmount = 90909,
+vat = 9091;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 6번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 6,
 `status` = 'DONE',
 method = '간편결제',
 bank = '토스페이',

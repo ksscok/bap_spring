@@ -72,4 +72,8 @@ public class BookingService {
 		
 		return bookings;
 	}
+
+	public Booking getBookingById(int id) {
+		return bookingRepository.getBookingById(id);
+	}
 }
