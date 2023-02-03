@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
@@ -127,23 +128,43 @@ public class UsrPaymentController {
 	}
 	
 	@RequestMapping("/usr/payment/cancel")
-	public String showCancel(Model model, String paymentKey, int id) throws IOException, InterruptedException {
+	public String showCancel(Model model, int booking_id) throws IOException, InterruptedException {
 		
-		Booking booking = bookingService.getBookingById(id);
-		Payment payment = paymentService.getPaymentByBooking_id(id);
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
+		
+		String paymentKey = payment.getPaymentKey();
 		
 		model.addAttribute("paymentKey", paymentKey);
-		model.addAttribute("payment", payment);
 		model.addAttribute("booking", booking);
+		model.addAttribute("booking.id", booking.getId());
+		model.addAttribute("payment", payment);
 		
 		return "/usr/payment/cancel";
 	}
 	
 	@RequestMapping("/usr/payment/doCancel")
 	@ResponseBody
-	public String doCancel(Model model, String paymentKey, String body, int booking_id) throws IOException, InterruptedException {
+	public String doCancel(Model model, int booking_id, String body) throws IOException, InterruptedException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(body)) {
+			return Ut.jsHistoryBack("취소사유를 입력해주세요");
+		}
 		
 		String cancelReason = body.trim();
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
+		
+		String paymentKey = payment.getPaymentKey();
 		
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
@@ -156,7 +177,7 @@ public class UsrPaymentController {
 			
 		
 		
-		return Ut.jsReplace(Ut.f("예약번호 %d번 결제가 취소 되었습니다.", booking_id), "/");
+		return Ut.jsReplace(Ut.f("예약번호 %d번 결제가 취소 되었습니다.", booking_id), Ut.f("/usr/booking/list?cellphoneNo=%s", booking.getCellphoneNo()));
 	}
 	
 	@RequestMapping("/success")

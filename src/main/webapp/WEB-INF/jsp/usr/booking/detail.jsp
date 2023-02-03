@@ -9,7 +9,7 @@
 
 <section>
 	<form action="../payment/cancel">
-		<input id="booking" type="hidden" name="id" value="${booking.id }" />
+		<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
 		<div class="con-3 mx-auto px-3">
 			<div class="my-12 text-3xl font-extrabold">예약 상세보기</div>
 			<div class="table-box-type-1">
