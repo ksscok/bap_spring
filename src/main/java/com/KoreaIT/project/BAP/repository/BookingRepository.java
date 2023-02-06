@@ -47,6 +47,7 @@ public interface BookingRepository {
 	Booking getBookingByCellphoneNo(String cellphoneNo);
 
 	@Select("""
+			<script>
 			SELECT b.*, 
 				c.name AS extra__compName,
 				p.roomType AS extra__prodRoomType,
@@ -57,9 +58,17 @@ public interface BookingRepository {
 				LEFT JOIN product AS p
 				ON b.prod_id = p.id
 				WHERE b.cellphoneNo = #{cellphoneNo}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordTypeCode == 'booking_id'">
+							AND b.id = #{searchKeyword}
+						</when>
+					</choose>
+				</if>
 				GROUP BY b.id
+			</script>
 			""")
-	List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo);
+	List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword);
 
 	@Select("""
 			SELECT *
@@ -67,4 +76,21 @@ public interface BookingRepository {
 				WHERE id = #{id}
 			""")
 	Booking getBookingById(int id);
+
+	@Select("""
+			<script>
+			SELECT COUNT(*)
+				FROM booking
+				WHERE cellphoneNo = #{cellphoneNo}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordTypeCode == 'booking_id'">
+							AND id = #{searchKeyword}
+						</when>
+					</choose>
+				</if>
+			</script>
+			""")
+	int getBookingsCount(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword);
+	
 }

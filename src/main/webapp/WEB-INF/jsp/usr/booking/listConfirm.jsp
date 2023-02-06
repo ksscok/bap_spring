@@ -15,7 +15,11 @@
 				<form onsubmit="chkNull(event);" action="list">
 					<div class="cellphoneNoInput-box flex items-center">
 						<div class="text-3xl text-gray-300 mx-3"><i class="fa-solid fa-mobile-screen-button"></i></div>
-						<input id="cellphoneNo" name="cellphoneNo" onkeypress="chkCharCodeNum(event);" type="text" class="cellphoneNo" oninput="autoHyphen(this)" style="width:230px;" placeholder="휴대폰 번호" maxlength="13" onblur="requiredData(this);"/>
+						<input id="cellphoneNo" name="cellphoneNo" onkeypress="chkCharCodeNum(event);" type="text" class="cellphoneNo" oninput="autoHyphen(this)" style="width:230px;" placeholder="휴대폰 번호" maxlength="13" onblur="cellphoneNoData(this);"/>
+					</div>
+					<div class="bookingIdInput-box flex items-center mt-2">
+						<div class="text-3xl text-gray-300 mx-3"><i class="fa-solid fa-receipt"></i></div>
+						<input id="searchKeyword" name="searchKeyword" onkeypress="chkCharCodeNum(event);" type="text" class="searchKeyword" style="width:230px;" placeholder="예약 번호" maxlength="13" onblur="searchKeywordData(this);"/>
 					</div>
 						<button class="text-center btn btn-active btn-secondary w-full mt-4">조회하기</button>
 				</form>
@@ -25,7 +29,7 @@
 </section>
 
 <script>
-	//전화번호칸에 숫자만 사용 가능하도록 하는 함수 시작(입력키 제한)
+	//전화번호칸, 예약번호칸에 숫자만 사용 가능하도록 하는 함수 시작(입력키 제한)
 	function chkCharCodeNum(event) {
 		  const keyCode = event.keyCode;
 		  const isValidKey = (keyCode >= 48 && keyCode <= 57);
@@ -45,12 +49,12 @@
 	//전화번호칸에 숫자를 적어 나아가면 자동으로 하이픈 붙여주는 함수 끝
 	
 	//휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 시작
-	function requiredData(el) {
-		$(".required-msg").empty();
+	function cellphoneNoData(el) {
+		$(".cellphoneNo").empty();
 		const form = $(el).closest('form').get(0);
 		
 		if (form.cellphoneNo.value.length <= 8) {
-			$(".required-msg").html('휴대폰 번호를 확인해주세요.');
+			$(".cellphoneNo").html('휴대폰 번호를 확인해주세요.');
 			}
 		};
 	//휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 끝
@@ -68,7 +72,14 @@
 		    event.preventDefault(); // return false와 같은 역할
 	    }
 		
+		if(document.getElementById('searchKeyword').value.trim().length == 0){
+		    alert('예약번호를 입력해주세요');
+		    event.preventDefault(); // return false와 같은 역할
+	    }
+		
 	}
+	
+	
 </script>
 
 <%@ include file="../common/foot.jspf"%>

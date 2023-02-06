@@ -60,9 +60,9 @@ public class BookingService {
 		return bookingRepository.getBookingByCellphoneNo(cellphoneNo);
 	}
 
-	public List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo) {
+	public List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword) {
 		
-		List<Booking> bookings = bookingRepository.getForPrintBookingsByCellphoneNo(cellphoneNo);
+		List<Booking> bookings = bookingRepository.getForPrintBookingsByCellphoneNo(cellphoneNo, searchKeywordTypeCode, searchKeyword);
 		
 		for (Booking booking : bookings) {
 			// 예약 리스트 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
@@ -75,5 +75,9 @@ public class BookingService {
 
 	public Booking getBookingById(int id) {
 		return bookingRepository.getBookingById(id);
+	}
+
+	public int getBookingsCount(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword) {
+		return bookingRepository.getBookingsCount(cellphoneNo, searchKeywordTypeCode, searchKeyword);
 	}
 }

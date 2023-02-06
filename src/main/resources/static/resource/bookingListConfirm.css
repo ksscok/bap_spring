@@ -6,14 +6,14 @@
 	width: 290px;
 }
 
-.non-memberInquiry .cellphoneNoInput-box {
+.non-memberInquiry .cellphoneNoInput-box , .non-memberInquiry .bookingIdInput-box {
 	height: 60px;
 	width: 100%;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 5px;
 }
 
-.non-memberInquiry .cellphoneNoInput-box .cellphoneNo {
+.non-memberInquiry .cellphoneNoInput-box .cellphoneNo, .non-memberInquiry .bookingIdInput-box .searchKeywordTypeCode {
 	outline: none;
 }
 

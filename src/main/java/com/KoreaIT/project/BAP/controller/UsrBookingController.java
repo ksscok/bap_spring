@@ -154,11 +154,24 @@ public class UsrBookingController {
 	}
 	
 	@RequestMapping("/usr/booking/list")
-	public String showList(Model model, String cellphoneNo) {
+	public String showList(Model model, String cellphoneNo,
+			@RequestParam(defaultValue = "booking_id") String searchKeywordTypeCode,
+			@RequestParam(defaultValue = "") String searchKeyword) {
 		
-		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo);
+		if(Ut.empty(cellphoneNo)) {
+			return rq.jsHistoryBack("예약번호를 입력해주세요.");
+		}
+		
+		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo, searchKeywordTypeCode, searchKeyword);
+		
+		int bookingsCount = bookingService.getBookingsCount(cellphoneNo, searchKeywordTypeCode, searchKeyword);
+		System.out.println("bookingsCount : " + bookingsCount);
 		
 		model.addAttribute("bookings", bookings);
+		model.addAttribute("cellphoneNo", cellphoneNo);
+		model.addAttribute("bookingsCount", bookingsCount);
+		model.addAttribute("searchKeywordTypeCode", searchKeywordTypeCode);
+		model.addAttribute("searchKeyword", searchKeyword);
 		
 		return "/usr/booking/list";
 	}
