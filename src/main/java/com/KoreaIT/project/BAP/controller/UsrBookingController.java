@@ -165,7 +165,6 @@ public class UsrBookingController {
 		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo, searchKeywordTypeCode, searchKeyword);
 		
 		int bookingsCount = bookingService.getBookingsCount(cellphoneNo, searchKeywordTypeCode, searchKeyword);
-		System.out.println("bookingsCount : " + bookingsCount);
 		
 		model.addAttribute("bookings", bookings);
 		model.addAttribute("cellphoneNo", cellphoneNo);

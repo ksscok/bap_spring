@@ -11,7 +11,7 @@
 	<div class="con-3 flex flex-row mx-auto px-3">
 		<div class="left">
 			<form>
-				<input type="hidden" name="comp_id" value="${comp_id }" />
+				<input type="hidden" id="comp_id" name="comp_id" value="${comp_id }" />
 				<input type="hidden" name="withoutMealsType" value="${withoutMealsType }" />
 				<input type="hidden" name="withBreakfastType" value="${withBreakfastType }" />
 				<input type="hidden" name="withBreakfastAndDinnerType" value="${withBreakfastAndDinnerType }" />
@@ -22,7 +22,7 @@
 					<div class="text-base font-semibold mb-4">날짜 변경</div>
 					
 					<div>
-						<span class="mr-4">체크인</span>
+						<span class="mr-3">체크인</span>
 						<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
 					</div>
 					<div class="my-1">
@@ -35,19 +35,19 @@
 						<span>아동</span>
 					</div>
 					<div>
-<!-- 					js로도 쓸 수 있다는 걸 같이 적어둔 것/성인, 아동처럼 data-value안 넣어도 됨 -->
-						<select data-value="${countOfRoom }" name="countOfRoom" class="select select-bordered" >
+<!-- 					if로도 쓸 수 있다는 걸 같이 적어둔 것/성인, 아동처럼 data-value안 넣어도 됨 -->
+						<select id="countOfRoom" data-value="${countOfRoom }" name="countOfRoom" class="select select-bordered" >
 							<c:forEach begin="1" end="10" var="i">
 								<option value="${i }" <c:if test="${i == countOfRoom}">selected</c:if> >${i }</option>
 							</c:forEach>
 						</select>
-						<select name="countOfAdult" class="mx-2 select select-bordered">
+						<select id="countOfAdult" data-value="${countOfAdult }" name="countOfAdult" class="mx-2 select select-bordered">
 							<c:forEach begin="0" end="10" var="i">
 								<option value="${i }" <c:if test="${i == countOfAdult}">selected</c:if> >${i }</option>
 							</c:forEach>
 							
 						</select>
-						<select name="countOfChild" class="select select-bordered">
+						<select id="countOfChild" data-value="${countOfChild }" name="countOfChild" class="select select-bordered">
 							<c:forEach begin="0" end="10" var="i">
 								<option value="${i }" <c:if test="${i == countOfChild}">selected</c:if> >${i }</option>
 							</c:forEach>
@@ -57,7 +57,7 @@
 				</div>
 			</form>
 			
-<!-- 			<form> -->
+			<form>
 				<input type="hidden" name="comp_id" value="${comp_id }" />
 				<input type="hidden" name="start_date" value="${start_date }" />
 				<input type="hidden" name="end_date" value="${end_date }" />
@@ -73,19 +73,19 @@
 					<div class="includeMeals-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">식사</span>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="withoutMealsType" value="withoutMealsType" id="withoutMeals" class="checkbox checkbox-sm"  />
+							<input type="checkbox" name="withoutMealsType" class="checkbox checkbox-sm" ${param.withoutMealsType.equals('on') ? 'checked' : '' } />
 							<span class="text-sm ml-2">식사 불포함</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="withBreakfastType" value="withBreakfastType" class="checkbox checkbox-sm" />
+							<input type="checkbox" name="withBreakfastType" class="checkbox checkbox-sm" ${param.withBreakfastType.equals('on') ? 'checked' : '' } />
 							<span class="text-sm ml-2">조식 포함</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="withDinnerType" value="withDinnerType" class="checkbox checkbox-sm" />
+							<input type="checkbox" name="withDinnerType" class="checkbox checkbox-sm" ${param.withDinnerType.equals('on') ? 'checked' : '' } />
 							<span class="text-sm ml-2">석식 포함</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="withBreakfastAndDinnerType" value="withBreakfastAndDinnerType" class="checkbox checkbox-sm" />
+							<input type="checkbox" name="withBreakfastAndDinnerType" class="checkbox checkbox-sm" ${param.withBreakfastAndDinnerType.equals('on') ? 'checked' : '' } />
 							<span class="text-sm ml-2">조식・석식포함</span>
 						</label>
 					</div>
@@ -93,34 +93,41 @@
 					<div class="smokinType-box flex flex-col mt-5">
 						<span class="text-sm font-semibold text-gray-500 mb-2">흡연 여부</span>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="noSmoking" <c:if test="${smokingType eq noSmoking}">checked</c:if> />
+							<input type="checkbox" name="smokingType" id="smokingType" class="checkbox checkbox-sm" value="noSmoking" ${param.smokingType.equals('noSmoking') ? 'checked' : '' } />
 							<span class="text-sm ml-2">금연</span>
 						</label>
 						<label class="cursor-pointer flex items-center h-8">
-							<input type="checkbox" name="smokingType" class="checkbox checkbox-sm" value="smoking" <c:if test="${smokingType eq smoking}">checked</c:if> />
+							<input type="checkbox" name="smokingType" id="smokingType" class="checkbox checkbox-sm" value="smoking" ${param.smokingType.equals('smoking') ? 'checked' : '' } />
 							<span class="text-sm ml-2">흡연</span>
 						</label>
 					</div>
 	
 					<div class="pricing-box flex flex-col mt-5">
-						<span class="text-sm font-semibold text-gray-500 mb-2">가격</span>
+						<div class="mb-2">
+								<span class="text-base font-semibold text-gray-500 mb-2">가격</span>
+								<span id="low_price">${param.low_price}</span>
+								<span>~</span>
+								<span id="high_price">${param.high_price}</span>
+						</div>
 						<ul>
-							<li>
-								<input type="text" name="low_price" class="input input-bordered input-sm" placeholder="최소" />
+							<li class="flex">
+								<input type="range" name="low_price" min="10000" max="250000" step="10000" class="range range-sm"
+								oninput="document.getElementById('low_price').innerHTML=this.value;"
+								value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}"/>
 							</li>
 						</ul>
 						<ul class="mt-1">
-							<li>
-								<input type="text" name="high_price" class="input input-bordered input-sm" placeholder="최대" />
+							<li class="flex">
+								<input type="range" name="high_price" min="250000" max="500000" step="10000" class="range range-sm"
+								oninput="document.getElementById('high_price').innerHTML=this.value;"
+								value="${param.high_price == null || param.high_price.equals('') ? '250000' : param.high_price}"/>
 							</li>
 						</ul>
 					</div>
 	
-<!-- 					<button type="submit" class="btn btn-primary w-full mt-5">적용</button> -->
-					<button onclick="Product__getList(${comp_id }, ${accommodationTypeCode }, ${start_date }, ${end_date }, ${countOfRoom }, ${countOfAdult }, ${countOfChild }, 
-					${withoutMealsType }, ${withBreakfastType}, ${withDinnerType}, ${withBreakfastAndDinnerType}, ${smokingType});" class="btn btn-primary w-full mt-5">적용</button>
+					<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
 				</div>
-<!-- 			</form> -->
+			</form>
 		</div>
 		<!-- 		오른쪽 시작 -->
 		<div class="right mt-2 bg-blue-400 w-4/6">
@@ -278,118 +285,6 @@
 	});//click() end
 // 체크인, 체크아웃 유효성 체크 끝
 
-// ajax로 파라미터값 적용에 따른 product list 갱신 시작
-	function Product__getList(comp_id, accommodationTypeCode, start_date, end_date, countOfRoom, countOfAdult, countOfChild, 
-		withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType) {	
-		
-		$.get('../product/ajaxDetail', {
-			comp_id : comp_id,
-			start_date : start_date,
-			end_date : end_date,
-			countOfRoom : countOfRoom,
-			countOfAdult : countOfAdult,
-			countOfChild : countOfChild,
-			withoutMealsType : withoutMealsType,
-			withBreakfastType : withBreakfastType,
-			withDinnerType : withDinnerType,
-			withBreakfastAndDinnerType : withBreakfastAndDinnerType,
-			smokingType : smokingType,
-			ajaxMode : 'Y'
-		}, function(data){
-			let productList = $('#productList');
-			
-			let addHtml = '';
-			
-			for(let i = 0; i < data.length; i++){
-				addHtml += `
-					<div>data[i]</div>
-// 					<div class="room-body flex border-gray rounded-lg p-6 my-4">
-// 					<div>
-// 						<img class="w-80" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" alt="" />
-// 					</div>
-// 					<div class="ml-4 w-6/12">
-// 						<div class="text-xl font-bold mb-10">\${data[i].roomType }</div>
-// 						<div class="price flex justify-between w-full border-bt-gray pb-4">
-// 							<div class="text-base font-bold">가격</div>
-// 							<div class="text-lg">\${data[i].fee}</div>
-// 						</div>
-// 						<button class="dt-modal flex justify-between w-full my-4">
-// 							<div>객실 이용 안내</div>
-// 							<div class="">&gt;</div>
-// 						</button>
-
-// 						<div class="layer">
-// 							<div class="relative-body">
-// 								<h2 class="md-title text-base font-extrabold flex items-center">객실 이용 안내</h2>
-// 								<div class="md-body border-bt-gray box-border">
-// 									<ul>
-// 										<li>
-// 											<div class="mt-4 mb-2 font-bold text-sm">기본정보</div>
-// 											<ul>
-// 												<li><a href="#">2인 기준 최대 4인 (유료)</a></li>
-// 												<li><a href="#">인원 추가시 비용이 발생되며, 현장에서 결제 바랍니다.</a></li>
-// 												<li><a href="#">객실+욕실/10.00평</a></li>
-// 											</ul>
-// 										</li>
-// 									</ul>
-// 								</div>
-// 								<div class="md-body border-bt-gray box-border">
-// 									<ul>
-// 										<li>
-// 											<div class="mt-4 mb-2 font-bold text-sm">편의시설</div>
-// 											<ul>
-// 												<li><a href="#">TV,침대,식탁,에어컨,냉장고,드라이기,취사도구,전기밥솥,전자레인지,핫플레이트,욕실용품,객실샤워실</a></li>
-// 											</ul>
-// 										</li>
-// 									</ul>
-// 								</div>
-// 								<div class="md-body border-bt-gray box-border">
-// 									<ul>
-// 										<li>
-// 											<div class="mt-4 mb-2 font-bold text-sm">추가 정보</div>
-// 											<ul>
-// 												<li><a href="#">3층위치</a></li>
-// 											</ul>
-// 										</li>
-// 									</ul>
-// 								</div>
-// 								<div class="md-body border-bt-gray box-border">
-// 									<ul>
-// 										<li>
-// 											<div class="mt-4 mb-2 font-bold text-sm">선택 날짜</div>
-// 											<ul>
-// 												<li><a href="#">\${start_date} ~ \${end_date}</a></li>
-// 											</ul>
-// 										</li>
-// 									</ul>
-// 								</div>
-// 							</div>
-// 							<div class="toggle-btn">
-// 								<div></div>
-// 								<div></div>
-// 							</div>
-// 						</div>
-
-// 						<div class="layer-bg"></div>
-// 						<form action="../booking/book" >
-// 							<input type="hidden" name="comp_id" value="\${comp_id }" />
-// 							<input type="hidden" name="prod_id" value="\${data[i].id }" />
-// 							<input type="hidden" name="accommodationTypeCode" value="\${accommodationTypeCode }" />
-// 							<input type="hidden" name="start_date" value="\${start_date }" />
-// 							<input type="hidden" name="end_date" value="\${end_date }" />
-// 							<button type="submit" class="w-full text-center btn btn-active btn-secondary">예약</button>
-// 						</form>
-// 					</div>
-// 				</div>
-				`;
-			}
-				
-			productList.empty().html("");
-			productList.append(addHtml);
-			
-		}, 'json');
-	};
-// ajax로 파라미터값 적용에 따른 product list 갱신 끝
 	
 // 찜하기 ajax 추가예정 시작(76일차 테마 적용/다크모드 보고 참고하면 될 듯)
 	let changeSaving = false;
@@ -407,7 +302,7 @@
 // 		}
 		alert(changeSaving);
 	};
-	// 찜하기 ajax 추가예정 시작
+// 찜하기 ajax 추가예정 시작
 
 // 객실 이용 안내 modal창 시작
 	$('.dt-modal').click(function() {

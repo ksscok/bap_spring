@@ -30,7 +30,7 @@
 					<span>${booking.end_date }</span>
 				</div>
 			</div>
-			<div class="mt-6 ml-2"">
+			<div class="mt-6 ml-2">
 				<span class="text-lg font-extrabold mb-4">간략정보</span>
 				<div class="my-2">예약번호 : ${booking.id }</div>
 				<div>결제 금액 : <fmt:formatNumber value="${payment.totalAmount}" pattern="#,###"/> 원</div>

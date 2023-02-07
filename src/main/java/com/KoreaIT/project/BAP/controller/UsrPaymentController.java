@@ -159,7 +159,9 @@ public class UsrPaymentController {
 			return Ut.jsHistoryBack("취소사유를 입력해주세요");
 		}
 		
-		String cancelReason = body.trim();
+		System.out.println("body : " + body);
+		String cancelReason = body;
+		System.out.println("cancelReason : " + cancelReason);
 		
 		Booking booking = bookingService.getBookingById(booking_id);
 		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
@@ -168,7 +170,7 @@ public class UsrPaymentController {
 		
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
-			    .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
+			    .header("Authorization", "Basic dGVzdF9za19xTGxESmFZbmdyb0xqZ0Q5R214OGV6R2RScFh4Og==")
 			    .header("Content-Type", "application/json")
 			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + cancelReason + "\"}"))
 			    .build();
