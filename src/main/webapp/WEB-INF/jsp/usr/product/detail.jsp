@@ -112,14 +112,14 @@
 						<ul>
 							<li class="flex">
 								<input type="range" name="low_price" min="10000" max="250000" step="10000" class="range range-sm"
-								oninput="AddComma(this.value);"
+								oninput="AddCommaAtLow_price(this.value);"
 								value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}"/>
 							</li>
 						</ul>
 						<ul class="mt-1">
 							<li class="flex">
 								<input type="range" name="high_price" min="250000" max="500000" step="10000" class="range range-sm"
-								oninput="AddComma(this.value);"
+								oninput="AddCommaAtHigh_price(this.value);"
 								value="${param.high_price == null || param.high_price.equals('') ? '250000' : param.high_price}"/>
 							</li>
 						</ul>
@@ -286,10 +286,16 @@
 // 체크인, 체크아웃 유효성 체크 끝
 
 // 가격 콤마 붙여서 나오는 함수 시작
-	function AddComma(num) {
+	function AddCommaAtLow_price(num) {
        let comma_price= num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
        document.getElementById('low_price').innerHTML = comma_price + " 원";
     }
+	
+	function AddCommaAtHigh_price(num) {
+       let comma_price= num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+       document.getElementById('high_price').innerHTML = comma_price + " 원";
+    }
+	
 // 가격 콤마 붙여서 나오는 함수 끝
 	
 // 찜하기 ajax 추가예정 시작(76일차 테마 적용/다크모드 보고 참고하면 될 듯)
