@@ -55,6 +55,10 @@
 							<th>전화번호</th>
 							<td>${booking.cellphoneNo }</td>
 						</tr>
+						<tr>
+							<th>예약 상태</th>
+							<td>${booking.extra__status }</td>
+						</tr>
 					</tbody>
 				</table>
 				
@@ -97,7 +101,7 @@
 				</table>
 				<div class="flex justify-end">
 <%-- 					<a href="../payment/cancel?paymentKey=${payment.paymentKey }&booking_id=${payment.booking_id }" class="btn btn-primary my-5">결제 취소</a> --%>
-					<button class="text-center btn btn-active btn-secondary my-5">결제 취소</button>
+					<button class="text-center btn btn-active btn-secondary my-5">예약 취소</button>
 				</div>
 			</div>
 		</div>

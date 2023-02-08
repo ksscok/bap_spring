@@ -65,7 +65,13 @@
 										<span>원</span>
 									</div>
 								</div>
-								<a href="../booking/detail?orderId=${booking.orderId }"  class="text-center btn btn-active btn-secondary">예약 상세보기</a>
+								<div class="right text-right">
+									<div class="mb-2">
+										<span>예약 상황 : </span>
+										<span class="text-red-400">${booking.extra__status }</span>
+									</div>
+									<a href="../booking/detail?orderId=${booking.orderId }"  class="text-center btn btn-active btn-secondary">예약 상세보기</a>
+								</div>
 							</div>
 						</div>
 					</div>

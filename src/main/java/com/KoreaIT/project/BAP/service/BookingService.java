@@ -53,7 +53,26 @@ public class BookingService {
 	}
 
 	public Booking getBookingByOrderId(String orderId) {
-		return bookingRepository.getBookingByOrderId(orderId);
+		
+		Booking booking = bookingRepository.getBookingByOrderId(orderId);
+		
+		if(booking.getStatus().equals("apply")) {
+			booking.setExtra__status("예약 신청");
+		} 
+		else if(booking.getStatus().equals("authorization")) {
+			booking.setExtra__status("예약 승인");
+		}
+		else if(booking.getStatus().equals("done")) {
+			booking.setExtra__status("예약 완료");
+		}
+		else if(booking.getStatus().equals("cancel_apply")) {
+			booking.setExtra__status("예약 취소 신청");
+		}
+		else {
+			booking.setExtra__status("예약 취소 완료");
+		}
+		
+		return booking;
 	}
 
 	public Booking getBookingByCellphoneNo(String cellphoneNo) {
@@ -68,6 +87,22 @@ public class BookingService {
 			// 예약 리스트 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
 			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
 			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
+			
+			if(booking.getStatus().equals("apply")) {
+				booking.setExtra__status("예약 신청");
+			} 
+			else if(booking.getStatus().equals("authorization")) {
+				booking.setExtra__status("예약 승인");
+			}
+			else if(booking.getStatus().equals("done")) {
+				booking.setExtra__status("예약 완료");
+			}
+			else if(booking.getStatus().equals("cancel_apply")) {
+				booking.setExtra__status("예약 취소 신청");
+			}
+			else {
+				booking.setExtra__status("예약 취소 완료");
+			}
 		}
 		
 		return bookings;

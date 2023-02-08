@@ -457,7 +457,8 @@ CREATE TABLE booking
     end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃',
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
-    countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수'
+    countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수',
+    `status`  VARCHAR(45)    NOT NULL    COMMENT '예약상태 (apply : 예약 신청, authorization : 예약 승인, done : 예약 완료, cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
 );
 
 SELECT COUNT(*)
@@ -484,7 +485,8 @@ start_date = "2023-02-13",
 end_date = "2023-02-15",
 diff = 2,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 서울 신라호텔 1번방을 예약
 INSERT INTO booking
@@ -499,7 +501,8 @@ start_date = "2023-03-01",
 end_date = "2023-04-28",
 diff = 58,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'apply';
 
 # 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -514,7 +517,8 @@ start_date = "2023-04-13",
 end_date = "2023-04-20",
 diff = 7,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'authorization';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
 INSERT INTO booking
@@ -529,7 +533,8 @@ start_date = "2023-05-01",
 end_date = "2023-05-02",
 diff = 1,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'cancel_apply';
 
 # 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
 INSERT INTO booking
@@ -544,7 +549,8 @@ start_date = "2023-04-13",
 end_date = "2023-04-20",
 diff = 7,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'cancel';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -559,7 +565,8 @@ start_date = "2023-05-13",
 end_date = "2023-05-20",
 diff = 7,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'apply';
 
 CREATE TABLE payment
 (
@@ -694,6 +701,20 @@ vat = 6364;
 
 SELECT *
 FROM payment;
+
+CREATE TABLE cancellationApplication
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    booking_id    INT UNSIGNED     NOT NULL    COMMENT '예약번호', 
+    title  VARCHAR(45)    NOT NULL    COMMENT '취소 사유', 
+    `body`    VARCHAR(45)    NOT NULL    COMMENT '취소 상세 사유', 
+    cancelAmount INT UNSIGNED NOT NULL COMMENT '취소할 금액'
+);
+
+SELECT *
+FROM cancellationApplication;
 
 CREATE TABLE cancel
 (
@@ -1094,6 +1115,3 @@ smokingType = 'noSmoking';
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
-
-select * from product
-where comp_id = 2;

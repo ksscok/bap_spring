@@ -19,12 +19,14 @@ public class Booking {
 	private String start_date;
 	private String end_date;
 	private int diff;
+	private String status;
 	
 	private String extra__compName;
 	private String extra__prodRoomType;
 	private String extra__prodFee;
 	private String extra__dateAndDayOfTheWeekOfChkin;
 	private String extra__dateAndDayOfTheWeekOfChkout;
+	private String extra__status;
 	
 }
 

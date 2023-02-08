@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.CancelService;
+import com.KoreaIT.project.BAP.service.CancellationApplicationService;
 import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
@@ -28,12 +29,14 @@ public class UsrPaymentController {
 	
 	private PaymentService paymentService;
 	private BookingService bookingService;
+	private CancellationApplicationService cancellationApplicationService;
 	private CancelService cancelService;
 	
 	@Autowired
-	public UsrPaymentController(PaymentService paymentService, BookingService bookingService, CancelService cancelService) {
+	public UsrPaymentController(PaymentService paymentService, BookingService bookingService, CancellationApplicationService cancellationApplicationService, CancelService cancelService) {
 		this.paymentService = paymentService;
 		this.bookingService = bookingService;
+		this.cancellationApplicationService = cancellationApplicationService;
 		this.cancelService = cancelService;
 	}
 	
@@ -150,6 +153,29 @@ public class UsrPaymentController {
 		return "/usr/payment/cancel";
 	}
 	
+	@RequestMapping("/usr/payment/doApply")
+	@ResponseBody
+	public String doApply(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(title)) {
+			return Ut.jsHistoryBack("취소 사유를 입력해주세요");
+		}
+		
+		if(Ut.empty(body)) {
+			return Ut.jsHistoryBack("취소 상세 사유를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		
+		cancellationApplicationService.doWrite(booking_id, title, body, booking.getExtra__prodFee());
+		
+		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 신청했습니다.", booking_id), Ut.f("/usr/booking/list?cellphoneNo=%s", booking.getCellphoneNo()));
+	}
+	
 	@RequestMapping("/usr/payment/doCancel")
 	@ResponseBody
 	public String doCancel(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {
@@ -172,33 +198,33 @@ public class UsrPaymentController {
 		String paymentKey = payment.getPaymentKey();
 		
 		HttpRequest request = HttpRequest.newBuilder()
-			    .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
-			    .header("Authorization", "Basic dGVzdF9za19xTGxESmFZbmdyb0xqZ0Q5R214OGV6R2RScFh4Og==")
-			    .header("Content-Type", "application/json")
-			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + body + "\"}"))
-			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response.body());
-			
+				.uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
+				.header("Authorization", "Basic dGVzdF9za19xTGxESmFZbmdyb0xqZ0Q5R214OGV6R2RScFh4Og==")
+				.header("Content-Type", "application/json")
+				.method("POST", HttpRequest.BodyPublishers.ofString("{\"cancelReason\":\"" + body + "\"}"))
+				.build();
+		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+		System.out.println(response.body());
+		
 		// json 파싱
 		JSONParser jsonParser = new JSONParser();
-	      
-	    JSONObject jsonObj = (JSONObject) jsonParser.parse(response.body());
-	    System.out.println("=====================" + jsonObj);
-	      
-	    // 복잡한(다중) json의 일부 배열을 때옴
-	    JSONArray cancels = (JSONArray) jsonObj.get("cancels");
-	    
-	    // 때어온 json의 겉에 대괄호를 벗겨내어 단일 json으로 만듦
-	    JSONObject cancelsObject = (JSONObject) cancels.get(0);
-	    
-	    String transactionKey = (String) cancelsObject.get("transactionKey"); // 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)
-	    Object taxExemptionAmount = (Object) cancelsObject.get("taxExemptionAmount"); // 결제 금액 중 과세 제외 금액(컵 보증금 등)
-	    Object easyPayDiscountAmount = (Object) cancelsObject.get("easyPayDiscountAmount"); // 간편결제 서비스의 포인트, 쿠폰, 즉시할인과 같은 적립식 결제 수단에서 취소된 금액
-	    Object cancelAmount = (Object) cancelsObject.get("cancelAmount"); // 취소할 금액
-	    Object taxFreeAmount = (Object) cancelsObject.get("taxFreeAmount"); // 결제 금액 중 면세 금액
-	    Object refundableAmount = (Object) cancelsObject.get("refundableAmount"); // 현재 환불 가능한 금액
-			
+		
+		JSONObject jsonObj = (JSONObject) jsonParser.parse(response.body());
+		System.out.println("=====================" + jsonObj);
+		
+		// 복잡한(다중) json의 일부 배열을 때옴
+		JSONArray cancels = (JSONArray) jsonObj.get("cancels");
+		
+		// 때어온 json의 겉에 대괄호를 벗겨내어 단일 json으로 만듦
+		JSONObject cancelsObject = (JSONObject) cancels.get(0);
+		
+		String transactionKey = (String) cancelsObject.get("transactionKey"); // 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)
+		Object taxExemptionAmount = (Object) cancelsObject.get("taxExemptionAmount"); // 결제 금액 중 과세 제외 금액(컵 보증금 등)
+		Object easyPayDiscountAmount = (Object) cancelsObject.get("easyPayDiscountAmount"); // 간편결제 서비스의 포인트, 쿠폰, 즉시할인과 같은 적립식 결제 수단에서 취소된 금액
+		Object cancelAmount = (Object) cancelsObject.get("cancelAmount"); // 취소할 금액
+		Object taxFreeAmount = (Object) cancelsObject.get("taxFreeAmount"); // 결제 금액 중 면세 금액
+		Object refundableAmount = (Object) cancelsObject.get("refundableAmount"); // 현재 환불 가능한 금액
+		
 		cancelService.doWrite(booking_id, title, body, transactionKey, taxExemptionAmount, easyPayDiscountAmount, cancelAmount, taxFreeAmount, refundableAmount);
 		
 		paymentService.doModify(payment.getId());
