@@ -26,4 +26,8 @@ public class PaymentService {
 		return paymentRepository.getPaymentByBooking_id(booking_id);
 	}
 
+	public void doModify(int id) {
+		paymentRepository.doModify(id);
+	}
+
 }

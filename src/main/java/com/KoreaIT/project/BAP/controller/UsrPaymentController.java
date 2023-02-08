@@ -190,7 +190,7 @@ public class UsrPaymentController {
 	    JSONArray cancels = (JSONArray) jsonObj.get("cancels");
 	    
 	    // 때어온 json의 겉에 대괄호를 벗겨내어 단일 json으로 만듦
-	    JSONObject cancelsObject = (JSONObject) cancels.get(0); // 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)
+	    JSONObject cancelsObject = (JSONObject) cancels.get(0);
 	    
 	    String transactionKey = (String) cancelsObject.get("transactionKey"); // 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)
 	    Object taxExemptionAmount = (Object) cancelsObject.get("taxExemptionAmount"); // 결제 금액 중 과세 제외 금액(컵 보증금 등)
@@ -200,6 +200,8 @@ public class UsrPaymentController {
 	    Object refundableAmount = (Object) cancelsObject.get("refundableAmount"); // 현재 환불 가능한 금액
 			
 		cancelService.doWrite(booking_id, title, body, transactionKey, taxExemptionAmount, easyPayDiscountAmount, cancelAmount, taxFreeAmount, refundableAmount);
+		
+		paymentService.doModify(payment.getId());
 		
 		return Ut.jsReplace(Ut.f("예약번호 %d번 결제가 취소 되었습니다.", booking_id), Ut.f("/usr/booking/list?cellphoneNo=%s", booking.getCellphoneNo()));
 	}

@@ -3,6 +3,7 @@ package com.KoreaIT.project.BAP.repository;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.KoreaIT.project.BAP.vo.Payment;
 
@@ -37,5 +38,13 @@ public interface PaymentRepository {
 				WHERE booking_id = #{booking_id}
 			""")
 	Payment getPaymentByBooking_id(int booking_id);
+
+	@Update("""
+			UPDATE payment
+				SET updateDate = NOW(), 
+				`status` = 'CANCELED'
+				WHERE id = #{id}
+			""")
+	void doModify(int id);
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.KoreaIT.project.BAP.vo.Booking;
 
@@ -50,14 +51,17 @@ public interface BookingRepository {
 			<script>
 			SELECT b.*, 
 				c.name AS extra__compName,
-				p.roomType AS extra__prodRoomType,
-				p.fee AS extra__prodFee
+				pr.roomType AS extra__prodRoomType,
+				pr.fee AS extra__prodFee
 				FROM booking AS b
 				LEFT JOIN company AS c
 				ON b.comp_id = c.id
-				LEFT JOIN product AS p
-				ON b.prod_id = p.id
+				LEFT JOIN product AS pr
+				ON b.prod_id = pr.id
+				LEFT JOIN payment AS pa
+				ON b.id = pa.booking_id
 				WHERE b.cellphoneNo = #{cellphoneNo}
+				AND pa.`status` = 'DONE'
 				<if test="searchKeyword != ''">
 					<choose>
 						<when test="searchKeywordTypeCode == 'booking_id'">
@@ -80,17 +84,20 @@ public interface BookingRepository {
 	@Select("""
 			<script>
 			SELECT COUNT(*)
-				FROM booking
-				WHERE cellphoneNo = #{cellphoneNo}
+				FROM booking AS b
+				LEFT JOIN payment AS pa
+				ON b.id = pa.booking_id
+				WHERE b.cellphoneNo = #{cellphoneNo}
+				AND pa.`status` = 'DONE'
 				<if test="searchKeyword != ''">
 					<choose>
 						<when test="searchKeywordTypeCode == 'booking_id'">
-							AND id = #{searchKeyword}
+							AND b.id = #{searchKeyword}
 						</when>
 					</choose>
 				</if>
 			</script>
 			""")
 	int getBookingsCount(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword);
-	
+
 }

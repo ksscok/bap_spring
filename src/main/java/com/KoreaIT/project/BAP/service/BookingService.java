@@ -80,4 +80,5 @@ public class BookingService {
 	public int getBookingsCount(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword) {
 		return bookingRepository.getBookingsCount(cellphoneNo, searchKeywordTypeCode, searchKeyword);
 	}
+
 }
