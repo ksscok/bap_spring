@@ -282,7 +282,7 @@ function getUriParams(uri) {
 	    return;
 	  }
 	  
-	  form.body.value = markdown;
+	  document.getElementById('cancelReason').value = markdown;
 	  
 	  form.submit();
 	}

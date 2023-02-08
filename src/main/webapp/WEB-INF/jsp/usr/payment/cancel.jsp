@@ -11,7 +11,7 @@
 	<div class="con-3 mx-auto px-3">
 		<form action="../payment/doCancel" onsubmit="submitForm(this); return false;">
 		<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
-		<input id="body" type="hidden" name="body" value="" />
+		<input id="cancelReason" type="hidden" name="cancelReason" value="" />
 		<div class="my-12 text-2xl font-extrabold">결제 취소</div>
 			<input type="text" name="body">
 			<div class="text-lg font-extrabold mb-4 ml-2">예약 날짜</div>

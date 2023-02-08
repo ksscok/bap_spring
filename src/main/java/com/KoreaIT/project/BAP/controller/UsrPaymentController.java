@@ -149,18 +149,16 @@ public class UsrPaymentController {
 	
 	@RequestMapping("/usr/payment/doCancel")
 	@ResponseBody
-	public String doCancel(Model model, int booking_id, String body) throws IOException, InterruptedException {
+	public String doCancel(Model model, int booking_id, String cancelReason) throws IOException, InterruptedException {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
 		}
 		
-		if(Ut.empty(body)) {
+		if(Ut.empty(cancelReason)) {
 			return Ut.jsHistoryBack("취소사유를 입력해주세요");
 		}
 		
-		System.out.println("body : " + body);
-		String cancelReason = body;
 		System.out.println("cancelReason : " + cancelReason);
 		
 		Booking booking = bookingService.getBookingById(booking_id);
