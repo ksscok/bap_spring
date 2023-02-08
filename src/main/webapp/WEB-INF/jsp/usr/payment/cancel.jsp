@@ -11,9 +11,8 @@
 	<div class="con-3 mx-auto px-3">
 		<form action="../payment/doCancel" onsubmit="submitForm(this); return false;">
 		<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
-		<input id="cancelReason" type="hidden" name="cancelReason" value="" />
+		<input id="body" type="hidden" name="body" />
 		<div class="my-12 text-2xl font-extrabold">결제 취소</div>
-			<input type="text" name="body">
 			<div class="text-lg font-extrabold mb-4 ml-2">예약 날짜</div>
 			<div class="period-inform flex justify-around items-center w-full">
 				<div class="chkin-inform text-xl">
@@ -38,7 +37,9 @@
 				<div class="my-2">취소 가능 금액 : <fmt:formatNumber value="${payment.balanceAmount}" pattern="#,###"/> 원</div>
 			</div>
 			<div class="mt-6">
-				<span class="text-lg font-extrabold mb-4 ml-2">취소사유</span>
+				<div class="text-lg font-extrabold mb-2 ml-2">취소 사유</div>
+				<input name="title" type="text" class="input input-bordered w-64 mb-3" placeholder="취소 사유를 입력해주세요."/>
+				<div class="text-lg font-extrabold mb-2 ml-2">취소 상세사유</div>
 				<div class="toast-ui-editor">
 					<script type="text/x-template"></script>
 				</div>

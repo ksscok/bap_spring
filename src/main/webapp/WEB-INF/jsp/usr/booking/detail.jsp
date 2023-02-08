@@ -97,7 +97,7 @@
 				</table>
 				<div class="flex justify-end">
 <%-- 					<a href="../payment/cancel?paymentKey=${payment.paymentKey }&booking_id=${payment.booking_id }" class="btn btn-primary my-5">결제 취소</a> --%>
-					<button class="btn btn-primary my-5">결제 취소</button>
+					<button class="text-center btn btn-active btn-secondary my-5">결제 취소</button>
 				</div>
 			</div>
 		</div>

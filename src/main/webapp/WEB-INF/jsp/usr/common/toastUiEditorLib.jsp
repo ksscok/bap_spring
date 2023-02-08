@@ -8,7 +8,8 @@
 <!-- 토스트 UI 에디터 플러그인, 컬러피커 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.css" />
 <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
-<link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css" />
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css" />
 <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
 <!-- 토스트 UI 차트 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.css">
@@ -17,10 +18,13 @@
 <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.min.js"></script>
 <!-- 토스트 UI 에디터 플러그인, 코드 신텍스 하이라이터 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
-<link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css">
-<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+<link rel="stylesheet"
+	href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css">
+<script
+	src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 <!-- 토스트 UI 에디터 플러그인, 테이블 셀 병합 -->
-<script src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
+<script
+	src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js"></script>
 <!-- 토스트 UI 에디터 플러그인, katex -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.13/katex.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.13/katex.min.css">
@@ -32,38 +36,47 @@
 .absolute {
 	position: absolute;
 }
+
 .relative {
 	position: relative;
 }
+
 .top-0 {
 	top: 0;
 }
+
 .left-0 {
 	left: 0;
 }
+
 .w-full {
 	width: 100%;
 }
+
 .ratio-16\/9::after {
 	content: "";
 	display: block;
 	padding-top: calc(100%/ 16 * 9);
 }
+
 .ratio-16\/9::after {
 	content: "";
 	display: block;
 	padding-top: calc(100%/ 16 * 9);
 }
+
 .ratio-9\/16::after {
 	content: "";
 	display: block;
 	padding-top: calc(100%/ 9 * 16);
 }
+
 .ratio-1\/1::after {
 	content: "";
 	display: block;
 	padding-top: calc(100%/ 1 * 1);
 }
+
 .ratio-1\/2::after {
 	content: "";
 	display: block;
@@ -273,6 +286,14 @@ function getUriParams(uri) {
 	});
 	function submitForm(form){
 	  
+	  form.title.value = form.title.value.trim();
+		  
+	  if(form.title.value.length == 0){
+	  	alert('제목을 입력해주세요');
+	    form.title.focus();
+	    return;
+	  }
+		
 	  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
 	  const markdown = editor.getMarkdown().trim();
 	  
@@ -282,7 +303,7 @@ function getUriParams(uri) {
 	    return;
 	  }
 	  
-	  document.getElementById('cancelReason').value = markdown;
+	  document.getElementById('body').value = markdown;
 	  
 	  form.submit();
 	}
