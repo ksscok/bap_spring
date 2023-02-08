@@ -460,6 +460,13 @@ CREATE TABLE booking
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수'
 );
 
+SELECT COUNT(*)
+				FROM booking
+				WHERE cellphoneNo = '010-1212-2323'
+				AND id = 3;
+			
+					
+
 SELECT * FROM booking;
 SELECT LAST_INSERT_ID();
 
@@ -687,6 +694,25 @@ vat = 6364;
 
 SELECT *
 FROM payment;
+
+CREATE TABLE cancel
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    booking_id    INT UNSIGNED     NOT NULL    COMMENT '예약번호', 
+    title  VARCHAR(45)    NOT NULL    COMMENT '취소 사유', 
+    `body`    VARCHAR(45)    NOT NULL    COMMENT '취소 상세 사유', 
+    transactionKey VARCHAR(200) NOT NULL COMMENT '거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)',
+    taxExemptionAmount INT UNSIGNED NOT NULL COMMENT '결제 금액 중 과세 제외 금액(컵 보증금 등)',
+    easyPayDiscountAmount INT UNSIGNED NOT NULL COMMENT '간편결제 서비스의 포인트, 쿠폰, 즉시할인과 같은 적립식 결제 수단에서 취소된 금액',
+    cancelAmount INT UNSIGNED NOT NULL COMMENT '취소할 금액',
+    taxFreeAmount INT UNSIGNED NOT NULL COMMENT '결제 금액 중 면세 금액',
+    refundableAmount INT UNSIGNED NOT NULL COMMENT '현재 환불 가능한 금액'
+);
+
+SELECT *
+FROM cancel;
 
 
 # 현재날짜(today)를 "-" 제외한 값 구하기
@@ -1068,3 +1094,6 @@ smokingType = 'noSmoking';
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
+
+select * from product
+where comp_id = 2;
