@@ -12,6 +12,7 @@ public class CancellationApplication {
 	private String regDate;
 	private String updateDate;
 	private int booking_id;
+	private String memberType;
 	private String title;
 	private String body;
 	private int cancelAmount;

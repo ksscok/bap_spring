@@ -8,148 +8,184 @@
 <link rel="stylesheet" href="/resource/bookingDetail.css" />
 
 <section>
-<!-- 	<form action="../payment/cancel"> -->
-		<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
-		<div class="con-3 mx-auto px-3">
-			<div class="my-12 text-3xl font-extrabold">예약 상세보기</div>
-			<div class="table-box-type-1">
-				<div class="text-2xl font-extrabold mb-6 ml-2">예약 날짜</div>
-				<div class="period-inform flex justify-around items-center w-full">
-					<div class="chkin-inform text-xl">
-						<span class="text-gray-400">체크인</span>
-						&nbsp;&nbsp;&nbsp;
-						<span>${dateAndDayOfTheWeekOfChkin }</span>
-						&nbsp;
-						<span>${timeChkin }</span>
-					</div>
-					<div class="text-xl"><i class="fa-solid fa-circle-right"></i></div>
-					<div class="chkout-inform text-xl">
-						<span class="text-gray-400">체크아웃</span>
-						&nbsp;&nbsp;&nbsp;
-						<span>${dateAndDayOfTheWeekOfChkout }</span>
-						&nbsp;
-						<span>${timeChkout }</span>
-					</div>
+	<div class="con-3 mx-auto px-3">
+		<div class="my-12 text-3xl font-extrabold">예약 상세보기</div>
+		<div class="table-box-type-1">
+			<div class="text-2xl font-extrabold mb-6 ml-2">예약 날짜</div>
+			<div class="period-inform flex justify-around items-center w-full">
+				<div class="chkin-inform text-xl">
+					<span class="text-gray-400">체크인</span>
+					&nbsp;&nbsp;&nbsp;
+					<span>${dateAndDayOfTheWeekOfChkin }</span>
+					&nbsp;
+					<span>${timeChkin }</span>
 				</div>
-			
-				<table class="mt-10">
-					<colgroup>
-						<col width="300" />
-					</colgroup>
-					
-					<thead>
+				<div class="text-xl">
+					<i class="fa-solid fa-circle-right"></i>
+				</div>
+				<div class="chkout-inform text-xl">
+					<span class="text-gray-400">체크아웃</span>
+					&nbsp;&nbsp;&nbsp;
+					<span>${dateAndDayOfTheWeekOfChkout }</span>
+					&nbsp;
+					<span>${timeChkout }</span>
+				</div>
+			</div>
+
+			<table class="mt-10">
+				<colgroup>
+					<col width="300" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th colspan="2">
+							<div class="text-2xl">예약 정보</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>예약번호</th>
+						<td>${booking.id }</td>
+					</tr>
+					<tr>
+						<th>예약자 이름</th>
+						<td>${booking.customerName }</td>
+					</tr>
+					<tr>
+						<th>예약자 전화번호</th>
+						<td>${booking.cellphoneNo }</td>
+					</tr>
+					<tr>
+						<th>예약 상태</th>
+						<td>${booking.extra__status }</td>
+					</tr>
+					<c:if test="${booking.getStatus() == 'cancel'}">
 						<tr>
-							<th colspan="2"><div class="text-2xl">예약 정보</div></th>
+							<th></th>
+							<td>
+								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 상세보기</a>
+							</td>
 						</tr>
-					</thead>				
-					<tbody>
+					</c:if>
+					<c:if test="${booking.getStatus() == 'cancel_apply'}">
 						<tr>
-							<th>예약번호</th>
-							<td>${booking.id }</td>
+							<c:choose>
+								<c:when test="${rq.getLoginedMember().getMemberType() == 'host' }">
+									<th></th>
+								</c:when>
+								<c:otherwise>
+									<th style="text-align: right;">
+										<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약으로 되돌리기</a>
+									</th>
+								</c:otherwise>
+							</c:choose>
+							<td>
+								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 상세보기</a>
+							</td>
 						</tr>
-						<tr>
-							<th>예약자 이름</th>
-							<td>${booking.customerName }</td>
-						</tr>
-						<tr>
-							<th>예약자 전화번호</th>
-							<td>${booking.cellphoneNo }</td>
-						</tr>
-						<tr>
-							<th>예약 상태</th>
-							<td>${booking.extra__status }</td>
-						</tr>
-					</tbody>
-				</table>
-			
-				<table class="mt-10">
-					<colgroup>
-						<col width="300" />
-					</colgroup>
-					
-					<thead>
-						<tr>
-							<th colspan="2"><div class="text-2xl">숙소 정보</div></th>
-						</tr>
-					</thead>				
-					<tbody>
-						<tr>
-							<th>숙소 이름</th>
-							<td>${company.name }</td>
-						</tr>
-						<tr>
-							<th>숙소 번호</th>
-							<td>${company.cellphoneNo }</td>
-						</tr>
-						<tr>
-							<th>방 타입</th>
-							<td>${product.roomType }</td>
-						</tr>
-					</tbody>
-				</table>
-				
-				<table class="mt-10">
-					<colgroup>
-						<col width="300" />
-					</colgroup>
-					
-					<thead>
-						<tr>
-							<th colspan="2"><div class="text-2xl">결제 정보</div></th>
-						</tr>
-					</thead>	
-					<tbody>
-						<tr>
-							<th>결제일시</th>
-							<td><input type="text" id="dateTime" name="dateTime" value="${dateTime }" readonly/></td>
-						</tr>
-						<tr>
-							<th>상품가격(${booking.diff }박)</th>
-							<td><fmt:formatNumber value="${payment.totalAmount}" pattern="#,###"/> 원</td>
-						</tr>
-						<tr>
-							<th>결제 시 포인트 사용</th>
-							<td>- 0P</td>
-						</tr>
-						<tr>
-							<th>결제 시 쿠폰 사용</th>
-							<td>- 0P</td>
-						</tr>
-						<tr>
-							<th>실 결제 금액</th>
-							<td>70,000원</td>
-						</tr>
-						<tr>
-							<th>결제수단</th>
-							<td>${easyPay }</td>
-						</tr>
-					</tbody>
-				</table>
-				<div class="flex justify-end">
-					<c:if test="${!rq.isLogined()}">
+					</c:if>
+				</tbody>
+			</table>
+
+			<table class="mt-10">
+				<colgroup>
+					<col width="300" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th colspan="2">
+							<div class="text-2xl">숙소 정보</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>숙소 이름</th>
+						<td>${company.name }</td>
+					</tr>
+					<tr>
+						<th>숙소 번호</th>
+						<td>${company.cellphoneNo }</td>
+					</tr>
+					<tr>
+						<th>방 타입</th>
+						<td>${product.roomType }</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="mt-10">
+				<colgroup>
+					<col width="300" />
+				</colgroup>
+
+				<thead>
+					<tr>
+						<th colspan="2">
+							<div class="text-2xl">결제 정보</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>결제일시</th>
+						<td>
+							<input type="text" id="dateTime" name="dateTime" value="${dateTime }" readonly />
+						</td>
+					</tr>
+					<tr>
+						<th>상품가격(${booking.diff }박)</th>
+						<td>
+							<fmt:formatNumber value="${payment.totalAmount}" pattern="#,###" />
+							원
+						</td>
+					</tr>
+					<tr>
+						<th>결제 시 포인트 사용</th>
+						<td>- 0P</td>
+					</tr>
+					<tr>
+						<th>결제 시 쿠폰 사용</th>
+						<td>- 0P</td>
+					</tr>
+					<tr>
+						<th>실 결제 금액</th>
+						<td>70,000원</td>
+					</tr>
+					<tr>
+						<th>결제수단</th>
+						<td>${easyPay }</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="flex justify-end">
+				<c:if test="${!rq.isLogined()}">
+					<c:if test="${booking.getStatus() == 'done'}">
+						<a href="../booking/cancel?booking_id=${payment.booking_id }"
+							class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+					</c:if>
+				</c:if>
+				<c:if test="${rq.isLogined()}">
+					<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
 						<c:if test="${booking.getStatus() == 'done'}">
 							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
 						</c:if>
 					</c:if>
-					<c:if test="${rq.isLogined()}">
-						<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
-							<c:if test="${booking.getStatus() == 'done'}">
-								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
-							</c:if>
+					<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
+						<c:if test="${booking.getStatus() == 'done'}">
+							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소</a>
 						</c:if>
-						<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
-							<c:if test="${booking.getStatus() == 'done'}">
-								<a href="../payment/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소</a>
-							</c:if>
-							<c:if test="${booking.getStatus() == 'cancel_apply'}">
-								<a href="../payment/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a>
-							</c:if>
+						<c:if test="${booking.getStatus() == 'cancel_apply'}">
+							<a href="../payment/showCancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a>
 						</c:if>
 					</c:if>
-				</div>
+				</c:if>
 			</div>
 		</div>
-<!-- 	</form> -->
+	</div>
 </section>
 
 <script>

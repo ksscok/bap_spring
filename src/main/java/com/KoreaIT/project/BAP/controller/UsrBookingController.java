@@ -26,6 +26,7 @@ import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
+import com.KoreaIT.project.BAP.vo.CancellationApplication;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.KoreaIT.project.BAP.vo.Payment;
@@ -245,7 +246,7 @@ public class UsrBookingController {
 	
 	@RequestMapping("/usr/booking/doApply")
 	@ResponseBody
-	public String doApply(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {
+	public String doApply(Model model, int booking_id, @RequestParam(defaultValue = "guest") String memberType, String title, String body) throws IOException, InterruptedException, ParseException {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -259,11 +260,23 @@ public class UsrBookingController {
 			return Ut.jsHistoryBack("취소 상세 사유를 입력해주세요");
 		}
 		
+		String status = "cancel_apply";
+		
+		// host의 사정으로 예약 신청을 취소할 때
+		if(rq.getLoginedMember().getMemberType().equals("host")) {
+			memberType = "host";
+			status = "cancel";
+		}
+		
 		Booking booking = bookingService.getBookingById(booking_id);
 		
-		cancellationApplicationService.doWrite(booking_id, title, body, booking.getExtra__prodFee());
+		cancellationApplicationService.doWrite(booking_id, memberType, title, body, booking.getExtra__prodFee());
 		
-		bookingService.doModifyStatus(booking.getId());
+		bookingService.doModifyStatus(booking.getId(), status);
+		
+		if(rq.getLoginedMember().getMemberType().equals("host")) {
+			return Ut.jsReplace("", Ut.f("/usr/payment/doCancel?booking_id=%d&title=$s&body=$s", booking.getId(), title, body));
+		}
 		
 		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 신청했습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}

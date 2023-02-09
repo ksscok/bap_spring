@@ -712,11 +712,42 @@ CREATE TABLE cancellationApplication
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
     regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
 	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
-    booking_id    INT UNSIGNED     NOT NULL    COMMENT '예약번호', 
-    title  VARCHAR(45)    NOT NULL    COMMENT '취소 사유', 
-    `body`    VARCHAR(45)    NOT NULL    COMMENT '취소 상세 사유', 
+    booking_id    INT UNSIGNED     NOT NULL    COMMENT '예약번호',
+    memberType CHAR(20) NOT NULL COMMENT 'guest, host',
+    title  VARCHAR(100)    NOT NULL    COMMENT '취소 사유', 
+    `body`    VARCHAR(200)    NOT NULL    COMMENT '취소 상세 사유', 
     cancelAmount INT UNSIGNED NOT NULL COMMENT '취소할 금액'
 );
+
+# booking_id = 4를 guest가 예약 취소 - 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
+INSERT INTO cancellationApplication
+SET regDate = NOW(),
+updateDate = NOW(),
+booking_id = 4,
+memberType = 'guest',
+title = '변심',
+`body` = '여행 안가고 싶어짐',
+cancelAmount = 100000;
+
+# booking_id = 5를 guest가 예약 취소 - 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
+INSERT INTO cancellationApplication
+SET regDate = NOW(),
+updateDate = NOW(),
+booking_id = 5,
+memberType = 'guest',
+title = '인원 변경으로 인해',
+`body` = '인원이 추가되어 더 큰 방을 예약하려고',
+cancelAmount = 100000;
+
+# booking_id = 6를 host가 예약 취소 - 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO cancellationApplication
+SET regDate = NOW(),
+updateDate = NOW(),
+booking_id = 5,
+memberType = 'host',
+title = '내부 공사',
+`body` = '방의 내부 공사 기간이여서 host측에서 취소 하게 되었습니다. 양해 부탁드립니다.',
+cancelAmount = 70000;
 
 SELECT *
 FROM cancellationApplication;

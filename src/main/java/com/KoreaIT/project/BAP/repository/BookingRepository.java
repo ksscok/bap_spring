@@ -127,9 +127,9 @@ public interface BookingRepository {
 	@Update("""
 			UPDATE booking
 				SET updateDate = NOW(), 
-				`status` = 'cancel_apply'
+				`status` = #{status}
 				WHERE id = #{id}
 			""")
-	void doModifyStatus(int id);
+	void doModifyStatus(int id, String status);
 
 }

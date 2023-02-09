@@ -109,8 +109,8 @@ public class BookingService {
 		return  bookingRepository.getBookingsCountByComp_id(comp_id);
 	}
 
-	public void doModifyStatus(int id) {
-		bookingRepository.doModifyStatus(id);
+	public void doModifyStatus(int id, String status) {
+		bookingRepository.doModifyStatus(id, status);
 	}
 
 	private void modifyExtra__status(Booking booking) {
