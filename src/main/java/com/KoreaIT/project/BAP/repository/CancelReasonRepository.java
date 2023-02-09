@@ -4,10 +4,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.KoreaIT.project.BAP.vo.CancellationApplication;
+import com.KoreaIT.project.BAP.vo.CancelReason;
 
 @Mapper
-public interface CancellationApplicationRepository {
+public interface CancelReasonRepository {
 	
 	@Insert("""
 			INSERT INTO cancellationApplication
@@ -23,8 +23,8 @@ public interface CancellationApplicationRepository {
 
 	@Select("""
 			SELECT *
-				FROM cancellationApplication
+				FROM cancelReason
 				WHERE booking_id = #{booking_id}
 			""")
-	CancellationApplication getCancellationApplicationServiceByBooking_id(int booking_id);
+	CancelReason getCancelReasonByBooking_id(int booking_id);
 }

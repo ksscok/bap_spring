@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.CancelService;
-import com.KoreaIT.project.BAP.service.CancellationApplicationService;
 import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
@@ -29,14 +28,12 @@ public class UsrPaymentController {
 	
 	private PaymentService paymentService;
 	private BookingService bookingService;
-	private CancellationApplicationService cancellationApplicationService;
 	private CancelService cancelService;
 	
 	@Autowired
-	public UsrPaymentController(PaymentService paymentService, BookingService bookingService, CancellationApplicationService cancellationApplicationService, CancelService cancelService) {
+	public UsrPaymentController(PaymentService paymentService, BookingService bookingService, CancelService cancelService) {
 		this.paymentService = paymentService;
 		this.bookingService = bookingService;
-		this.cancellationApplicationService = cancellationApplicationService;
 		this.cancelService = cancelService;
 	}
 	

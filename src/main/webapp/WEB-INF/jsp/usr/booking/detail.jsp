@@ -65,7 +65,7 @@
 						<tr>
 							<th></th>
 							<td>
-								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 상세보기</a>
+								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">취소 사유 상세보기</a>
 							</td>
 						</tr>
 					</c:if>
@@ -77,12 +77,12 @@
 								</c:when>
 								<c:otherwise>
 									<th style="text-align: right;">
-										<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약으로 되돌리기</a>
+										<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">예약으로 되돌리기</a>
 									</th>
 								</c:otherwise>
 							</c:choose>
 							<td>
-								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 상세보기</a>
+								<a href="../booking/cancelReason?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">취소 사유 상세보기</a>
 							</td>
 						</tr>
 					</c:if>

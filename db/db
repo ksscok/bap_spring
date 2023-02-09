@@ -707,7 +707,7 @@ vat = 6364;
 SELECT *
 FROM payment;
 
-CREATE TABLE cancellationApplication
+CREATE TABLE cancelReason
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
     regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
@@ -720,7 +720,7 @@ CREATE TABLE cancellationApplication
 );
 
 # booking_id = 4를 guest가 예약 취소 - 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
-INSERT INTO cancellationApplication
+INSERT INTO cancelReason
 SET regDate = NOW(),
 updateDate = NOW(),
 booking_id = 4,
@@ -730,7 +730,7 @@ title = '변심',
 cancelAmount = 100000;
 
 # booking_id = 5를 guest가 예약 취소 - 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
-INSERT INTO cancellationApplication
+INSERT INTO cancelReason
 SET regDate = NOW(),
 updateDate = NOW(),
 booking_id = 5,
@@ -740,7 +740,7 @@ title = '인원 변경으로 인해',
 cancelAmount = 100000;
 
 # booking_id = 6를 host가 예약 취소 - 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
-INSERT INTO cancellationApplication
+INSERT INTO cancelReason
 SET regDate = NOW(),
 updateDate = NOW(),
 booking_id = 5,
@@ -750,7 +750,7 @@ title = '내부 공사',
 cancelAmount = 70000;
 
 SELECT *
-FROM cancellationApplication;
+FROM cancelReason;
 
 CREATE TABLE cancel
 (

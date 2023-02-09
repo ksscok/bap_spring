@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
-import com.KoreaIT.project.BAP.service.CancellationApplicationService;
+import com.KoreaIT.project.BAP.service.CancelReasonService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
-import com.KoreaIT.project.BAP.vo.CancellationApplication;
+import com.KoreaIT.project.BAP.vo.CancelReason;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.KoreaIT.project.BAP.vo.Payment;
@@ -41,17 +41,17 @@ public class UsrBookingController {
 	private ProductService productService;
 	private BookingService bookingService;
 	private PaymentService paymentService;
-	private CancellationApplicationService cancellationApplicationService;
+	private CancelReasonService cancelReasonService;
 	private Rq rq;
 	
 	@Autowired
-	public UsrBookingController(MemberService memberService, CompanyService companyService, ProductService productService, BookingService bookingService, PaymentService paymentService, CancellationApplicationService cancellationApplicationService, Rq rq) {
+	public UsrBookingController(MemberService memberService, CompanyService companyService, ProductService productService, BookingService bookingService, PaymentService paymentService, CancelReasonService cancelReasonService, Rq rq) {
 		this.memberService = memberService;
 		this.companyService = companyService;
 		this.productService = productService;
 		this.bookingService = bookingService;
 		this.paymentService = paymentService;
-		this.cancellationApplicationService = cancellationApplicationService;
+		this.cancelReasonService = cancelReasonService;
 		this.rq = rq;
 	}
 	
@@ -171,7 +171,7 @@ public class UsrBookingController {
 			@RequestParam(defaultValue = "") String searchKeyword) {
 		
 		if(Ut.empty(cellphoneNo)) {
-			return rq.jsHistoryBack("예약번호를 입력해주세요.");
+			return rq.jsHistoryBack("전화번호를 입력해주세요.");
 		}
 		
 		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo, searchKeywordTypeCode, searchKeyword);
@@ -237,8 +237,8 @@ public class UsrBookingController {
 		String paymentKey = payment.getPaymentKey();
 		
 		model.addAttribute("paymentKey", paymentKey);
-		model.addAttribute("booking", booking);
 		model.addAttribute("booking.id", booking.getId());
+		model.addAttribute("booking", booking);
 		model.addAttribute("payment", payment);
 		
 		return "/usr/booking/cancel";
@@ -270,7 +270,7 @@ public class UsrBookingController {
 		
 		Booking booking = bookingService.getBookingById(booking_id);
 		
-		cancellationApplicationService.doWrite(booking_id, memberType, title, body, booking.getExtra__prodFee());
+		cancelReasonService.doWrite(booking_id, memberType, title, body, booking.getExtra__prodFee());
 		
 		bookingService.doModifyStatus(booking.getId(), status);
 		
@@ -279,6 +279,43 @@ public class UsrBookingController {
 		}
 		
 		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 신청했습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
+	}
+	
+	@RequestMapping("/usr/booking/cancelReason")
+	public String showCancelReason(Model model, int booking_id) throws IOException, InterruptedException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
+		
+		CancelReason cancelReason = cancelReasonService.getCancelReasonByBooking_id(booking_id);
+		
+		model.addAttribute("booking_id", booking_id);
+		model.addAttribute("booking", booking);
+		model.addAttribute("payment", payment);
+		model.addAttribute("cancelReason", cancelReason);
+		
+		return "/usr/booking/cancelReason";
+	}
+	
+	@RequestMapping("/usr/booking/authorize")
+	@ResponseBody
+	public String doAuthorize(Model model, int booking_id) throws IOException, InterruptedException, ParseException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		String status = "cancel";
+		
+		bookingService.doModifyStatus(booking_id, status);
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		
+		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 승인했습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}
 	
 }
