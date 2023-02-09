@@ -17,6 +17,7 @@ public class Company {
 	private String regDate;
 	private String updateDate;
 	private String name;
+	private String cellphoneNo;
 	private String address;
 	private String area;
 	private String timeChkin;

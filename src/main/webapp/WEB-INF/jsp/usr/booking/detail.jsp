@@ -52,12 +52,38 @@
 							<td>${booking.customerName }</td>
 						</tr>
 						<tr>
-							<th>전화번호</th>
+							<th>예약자 전화번호</th>
 							<td>${booking.cellphoneNo }</td>
 						</tr>
 						<tr>
 							<th>예약 상태</th>
 							<td>${booking.extra__status }</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table class="mt-10">
+					<colgroup>
+						<col width="300" />
+					</colgroup>
+					
+					<thead>
+						<tr>
+							<th colspan="2"><div class="text-2xl">숙소 정보</div></th>
+						</tr>
+					</thead>				
+					<tbody>
+						<tr>
+							<th>숙소 이름</th>
+							<td>${company.name }</td>
+						</tr>
+						<tr>
+							<th>숙소 번호</th>
+							<td>${company.cellphoneNo }</td>
+						</tr>
+						<tr>
+							<th>방 타입</th>
+							<td>${product.roomType }</td>
 						</tr>
 					</tbody>
 				</table>
@@ -101,11 +127,15 @@
 				</table>
 				<div class="flex justify-end">
 					<c:if test="${!rq.isLogined()}">
-						<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+						<c:if test="${booking.getStatus() == 'apply' or booking.getStatus() == 'authorization'}">
+							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+						</c:if>
 					</c:if>
 					<c:if test="${rq.isLogined()}">
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
-							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+							<c:if test="${booking.getStatus() == 'apply' or booking.getStatus() == 'authorization'}">
+								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+							</c:if>
 						</c:if>
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
 							<a href="../management/bookingModify?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 승인</a>

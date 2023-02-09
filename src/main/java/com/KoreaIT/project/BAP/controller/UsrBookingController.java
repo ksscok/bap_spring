@@ -159,6 +159,11 @@ public class UsrBookingController {
 		return "/usr/payment/pay";
 	}
 	
+	@RequestMapping("/usr/booking/listConfirm")
+	public String showListConfirm() {
+		return "/usr/booking/listConfirm";
+	}
+	
 	@RequestMapping("/usr/booking/list")
 	public String showList(Model model, String cellphoneNo,
 			@RequestParam(defaultValue = "booking_id") String searchKeywordTypeCode,
@@ -179,11 +184,6 @@ public class UsrBookingController {
 		model.addAttribute("searchKeyword", searchKeyword);
 		
 		return "/usr/booking/list";
-	}
-	
-	@RequestMapping("/usr/booking/listConfirm")
-	public String showListConfirm() {
-		return "/usr/booking/listConfirm";
 	}
 	
 	@RequestMapping("/usr/booking/detail")
@@ -213,8 +213,10 @@ public class UsrBookingController {
 		model.addAttribute("payment", payment);
 		model.addAttribute("dateAndDayOfTheWeekOfChkin", dateAndDayOfTheWeekOfChkin);
 		model.addAttribute("dateAndDayOfTheWeekOfChkout", dateAndDayOfTheWeekOfChkout);
+		model.addAttribute("company", company);
 		model.addAttribute("timeChkin", timeChkin);
 		model.addAttribute("timeChkout", timeChkout);
+		model.addAttribute("product", product);
 		model.addAttribute("requestedAt", requestedAt);
 		model.addAttribute("dateTime", dateTime);
 		
