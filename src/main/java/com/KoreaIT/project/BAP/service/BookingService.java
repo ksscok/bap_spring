@@ -56,18 +56,8 @@ public class BookingService {
 		
 		Booking booking = bookingRepository.getBookingByOrderId(orderId);
 		
-		if(booking.getStatus().equals("done")) {
-			booking.setExtra__status("예약 완료");
-		}
-		else if(booking.getStatus().equals("expired")) {
-			booking.setExtra__status("예약 만료");
-		}
-		else if(booking.getStatus().equals("cancel_apply")) {
-			booking.setExtra__status("예약 취소 신청");
-		}
-		else {
-			booking.setExtra__status("예약 취소 완료");
-		}
+		// status 한글 번역화
+		modifyExtra__status(booking);
 		
 		return booking;
 	}
@@ -85,18 +75,8 @@ public class BookingService {
 			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
 			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
 			
-			if(booking.getStatus().equals("done")) {
-				booking.setExtra__status("예약 완료");
-			}
-			else if(booking.getStatus().equals("expired")) {
-				booking.setExtra__status("예약 만료");
-			}
-			else if(booking.getStatus().equals("cancel_apply")) {
-				booking.setExtra__status("예약 취소 신청");
-			}
-			else {
-				booking.setExtra__status("예약 취소 완료");
-			}
+			// status 한글 번역화
+			modifyExtra__status(booking);
 		}
 		
 		return bookings;
@@ -118,21 +98,8 @@ public class BookingService {
 			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
 			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
 			
-			if(booking.getStatus().equals("apply")) {
-				booking.setExtra__status("예약 신청");
-			} 
-			else if(booking.getStatus().equals("authorization")) {
-				booking.setExtra__status("예약 승인");
-			}
-			else if(booking.getStatus().equals("done")) {
-				booking.setExtra__status("예약 완료");
-			}
-			else if(booking.getStatus().equals("cancel_apply")) {
-				booking.setExtra__status("예약 취소 신청");
-			}
-			else {
-				booking.setExtra__status("예약 취소 완료");
-			}
+			// status 한글 번역화
+			modifyExtra__status(booking);
 		}
 		
 		return bookings;
@@ -146,4 +113,20 @@ public class BookingService {
 		bookingRepository.doModifyStatus(id);
 	}
 
+	private void modifyExtra__status(Booking booking) {
+		
+		if(booking.getStatus().equals("done")) {
+			booking.setExtra__status("예약 완료");
+		}
+		else if(booking.getStatus().equals("expired")) {
+			booking.setExtra__status("예약 만료");
+		}
+		else if(booking.getStatus().equals("cancel_apply")) {
+			booking.setExtra__status("예약 취소 신청");
+		}
+		else if(booking.getStatus().equals("cancel")) {
+			booking.setExtra__status("예약 취소 완료");
+		}
+	}
+	
 }
