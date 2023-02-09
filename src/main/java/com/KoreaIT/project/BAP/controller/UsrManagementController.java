@@ -18,7 +18,6 @@ import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
 import com.KoreaIT.project.BAP.vo.Company;
-import com.KoreaIT.project.BAP.vo.Payment;
 import com.KoreaIT.project.BAP.vo.Product;
 import com.KoreaIT.project.BAP.vo.Rq;
 

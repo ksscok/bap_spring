@@ -127,19 +127,19 @@
 				</table>
 				<div class="flex justify-end">
 					<c:if test="${!rq.isLogined()}">
-						<c:if test="${booking.getStatus() == 'apply' or booking.getStatus() == 'authorization'}">
+						<c:if test="${booking.getStatus() == 'done'}">
 							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
 						</c:if>
 					</c:if>
 					<c:if test="${rq.isLogined()}">
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
-							<c:if test="${booking.getStatus() == 'apply' or booking.getStatus() == 'authorization'}">
+							<c:if test="${booking.getStatus() == 'done'}">
 								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
 							</c:if>
 						</c:if>
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
-							<a href="../management/bookingModify?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 승인</a>
-							<a href="../payment/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a>
+							<span class="mr-4"><a href="../payment/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소</a></span>
+							<span><a href="../payment/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a></span>
 						</c:if>
 					</c:if>
 				</div>
