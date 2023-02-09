@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class cancellationApplication {
+public class CancellationApplication {
 	private int id;
 	private String regDate;
 	private String updateDate;

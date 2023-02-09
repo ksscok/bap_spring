@@ -148,4 +148,8 @@ public class BookingService {
 		return  bookingRepository.getBookingsCountByComp_id(comp_id);
 	}
 
+	public void doModifyStatus(int id) {
+		bookingRepository.doModifyStatus(id);
+	}
+
 }

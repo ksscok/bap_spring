@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/resource/bookingDetail.css" />
 
 <section>
-	<form action="../payment/cancel">
+<!-- 	<form action="../payment/cancel"> -->
 		<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
 		<div class="con-3 mx-auto px-3">
 			<div class="my-12 text-3xl font-extrabold">예약 상세보기</div>
@@ -100,12 +100,22 @@
 					</tbody>
 				</table>
 				<div class="flex justify-end">
-<%-- 					<a href="../payment/cancel?paymentKey=${payment.paymentKey }&booking_id=${payment.booking_id }" class="btn btn-primary my-5">결제 취소</a> --%>
-					<button class="text-center btn btn-active btn-secondary my-5">예약 취소</button>
+					<c:if test="${!rq.isLogined()}">
+						<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+					</c:if>
+					<c:if test="${rq.isLogined()}">
+						<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
+							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+						</c:if>
+						<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
+							<a href="../management/bookingModify?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 승인</a>
+							<a href="../payment/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a>
+						</c:if>
+					</c:if>
 				</div>
 			</div>
 		</div>
-	</form>
+<!-- 	</form> -->
 </section>
 
 <script>

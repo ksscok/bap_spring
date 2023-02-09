@@ -458,7 +458,7 @@ CREATE TABLE booking
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수',
-    `status`  VARCHAR(45)    NOT NULL DEFAULT 'apply'   COMMENT '예약상태 (apply : 예약 신청, authorization : 예약 승인, done : 예약 완료, cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
+    `status`  VARCHAR(45)    NOT NULL DEFAULT 'apply'   COMMENT '예약상태 (apply : 예약 신청, authorization : 예약 승인, done : 예약 완료(이미 왔다 간 것을 표시), cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
 );
 
 SELECT COUNT(*)

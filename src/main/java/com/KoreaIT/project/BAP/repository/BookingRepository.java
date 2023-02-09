@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.KoreaIT.project.BAP.vo.Booking;
 
@@ -74,9 +75,12 @@ public interface BookingRepository {
 	List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword);
 
 	@Select("""
-			SELECT *
-				FROM booking
-				WHERE id = #{id}
+			SELECT b.*, 
+				pr.fee AS extra__prodFee
+				FROM booking AS b
+				LEFT JOIN product AS pr
+				ON b.prod_id = pr.id
+				WHERE b.id = #{id}
 			""")
 	Booking getBookingById(int id);
 
@@ -119,5 +123,13 @@ public interface BookingRepository {
 				WHERE comp_id = #{comp_id}
 			""")
 	int getBookingsCountByComp_id(int comp_id);
+
+	@Update("""
+			UPDATE booking
+				SET updateDate = NOW(), 
+				`status` = 'cancel_apply'
+				WHERE id = #{id}
+			""")
+	void doModifyStatus(int id);
 
 }

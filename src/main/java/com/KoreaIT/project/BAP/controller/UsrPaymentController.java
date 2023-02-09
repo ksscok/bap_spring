@@ -153,29 +153,6 @@ public class UsrPaymentController {
 		return "/usr/payment/cancel";
 	}
 	
-	@RequestMapping("/usr/payment/doApply")
-	@ResponseBody
-	public String doApply(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {
-		
-		if(Ut.empty(booking_id)) {
-			return Ut.jsHistoryBack("예약번호를 입력해주세요");
-		}
-		
-		if(Ut.empty(title)) {
-			return Ut.jsHistoryBack("취소 사유를 입력해주세요");
-		}
-		
-		if(Ut.empty(body)) {
-			return Ut.jsHistoryBack("취소 상세 사유를 입력해주세요");
-		}
-		
-		Booking booking = bookingService.getBookingById(booking_id);
-		
-		cancellationApplicationService.doWrite(booking_id, title, body, booking.getExtra__prodFee());
-		
-		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 신청했습니다.", booking_id), Ut.f("/usr/booking/list?cellphoneNo=%s", booking.getCellphoneNo()));
-	}
-	
 	@RequestMapping("/usr/payment/doCancel")
 	@ResponseBody
 	public String doCancel(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {

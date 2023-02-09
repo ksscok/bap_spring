@@ -1,5 +1,6 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -9,13 +10,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
+import com.KoreaIT.project.BAP.service.CancellationApplicationService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.service.PaymentService;
@@ -31,20 +35,22 @@ import com.KoreaIT.project.BAP.vo.Rq;
 @Controller
 public class UsrBookingController {
 	
+	private MemberService memberService;
+	private CompanyService companyService;
+	private ProductService productService;
 	private BookingService bookingService;
 	private PaymentService paymentService;
-	private ProductService productService;
-	private CompanyService companyService;
-	private MemberService memberService;
+	private CancellationApplicationService cancellationApplicationService;
 	private Rq rq;
 	
 	@Autowired
-	public UsrBookingController(BookingService bookingService, PaymentService paymentService, ProductService productService, CompanyService companyService, MemberService memberService, Rq rq) {
+	public UsrBookingController(MemberService memberService, CompanyService companyService, ProductService productService, BookingService bookingService, PaymentService paymentService, CancellationApplicationService cancellationApplicationService, Rq rq) {
+		this.memberService = memberService;
+		this.companyService = companyService;
+		this.productService = productService;
 		this.bookingService = bookingService;
 		this.paymentService = paymentService;
-		this.productService = productService;
-		this.companyService = companyService;
-		this.memberService = memberService;
+		this.cancellationApplicationService = cancellationApplicationService;
 		this.rq = rq;
 	}
 	
@@ -213,6 +219,51 @@ public class UsrBookingController {
 		model.addAttribute("dateTime", dateTime);
 		
 		return "/usr/booking/detail";
+	}
+	
+	@RequestMapping("/usr/booking/cancel")
+	public String showCancel(Model model, int booking_id) throws IOException, InterruptedException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
+		
+		String paymentKey = payment.getPaymentKey();
+		
+		model.addAttribute("paymentKey", paymentKey);
+		model.addAttribute("booking", booking);
+		model.addAttribute("booking.id", booking.getId());
+		model.addAttribute("payment", payment);
+		
+		return "/usr/booking/cancel";
+	}
+	
+	@RequestMapping("/usr/booking/doApply")
+	@ResponseBody
+	public String doApply(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(title)) {
+			return Ut.jsHistoryBack("취소 사유를 입력해주세요");
+		}
+		
+		if(Ut.empty(body)) {
+			return Ut.jsHistoryBack("취소 상세 사유를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		
+		cancellationApplicationService.doWrite(booking_id, title, body, booking.getExtra__prodFee());
+		
+		bookingService.doModifyStatus(booking.getId());
+		
+		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 신청했습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}
 	
 }
