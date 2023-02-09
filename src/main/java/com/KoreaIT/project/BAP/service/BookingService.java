@@ -116,4 +116,36 @@ public class BookingService {
 		return bookingRepository.getBookingsCount(cellphoneNo, searchKeywordTypeCode, searchKeyword);
 	}
 
+	public List<Booking> getBookingsByComp_id(int comp_id) {
+		List<Booking> bookings = bookingRepository.getBookingsByComp_id(comp_id);
+		
+		for (Booking booking : bookings) {
+			// 예약 리스트 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
+			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
+			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
+			
+			if(booking.getStatus().equals("apply")) {
+				booking.setExtra__status("예약 신청");
+			} 
+			else if(booking.getStatus().equals("authorization")) {
+				booking.setExtra__status("예약 승인");
+			}
+			else if(booking.getStatus().equals("done")) {
+				booking.setExtra__status("예약 완료");
+			}
+			else if(booking.getStatus().equals("cancel_apply")) {
+				booking.setExtra__status("예약 취소 신청");
+			}
+			else {
+				booking.setExtra__status("예약 취소 완료");
+			}
+		}
+		
+		return bookings;
+	}
+
+	public int getBookingsCountByComp_id(int comp_id) {
+		return  bookingRepository.getBookingsCountByComp_id(comp_id);
+	}
+
 }

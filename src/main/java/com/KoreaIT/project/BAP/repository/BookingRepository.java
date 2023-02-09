@@ -99,4 +99,25 @@ public interface BookingRepository {
 			""")
 	int getBookingsCount(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword);
 
+	@Select("""
+			SELECT b.*, 
+				c.name AS extra__compName,
+				pr.roomType AS extra__prodRoomType,
+				pr.fee AS extra__prodFee
+				FROM booking AS b
+				LEFT JOIN company AS c
+				ON b.comp_id = c.id
+				LEFT JOIN product AS pr
+				ON b.prod_id = pr.id
+				WHERE b.comp_id = #{comp_id}
+			""")
+	List<Booking> getBookingsByComp_id(int comp_id);
+
+	@Select("""
+			SELECT COUNT(*)
+				FROM booking
+				WHERE comp_id = #{comp_id}
+			""")
+	int getBookingsCountByComp_id(int comp_id);
+
 }

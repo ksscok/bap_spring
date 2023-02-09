@@ -68,7 +68,7 @@ memberType = 'guest',
 loginId = 'guest1',
 loginPw = 'guest1',
 `name` = '게스트1',
-cellphoneNo = '010-1212-3434',
+cellphoneNo = '010-1212-2323',
 email = 'guest1@gmail.com';
 
 INSERT INTO `member`
@@ -458,7 +458,7 @@ CREATE TABLE booking
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수',
-    `status`  VARCHAR(45)    NOT NULL    COMMENT '예약상태 (apply : 예약 신청, authorization : 예약 승인, done : 예약 완료, cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
+    `status`  VARCHAR(45)    NOT NULL DEFAULT 'apply'   COMMENT '예약상태 (apply : 예약 신청, authorization : 예약 승인, done : 예약 완료, cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
 );
 
 SELECT COUNT(*)
@@ -501,8 +501,7 @@ start_date = "2023-03-01",
 end_date = "2023-04-28",
 diff = 58,
 countOfAdult = 2,
-countOfChild = 0,
-`status` = 'apply';
+countOfChild = 0;
 
 # 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking

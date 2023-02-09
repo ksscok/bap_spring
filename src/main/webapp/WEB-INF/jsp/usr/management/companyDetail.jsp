@@ -12,7 +12,7 @@
 					<li><a href="../management/companyDetail?id=${param.id}">사업장 정보</a></li>
 				</ul>
 				<ul>
-					<li><a href="../product/management">예약 확인</a></li>
+					<li><a href="../management/bookingList?comp_id=${param.id }">예약 확인</a></li>
 				</ul>
 				<ul>
 					<li><a href="../product/management">리뷰 확인</a></li>
