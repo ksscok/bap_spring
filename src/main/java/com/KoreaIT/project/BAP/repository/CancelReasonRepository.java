@@ -1,5 +1,6 @@
 package com.KoreaIT.project.BAP.repository;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -37,4 +38,10 @@ public interface CancelReasonRepository {
 				WHERE booking_id = #{booking_id}
 			""")
 	void doModify(int booking_id, String title, String body);
+
+	@Delete("""
+			DELETE FROM cancelReason 
+				WHERE booking_id = #{booking_id}
+			""")
+	void doDelete(int booking_id);
 }

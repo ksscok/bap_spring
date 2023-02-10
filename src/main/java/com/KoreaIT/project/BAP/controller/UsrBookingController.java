@@ -225,7 +225,7 @@ public class UsrBookingController {
 	}
 	
 	@RequestMapping("/usr/booking/cancelWrite")
-	public String showCancelWrite(Model model, int booking_id) throws IOException, InterruptedException {
+	public String showCancelWrite(Model model, int booking_id) {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -246,7 +246,7 @@ public class UsrBookingController {
 	
 	@RequestMapping("/usr/booking/doCancelWrite")
 	@ResponseBody
-	public String doCancelWrite(Model model, int booking_id, @RequestParam(defaultValue = "guest") String memberType, String title, String body) throws IOException, InterruptedException, ParseException {
+	public String doCancelWrite(Model model, int booking_id, @RequestParam(defaultValue = "guest") String memberType, String title, String body) {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -282,7 +282,7 @@ public class UsrBookingController {
 	}
 	
 	@RequestMapping("/usr/booking/cancelDetail")
-	public String showCancelDetail(Model model, int booking_id) throws IOException, InterruptedException {
+	public String showCancelDetail(Model model, int booking_id) {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -302,7 +302,7 @@ public class UsrBookingController {
 	}
 	
 	@RequestMapping("/usr/booking/cancelModify")
-	public String showCancelModify(Model model, int booking_id) throws IOException, InterruptedException {
+	public String showCancelModify(Model model, int booking_id) {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -323,7 +323,7 @@ public class UsrBookingController {
 	
 	@RequestMapping("/usr/booking/doCancelModify")
 	@ResponseBody
-	public String doCancelModify(Model model, int booking_id, String title, String body) throws IOException, InterruptedException {
+	public String doCancelModify(Model model, int booking_id, String title, String body) {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -350,6 +350,23 @@ public class UsrBookingController {
 		model.addAttribute("cancelReason", cancelReason);
 		
 		return Ut.jsReplace("취소 사유를 수정했습니다.", Ut.f("/usr/booking/cancelDetail?booking_id=%s", booking_id));
+	}
+	
+	@RequestMapping("/usr/booking/cancelDelete")
+	@ResponseBody
+	public String doCancelDelete(Model model, int booking_id) {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		
+		cancelReasonService.doDelete(booking_id);
+		
+		bookingService.doModifyStatus(booking_id, "done");
+		
+		return Ut.jsReplace("다시 예약이 되었습니다.", Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}
 	
 }

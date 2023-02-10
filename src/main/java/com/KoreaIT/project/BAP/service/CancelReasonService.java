@@ -30,4 +30,9 @@ public CancelReasonRepository cancelReasonRepository;
 	public void doModify(int booking_id, String title, String body) {
 		cancelReasonRepository.doModify(booking_id, title, body);
 	}
+
+	public void doDelete(int booking_id) {
+		cancelReasonRepository.doDelete(booking_id);
+	}
+
 }
