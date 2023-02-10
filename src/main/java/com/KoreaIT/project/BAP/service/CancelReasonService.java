@@ -26,4 +26,8 @@ public CancelReasonRepository cancelReasonRepository;
 	public CancelReason getCancelReasonByBooking_id(int Booking_id) {
 		return cancelReasonRepository.getCancelReasonByBooking_id(Booking_id);
 	}
+
+	public void doModify(int booking_id, String title, String body) {
+		cancelReasonRepository.doModify(booking_id, title, body);
+	}
 }

@@ -301,6 +301,57 @@ public class UsrBookingController {
 		return "/usr/booking/cancelDetail";
 	}
 	
+	@RequestMapping("/usr/booking/cancelModify")
+	public String showCancelModify(Model model, int booking_id) throws IOException, InterruptedException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
+		
+		CancelReason cancelReason = cancelReasonService.getCancelReasonByBooking_id(booking_id);
+		
+		model.addAttribute("booking_id", booking_id);
+		model.addAttribute("booking", booking);
+		model.addAttribute("payment", payment);
+		model.addAttribute("cancelReason", cancelReason);
+		
+		return "/usr/booking/cancelModify";
+	}
+	
+	@RequestMapping("/usr/booking/doCancelModify")
+	@ResponseBody
+	public String doCancelModify(Model model, int booking_id, String title, String body) throws IOException, InterruptedException {
+		
+		if(Ut.empty(booking_id)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(title)) {
+			return Ut.jsHistoryBack("취소 사유를 입력해주세요");
+		}
+		
+		if(Ut.empty(body)) {
+			return Ut.jsHistoryBack("취소 상세 사유를 입력해주세요");
+		}
+		
+		cancelReasonService.doModify(booking_id, title, body);
+		
+		Booking booking = bookingService.getBookingById(booking_id);
+		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
+		
+		CancelReason cancelReason = cancelReasonService.getCancelReasonByBooking_id(booking_id);
+		
+		model.addAttribute("booking_id", booking_id);
+		model.addAttribute("booking", booking);
+		model.addAttribute("payment", payment);
+		model.addAttribute("cancelReason", cancelReason);
+		
+		return Ut.jsReplace("취소 사유를 수정했습니다.", Ut.f("/usr/booking/cancelDetail?booking_id=%s", booking_id));
+	}
+	
 	@RequestMapping("/usr/booking/authorize")
 	@ResponseBody
 	public String doAuthorize(Model model, int booking_id) throws IOException, InterruptedException, ParseException {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="결제 취소" />
+<c:set var="pageTitle" value="취소 상세보기" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jsp"%>
 
@@ -9,7 +9,7 @@
 
 <section class="my-20">
 	<div class="con-3 mx-auto px-3">
-		<div class="my-12 text-2xl font-extrabold">결제 취소</div>
+		<div class="my-12 text-2xl font-extrabold">취소 상세보기</div>
 		<div class="text-lg font-extrabold mb-4 ml-2">예약 날짜</div>
 		<div class="period-inform flex justify-around items-center w-full">
 			<div class="chkin-inform text-xl">
@@ -50,7 +50,7 @@
 							<a href="../booking/authorize?booking_id=${booking_id }" class="text-center btn btn-active btn-secondary mt-4">취소 승인</a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" class="text-center btn btn-active btn-secondary mt-4">수정</a>
+							<a href="../booking/cancelModify?booking_id=${booking.id }" class="text-center btn btn-active btn-secondary mt-4">수정</a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -59,7 +59,7 @@
 						<c:when test="${cancelReason.getMemberType() == 'host' }">
 						</c:when>
 						<c:otherwise>
-							<a href="#" class="text-center btn btn-active btn-secondary mt-4">수정</a>
+							<a href="../booking/cancelModify?booking_id=${booking.id }" class="text-center btn btn-active btn-secondary mt-4">수정</a>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
