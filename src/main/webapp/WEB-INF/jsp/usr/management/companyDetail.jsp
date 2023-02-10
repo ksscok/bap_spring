@@ -46,6 +46,10 @@
 						<td>${company.name}</td>
 					</tr>
 					<tr>
+						<th>전화번호</th>
+						<td>${company.cellphoneNo}</td>
+					</tr>
+					<tr>
 						<th>주소</th>
 						<td>${company.address}</td>
 					</tr>

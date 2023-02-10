@@ -117,6 +117,7 @@ public interface CompanyRepository {
 			SET regDate = NOW(),
 			updateDate = NOW(),
 			`name` = #{name},
+			cellphoneNo = #{cellphoneNo},
 			address = #{address},
 			area = #{area},
 			timeChkin = #{timeChkin},
@@ -124,7 +125,7 @@ public interface CompanyRepository {
 			accommodationType = #{accommodationType},
 			host_id = #{host_id}
 			""")
-	void register(String name, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id);
+	void register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
