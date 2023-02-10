@@ -47,7 +47,6 @@
 				<div class="text-center font-extrabold text-4xl">
 					<div class="mb-2">
 						<span id="regular" class="regular"><i class="fa-regular fa-circle-check"></i></span>
-						<span id="solid" class="solid"><i class="fa-solid fa-circle-check"></i></span>
 					</div>
 					<h1> 결제가 완료 되었습니다. </h1>
 				</div>	
@@ -65,7 +64,7 @@
 	
 	setTimeout(function() {
 		// 결제페이지에서 서클-체크가 시간(1초)이 지나서 바뀌도록 하는 함수
-		document.getElementById('regular').innerHTML= '<i class="fa-solid fa-circle-check">';
+		document.getElementById('regular').innerHTML= '<i class="fa-solid fa-circle-check"></i>';
 	}, 1000)
 	
 		// 결제페이지에서 시간(2초)지나면 페이지가 자동으로 넘어가도록 하는 함수

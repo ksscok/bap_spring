@@ -115,28 +115,6 @@ public class UsrProductController {
 		return "usr/product/detail";
 	}
 	
-	@RequestMapping("/usr/product/ajaxDetail")
-	public List<Product> showAjaxDetail(Model model, int comp_id,
-			@RequestParam(defaultValue="") String start_date,
-			@RequestParam(defaultValue="") String end_date,
-			@RequestParam(defaultValue="1") String countOfRoom,
-			@RequestParam(defaultValue="2") String countOfAdult,
-			@RequestParam(defaultValue="0") String countOfChild,
-			@RequestParam(defaultValue="") String withoutMealsType,
-			@RequestParam(defaultValue="") String withBreakfastType,
-			@RequestParam(defaultValue="") String withDinnerType,
-			@RequestParam(defaultValue="") String withBreakfastAndDinnerType,
-			@RequestParam(defaultValue="") String smokingType,
-			@RequestParam(defaultValue="1") int low_price,
-			@RequestParam(defaultValue="999999999") int high_price) {
-		
-		List<Product> products = productService.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType, low_price, high_price);
-		
-		System.out.println(products);
-		
-		return products;
-	}
-	
 	@RequestMapping("/usr/product/register")
 	public String showRegister() {
 		

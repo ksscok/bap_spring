@@ -43,6 +43,7 @@
 						<li><a href="${rq.logoutUri}" class="h-full flex items-center mx-2 px-2"><span>로그아웃</span></a></li>
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
 							<li><a href="/usr/booking/list?cellphoneNo=${rq.getLoginedMember().cellphoneNo }" class="h-full flex items-center mx-2 px-2"><span>예약관리</span></a></li>
+							<li><a href="/usr/cart/list?memberId=${rq.loginedMember.id }" class="h-full flex items-center mx-2 px-2"><span class="text-lg"><i class="fa-solid fa-cart-shopping"></i></span></a></li>
 						</c:if>
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
 							<li><a href="/usr/management/allBookingList?host_id=${rq.loginedMember.id} }" class="h-full flex items-center mx-2 px-2"><span>예약관리</span></a></li>

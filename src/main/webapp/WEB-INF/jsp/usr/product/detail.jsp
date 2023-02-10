@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="상세보기" />
+<c:set var="pageTitle" value="숙소 방 목록" />
 <%@ include file="../common/head.jspf"%>
 
 <!-- detail css -->
@@ -139,10 +139,9 @@
 				</div>
 				<div class="flex bg-red-400 my-2">
 					<div>찜하기</div>
-					<button class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();">
-						<i class="fa-regular fa-heart"></i>
-					</button>
-					<i class="fa-solid fa-heart"></i>
+<!-- 					아래 버튼과 버튼 내의 i태그 줄바꿈하면 change_bgc();이거 첫번째 클릭때 오류나서 안 바뀜 -->
+					<button id="heart" class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();"><i id="i-heart" class="fa-regular fa-heart"></i></button>
+					<button id="heart2" class="saving mx-2 mt-1 flex content-start" onclick="change_bgc2();"><i class="fa-solid fa-heart"></i></button>
 				</div>
 			</div>
 			<div>
@@ -298,22 +297,41 @@
 	
 // 가격 콤마 붙여서 나오는 함수 끝
 	
-// 찜하기 ajax 추가예정 시작(76일차 테마 적용/다크모드 보고 참고하면 될 듯)
-	let changeSaving = false;
-
+// 찜하기 ajax 추가예정 시작
 	function change_bgc() {
 		
-// 		if(changeSaving == false){
-// 			changeSaving = true;
-// 			$('.saving').children().removeClass(fa-regular);
-// 			$('.saving').children().addClass(fa-solid);
-// 		}else {
-// 			changeSaving = false;
-// 			$('.saving').children().removeClass(fa-solid);
-// 			$('.saving').children().addClass(fa-regular);
-// 		}
-		alert(changeSaving);
+		let $comp_id = document.getElementById('comp_id').value;
+		alert($comp_id);
+		
+		$.get('../cart/getNumber', {
+			comp_id : $comp_id,
+			ajaxMode : 'Y'
+		}, function(data){
+			// hasClass - boolean 타입 리턴. hasClass('class1 class2')처럼 여러개의 클래스의 존재를 확인할 때 한 개라도 일치하지 않으면 false 반환
+			if($('#i-heart').hasClass('fa-regular')){
+				alert(data);
+				$('#i-heart').removeClass('fa-regular').addClass('fa-solid');
+			}else {
+				alert(data);
+				$('#i-heart').removeClass('fa-solid').addClass('fa-regular');
+				
+			}
+		}, 'json');
+		
 	};
+	
+// 	function change_bgc() {
+		
+// 		let html = document.getElementById('heart').innerHTML;
+// 		alert(html);
+		
+// 		if(html == '<i class="fa-regular fa-heart"></i>'){
+// 			document.getElementById('heart').innerHTML = '<i class="fa-solid fa-heart"></i>';
+// 		} else {
+// 			document.getElementById('heart').innerHTML = '<i class="fa-regular fa-heart"></i>';
+// 		}
+		
+// 	};
 // 찜하기 ajax 추가예정 시작
 
 // 객실 이용 안내 modal창 시작
