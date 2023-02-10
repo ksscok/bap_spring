@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.CartService;
-import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.util.Ut;
+import com.KoreaIT.project.BAP.vo.Cart;
 import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
@@ -61,12 +61,20 @@ public class UsrCartController {
 		return "usr/cart/write";
 	}
 	
-	@RequestMapping("usr/cart/getNumber")
+	@RequestMapping("usr/cart/doWriteOrDelete")
 	@ResponseBody()
-	public String doSearch(int comp_id) {
+	public String doWriteOrDelete(int memberId, int comp_id) {
 		
 		if(Ut.empty(comp_id)) {
 			return rq.jsHistoryBack("사업장 번호를 입력해주세요.");
+		}
+		
+		Cart cart = cartService.getCartByMemberIdAndComp_id(memberId, comp_id);
+		
+		if(cart == null) {
+			cartService.doWrite(memberId, comp_id);
+		} else {
+			cartService.doDelete(memberId, comp_id);
 		}
 		
 		return "10";

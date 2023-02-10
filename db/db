@@ -1154,6 +1154,17 @@ countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
 
+CREATE TABLE cart
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호', 
+    comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호'
+);
+
+SELECT * FROM cart;
+
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;

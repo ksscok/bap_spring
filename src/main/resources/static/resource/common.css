@@ -83,6 +83,10 @@ main {
 	max-width: 930px;
 }
 
+.con-4 {
+	max-width: 990px;
+}
+
 .con-min-width {
 	min-width: 400px;
 }
