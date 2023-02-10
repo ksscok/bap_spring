@@ -34,18 +34,34 @@
 			<div class="my-2">취소 가능 금액 : <fmt:formatNumber value="${payment.balanceAmount}" pattern="#,###"/> 원</div>
 		</div>
 		<div class="mt-6">
-			<div class="text-lg font-extrabold mb-2 ml-2">취소 사유</div>
+			<div class="text-lg font-extrabold mb-2 ml-2">작성자</div>
+			<div class="ml-2">${cancelReason.memberType }</div>
+			<div class="text-lg font-extrabold my-2 ml-2">취소 사유</div>
 			<div class="ml-2">${cancelReason.title }</div>
 			<div class="text-lg font-extrabold my-2 ml-2">취소 상세사유</div>
 			<div class="ml-2">${cancelReason.body }</div>
 		</div>
-		<div class="flex justify-end">
+		<div class="btns flex justify-end">
+			<button class="text-center btn btn-active btn-secondary mt-4 mr-2" type="button" onclick="history.back();">뒤로가기</button>
 			<c:choose>
 				<c:when test="${rq.getLoginedMember().getMemberType() == 'host' }">
-					<a href="../booking/authorize?booking_id=${booking_id }" class="text-center btn btn-active btn-secondary mt-4">취소 승인</a>
+					<c:choose>
+						<c:when test="${cancelReason.getMemberType() == 'guest' }">
+							<a href="../booking/authorize?booking_id=${booking_id }" class="text-center btn btn-active btn-secondary mt-4">취소 승인</a>
+						</c:when>
+						<c:otherwise>
+							<a href="#" class="text-center btn btn-active btn-secondary mt-4">수정</a>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<a href="#" class="text-center btn btn-active btn-secondary mt-4">수정</a>
+					<c:choose>
+						<c:when test="${cancelReason.getMemberType() == 'host' }">
+						</c:when>
+						<c:otherwise>
+							<a href="#" class="text-center btn btn-active btn-secondary mt-4">수정</a>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 		</div>

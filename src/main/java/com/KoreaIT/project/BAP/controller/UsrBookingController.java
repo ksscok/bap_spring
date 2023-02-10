@@ -275,14 +275,14 @@ public class UsrBookingController {
 		bookingService.doModifyStatus(booking.getId(), status);
 		
 		if(rq.getLoginedMember().getMemberType().equals("host")) {
-			return Ut.jsReplace("", Ut.f("/usr/payment/doCancel?booking_id=%d&title=$s&body=$s", booking.getId(), title, body));
+			return Ut.jsReplace("", Ut.f("/usr/payment/doCancel?booking_id=%d&title=%s&body=%s", booking.getId(), title, body));
 		}
 		
 		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 신청했습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}
 	
-	@RequestMapping("/usr/booking/cancelReason")
-	public String showCancelReason(Model model, int booking_id) throws IOException, InterruptedException {
+	@RequestMapping("/usr/booking/cancelDetail")
+	public String showCancelDetail(Model model, int booking_id) throws IOException, InterruptedException {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -298,7 +298,7 @@ public class UsrBookingController {
 		model.addAttribute("payment", payment);
 		model.addAttribute("cancelReason", cancelReason);
 		
-		return "/usr/booking/cancelReason";
+		return "/usr/booking/cancelDetail";
 	}
 	
 	@RequestMapping("/usr/booking/authorize")

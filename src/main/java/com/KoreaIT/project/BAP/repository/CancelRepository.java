@@ -20,7 +20,7 @@ public interface CancelRepository {
 					taxFreeAmount = #{taxFreeAmount},
 					refundableAmount = #{refundableAmount}
 			""")
-	void doWrite(int booking_id, String title, String body, String transactionKey, int taxExemptionAmount,
-			int easyPayDiscountAmount, int cancelAmount, int taxFreeAmount, int refundableAmount);
+	void doWrite(int booking_id, String title, String body, String transactionKey, Object taxExemptionAmount,
+			Object easyPayDiscountAmount, Object cancelAmount, Object taxFreeAmount, Object refundableAmount);
 
 }

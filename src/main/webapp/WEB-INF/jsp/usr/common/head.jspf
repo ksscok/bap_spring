@@ -45,7 +45,7 @@
 							<li><a href="/usr/booking/list?cellphoneNo=${rq.getLoginedMember().cellphoneNo }" class="h-full flex items-center mx-2 px-2"><span>예약관리</span></a></li>
 						</c:if>
 						<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
-							<li><a href="/usr/management/bookingList?cellphoneNo=${rq.getLoginedMember().cellphoneNo }" class="h-full flex items-center mx-2 px-2"><span>예약관리</span></a></li>
+							<li><a href="/usr/management/allBookingList?host_id=${rq.loginedMember.id} }" class="h-full flex items-center mx-2 px-2"><span>예약관리</span></a></li>
 						</c:if>
 						<li><a href="/usr/member/myPage" class="h-full flex items-center mx-2 px-2"><span>마이페이지</span></a></li>
 					</c:if>

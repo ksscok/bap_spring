@@ -10,7 +10,7 @@ import com.KoreaIT.project.BAP.vo.CancelReason;
 public interface CancelReasonRepository {
 	
 	@Insert("""
-			INSERT INTO cancellationApplication
+			INSERT INTO cancelReason
 				SET regDate = NOW(),
 					updateDate = NOW(),
 					booking_id = #{booking_id},

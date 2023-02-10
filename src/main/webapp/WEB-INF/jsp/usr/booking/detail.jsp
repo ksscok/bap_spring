@@ -61,11 +61,23 @@
 						<th>예약 상태</th>
 						<td>${booking.extra__status }</td>
 					</tr>
+<!-- 					host의 사정으로 예약을 취소하게 되는 경우 시작 -->
+					<c:if test="${booking.getStatus() == 'done'}">
+						<c:if test="${rq.getLoginedMember().getMemberType() == 'host' }">
+							<tr>
+								<th></th>
+								<td>
+									<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">예약 취소하기</a>
+								</td>
+							</tr>
+						</c:if>
+					</c:if>
+<!-- 					host의 사정으로 예약을 취소하게 되는 경우 끝 -->
 					<c:if test="${booking.getStatus() == 'cancel'}">
 						<tr>
 							<th></th>
 							<td>
-								<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">취소 사유 상세보기</a>
+								<a href="../booking/cancelDetail?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">취소 사유 상세보기</a>
 							</td>
 						</tr>
 					</c:if>
@@ -82,7 +94,7 @@
 								</c:otherwise>
 							</c:choose>
 							<td>
-								<a href="../booking/cancelReason?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">취소 사유 상세보기</a>
+								<a href="../booking/cancelDetail?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">취소 사유 상세보기</a>
 							</td>
 						</tr>
 					</c:if>
