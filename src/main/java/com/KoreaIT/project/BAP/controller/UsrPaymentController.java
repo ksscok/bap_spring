@@ -130,26 +130,6 @@ public class UsrPaymentController {
 		return Ut.jsReplace("", Ut.f("/usr/booking/detail?orderId=%s", orderId));
 	}
 	
-	@RequestMapping("/usr/payment/cancel")
-	public String showCancel(Model model, int booking_id) throws IOException, InterruptedException {
-		
-		if(Ut.empty(booking_id)) {
-			return Ut.jsHistoryBack("예약번호를 입력해주세요");
-		}
-		
-		Booking booking = bookingService.getBookingById(booking_id);
-		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
-		
-		String paymentKey = payment.getPaymentKey();
-		
-		model.addAttribute("paymentKey", paymentKey);
-		model.addAttribute("booking", booking);
-		model.addAttribute("booking.id", booking.getId());
-		model.addAttribute("payment", payment);
-		
-		return "/usr/payment/cancel";
-	}
-	
 	@RequestMapping("/usr/payment/doCancel")
 	@ResponseBody
 	public String doCancel(Model model, int booking_id, String title, String body) throws IOException, InterruptedException, ParseException {

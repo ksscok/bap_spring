@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="결제 취소" />
+<c:set var="pageTitle" value="결제 취소 작성" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jsp"%>
 
@@ -9,10 +9,10 @@
 
 <section class="my-20">
 	<div class="con-3 mx-auto px-3">
-		<form action="../payment/doApply" onsubmit="submitForm(this); return false;">
-		<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
-		<input id="body" type="hidden" name="body" />
-		<div class="my-12 text-2xl font-extrabold">결제 취소</div>
+		<form action="../booking/doCancelWrite" onsubmit="submitForm(this); return false;">
+			<input id="booking_id" type="hidden" name="booking_id" value="${booking.id }" />
+			<input id="body" type="hidden" name="body" />
+			<div class="my-12 text-2xl font-extrabold">결제 취소 작성</div>
 			<div class="text-lg font-extrabold mb-4 ml-2">예약 날짜</div>
 			<div class="period-inform flex justify-around items-center w-full">
 				<div class="chkin-inform text-xl">

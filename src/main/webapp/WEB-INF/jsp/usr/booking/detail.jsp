@@ -89,7 +89,7 @@
 								</c:when>
 								<c:otherwise>
 									<th style="text-align: right;">
-										<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">예약으로 되돌리기</a>
+										<a href="../booking/cancelDelete?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary">예약으로 되돌리기</a>
 									</th>
 								</c:otherwise>
 							</c:choose>
@@ -174,22 +174,21 @@
 				</tbody>
 			</table>
 			<div class="btns flex justify-end mb-3">
-				<button class="text-center btn btn-active btn-secondary mt-4 mr-2" type="button" onclick="history.back();">뒤로가기</button>
+				<button class="text-center btn btn-active btn-secondary my-5 mr-2" type="button" onclick="history.back();">뒤로가기</button>
 				<c:if test="${!rq.isLogined()}">
 					<c:if test="${booking.getStatus() == 'done'}">
-						<a href="../booking/cancel?booking_id=${payment.booking_id }"
-							class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+						<a href="../booking/cancelWrite?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
 					</c:if>
 				</c:if>
 				<c:if test="${rq.isLogined()}">
 					<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
 						<c:if test="${booking.getStatus() == 'done'}">
-							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+							<a href="../booking/cancelWrite?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
 						</c:if>
 					</c:if>
 					<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">
 						<c:if test="${booking.getStatus() == 'done'}">
-							<a href="../booking/cancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소</a>
+							<a href="../booking/cancelWrite?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소</a>
 						</c:if>
 						<c:if test="${booking.getStatus() == 'cancel_apply'}">
 							<a href="../payment/showCancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a>

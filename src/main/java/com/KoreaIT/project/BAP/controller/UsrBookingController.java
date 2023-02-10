@@ -224,8 +224,8 @@ public class UsrBookingController {
 		return "/usr/booking/detail";
 	}
 	
-	@RequestMapping("/usr/booking/cancel")
-	public String showCancel(Model model, int booking_id) throws IOException, InterruptedException {
+	@RequestMapping("/usr/booking/cancelWrite")
+	public String showCancelWrite(Model model, int booking_id) throws IOException, InterruptedException {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
@@ -241,12 +241,12 @@ public class UsrBookingController {
 		model.addAttribute("booking", booking);
 		model.addAttribute("payment", payment);
 		
-		return "/usr/booking/cancel";
+		return "/usr/booking/cancelWrite";
 	}
 	
-	@RequestMapping("/usr/booking/doApply")
+	@RequestMapping("/usr/booking/doCancelWrite")
 	@ResponseBody
-	public String doApply(Model model, int booking_id, @RequestParam(defaultValue = "guest") String memberType, String title, String body) throws IOException, InterruptedException, ParseException {
+	public String doCancelWrite(Model model, int booking_id, @RequestParam(defaultValue = "guest") String memberType, String title, String body) throws IOException, InterruptedException, ParseException {
 		
 		if(Ut.empty(booking_id)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
