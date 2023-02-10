@@ -743,7 +743,7 @@ cancelAmount = 100000;
 INSERT INTO cancelReason
 SET regDate = NOW(),
 updateDate = NOW(),
-booking_id = 5,
+booking_id = 6,
 memberType = 'host',
 title = '내부 공사',
 `body` = '방의 내부 공사 기간이여서 host측에서 취소 하게 되었습니다. 양해 부탁드립니다.',

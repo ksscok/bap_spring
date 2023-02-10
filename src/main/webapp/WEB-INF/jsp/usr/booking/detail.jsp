@@ -173,7 +173,8 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="flex justify-end">
+			<div class="btns flex justify-end mb-3">
+				<button class="text-center btn btn-active btn-secondary mt-4 mr-2" type="button" onclick="history.back();">뒤로가기</button>
 				<c:if test="${!rq.isLogined()}">
 					<c:if test="${booking.getStatus() == 'done'}">
 						<a href="../booking/cancel?booking_id=${payment.booking_id }"
