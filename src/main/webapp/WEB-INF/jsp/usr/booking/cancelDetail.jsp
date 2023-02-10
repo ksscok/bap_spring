@@ -47,7 +47,9 @@
 				<c:when test="${rq.getLoginedMember().getMemberType() == 'host' }">
 					<c:choose>
 						<c:when test="${cancelReason.getMemberType() == 'guest' }">
-							<a href="../booking/authorize?booking_id=${booking_id }" class="text-center btn btn-active btn-secondary mt-4">취소 승인</a>
+							<c:if test="${booking.status == 'cancel_apply' }">
+								<a href="../payment/doCancel?booking_id=${booking_id }&title=${cancelReason.title}&body=${cancelReason.body}" class="text-center btn btn-active btn-secondary mt-4">취소 승인</a>
+							</c:if>
 						</c:when>
 						<c:otherwise>
 							<a href="../booking/cancelModify?booking_id=${booking.id }" class="text-center btn btn-active btn-secondary mt-4">수정</a>

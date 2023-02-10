@@ -183,6 +183,10 @@ public class UsrPaymentController {
 		
 		paymentService.doModify(payment.getId());
 		
+		String status = "cancel";
+		
+		bookingService.doModifyStatus(booking.getId(), status);
+		
 		return Ut.jsReplace(Ut.f("예약번호 %d번 결제가 취소 되었습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}
 	

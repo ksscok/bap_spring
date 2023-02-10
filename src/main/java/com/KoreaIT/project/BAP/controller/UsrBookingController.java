@@ -352,21 +352,4 @@ public class UsrBookingController {
 		return Ut.jsReplace("취소 사유를 수정했습니다.", Ut.f("/usr/booking/cancelDetail?booking_id=%s", booking_id));
 	}
 	
-	@RequestMapping("/usr/booking/authorize")
-	@ResponseBody
-	public String doAuthorize(Model model, int booking_id) throws IOException, InterruptedException, ParseException {
-		
-		if(Ut.empty(booking_id)) {
-			return Ut.jsHistoryBack("예약번호를 입력해주세요");
-		}
-		
-		String status = "cancel";
-		
-		bookingService.doModifyStatus(booking_id, status);
-		
-		Booking booking = bookingService.getBookingById(booking_id);
-		
-		return Ut.jsReplace(Ut.f("예약번호 %d번 예약 취소를 승인했습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
-	}
-	
 }

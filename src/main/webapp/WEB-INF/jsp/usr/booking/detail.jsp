@@ -190,9 +190,6 @@
 						<c:if test="${booking.getStatus() == 'done'}">
 							<a href="../booking/cancelWrite?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소</a>
 						</c:if>
-						<c:if test="${booking.getStatus() == 'cancel_apply'}">
-							<a href="../payment/showCancel?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">결제 취소 승인</a>
-						</c:if>
 					</c:if>
 				</c:if>
 			</div>
