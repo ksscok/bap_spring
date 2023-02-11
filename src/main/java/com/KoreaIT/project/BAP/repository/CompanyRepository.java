@@ -131,9 +131,12 @@ public interface CompanyRepository {
 	int getLastInsertId();
 
 	@Select("""
-			SELECT *
-				FROM company
-				WHERE id = #{comp_id}
+			SELECT c.*,
+				MIN(fee) AS extra__minFee
+				FROM company AS c
+				LEFT JOIN product AS p
+				ON c.id = p.comp_id
+				WHERE c.id = #{comp_id}
 			""")
 	Company getCompanyByComp_id(int comp_id);
 

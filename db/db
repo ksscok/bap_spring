@@ -1154,7 +1154,7 @@ countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
 
-CREATE TABLE cart
+CREATE TABLE wish
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
     regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
@@ -1163,7 +1163,7 @@ CREATE TABLE cart
     comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호'
 );
 
-SELECT * FROM cart;
+SELECT * FROM wish;
 
 SELECT * FROM company;
 SELECT * FROM product;

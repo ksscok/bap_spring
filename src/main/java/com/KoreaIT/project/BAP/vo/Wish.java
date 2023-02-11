@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cart {
+public class Wish {
 	private int id;
 	private String regDate;
 	private String updateDate;

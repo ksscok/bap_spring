@@ -1,6 +1,6 @@
 package com.KoreaIT.project.BAP.service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -143,4 +143,17 @@ public class CompanyService {
 	public List<Company> getCompanyByHostId(int hostId) {
 		return companyRepository.getCompanyByHostId(hostId);
 	}
+
+	public List<Company> getCompaniesByIds(int[] comp_ids) {
+		
+		List<Company> companies = new ArrayList<>();
+		
+		for(int i = 0; i < comp_ids.length; i++) {
+			System.out.println("장바구니 확인 목록 : " + (i + 1) + "번");
+			companies.add(getCompanyByComp_id(comp_ids[i]));
+		}
+		
+		return companies;
+	}
+
 }

@@ -143,7 +143,7 @@
 						<div class="flex my-2">
 							<div>찜하기</div>
 								<c:choose>
-									<c:when test="${cart.id == null }">
+									<c:when test="${wish.id == null }">
 		<!-- 					아래 버튼과 버튼 내의 i태그 줄바꿈하면 change_bgc();이거 첫번째 클릭때 오류나서 안 바뀜 -->
 										<button class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();"><i id="i-heart" class="fa-regular fa-heart"></i></button>
 									</c:when>
@@ -315,19 +315,16 @@
 		let $memberId = document.getElementById('memberId').value;
 		let $comp_id = document.getElementById('comp_id').value;
 		
-		$.get('../cart/doWriteOrDelete', {
+		$.get('../wish/doWriteOrDelete', {
 			memberId : $memberId,
 			comp_id : $comp_id,
 			ajaxMode : 'Y'
 		}, function(data){
 			// hasClass - boolean 타입 리턴. hasClass('class1 class2')처럼 여러개의 클래스의 존재를 확인할 때 한 개라도 일치하지 않으면 false 반환
 			if($('#i-heart').hasClass('fa-regular')){
-				alert(data);
 				$('#i-heart').removeClass('fa-regular').addClass('fa-solid');
 			}else {
-				alert(data);
 				$('#i-heart').removeClass('fa-solid').addClass('fa-regular');
-				
 			}
 		}, 'json');
 		
