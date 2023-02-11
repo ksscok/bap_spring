@@ -158,11 +158,6 @@ public class UsrBookingController {
 		return "/usr/payment/pay";
 	}
 	
-	@RequestMapping("/usr/booking/detailConfirm")
-	public String showDetailConfirm() {
-		return "/usr/booking/detailConfirm";
-	}
-	
 	@RequestMapping("/usr/booking/list")
 	public String showList(Model model, String cellphoneNo,
 			@RequestParam(defaultValue = "booking_id") String searchKeywordTypeCode,
@@ -183,6 +178,11 @@ public class UsrBookingController {
 		model.addAttribute("searchKeyword", searchKeyword);
 		
 		return "/usr/booking/list";
+	}
+	
+	@RequestMapping("/usr/booking/detailConfirm")
+	public String showDetailConfirm() {
+		return "/usr/booking/detailConfirm";
 	}
 	
 	@RequestMapping("/usr/booking/doDetailComfirm")

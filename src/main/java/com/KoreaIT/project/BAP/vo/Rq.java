@@ -144,6 +144,7 @@ public class Rq {
 		case "/usr/member/join":
 		case "/usr/member/findLoginId":
 		case "/usr/member/findLoginPw":
+		case "/usr/booking/detailConfirm":
 			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
 		}
 		
@@ -157,6 +158,10 @@ public class Rq {
 		switch (requestUri) {
 		case "/usr/member/logout":
 		case "/usr/member/myPage":
+		case "/usr/booking/list":
+		case "/usr/booking/detail":
+		case "/usr/booking/cancelWrite":
+		case "/usr/wish/list":
 			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLogoutUri", ""));
 		}
 		
