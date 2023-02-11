@@ -1163,6 +1163,49 @@ CREATE TABLE wish
     comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호'
 );
 
+# wish 테스트 데이터
+# 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)를 찜
+INSERT INTO wish
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 2;
+
+# 게스트1(memberId = 5)이 대전 하늘정원 게스트하우스(comp_id = 8)를 찜
+INSERT INTO wish
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 8;
+
+# 게스트1(memberId = 5)이 라마다 바이 윈덤 대전(comp_id = 10)를 찜
+INSERT INTO wish
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 10;
+
+# 게스트1(memberId = 5)이 양평 로즈데일(comp_id = 4)를 찜
+INSERT INTO wish
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 4;
+
+# 게스트2(memberId = 6)이 롯데시티호텔(comp_id = 2)를 찜
+INSERT INTO wish
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 2;
+
+# 게스트1(memberId = 6)이 제주 쉬멍놀멍 게스트하우스(comp_id = 6)를 찜
+INSERT INTO wish
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 6;
+
 SELECT * FROM wish;
 
 SELECT * FROM company;
