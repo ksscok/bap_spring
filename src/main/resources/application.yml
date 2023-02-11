@@ -20,9 +20,9 @@ mybatis:
 custom:
   # 이미지 저장폴더 경로
   # 성석 경로
-  genFileDirPath: C:\workspace_kss\sts-4.16.0.RELEASE-workspace\BAP_spring1\image
+  #genFileDirPath: C:\workspace_kss\sts-4.16.0.RELEASE-workspace\BAP_spring1\image
   # 재형 경로
-  #genFileDirPath: C:\work\sts-4.16.0.RELEASE-workspace\BAP_spring1\image 
+  genFileDirPath: C:\work\sts-4.16.0.RELEASE-workspace\BAP_spring1\image 
   logging:
     dir: log
     level: debug 

@@ -17,7 +17,7 @@
 				<span>${bookingsCount } 개</span>
 			</div>
 			<form>
-				<input type="hidden" name="cellphoneNo" value="${cellphoneNo }" />
+				<input type="hidden" name="comp_id" value="${comp_id }" />
 				
 				<select data-value="${searchKeywordTypeCode }" class="select select-bordered" name="searchKeywordTypeCode">
 					<option value="booking_id">예약번호</option>

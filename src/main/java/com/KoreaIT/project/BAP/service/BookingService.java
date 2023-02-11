@@ -15,7 +15,7 @@ import com.KoreaIT.project.BAP.vo.Booking;
 @Service
 public class BookingService {
 	
-	BookingRepository bookingRepository;
+	public BookingRepository bookingRepository;
 	
 	@Autowired
 	public BookingService(BookingRepository bookingRepository) {
@@ -48,28 +48,85 @@ public class BookingService {
 		return betweenDays;
 	}
 
-	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int countOfAdult, int countOfChild) {
-		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, countOfAdult, countOfChild);
+	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int diff, int countOfAdult, int countOfChild) {
+		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, diff, countOfAdult, countOfChild);
 	}
 
 	public Booking getBookingByOrderId(String orderId) {
-		return bookingRepository.getBookingByOrderId(orderId);
+		
+		Booking booking = bookingRepository.getBookingByOrderId(orderId);
+		
+		// status 한글 번역화
+		modifyExtra__status(booking);
+		
+		return booking;
 	}
 
 	public Booking getBookingByCellphoneNo(String cellphoneNo) {
 		return bookingRepository.getBookingByCellphoneNo(cellphoneNo);
 	}
 
-	public List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo) {
+	public List<Booking> getForPrintBookingsByCellphoneNo(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword) {
 		
-		List<Booking> bookings = bookingRepository.getForPrintBookingsByCellphoneNo(cellphoneNo);
+		List<Booking> bookings = bookingRepository.getForPrintBookingsByCellphoneNo(cellphoneNo, searchKeywordTypeCode, searchKeyword);
 		
 		for (Booking booking : bookings) {
 			// 예약 리스트 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
 			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
 			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
+			
+			// status 한글 번역화
+			modifyExtra__status(booking);
 		}
 		
 		return bookings;
 	}
+
+	public Booking getBookingById(int id) {
+		return bookingRepository.getBookingById(id);
+	}
+
+	public int getBookingsCount(String cellphoneNo, String searchKeywordTypeCode, String searchKeyword) {
+		return bookingRepository.getBookingsCount(cellphoneNo, searchKeywordTypeCode, searchKeyword);
+	}
+
+	public List<Booking> getBookingsByComp_id(int comp_id) {
+		List<Booking> bookings = bookingRepository.getBookingsByComp_id(comp_id);
+		
+		for (Booking booking : bookings) {
+			// 예약 리스트 페이지에서 체크인, 체크아웃에 요일 보여주기 위한 날짜방식
+			booking.setExtra__dateAndDayOfTheWeekOfChkin(Ut.getDateAndDayOfTheWeek(booking.getStart_date()));
+			booking.setExtra__dateAndDayOfTheWeekOfChkout(Ut.getDateAndDayOfTheWeek(booking.getEnd_date()));
+			
+			// status 한글 번역화
+			modifyExtra__status(booking);
+		}
+		
+		return bookings;
+	}
+
+	public int getBookingsCountByComp_id(int comp_id) {
+		return  bookingRepository.getBookingsCountByComp_id(comp_id);
+	}
+
+	public void doModifyStatus(int id, String status) {
+		bookingRepository.doModifyStatus(id, status);
+	}
+
+	private void modifyExtra__status(Booking booking) {
+		
+		if(booking.getStatus().equals("done")) {
+			booking.setExtra__status("예약 완료");
+		}
+		else if(booking.getStatus().equals("expired")) {
+			booking.setExtra__status("예약 만료");
+		}
+		else if(booking.getStatus().equals("cancel_apply")) {
+			booking.setExtra__status("예약 취소 신청");
+		}
+		else if(booking.getStatus().equals("cancel")) {
+			booking.setExtra__status("예약 취소 완료");
+		}
+	}
+	
 }

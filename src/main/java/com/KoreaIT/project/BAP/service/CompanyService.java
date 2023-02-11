@@ -1,6 +1,6 @@
 package com.KoreaIT.project.BAP.service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class CompanyService {
 		this.companyRepository = companyRepository;
 	}
 
-	public int register(String name, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id) {
-		companyRepository.register(name, address, area, timeChkin, timeChkout, accommodationType, host_id);
+	public int register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id) {
+		companyRepository.register(name, cellphoneNo, address, area, timeChkin, timeChkout, accommodationType, host_id);
 		return companyRepository.getLastInsertId();
 	}
 	
@@ -143,4 +143,25 @@ public class CompanyService {
 	public List<Company> getCompanyByHostId(int hostId) {
 		return companyRepository.getCompanyByHostId(hostId);
 	}
+
+	// 찜 목록 불러오는 함수1
+	public List<Company> getCompaniesByIds(int[] comp_ids, String searchKeywordTypeCode, String searchKeyword) {
+		
+		List<Company> companies = new ArrayList<>();
+		
+		for(int i = 0; i < comp_ids.length; i++) {
+			// 만약 getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword)의 값이 없을 때 없는 값으로 companies에 add를 해버려서 빈칸이 나와버림
+			if(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword) != null) {
+				companies.add(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword));
+			}
+		}
+		
+		return companies;
+	}
+
+	// 찜 목록 불러오는 함수2
+	private Company getCompanyByComp_idForWish(int id, String searchKeywordTypeCode, String searchKeyword) {
+		return companyRepository.getCompanyByComp_idForWish(id, searchKeywordTypeCode, searchKeyword);
+	}
+
 }

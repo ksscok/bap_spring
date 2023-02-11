@@ -42,11 +42,14 @@ public class UsrCompanyController {
 	
 	@RequestMapping("/usr/company/doRegister")
 	@ResponseBody
-	public String doRegister(String name, String address, String area, String timeChkin, String timeChkout, String accommodationType, 
+	public String doRegister(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, 
 			int host_id, MultipartRequest multipartRequest) {
 		
 		if(Ut.empty(name)) {
 			return rq.jsHistoryBack("상호를 등록해주세요.");
+		}
+		if(Ut.empty(cellphoneNo)) {
+			return rq.jsHistoryBack("사업장 전화번호를 등록해주세요.");
 		}
 		if(Ut.empty(address)) {
 			return rq.jsHistoryBack("사업장 주소를 등록해주세요.");
@@ -64,7 +67,7 @@ public class UsrCompanyController {
 			return rq.jsHistoryBack("시설 유형을 선택해주세요.");
 		}
 		
-		int newCompanyId = companyService.register(name, address, area, timeChkin, timeChkout, accommodationType, host_id);
+		int newCompanyId = companyService.register(name, cellphoneNo, address, area, timeChkin, timeChkout, accommodationType, host_id);
 		
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 

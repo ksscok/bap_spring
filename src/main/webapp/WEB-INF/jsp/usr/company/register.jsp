@@ -38,6 +38,13 @@
 							</td>
 						</tr>
 						<tr>
+							<th>사업장 전화번호</th>
+							<td>
+								<input name="cellphoneNo" onkeypress="chkCharCodeNum(event);" oninput="autoHyphen(this)" onblur="requiredData(this);" placeholder="사업장 전화번호를 입력해주세요." maxlength="13" type="text" class="input input-bordered w-72"/>
+								<div class="required-msg text-sm mt-2 h-5 text-red-500"></div>
+							</td>
+						</tr>
+						<tr>
 							<th>사업장 주소</th>
 							<td>
 								<input name="address" placeholder="사업장 주소를 입력해주세요." type="text" class="input input-bordered w-72"/>
@@ -298,6 +305,14 @@ function companyRegister__submit(form) {
 		return;
 	}
 	
+	form.cellphoneNo.value = form.cellphoneNo.value.trim();
+	if(form.cellphoneNo.value.length == 0) {
+		alert('사업장 전화번호를 입력해주세요');
+		form.cellphoneNo.focus();
+		
+		return;
+	}
+	
 	form.address.value = form.address.value.trim();
 	if(form.address.value.length == 0) {
 		alert('사업장 주소를 입력해주세요');
@@ -350,6 +365,36 @@ function companyRegister__submit(form) {
 function insert_area_param(areaNo) {
 	document.getElementById('area').setAttribute('value', areaNo);
 };
+
+//전화번호칸에 숫자만 사용 가능하도록 하는 함수 시작(입력키 제한)
+	function chkCharCodeNum(event) {
+	  const keyCode = event.keyCode;
+	  const isValidKey = (keyCode >= 48 && keyCode <= 57);
+	  if (!isValidKey) {
+	    event.preventDefault();
+	    return false;
+	  }
+	};
+//전화번호칸에 숫자만 사용 가능하도록 하는 함수 끝
+
+//전화번호칸에 숫자를 적어 나아가면 자동으로 하이픈 붙여주는 함수 시작
+	const autoHyphen = (target) => {
+		 target.value = target.value
+		   .replace(/[^0-9]/g, '')
+		  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
+//전화번호칸에 숫자를 적어 나아가면 자동으로 하이픈 붙여주는 함수 끝
+
+//전화번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 시작
+	function requiredData(el) {
+		$(".required-msg").empty();
+		const form = $(el).closest('form').get(0);
+		
+		if (form.cellphoneNo.value.length <= 8) {
+			$(".required-msg").html('전화번호를 확인해주세요.');
+		}
+	};
+//전화번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 끝
 
 </script>
 

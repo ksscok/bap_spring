@@ -22,6 +22,7 @@
 		<input id="DateAndDayOfTheWeekOfChkin" type="hidden" name="DateAndDayOfTheWeekOfChkin" value="${DateAndDayOfTheWeekOfChkin }" />
 		<input id="DateAndDayOfTheWeekOfChkout" type="hidden" name="DateAndDayOfTheWeekOfChkout" value="${DateAndDayOfTheWeekOfChkout }" />
 		<input id="orderName" type="hidden" name="orderName" value="${company.name }/${product.roomType } " />
+		<input id="diff" type="hidden" name="diff" value="${diff } " />
 		<input id="isWrite" type="hidden" name="isWrite" value="${isWrite } " />
 		<div class="con-3 flex flex-row mx-auto px-3">
 			<div class="left left_book mr-14">

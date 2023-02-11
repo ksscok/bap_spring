@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.KoreaIT.project.BAP.service.WishService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.GenFileService;
 import com.KoreaIT.project.BAP.service.ProductService;
 import com.KoreaIT.project.BAP.util.Ut;
+import com.KoreaIT.project.BAP.vo.Wish;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Product;
 import com.KoreaIT.project.BAP.vo.Rq;
@@ -30,13 +32,15 @@ public class UsrProductController {
 	private ProductService productService;
 	private CompanyService companyService;
 	GenFileService genFileService;
-	Rq rq;
+	private WishService wishService;
+	private Rq rq;
 	
 	@Autowired
-	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, Rq rq) {
+	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, WishService wishService, Rq rq) {
 		this.productService = productService;
 		this.companyService = companyService;
 		this.genFileService = genFileService;
+		this.wishService = wishService;
 		this.rq = rq;
 	}
 	
@@ -95,6 +99,12 @@ public class UsrProductController {
 		}
 		// 예약페이지에서 orderId를 만들 때 필요한 숙박타입 코드를 넘겨주기 위한 부분 끝
 		
+		Wish wish = null;
+		
+		if(rq.isLogined()) {
+			wish = wishService.getWishByMemberIdAndComp_id(rq.getLoginedMemberId(), comp_id);
+		}
+		
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("countOfRoom", countOfRoom);
 		model.addAttribute("countOfAdult", countOfAdult);
@@ -111,6 +121,7 @@ public class UsrProductController {
 		model.addAttribute("accommodationTypeCode", accommodationTypeCode);
 		model.addAttribute("start_date", start_date);
 		model.addAttribute("end_date", end_date);
+		model.addAttribute("wish", wish);
 		
 		return "usr/product/detail";
 	}

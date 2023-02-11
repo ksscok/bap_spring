@@ -1,3 +1,21 @@
+.back-ground-page {
+	background-color: #f0f0f0;	
+}
+
+.side-bar-d1, .side-bar-d2, .right {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px #c4c4c4;
+}
+
+.right {
+	padding: 10px;
+}
+
+.room-body {
+	border: 1px solid rgba(0,0,0,0.3);
+}
+
 .layer  {
 	display: none;
 	width: 600px;
