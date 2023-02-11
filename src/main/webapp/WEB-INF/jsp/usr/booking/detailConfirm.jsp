@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="예약 목록" />
+<c:set var="pageTitle" value="예약 상세보기 확인" />
 <%@ include file="../common/head.jspf"%>
 
-<!-- bookingListConfirm css -->
-<link rel="stylesheet" href="/resource/bookingListConfirm.css" />
+<!-- bookingDetailConfirm css -->
+<link rel="stylesheet" href="/resource/bookingDetailConfirm.css" />
 
 <section class="my-10">
 	<div class="con-3 mx-auto px-3">
 		<div class="non-memberInquiry-box flex justify-center mt-32">
 			<div class="non-memberInquiry">
 				<div class="text-2xl font-bold my-5">비회원 예약 조회</div>
-				<form onsubmit="chkNull(event);" action="list">
+				<form onsubmit="chkNull(event);" action="doDetailComfirm">
 					<div class="cellphoneNoInput-box flex items-center">
 						<div class="text-3xl text-gray-300 mx-3"><i class="fa-solid fa-mobile-screen-button"></i></div>
 						<input id="cellphoneNo" name="cellphoneNo" onkeypress="chkCharCodeNum(event);" type="text" class="cellphoneNo" oninput="autoHyphen(this)" style="width:230px;" placeholder="휴대폰 번호" maxlength="13" onblur="cellphoneNoData(this);"/>

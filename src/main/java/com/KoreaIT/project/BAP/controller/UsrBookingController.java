@@ -158,9 +158,9 @@ public class UsrBookingController {
 		return "/usr/payment/pay";
 	}
 	
-	@RequestMapping("/usr/booking/listConfirm")
-	public String showListConfirm() {
-		return "/usr/booking/listConfirm";
+	@RequestMapping("/usr/booking/detailConfirm")
+	public String showDetailConfirm() {
+		return "/usr/booking/detailConfirm";
 	}
 	
 	@RequestMapping("/usr/booking/list")
@@ -183,6 +183,31 @@ public class UsrBookingController {
 		model.addAttribute("searchKeyword", searchKeyword);
 		
 		return "/usr/booking/list";
+	}
+	
+	@RequestMapping("/usr/booking/doDetailComfirm")
+	@ResponseBody
+	public String doDetailComfirm(Model model, String cellphoneNo, String searchKeyword) {
+		
+		// booking/detail에서 bookingId를 searchKeyword로 받기 때문에
+		if(Ut.empty(searchKeyword)) {
+			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(cellphoneNo)) {
+			return Ut.jsHistoryBack("전화번호를 입력해주세요");
+		}
+		
+		int id = Integer.parseInt(searchKeyword);
+		
+		Booking booking = bookingService.getBookingById(id);
+		
+		if(!booking.getCellphoneNo().equals(cellphoneNo)) {
+			return Ut.jsReplace( Ut.f("입력하신 전화번호(%s)와 예약번호(%s)에 일치하는 예약이 존재하지 않습니다.", cellphoneNo, searchKeyword), "/usr/booking/detailConfirm");
+		}
+		
+		
+		return Ut.jsReplace("", Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}
 	
 	@RequestMapping("/usr/booking/detail")
