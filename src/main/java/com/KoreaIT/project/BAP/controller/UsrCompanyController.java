@@ -63,9 +63,6 @@ public class UsrCompanyController {
 		if(Ut.empty(accommodationType)) {
 			return rq.jsHistoryBack("시설 유형을 선택해주세요.");
 		}
-		if(Ut.empty(multipartRequest)) {
-			return rq.jsHistoryBack("사업장 프로필 이미지를 등록해주세요.");
-		}
 		
 		int newCompanyId = companyService.register(name, address, area, timeChkin, timeChkout, accommodationType, host_id);
 		
