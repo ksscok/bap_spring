@@ -1,13 +1,10 @@
 package com.KoreaIT.project.BAP.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.WishRepository;
 import com.KoreaIT.project.BAP.vo.Wish;
-import com.KoreaIT.project.BAP.vo.Company;
 
 @Service
 public class WishService {

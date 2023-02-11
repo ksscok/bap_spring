@@ -295,4 +295,24 @@ public interface CompanyRepository {
 			""")
 	List<Company> getCompanyByHostId(int hostId);
 
+	@Select("""
+			<script>
+			SELECT c.*,
+			p.fee AS extra__productFee,
+			MIN(fee) AS extra__minFee
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.id = #{id}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordTypeCode == 'name'">
+						AND c.name LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+				</choose>
+			</if>
+			</script>
+			""")
+	Company getCompanyByComp_idForWish(int id, String searchKeywordTypeCode, String searchKeyword);
+
 }

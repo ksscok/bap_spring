@@ -54,6 +54,7 @@ public interface WishRepository {
 			SELECT COUNT(*)
 				FROM wish
 				WHERE memberId = #{memberId}
+				
 			""")
 	int getWishesCountByIds(int memberId);
 	

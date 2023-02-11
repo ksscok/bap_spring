@@ -33,19 +33,21 @@
 			<c:otherwise>
 				<input type="hidden" name="companies" value="${companies }"/>
 				<c:forEach var="company" items="${companies}" >
-					<div class="companyList-box mt-5">
-						<!-- 				대표이미지 들어갈 곳 -->
-						<div class="img-box"></div>
-						<div class="company-infor">
-							<a href="../product/detail?comp_id=${company.id }">
-								<span class="companyList-top-box">
+					<a href="../product/detail?comp_id=${company.id }">
+						<span class="companyList-box flex mt-5">
+						<!-- 		추후에 product 대표 이미지로 바꾸기 -->
+							<span class="img-box">
+								 <img src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+							</span>
+							<span class="company-infor ml-4 w-full">
+								<span class="companyList-top-box h-1/2">
 									<span>숙소명 : ${company.name }</span>
 									<br />
 									<span>(리뷰 칸)★★★★☆ 점수(리뷰 개수)</span>
 									<br />
 								</span>
 								<br />
-								<span class="bookingList-bottom-box flex justify-end items-end mt-5">
+								<span class="companyList-bottom-box h-1/2 flex justify-end items-end mt-5">
 									<span>체크인 : ${company.timeChkin }</span>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<span><fmt:formatNumber value="${company.extra__minFee}" pattern="#,###"/></span>
@@ -53,9 +55,9 @@
 									<span class="text-sm" style="line-height: 25px;">원</span>
 									<span>~</span>
 								</span>
-							</a>
-						</div>
-					</div>
+							</span>
+						</span>
+					</a>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>

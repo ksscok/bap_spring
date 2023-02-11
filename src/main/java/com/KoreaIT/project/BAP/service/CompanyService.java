@@ -144,16 +144,22 @@ public class CompanyService {
 		return companyRepository.getCompanyByHostId(hostId);
 	}
 
-	public List<Company> getCompaniesByIds(int[] comp_ids) {
+	// 찜 목록 불러오는 함수
+	public List<Company> getCompaniesByIds(int[] comp_ids, String searchKeywordTypeCode, String searchKeyword) {
 		
 		List<Company> companies = new ArrayList<>();
 		
 		for(int i = 0; i < comp_ids.length; i++) {
-			System.out.println("장바구니 확인 목록 : " + (i + 1) + "번");
-			companies.add(getCompanyByComp_id(comp_ids[i]));
+			if(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword) != null) {
+				companies.add(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword));
+			}
 		}
 		
 		return companies;
+	}
+
+	private Company getCompanyByComp_idForWish(int id, String searchKeywordTypeCode, String searchKeyword) {
+		return companyRepository.getCompanyByComp_idForWish(id, searchKeywordTypeCode, searchKeyword);
 	}
 
 }

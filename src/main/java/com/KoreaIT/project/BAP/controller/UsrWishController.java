@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.WishService;
@@ -30,11 +31,13 @@ public class UsrWishController {
 	}
 	
 	@RequestMapping("/usr/wish/list")
-	public String showList(Model model, int memberId) {
+	public String showList(Model model, int memberId,
+			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
+			@RequestParam(defaultValue="") String searchKeyword) {
 		
 		int[] comp_ids = wishService.getComp_idByMemberId(memberId);
 		
-		List<Company> companies = companyService.getCompaniesByIds(comp_ids);
+		List<Company> companies = companyService.getCompaniesByIds(comp_ids, searchKeywordTypeCode, searchKeyword);
 		
 		int wishesCount = wishService.getWishesCountByIds(memberId);
 		
