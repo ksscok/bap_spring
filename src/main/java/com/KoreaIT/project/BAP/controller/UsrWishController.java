@@ -68,7 +68,7 @@ public class UsrWishController {
 			wishService.doDelete(memberId, comp_id);
 		}
 		
-		// 혹시 몰라서 임시로 넣어둠. 나중에 필요 없으면 공백으로 리턴.
+		// 혹시 몰라서 임시로 넣어둠. 나중에 필요 없으면 공백으로 리턴 or void 타입으로 변경.
 		return "10";
 	}
 	

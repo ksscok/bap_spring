@@ -161,7 +161,13 @@
 				<div class="company-img img-box">
 					<img src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 				</div>
-				<div id="productList">
+				<div class="product-btn text-gray-400 mt-8 ">
+					<a href="#" class="list-btn ml-4">객실 안내/예약</a>
+					<a href="#" class="detail-btn ml-4">숙소 정보</a>
+					<a href="#" class="review-btn ml-4">리뷰</a>
+				</div>
+				
+				<div class="productList-box">
 					<c:forEach var="product" items="${products}" varStatus="status">
 						<div id="${status.count }" class="room-body flex items-center rounded-lg p-2 my-4">
 							<div>
@@ -243,6 +249,41 @@
 						</div>
 					</c:forEach>
 				</div>
+				
+				<div class="productDetail-box">
+					<div class="baseInform flex justify-between items-center">
+						<div class="m-4">기본 정보</div>
+						<a href="" class="m-4"><i class="fa-solid fa-chevron-up"></i></a>
+					</div>
+					<div class="amenities-and-services flex justify-between items-center">
+						<div class="m-4">편의시설 및 서비스</div>
+						<a href="#" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></a>
+					</div>
+					<div class="hostInform flex justify-between items-center">
+						<div class="m-4">판매자 정보</div>
+						<a href="#" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></a>
+					</div>
+				</div>
+				
+				<div class="review-box">
+					<div class="review-box-top text-center">
+						<div class="mt-6 text-lg font-extrabold">추천해요</div>
+						<span class="text-xl">★★★★☆</span>
+						&nbsp;&nbsp;&nbsp;
+						<span>9.1</span>
+						<div class="review-count flex justify-center item-center mt-3">
+							<div class="totalReview-count mr-8">
+								전체 리뷰
+								<span class="font-extrabold">2556</span>
+							</div>
+							<div class="answerReview-count">
+								제휴점 답변
+								<span class="font-extrabold">7</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -333,6 +374,53 @@
 		
 	};
 // 찜하기 ajax 끝
+
+// product-btn 컨트롤 시작
+	$('.list-btn').click(function() {
+		$('.list-btn').css('color', 'red')
+		$('.list-btn').css('font-weight', '900')
+		$('.list-btn').css('border-bottom', '3px solid red')
+		$('.detail-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.detail-btn').css('font-weight', 'normal')
+		$('.detail-btn').css('border-bottom', 'none')
+		$('.review-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.review-btn').css('font-weight', 'normal')
+		$('.review-btn').css('border-bottom', 'none')
+		$('.productList-box').show(); 
+		$('.productDetail-box').hide(); 
+		$('.review-box').hide(); 
+	});
+
+	$('.detail-btn').click(function() {
+		$('.list-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.list-btn').css('font-weight', 'normal')
+		$('.list-btn').css('border-bottom', 'none')
+		$('.detail-btn').css('color', 'red')
+		$('.detail-btn').css('font-weight', '900')
+		$('.detail-btn').css('border-bottom', '3px solid red')
+		$('.review-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.review-btn').css('font-weight', 'normal')
+		$('.review-btn').css('border-bottom', 'none')
+		$('.productList-box').hide(); 
+		$('.productDetail-box').show(); 
+		$('.review-box').hide(); 
+	});
+
+	$('.review-btn').click(function() {
+		$('.list-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.list-btn').css('font-weight', 'normal')
+		$('.list-btn').css('border-bottom', 'none')
+		$('.detail-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.detail-btn').css('font-weight', 'normal')
+		$('.detail-btn').css('border-bottom', 'none')
+		$('.review-btn').css('color', 'red')
+		$('.review-btn').css('font-weight', '900')
+		$('.review-btn').css('border-bottom', '3px solid red')
+		$('.productList-box').hide(); 
+		$('.productDetail-box').hide(); 
+		$('.review-box').show(); 
+	});
+// product-btn 컨트롤 끝
 
 // 객실 이용 안내 modal창 시작
 	$('.dt-modal').click(function() {

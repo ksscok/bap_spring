@@ -12,8 +12,34 @@
 	padding: 10px;
 }
 
+.product-btn, .review-box, .productDetail-box > .baseInform, .productDetail-box > .amenities-and-services, .productDetail-box > .hostInform {
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.product-btn {
+	padding-bottom: 25px;
+}
+
+.list-btn, .detail-btn, .review-btn{
+	padding-bottom: 25px;
+}
+
+.list-btn {
+	color: red;
+	font-weight: 700;
+	border-bottom: 3px solid red;
+}
+
+.review-box {
+	padding-bottom: 10px;
+}
+
 .room-body {
 	border: 1px solid rgba(0,0,0,0.3);
+}
+
+.productDetail-box, .review-box {
+	display: none;
 }
 
 .layer  {

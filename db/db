@@ -1208,6 +1208,18 @@ comp_id = 6;
 
 SELECT * FROM wish;
 
+CREATE TABLE review
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
+    booking_id    INT UNSIGNED    NOT NULL    COMMENT '예약번호',
+    `body`    VARCHAR(200)    NOT NULL    COMMENT '리뷰 내용'
+);
+
+SELECT * FROM review;
+
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;

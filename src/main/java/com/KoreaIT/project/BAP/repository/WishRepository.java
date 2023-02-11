@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Wish;
 
 @Mapper
