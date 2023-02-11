@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Member;
+import com.KoreaIT.project.BAP.vo.ResultData;
 import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
@@ -101,6 +102,23 @@ public class UsrMemberController {
 		memberService.join(memberType, loginId, loginPw, name, email, cellphoneNo);
 		
 		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", "/");
+	}
+	
+	@RequestMapping("/usr/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData<String> getLoginIdDup(String loginId) {
+		
+		if(Ut.empty(loginId)) {
+			return ResultData.from("F-1", "아이디를 입력해주세요.");
+		}
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member != null) {
+			return ResultData.from("F-2", "이미 사용중인 아이디입니다.", "loginId", loginId);
+		}
+		
+		return ResultData.from("S-1", "사용 가능한 아이디입니다.", "loginId", loginId);
 	}
 	
 	@RequestMapping("/usr/member/myPage")

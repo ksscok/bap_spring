@@ -32,7 +32,10 @@
 					<tr>
 						<th>아이디</th>
 						<td>
-							<input name="loginId" type="text" class="input input-bordered w-64" placeholder="아이디를 입력해주세요."/>
+							<div>
+								<input name="loginId" type="text" class="input input-bordered w-64" placeholder="아이디를 입력해주세요." onblur="checkLoginIdDup(this);"/>
+								<div class="loginId-msg mt-2 h-5 text-red-500"></div>
+							</div>
 							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 반드시 6~15자리의 영문, 숫자를 조합해서 입력해주세요. 한글, 여백, 특수문자는 입력 불가합니다.</div>
 						</td>
 					</tr>
@@ -83,6 +86,9 @@
 </section>
 
 <script>
+
+	let validLoginId = '';
+
 	function memberJoin__submit(form) {
 		
 		form.memberType.value = form.memberType.value.trim();
@@ -98,6 +104,12 @@
 			alert('아이디를 입력해주세요');
 			form.loginId.focus();
 			
+			return;
+		}
+		
+		if(form.loginId.value != validLoginId) {
+			alert(form.loginId.value + '은(는) 사용할 수 없는 아이디입니다.');
+			form.loginId.focus();
 			return;
 		}
 		
@@ -149,6 +161,38 @@
 		}
 		
 		form.submit();
+	}
+	
+
+	function checkLoginIdDup(el) {
+		$(".loginId-msg").empty();
+		const form = $(el).closest('form').get(0);
+		
+		if (form.loginId.value.length == 0) {
+			return;
+		}
+		
+		$.get('getLoginIdDup', {
+			loginId : form.loginId.value,
+			ajaxMode : 'Y'
+		}, function(data){
+			console.log(data);
+			$(".loginId-msg").html(data.data1 + '은(는) ' + data.msg);
+			if (data.success) {
+				validLoginId = data.data1;
+			}else {
+				validLoginId = '';
+			}
+		}, 'json');
+	}
+	
+	function requiredData(el) {
+		$(".required-msg").empty();
+		const form = $(el).closest('form').get(0);
+		
+		if (form.loginPw.value.length == 0) {
+			$(".required-msg").html('필수 정보 입니다');
+		}
 	}
 </script>
 
