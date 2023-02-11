@@ -144,12 +144,13 @@ public class CompanyService {
 		return companyRepository.getCompanyByHostId(hostId);
 	}
 
-	// 찜 목록 불러오는 함수
+	// 찜 목록 불러오는 함수1
 	public List<Company> getCompaniesByIds(int[] comp_ids, String searchKeywordTypeCode, String searchKeyword) {
 		
 		List<Company> companies = new ArrayList<>();
 		
 		for(int i = 0; i < comp_ids.length; i++) {
+			// 만약 getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword)의 값이 없을 때 없는 값으로 companies에 add를 해버려서 빈칸이 나와버림
 			if(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword) != null) {
 				companies.add(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword));
 			}
@@ -158,6 +159,7 @@ public class CompanyService {
 		return companies;
 	}
 
+	// 찜 목록 불러오는 함수2
 	private Company getCompanyByComp_idForWish(int id, String searchKeywordTypeCode, String searchKeyword) {
 		return companyRepository.getCompanyByComp_idForWish(id, searchKeywordTypeCode, searchKeyword);
 	}

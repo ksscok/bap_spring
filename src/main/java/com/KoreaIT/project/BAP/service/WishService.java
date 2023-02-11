@@ -1,9 +1,12 @@
 package com.KoreaIT.project.BAP.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.WishRepository;
+import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Wish;
 
 @Service
@@ -34,7 +37,8 @@ public class WishService {
 		return wishRepository.getComp_idByMemberId(memberId);
 	}
 
-	public int getWishesCountByIds(int memberId) {
-		return wishRepository.getWishesCountByIds(memberId);
+	public int getWishesCountByIds(int memberId, String searchKeywordTypeCode, String searchKeyword) {
+		return wishRepository.getWishesCountByIds(memberId, searchKeywordTypeCode, searchKeyword);
 	}
+
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Wish;
 
 @Mapper
@@ -51,11 +52,21 @@ public interface WishRepository {
 	int[] getComp_idByMemberId(int memberId);
 
 	@Select("""
+			<script>
 			SELECT COUNT(*)
-				FROM wish
+				FROM wish AS w
+				LEFT JOIN company AS c
+				ON w.comp_id = c.id
 				WHERE memberId = #{memberId}
-				
+					<if test="searchKeyword != ''">
+						<choose>
+							<when test="searchKeywordTypeCode == 'name'">
+								AND c.name LIKE CONCAT('%', #{searchKeyword}, '%')
+							</when>
+						</choose>
+					</if>
+			</script>
 			""")
-	int getWishesCountByIds(int memberId);
-	
+	int getWishesCountByIds(int memberId, String searchKeywordTypeCode, String searchKeyword);
+
 }

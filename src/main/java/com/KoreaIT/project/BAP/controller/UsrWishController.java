@@ -13,6 +13,7 @@ import com.KoreaIT.project.BAP.service.WishService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Wish;
+import com.KoreaIT.project.BAP.vo.Booking;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Rq;
 
@@ -39,7 +40,7 @@ public class UsrWishController {
 		
 		List<Company> companies = companyService.getCompaniesByIds(comp_ids, searchKeywordTypeCode, searchKeyword);
 		
-		int wishesCount = wishService.getWishesCountByIds(memberId);
+		int wishesCount = wishService.getWishesCountByIds(memberId, searchKeywordTypeCode, searchKeyword);
 		
 		model.addAttribute("companies", companies);
 		model.addAttribute("wishesCount", wishesCount);
@@ -71,5 +72,22 @@ public class UsrWishController {
 		return "10";
 	}
 	
+	
+	@RequestMapping("/usr/wish/doDeleteAtWishList")
+	@ResponseBody
+	public String doDeleteAtWishList(int memberId, int comp_id) {
+		
+		if(Ut.empty(memberId)) {
+			return Ut.jsHistoryBack("회원번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(comp_id)) {
+			return Ut.jsHistoryBack("사업장 번호를 입력해주세요");
+		}
+		
+		wishService.doDelete(memberId, comp_id);
+		
+		return Ut.jsReplace("해당 숙소를 찜 목록에서 삭제했습니다.", Ut.f("/usr/wish/list?memberId=%d", memberId));
+	}
 }
 
