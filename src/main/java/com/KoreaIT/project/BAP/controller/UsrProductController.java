@@ -1,5 +1,6 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,7 +111,7 @@ public class UsrProductController {
 			wish = wishService.getWishByMemberIdAndComp_id(rq.getLoginedMemberId(), comp_id);
 		}
 		
-		List<Review> reviews = reviewService.getReviewByComp_id(comp_id);
+		List<Review> reviews = reviewService.getForPrintReviews(rq.getLoginedMemberId(), comp_id);
 		
 		//평균 평점 구하기 시작
 		int totalRating = 0;
@@ -119,7 +120,11 @@ public class UsrProductController {
 			totalRating += review.getRating();
 		}
 		
-		double avg = totalRating/ (double) reviews.size();
+		// 실수를 소수점 첫째자리까지 자르기 위한 함수
+		DecimalFormat df = new DecimalFormat("0.0"); 
+		
+		String avg = df.format(totalRating/ (double) reviews.size());
+		
 		int avgStarCount = (int) Math.floor(totalRating/reviews.size());
 		//평균 평점 구하기 끝
 		

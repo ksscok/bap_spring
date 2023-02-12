@@ -2,6 +2,7 @@ package com.KoreaIT.project.BAP.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -60,12 +61,21 @@ public interface ReviewRepository {
 			""")
 	void doModify(int id, int rating, String body);
 
-//	@Delete("""
-//			DELETE FROM wish 
-//				WHERE memberId = #{memberId}
-//				AND comp_id = #{comp_id}
-//			""")
-//
+	@Select("""
+			SELECT r.*, m.name AS extra__writerName
+				FROM review AS r
+				LEFT JOIN `member` AS m
+				ON r.memberId = m.id
+				WHERE r.comp_id = #{comp_id}
+			""")
+	List<Review> getForPrintReviews(int comp_id);
+
+	@Delete("""
+			DELETE FROM review 
+				WHERE id = #{id}
+			""")
+	void doDelete(int id);
+
 //	@Select("""
 //			<script>
 //			SELECT COUNT(*)

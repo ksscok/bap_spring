@@ -15,6 +15,7 @@ import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.KoreaIT.project.BAP.vo.Payment;
+import com.KoreaIT.project.BAP.vo.ResultData;
 import com.KoreaIT.project.BAP.vo.Review;
 import com.KoreaIT.project.BAP.vo.Rq;
 
@@ -135,18 +136,51 @@ public class UsrReviewController {
 			return rq.jsHistoryBack("리뷰 내용을 입력해주세요.");
 		}
 		
+		Review review = reviewService.getReviewById(id);
+		
+		ResultData actorCanMDRd = reviewService.actorCanMD(rq.getLoginedMemberId(), review);
+
+		if (actorCanMDRd.isFail()) {
+			return Ut.jsHistoryBack(actorCanMDRd.getMsg());
+		}
+		
 		reviewService.doModify(id, rating, body);
 		
 		return Ut.jsReplace(Ut.f("%d번 리뷰가 수정되었습니다.", id), Ut.f("/usr/product/detail?comp_id=%d", comp_id));
 	}
 	
-	@RequestMapping("usr/review/getReviewContent")
-	@ResponseBody()
-	public Review doWriteOrDelete(int id) {
+	@RequestMapping("/usr/review/doDelete")
+	@ResponseBody
+	public String doDelete(int id, int comp_id) {
+		
+		if(Ut.empty(id)) {
+			return rq.jsHistoryBack("리뷰번호를 입력해주세요.");
+		}
 		
 		Review review = reviewService.getReviewById(id);
 		
-		return review;
+		ResultData actorCanMDRd = reviewService.actorCanMD(rq.getLoginedMemberId(), review);
+		
+		if (actorCanMDRd.isFail()) {
+			return Ut.jsHistoryBack(actorCanMDRd.getMsg());
+		}
+		
+		reviewService.doDelete(id);
+		
+		return Ut.jsReplace(Ut.f("%d번 리뷰가 삭제되었습니다.", id), Ut.f("/usr/product/detail?comp_id=%d", comp_id));
+	}
+	
+	@RequestMapping("usr/review/getReviewContent")
+	@ResponseBody()
+	public ResultData<Review> getReviewContent(int id) {
+		
+		Review review = reviewService.getReviewById(id);
+		
+		if(review == null) {
+			return ResultData.from("F-1", "해당 리뷰는 존재하지 않습니다");
+		}
+		
+		return ResultData.from("S-1", "리뷰 정보 조회 성공", "review", review);
 	}
 	
 }

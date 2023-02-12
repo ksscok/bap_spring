@@ -310,17 +310,17 @@
 										<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
 										<span class="ml-1">${review.rating }</span>
 									</div>
-<%-- 								<c:if test="${review.actorCanChangeData }"> --%>
+								<c:if test="${review.actorCanChangeData }">
 									<div class="dropdown">
 										<button class="btn btn-circle btn-ghost btn-sm">
 								      		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
 								    	</button>
 								    	<ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-20">
 									        <li><a onclick="ReviewModify__getForm(${review.id }, ${status.count });">수정</a></li>
-									    	<li><a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../rreview/doDelete?id=${review.id }">삭제</a></li>
+									    	<li><a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../review/doDelete?id=${review.id }&comp_id=${review.comp_id}">삭제</a></li>
 									    </ul>
 					    			</div>
-<%-- 					    		</c:if> --%>
+					    		</c:if>
 			    				</div>
 							</div>
 							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
@@ -549,18 +549,18 @@
 			let addHtml = `
 				<div class="writeReview-box mx-2">
 					<form action="../review/doModify" onsubmit="submitFormReviewModify(this); return false;">
-						<input type="hidden" id="id" name="id" value="\${data.id }" />
-						<input type="hidden" id="memberId" name="memberId" value="\${data.memberId }" />
-						<input type="hidden" id="comp_id" name="comp_id" value="\${data.comp_id }" />
+						<input type="hidden" id="id" name="id" value="\${data.data1.id }" />
+						<input type="hidden" id="memberId" name="memberId" value="\${data.data1.memberId }" />
+						<input type="hidden" id="comp_id" name="comp_id" value="\${data.data1.comp_id }" />
 						<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
-						<div class="text-sm text-gray-400 mb-2">\${data.extra__writerName }</div>
+						<div class="text-sm text-gray-400 mb-2">\${data.data1.extra__writerName }</div>
 						<div class="writeReview-rating-box mb-2">
 							<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
 								<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
 							</c:forEach>
 							<input name="rating" class="writeRating ml-1" type="text" readonly/>
 						</div>
-						<input name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="      예약번호를 입력해주세요."/>
+						<input name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="   \${data.data1.booking_id}"/>
 						<div class="toast-ui-editor2">
 							<script type="text/x-template"><\/script>
 						</div>
@@ -574,6 +574,7 @@
 			reviewContent.empty().html("");
 			reviewContent.append(addHtml);
 			
+			// 아마 클래스명이 toast-ui-editor인 태그가 두 개여서 수정 폼에서는 안먹는 것 같아서 뒤에 2 붙여서 하니까 됨 
 			$('.toast-ui-editor2').each(function(index, node) {
 			    const $node = $(node);
 			    const $initialValueEl = $node.find(' > script');
@@ -604,6 +605,7 @@
 		}, 'json');
 	}
 
+	// toast-ui-editor2를 위한 함수
 	function submitFormReviewModify(form){
 		  
 		  form.memberId.value = form.memberId.value.trim();
