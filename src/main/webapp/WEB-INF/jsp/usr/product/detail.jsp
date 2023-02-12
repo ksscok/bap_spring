@@ -3,6 +3,7 @@
 
 <c:set var="pageTitle" value="숙소 방 목록" />
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jsp"%>
 
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
@@ -284,7 +285,7 @@
 								<div class="mt-6 text-lg font-extrabold">아쉬워요</div>
 							</c:otherwise>
 						</c:choose>
-						<span class="text-xl text-yellow-400"><c:forEach var="totalrating" items="${ratingOptions }" varStatus="status" begin="1" end="${avgStarCount }">★</c:forEach></span>
+						<span class="text-xl text-yellow-400">${ratingOptions.get(avgStarCount) }</span>
 						&nbsp;&nbsp;&nbsp;
 						<span>${avg }</span>
 						<div class="review-count flex justify-center item-center mt-3">
@@ -299,17 +300,18 @@
 						</div>
 					</div>
 					
-					<div class="showReview mb-4">
+					<div class="showReview mb-2">
 					<c:forEach var="review" items="${reviews}" varStatus="status">
 						<div class="showReview-box mt-10">
 							<div class="showReview-box-top flex justify-start">
 								<div>프로필img</div>
-								<div class="rating-box">
-									<span class="ml-3 text-yellow-400"><c:forEach var="rating" items="${ ratingOptions }" varStatus="status" begin="1" end="${ review.rating }">★</c:forEach></span>
+								<div class="showReview-rating-box">
+									<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
 									<span class="ml-1">${review.rating }</span>
 								</div>
 							</div>
-							<div class="ml-20 mt-4">${review.body }</div>
+							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
+							<div class="ml-20 mt-1">${review.body }</div>
 							<div class="img-box ml-20 mt-2">
 								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
 							</div>
@@ -327,8 +329,23 @@
 						</div>
 					</c:forEach>
 					</div>
+					<div class="writeReview-box mx-2">
+						<input id="body" type="hidden" name="body" />
+						<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
+						<div class="writeReview-rating-box mb-2">
+							<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
+								<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
+							</c:forEach>
+							<input name="writeRating" class="writeRating ml-1" type="text" readonly/>
+						</div>
+						<div class="toast-ui-editor">
+							<script type="text/x-template"></script>
+						</div>
+						<div class="flex justify-end">
+							<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
+						</div>
+					</div>
 				</div>
-				
 			</div>
 		</div>
 	</section>
@@ -485,6 +502,56 @@
 		$('.layer-bg').css('display', 'none');
 	});
 // 객실 이용 안내 modal창 끝
+
+
+// 별 클릭시 클릭한 별 위치까지 색이 채워진 별로 바뀌고 그에 해당하는 점수가 나오도록 하는 함수 시작
+	function change_star(starNo) {
+		
+		$('.writeRating').val(starNo);
+	
+		if($('a#star' + starNo).text() == "★"){
+			for(let i = starNo + 1; i <= 5; i++){
+				$('a#star' + i).text("☆");
+			}
+		} else {
+			for(let i = 1; i <= starNo; i++){
+				$('a#star' + i).text("★");
+			}
+		}
+		
+	};
+// 별 클릭시 클릭한 별 위치까지 색이 채워진 별로 바뀌고 그에 해당하는 점수가 나오도록 하는 함수 끝
+
+// writeReview toastUiEditor 높이 커스터마이징 시작
+function ToastEditor__init() {
+	  $('.toast-ui-editor').each(function(index, node) {
+	    const $node = $(node);
+	    const $initialValueEl = $node.find(' > script');
+	    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
+	    const editor = new toastui.Editor({
+	      el: node,
+	      previewStyle: 'tab',
+	      initialValue: initialValue,
+	      height:'200px',
+	      plugins: [
+	        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
+	        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
+	        toastui.Editor.plugin.colorSyntax,
+	        toastui.Editor.plugin.tableMergedCell,
+	        toastui.Editor.plugin.uml,
+	        katexPlugin,
+	        youtubePlugin,
+	        codepenPlugin,
+	        replPlugin
+	      ],
+	      customHTMLSanitizer: html => {
+	        return DOMPurify.sanitize(html, { ADD_TAGS: ["iframe"], ADD_ATTR: ['width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'scrolling', 'style', 'title', 'loading', 'allowtransparency'] }) || ''
+	      }
+	    });
+	    $node.data('data-toast-editor', editor);
+	  });
+	}
+//writeReview toastUiEditor 높이 커스터마이징 끝
 </script>
 
 

@@ -124,7 +124,7 @@ public class UsrProductController {
 		int avgStarCount = (int) Math.floor(totalRating/reviews.size());
 		//평균 평점 구하기 끝
 		
-		// 평점 옵션
+		// 평점 옵션 시작
 		Map<Integer, String> ratingOptions = new HashMap<>();
 		ratingOptions.put(0, "☆☆☆☆☆");
 		ratingOptions.put(1, "★☆☆☆☆");
@@ -132,6 +132,7 @@ public class UsrProductController {
 		ratingOptions.put(3, "★★★☆☆");
 		ratingOptions.put(4, "★★★★☆");
 		ratingOptions.put(5, "★★★★★");
+		// 평점 옵션 시작 끝
 		model.addAttribute("ratingOptions", ratingOptions);
 		
 		model.addAttribute("comp_id", comp_id);

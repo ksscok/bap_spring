@@ -18,5 +18,6 @@ public class Review {
 	private String body;
 	
 	private int extra__beforeDays;
+	private String extra__writerName;
 }
 

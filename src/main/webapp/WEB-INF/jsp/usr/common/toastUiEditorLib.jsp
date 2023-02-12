@@ -233,7 +233,7 @@ function getUriParams(uri) {
 	      el: node,
 	      previewStyle: 'tab',
 	      initialValue: initialValue,
-	      height:'600px',
+	      height:'300px',
 	      plugins: [
 	        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
 	        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
