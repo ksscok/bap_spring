@@ -2,6 +2,7 @@ package com.KoreaIT.project.BAP.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,15 +38,14 @@ public class UsrReviewController {
 		this.rq = rq;
 	}
 	
-//	@RequestMapping("/usr/review/list")
-//	public String showList(Model model, int memberId,
-//			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
-//			@RequestParam(defaultValue="") String searchKeyword) {
-//		
-//		model.addAttribute("wishesCount", wishesCount);
-//		
-//		return "usr/wish/list";
-//	}
+	@RequestMapping("/usr/review/list")
+	public String showList(Model model, int memberId,
+			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
+			@RequestParam(defaultValue="") String searchKeyword) {
+		
+		
+		return "usr/review/list";
+	}
 	
 	@RequestMapping("/usr/review/doWrite")
 	@ResponseBody

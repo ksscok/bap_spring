@@ -30,19 +30,7 @@ public class ReviewService {
 
 
 	public List<Review> getReviewByComp_id(int comp_id) {
-		List<Review> reviews = reviewRepository.getReviewByComp_id(comp_id);
-				
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date now = new Date();
-		
-		String formatedNow = format.format(now);
-		System.out.println("formatedNow : " + formatedNow + "=============");
-		
-		for(Review review : reviews) {
-			review.setExtra__beforeDays(bookingService.getDiffBetweenChkinChkout(review.getRegDate(), formatedNow));
-		}
-		
-		return reviews; 
+		return reviewRepository.getReviewByComp_id(comp_id); 
 	}
 
 	public List<Review> getForPrintReviews(int loginedMemberId, int comp_id) {

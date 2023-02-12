@@ -332,14 +332,14 @@
 								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
 							</div>
 							<c:choose>
-								<c:when test="${review.extra__beforeDays == 0}">
+								<c:when test="${review.getForPrintBeforeDays() == 0}">
 									<div class="mt-5 text-gray-400 ml-20">오늘</div>
 								</c:when>
-								<c:when test="${review.extra__beforeDays == 1}">
+								<c:when test="${review.getForPrintBeforeDays() == 1}">
 									<div class="mt-5 text-gray-400 ml-20">어제</div>
 								</c:when>
 								<c:otherwise>
-									<div class="mt-5 text-gray-400 ml-20">${review.extra__beforeDays }일 전</div>
+									<div class="mt-5 text-gray-400 ml-20">${review.getForPrintBeforeDays() }일 전</div>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -552,22 +552,22 @@
 			let addHtml = `
 				<div class="writeReview-box mx-2">
 					<form action="../review/doModify" onsubmit="submitFormReviewModify(this); return false;">
-						<input type="hidden" id="id" name="id" value="\${data.data1.id }" />
-						<input type="hidden" id="memberId" name="memberId" value="\${data.data1.memberId }" />
-						<input type="hidden" id="comp_id" name="comp_id" value="\${data.data1.comp_id }" />
+						<input type="hidden" id="id2" name="id" value="\${data.data1.id }" />
+						<input type="hidden" id="memberId2" name="memberId" value="\${data.data1.memberId }" />
+						<input type="hidden" id="comp_id2" name="comp_id" value="\${data.data1.comp_id }" />
 						<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
 						<div class="text-sm text-gray-400 mb-2">\${data.data1.extra__writerName }</div>
 						<div class="writeReview-rating-box mb-2">
 							<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
 								<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
 							</c:forEach>
-							<input name="rating" class="writeRating ml-1" type="text" readonly/>
+							<input id="rating2" name="rating" class="writeRating ml-1" type="text" readonly/>
 						</div>
-						<input name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="   \${data.data1.booking_id}"/>
+						<input id="booking_id2" name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="   예약번호 : \${data.data1.booking_id}"/>
 						<div class="toast-ui-editor2">
 							<script type="text/x-template"><\/script>
 						</div>
-						<input id="body" type="hidden" name="body" />
+						<input id="body2" type="hidden" name="body" />
 						<div class="flex justify-end">
 							<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
 						</div>
@@ -611,37 +611,37 @@
 	// toast-ui-editor2를 위한 함수
 	function submitFormReviewModify(form){
 		  
-		  form.memberId.value = form.memberId.value.trim();
+		  form.memberId2.value = form.memberId2.value.trim();
 			  
-		  if(form.memberId.value.length == 0){
+		  if(form.memberId2.value.length == 0){
 		  	alert('로그인 후 이용해주세요.');
 		    return;
 		  }
 		  
-		  form.comp_id.value = form.comp_id.value.trim();
+		  form.comp_id2.value = form.comp_id2.value.trim();
 			  
-		  if(form.comp_id.value.length == 0){
+		  if(form.comp_id2.value.length == 0){
 		  	alert('사업장 번호를 입력해주세요.');
 		    return;
 		  }
 		  
-		  form.rating.value = form.rating.value.trim();
+		  form.rating2.value = form.rating2.value.trim();
 			  
-		  if(form.rating.value.length == 0){
+		  if(form.rating2.value.length == 0){
 		  	alert('별점을 체크해주세요.');
 		    return;
 		  }
 		  
-		  if(form.booking_id.value.length == 0){
+		  if(form.booking_id2.value.length == 0){
 			  	alert('예약 번호를 입력해주세요.');
-			  	form.booking_id.focus();
+			  	form.booking_id2.focus();
 			    return;
 		  }
 		  
 		  const editor = $(form).find('.toast-ui-editor2').data('data-toast-editor');
-		  const markdown = editor.getMarkdown().trim();
+		  const markdown2 = editor.getMarkdown().trim();
 		  
-		  if(markdown.length < 2){
+		  if(markdown2.length < 2){
 		    alert('리뷰 내용을 2글자 이상 입력해주세요');
 		    editor.focus();
 		    return;
@@ -649,14 +649,14 @@
 		  
 		  form.booking_id.value = form.booking_id.value.trim();
 		  
-		  document.getElementById('body').value = markdown;
+		  document.getElementById('body2').value = markdown2;
 		  
 		  form.submit();
 		}
 	
-	function ReplyModify__cancel(i) {
-		let replyContent = $('#' + i);
-		replyContent.html(originalForm);
+	function ReviewModify__cancel(i) {
+		let reviewContent = $('#review' + i);
+		reviewContent.html(originalForm);
 		
 		originalForm = null;
 		originalId = null;
