@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.GenFileService;
 import com.KoreaIT.project.BAP.service.ProductService;

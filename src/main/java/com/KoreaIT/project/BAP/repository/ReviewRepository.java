@@ -2,6 +2,7 @@ package com.KoreaIT.project.BAP.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -17,37 +18,29 @@ public interface ReviewRepository {
 			""")
 	List<Review> getReviewByComp_id(int comp_id);
 
-//	@Select("""
-//			SELECT *
-//				FROM wish
-//				WHERE memberId = #{memberId}
-//				AND comp_id = #{comp_id}
-//			""")
-//	
-//	@Insert("""
-//			INSERT INTO wish
-//				SET regDate = NOW(),
-//				updateDate = NOW(),
-//				memberId = #{memberId},
-//				comp_id = #{comp_id}
-//			""")
-//
+	@Select("""
+			SELECT *
+				FROM review
+				WHERE booking_id = #{booking_id}
+			""")
+	Review getReviewByBooking_id(int booking_id);
+
+	@Insert("""
+			INSERT INTO review
+				SET regDate = NOW(),
+				updateDate = NOW(),
+				memberId = #{memberId},
+				comp_id = #{comp_id},
+				booking_id = #{booking_id},
+				rating = #{rating},
+				body = #{body}
+			""")
+	void doWrite(int memberId, int comp_id, int booking_id, int rating, String body);
+
 //	@Delete("""
 //			DELETE FROM wish 
 //				WHERE memberId = #{memberId}
 //				AND comp_id = #{comp_id}
-//			""")
-//
-//	@Select("""
-//			SELECT *
-//				FROM wish
-//				WHERE memberId = #{memberId}
-//			""")
-//
-//	@Select("""
-//			SELECT comp_id
-//				FROM wish
-//				WHERE memberId = #{memberId}
 //			""")
 //
 //	@Select("""

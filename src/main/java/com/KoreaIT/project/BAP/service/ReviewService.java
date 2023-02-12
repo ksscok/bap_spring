@@ -48,4 +48,14 @@ public class ReviewService {
 	}
 
 
+	public Review getReviewByBooking_id(int booking_id) {
+		return reviewRepository.getReviewByBooking_id(booking_id);
+	}
+
+
+	public void doWrite(int memberId, int comp_id, int booking_id, int rating, String body) {
+		reviewRepository.doWrite(memberId, comp_id, booking_id, rating, body);
+	}
+
+
 }

@@ -330,20 +330,26 @@
 					</c:forEach>
 					</div>
 					<div class="writeReview-box mx-2">
-						<input id="body" type="hidden" name="body" />
-						<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
-						<div class="writeReview-rating-box mb-2">
-							<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
-								<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
-							</c:forEach>
-							<input name="writeRating" class="writeRating ml-1" type="text" readonly/>
-						</div>
-						<div class="toast-ui-editor">
-							<script type="text/x-template"></script>
-						</div>
-						<div class="flex justify-end">
-							<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
-						</div>
+						<form action="../review/doWrite" onsubmit="submitFormReview(this); return false;">
+							<input type="hidden" id="memberId" name="memberId" value="${rq.getLoginedMemberId() }" />
+							<input type="hidden" id="comp_id" name="comp_id" value="${comp_id }" />
+							<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
+							<div class="text-sm text-gray-400 mb-2">${rq.getLoginedMember().getName() }</div>
+							<div class="writeReview-rating-box mb-2">
+								<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
+									<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
+								</c:forEach>
+								<input name="rating" class="writeRating ml-1" type="text" readonly/>
+							</div>
+							<input name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="      예약번호를 입력해주세요."/>
+							<div class="toast-ui-editor">
+								<script type="text/x-template"></script>
+							</div>
+							<input id="body" type="hidden" name="body" />
+							<div class="flex justify-end">
+								<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -352,6 +358,12 @@
 </div>
 
 <script>
+// 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 시작
+	$(document).ready(function initialize_booking_id() {
+		$(".booking_id-box").val('');
+	});
+// 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 끝
+
 // 체크인, 체크아웃 유효성 체크 시작
 	$('#btnToApplyDate').click(function(){
 	  var dateFrom = document.getElementById('start_date');	//시작일
@@ -522,7 +534,7 @@
 	};
 // 별 클릭시 클릭한 별 위치까지 색이 채워진 별로 바뀌고 그에 해당하는 점수가 나오도록 하는 함수 끝
 
-// writeReview toastUiEditor 높이 커스터마이징 시작
+// writeReview toastUiEditor 커스터마이징 시작
 function ToastEditor__init() {
 	  $('.toast-ui-editor').each(function(index, node) {
 	    const $node = $(node);
@@ -551,7 +563,52 @@ function ToastEditor__init() {
 	    $node.data('data-toast-editor', editor);
 	  });
 	}
-//writeReview toastUiEditor 높이 커스터마이징 끝
+	
+	function submitFormReview(form){
+	  
+	  form.memberId.value = form.memberId.value.trim();
+		  
+	  if(form.memberId.value.length == 0){
+	  	alert('로그인 후 이용해주세요.');
+	    return;
+	  }
+	  
+	  form.comp_id.value = form.comp_id.value.trim();
+		  
+	  if(form.comp_id.value.length == 0){
+	  	alert('사업장 번호를 입력해주세요.');
+	    return;
+	  }
+	  
+	  form.rating.value = form.rating.value.trim();
+		  
+	  if(form.rating.value.length == 0){
+	  	alert('별점을 체크해주세요.');
+	    return;
+	  }
+	  
+	  if(form.booking_id.value.length == 0){
+		  	alert('예약 번호를 입력해주세요.');
+		  	form.booking_id.focus();
+		    return;
+	  }
+	  
+	  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	  const markdown = editor.getMarkdown().trim();
+	  
+	  if(markdown.length == 0){
+	    alert('리뷰 내용을 입력해주세요');
+	    editor.focus();
+	    return;
+	  }
+	  
+	  form.booking_id.value = form.booking_id.value.trim();
+	  
+	  document.getElementById('body').value = markdown;
+	  
+	  form.submit();
+	}
+//writeReview toastUiEditor 커스터마이징 끝
 </script>
 
 
