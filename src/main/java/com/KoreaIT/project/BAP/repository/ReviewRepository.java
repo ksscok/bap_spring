@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.KoreaIT.project.BAP.vo.Review;
 
@@ -12,8 +13,11 @@ import com.KoreaIT.project.BAP.vo.Review;
 public interface ReviewRepository {
 
 	@Select("""
-			SELECT *
-				FROM review
+			SELECT r.*,
+				m.name AS extra__writerName
+				FROM review AS r
+				LEFT JOIN `member` AS m
+				ON r.memberId = m.id
 				WHERE comp_id = #{comp_id}
 			""")
 	List<Review> getReviewByComp_id(int comp_id);
@@ -36,6 +40,25 @@ public interface ReviewRepository {
 				body = #{body}
 			""")
 	void doWrite(int memberId, int comp_id, int booking_id, int rating, String body);
+
+	@Select("""
+			SELECT r.*,
+				m.name AS extra__writerName
+				FROM review AS r
+				LEFT JOIN `member` AS m
+				ON r.memberId = m.id
+				WHERE r.id = #{id}
+			""")
+	Review getReviewById(int id);
+
+	@Update("""
+			UPDATE review
+				SET updateDate = NOW(), 
+				rating = #{rating},
+				body = #{body}
+				WHERE id = #{id}
+			""")
+	void doModify(int id, int rating, String body);
 
 //	@Delete("""
 //			DELETE FROM wish 

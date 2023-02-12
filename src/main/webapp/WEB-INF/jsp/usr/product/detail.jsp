@@ -302,13 +302,26 @@
 					
 					<div class="showReview mb-2">
 					<c:forEach var="review" items="${reviews}" varStatus="status">
-						<div class="showReview-box mt-10">
+						<div id="review${status.count }" class="showReview-box mt-10">
 							<div class="showReview-box-top flex justify-start">
 								<div>프로필img</div>
-								<div class="showReview-rating-box">
-									<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
-									<span class="ml-1">${review.rating }</span>
-								</div>
+								<div class="flex justify-between" style="width: 505px">
+									<div class="showReview-rating-box">
+										<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
+										<span class="ml-1">${review.rating }</span>
+									</div>
+<%-- 								<c:if test="${review.actorCanChangeData }"> --%>
+									<div class="dropdown">
+										<button class="btn btn-circle btn-ghost btn-sm">
+								      		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+								    	</button>
+								    	<ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-20">
+									        <li><a onclick="ReviewModify__getForm(${review.id }, ${status.count });">수정</a></li>
+									    	<li><a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../rreview/doDelete?id=${review.id }">삭제</a></li>
+									    </ul>
+					    			</div>
+<%-- 					    		</c:if> --%>
+			    				</div>
 							</div>
 							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
 							<div class="ml-20 mt-1">${review.body }</div>
@@ -515,6 +528,136 @@
 	});
 // 객실 이용 안내 modal창 끝
 
+// 리뷰 수정 함수 시작
+	originalForm = null;
+	originalId = null;
+	
+	function ReviewModify__getForm(reviewId, i) {	
+		
+		if(originalForm != null){
+			ReviewModify__cancel(originalId);
+		}
+		
+		$.get('../review/getReviewContent', {
+			id : reviewId,
+			ajaxMode : 'Y'
+		}, function(data){
+			let reviewContent = $('#review' + i);
+			originalId = i;
+			originalForm = reviewContent.html();
+			
+			let addHtml = `
+				<div class="writeReview-box mx-2">
+					<form action="../review/doModify" onsubmit="submitFormReviewModify(this); return false;">
+						<input type="hidden" id="id" name="id" value="\${data.id }" />
+						<input type="hidden" id="memberId" name="memberId" value="\${data.memberId }" />
+						<input type="hidden" id="comp_id" name="comp_id" value="\${data.comp_id }" />
+						<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
+						<div class="text-sm text-gray-400 mb-2">\${data.extra__writerName }</div>
+						<div class="writeReview-rating-box mb-2">
+							<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
+								<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
+							</c:forEach>
+							<input name="rating" class="writeRating ml-1" type="text" readonly/>
+						</div>
+						<input name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="      예약번호를 입력해주세요."/>
+						<div class="toast-ui-editor2">
+							<script type="text/x-template"><\/script>
+						</div>
+						<input id="body" type="hidden" name="body" />
+						<div class="flex justify-end">
+							<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
+						</div>
+					</form>
+				</div>`;
+				
+			reviewContent.empty().html("");
+			reviewContent.append(addHtml);
+			
+			$('.toast-ui-editor2').each(function(index, node) {
+			    const $node = $(node);
+			    const $initialValueEl = $node.find(' > script');
+			    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
+			    const editor = new toastui.Editor({
+			      el: node,
+			      previewStyle: 'tab',
+			      initialValue: initialValue,
+			      height:'200px',
+			      plugins: [
+			        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
+			        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
+			        toastui.Editor.plugin.colorSyntax,
+			        toastui.Editor.plugin.tableMergedCell,
+			        toastui.Editor.plugin.uml,
+			        katexPlugin,
+			        youtubePlugin,
+			        codepenPlugin,
+			        replPlugin
+			      ],
+			      customHTMLSanitizer: html => {
+			        return DOMPurify.sanitize(html, { ADD_TAGS: ["iframe"], ADD_ATTR: ['width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'scrolling', 'style', 'title', 'loading', 'allowtransparency'] }) || ''
+			      }
+			    });
+			    $node.data('data-toast-editor', editor);
+			  });
+			
+		}, 'json');
+	}
+
+	function submitFormReviewModify(form){
+		  
+		  form.memberId.value = form.memberId.value.trim();
+			  
+		  if(form.memberId.value.length == 0){
+		  	alert('로그인 후 이용해주세요.');
+		    return;
+		  }
+		  
+		  form.comp_id.value = form.comp_id.value.trim();
+			  
+		  if(form.comp_id.value.length == 0){
+		  	alert('사업장 번호를 입력해주세요.');
+		    return;
+		  }
+		  
+		  form.rating.value = form.rating.value.trim();
+			  
+		  if(form.rating.value.length == 0){
+		  	alert('별점을 체크해주세요.');
+		    return;
+		  }
+		  
+		  if(form.booking_id.value.length == 0){
+			  	alert('예약 번호를 입력해주세요.');
+			  	form.booking_id.focus();
+			    return;
+		  }
+		  
+		  const editor = $(form).find('.toast-ui-editor2').data('data-toast-editor');
+		  const markdown = editor.getMarkdown().trim();
+		  
+		  if(markdown.length < 2){
+		    alert('리뷰 내용을 2글자 이상 입력해주세요');
+		    editor.focus();
+		    return;
+		  }
+		  
+		  form.booking_id.value = form.booking_id.value.trim();
+		  
+		  document.getElementById('body').value = markdown;
+		  
+		  form.submit();
+		}
+	
+	function ReplyModify__cancel(i) {
+		let replyContent = $('#' + i);
+		replyContent.html(originalForm);
+		
+		originalForm = null;
+		originalId = null;
+	}
+// 리뷰 수정 함수 끝
+
 
 // 별 클릭시 클릭한 별 위치까지 색이 채워진 별로 바뀌고 그에 해당하는 점수가 나오도록 하는 함수 시작
 	function change_star(starNo) {
@@ -596,8 +739,8 @@ function ToastEditor__init() {
 	  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
 	  const markdown = editor.getMarkdown().trim();
 	  
-	  if(markdown.length == 0){
-	    alert('리뷰 내용을 입력해주세요');
+	  if(markdown.length < 2){
+	    alert('리뷰 내용을 2글자 이상 입력해주세요');
 	    editor.focus();
 	    return;
 	  }

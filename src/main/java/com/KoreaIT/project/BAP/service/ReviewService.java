@@ -38,10 +38,6 @@ public class ReviewService {
 		
 		for(Review review : reviews) {
 			review.setExtra__beforeDays(bookingService.getDiffBetweenChkinChkout(review.getRegDate(), formatedNow));
-			
-			Member member = memberService.getMemberById(review.getMemberId());
-			
-			review.setExtra__writerName(member.getName());
 		}
 		
 		return reviews; 
@@ -55,6 +51,16 @@ public class ReviewService {
 
 	public void doWrite(int memberId, int comp_id, int booking_id, int rating, String body) {
 		reviewRepository.doWrite(memberId, comp_id, booking_id, rating, body);
+	}
+
+
+	public Review getReviewById(int id) {
+		return reviewRepository.getReviewById(id);
+	}
+
+
+	public void doModify(int id, int rating, String body) {
+		reviewRepository.doModify(id, rating, body);
 	}
 
 

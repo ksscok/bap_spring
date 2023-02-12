@@ -36,27 +36,39 @@ public class UsrReviewController {
 		this.rq = rq;
 	}
 	
-//	@RequestMapping("/usr/wish/list")
+//	@RequestMapping("/usr/review/list")
 //	public String showList(Model model, int memberId,
 //			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
 //			@RequestParam(defaultValue="") String searchKeyword) {
 //		
-////		model.addAttribute("wishesCount", wishesCount);
+//		model.addAttribute("wishesCount", wishesCount);
 //		
 //		return "usr/wish/list";
 //	}
-//	
-//	@RequestMapping("usr/wish/doWriteOrDelete")
-//	@ResponseBody()
-//	public String doWriteOrDelete(int memberId, int comp_id) {
-//		
-//		return "10";
-//	}
-//	
-//	
+	
 	@RequestMapping("/usr/review/doWrite")
 	@ResponseBody
 	public String doWrite(int memberId, int comp_id, int booking_id, int rating, String body, @RequestParam(required = false) MultipartRequest multipartRequest) {
+		
+		if(Ut.empty(memberId)) {
+			return rq.jsHistoryBack("회원번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(comp_id)) {
+			return rq.jsHistoryBack("사업장 번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(booking_id)) {
+			return rq.jsHistoryBack("예약번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(rating)) {
+			return rq.jsHistoryBack("평점을 입력해주세요.");
+		}
+		
+		if(Ut.empty(body)) {
+			return rq.jsHistoryBack("리뷰 내용을 입력해주세요.");
+		}
 		
 		// 이미 전에 작성한 예약번호가 있는지 유효성 검사 시작
 		Review review = reviewService.getReviewByBooking_id(booking_id);
@@ -92,9 +104,50 @@ public class UsrReviewController {
 		}
 		// 예약번호만 하고 결제는 하지 않은 경우 유효성 검사 끝
 		
+		// 예약이 만료된 경우에만 리뷰 작성이 가능하도록 유효성 검사 시작
+//		if(!booking.getStatus().equals("expired")) {
+//			return rq.jsHistoryBack("예약된 방이 아직 이용되지 않았습니다.");
+//		}
+		// 예약이 만료된 경우에만 리뷰 작성이 가능하도록 유효성 검사 끝
+		
 		reviewService.doWrite(memberId, comp_id, booking_id, rating, body);
 		
 		return Ut.jsReplace("리뷰가 등록되었습니다.", Ut.f("/usr/product/detail?comp_id=%d", comp_id));
 	}
+	
+	@RequestMapping("/usr/review/doModify")
+	@ResponseBody
+	public String doModify(int id, int comp_id, int rating, String body, @RequestParam(required = false) MultipartRequest multipartRequest) {
+		
+		if(Ut.empty(id)) {
+			return rq.jsHistoryBack("리뷰번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(comp_id)) {
+			return rq.jsHistoryBack("사업장 번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(rating)) {
+			return rq.jsHistoryBack("평점을 입력해주세요.");
+		}
+		
+		if(Ut.empty(body)) {
+			return rq.jsHistoryBack("리뷰 내용을 입력해주세요.");
+		}
+		
+		reviewService.doModify(id, rating, body);
+		
+		return Ut.jsReplace(Ut.f("%d번 리뷰가 수정되었습니다.", id), Ut.f("/usr/product/detail?comp_id=%d", comp_id));
+	}
+	
+	@RequestMapping("usr/review/getReviewContent")
+	@ResponseBody()
+	public Review doWriteOrDelete(int id) {
+		
+		Review review = reviewService.getReviewById(id);
+		
+		return review;
+	}
+	
 }
 
