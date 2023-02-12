@@ -1214,11 +1214,46 @@ CREATE TABLE review
     regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
 	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
     memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
+    comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호',
     booking_id    INT UNSIGNED    NOT NULL    COMMENT '예약번호',
+    rating INT (10) UNSIGNED NOT NULL  COMMENT '점수',
     `body`    VARCHAR(200)    NOT NULL    COMMENT '리뷰 내용'
 );
 
 SELECT * FROM review;
+
+# review 테스트 데이터
+# 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 1번 리뷰 작성
+INSERT INTO review
+SET regDate = '2023-01-18',
+updateDate = NOW(),
+memberId = 5,
+comp_id = 2, 
+booking_id = 1,
+rating = 5,
+`body` = '깔끔하고 좋아요';
+
+# 게스트2(memberId = 6)이 롯데시티호텔(comp_id = 2)에 예약번호 3번 리뷰 작성
+INSERT INTO review
+SET regDate = SUBDATE(NOW(), 1),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 2, 
+booking_id = 3,
+rating = 2,
+`body` = '생각보다 별로네요';
+
+# 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 6번 리뷰 작성
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 2, 
+booking_id = 6,
+rating = 5,
+`body` = '두번째 방문인데 정말 좋네요. 또 오고싶어요.';
+
+SELECT * FROM booking;
 
 SELECT * FROM company;
 SELECT * FROM product;

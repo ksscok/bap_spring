@@ -12,7 +12,7 @@
 	padding: 10px;
 }
 
-.product-btn, .review-box, .productDetail-box > .baseInform, .productDetail-box > .amenities-and-services, .productDetail-box > .hostInform {
+.product-btn, .review-box-top, .productDetail-box > .baseInform, .productDetail-box > .amenities-and-services, .productDetail-box > .hostInform, .showReview > .showReview-box {
 	border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -30,8 +30,8 @@
 	border-bottom: 3px solid red;
 }
 
-.review-box {
-	padding-bottom: 10px;
+.review-box-top, .showReview > .showReview-box {
+	padding-bottom: 30px;
 }
 
 .room-body {

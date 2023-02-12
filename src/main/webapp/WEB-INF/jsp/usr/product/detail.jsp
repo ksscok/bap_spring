@@ -66,7 +66,7 @@
 					<input type="hidden" name="countOfRoom" value="${countOfRoom }" />
 					<input type="hidden" name="countOfAdult" value="${countOfAdult }" />
 					<input type="hidden" name="countOfChild" value="${countOfChild }" />
-					<!-- 			폼만 제작 / 변수 수정해야 함 -->
+
 					<div class="left side-bar-d2 mr-6 p-5 border border-gray-300">
 						<span class="text-base font-semibold">상세조건</span>
 		
@@ -134,7 +134,7 @@
 			<!-- 		오른쪽 시작 -->
 			<div class="right w-4/6">
 				<input type="hidden" name="id" value="${product.comp_id}" />
-				<div class="flex justify-between">
+				<div class="flex justify-between pl-2">
 					<div class="company-body">
 						<div class="text-3xl">${company.name}</div>
 						<div class="text-lg my-2">${company.address}</div>
@@ -158,10 +158,10 @@
 						</c:if>
 					</div>
 				</div>
-				<div class="company-img img-box">
+				<div class="company-img img-box flex justify-center">
 					<img src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 				</div>
-				<div class="product-btn text-gray-400 mt-8 ">
+				<div class="product-btn text-gray-400 mt-8">
 					<a href="#" class="list-btn ml-4">객실 안내/예약</a>
 					<a href="#" class="detail-btn ml-4">숙소 정보</a>
 					<a href="#" class="review-btn ml-4">리뷰</a>
@@ -267,20 +267,65 @@
 				
 				<div class="review-box">
 					<div class="review-box-top text-center">
-						<div class="mt-6 text-lg font-extrabold">추천해요</div>
-						<span class="text-xl">★★★★☆</span>
+						<c:choose>
+							<c:when test="${avgStarCount == 5}">
+								<div class="mt-6 text-lg font-extrabold">최고예요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 4}">
+								<div class="mt-6 text-lg font-extrabold">추천해요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 3}">
+								<div class="mt-6 text-lg font-extrabold">만족해요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 2}">
+								<div class="mt-6 text-lg font-extrabold">그저그래요</div>
+							</c:when>
+							<c:otherwise>
+								<div class="mt-6 text-lg font-extrabold">아쉬워요</div>
+							</c:otherwise>
+						</c:choose>
+						<span class="text-xl text-yellow-400"><c:forEach var="totalrating" items="${ratingOptions }" varStatus="status" begin="1" end="${avgStarCount }">★</c:forEach></span>
 						&nbsp;&nbsp;&nbsp;
-						<span>9.1</span>
+						<span>${avg }</span>
 						<div class="review-count flex justify-center item-center mt-3">
 							<div class="totalReview-count mr-8">
 								전체 리뷰
-								<span class="font-extrabold">2556</span>
+								<span class="font-extrabold">${reviews.size() }</span>
 							</div>
 							<div class="answerReview-count">
 								제휴점 답변
 								<span class="font-extrabold">7</span>
 							</div>
 						</div>
+					</div>
+					
+					<div class="showReview mb-4">
+					<c:forEach var="review" items="${reviews}" varStatus="status">
+						<div class="showReview-box mt-10">
+							<div class="showReview-box-top flex justify-start">
+								<div>프로필img</div>
+								<div class="rating-box">
+									<span class="ml-3 text-yellow-400"><c:forEach var="rating" items="${ ratingOptions }" varStatus="status" begin="1" end="${ review.rating }">★</c:forEach></span>
+									<span class="ml-1">${review.rating }</span>
+								</div>
+							</div>
+							<div class="ml-20 mt-4">${review.body }</div>
+							<div class="img-box ml-20 mt-2">
+								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
+							</div>
+							<c:choose>
+								<c:when test="${review.extra__beforeDays == 0}">
+									<div class="mt-5 text-gray-400 ml-20">오늘</div>
+								</c:when>
+								<c:when test="${review.extra__beforeDays == 1}">
+									<div class="mt-5 text-gray-400 ml-20">어제</div>
+								</c:when>
+								<c:otherwise>
+									<div class="mt-5 text-gray-400 ml-20">${review.extra__beforeDays }일 전</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:forEach>
 					</div>
 				</div>
 				

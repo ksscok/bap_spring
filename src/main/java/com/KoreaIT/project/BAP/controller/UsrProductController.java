@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,15 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.KoreaIT.project.BAP.service.WishService;
+import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.GenFileService;
 import com.KoreaIT.project.BAP.service.ProductService;
+import com.KoreaIT.project.BAP.service.ReviewService;
+import com.KoreaIT.project.BAP.service.WishService;
 import com.KoreaIT.project.BAP.util.Ut;
-import com.KoreaIT.project.BAP.vo.Wish;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Product;
+import com.KoreaIT.project.BAP.vo.Review;
 import com.KoreaIT.project.BAP.vo.Rq;
+import com.KoreaIT.project.BAP.vo.Wish;
 
 @Controller
 public class UsrProductController {
@@ -33,14 +37,16 @@ public class UsrProductController {
 	private CompanyService companyService;
 	GenFileService genFileService;
 	private WishService wishService;
+	private ReviewService reviewService;
 	private Rq rq;
 	
 	@Autowired
-	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, WishService wishService, Rq rq) {
+	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, WishService wishService, ReviewService reviewService, Rq rq) {
 		this.productService = productService;
 		this.companyService = companyService;
 		this.genFileService = genFileService;
 		this.wishService = wishService;
+		this.reviewService = reviewService;
 		this.rq = rq;
 	}
 	
@@ -105,6 +111,29 @@ public class UsrProductController {
 			wish = wishService.getWishByMemberIdAndComp_id(rq.getLoginedMemberId(), comp_id);
 		}
 		
+		List<Review> reviews = reviewService.getReviewByComp_id(comp_id);
+		
+		//평균 평점 구하기 시작
+		int totalRating = 0;
+		
+		for(Review review : reviews) {
+			totalRating += review.getRating();
+		}
+		
+		double avg = totalRating/ (double) reviews.size();
+		int avgStarCount = (int) Math.floor(totalRating/reviews.size());
+		//평균 평점 구하기 끝
+		
+		// 평점 옵션
+		Map<Integer, String> ratingOptions = new HashMap<>();
+		ratingOptions.put(0, "☆☆☆☆☆");
+		ratingOptions.put(1, "★☆☆☆☆");
+		ratingOptions.put(2, "★★☆☆☆");
+		ratingOptions.put(3, "★★★☆☆");
+		ratingOptions.put(4, "★★★★☆");
+		ratingOptions.put(5, "★★★★★");
+		model.addAttribute("ratingOptions", ratingOptions);
+		
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("countOfRoom", countOfRoom);
 		model.addAttribute("countOfAdult", countOfAdult);
@@ -122,6 +151,9 @@ public class UsrProductController {
 		model.addAttribute("start_date", start_date);
 		model.addAttribute("end_date", end_date);
 		model.addAttribute("wish", wish);
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("avg", avg);
+		model.addAttribute("avgStarCount", avgStarCount);
 		
 		return "usr/product/detail";
 	}

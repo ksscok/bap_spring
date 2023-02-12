@@ -1,9 +1,21 @@
 package com.KoreaIT.project.BAP.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.KoreaIT.project.BAP.vo.Review;
 
 @Mapper
 public interface ReviewRepository {
+
+	@Select("""
+			SELECT *
+				FROM review
+				WHERE comp_id = #{comp_id}
+			""")
+	List<Review> getReviewByComp_id(int comp_id);
 
 //	@Select("""
 //			SELECT *
