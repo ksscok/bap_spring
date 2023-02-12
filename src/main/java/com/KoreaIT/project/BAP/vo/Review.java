@@ -20,5 +20,9 @@ public class Review {
 	private int extra__beforeDays;
 	private String extra__writerName;
 	private boolean actorCanChangeData;
+	
+	public String getForPrintBody() {
+		return this.body.replaceAll("\n", "<br />");
+	}
 }
 

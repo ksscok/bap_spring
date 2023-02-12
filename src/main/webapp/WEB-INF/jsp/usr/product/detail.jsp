@@ -281,8 +281,11 @@
 							<c:when test="${avgStarCount == 2}">
 								<div class="mt-6 text-lg font-extrabold">그저그래요</div>
 							</c:when>
-							<c:otherwise>
+							<c:when test="${avgStarCount == 1}">
 								<div class="mt-6 text-lg font-extrabold">아쉬워요</div>
+							</c:when>
+							<c:otherwise>
+								<div class="mt-6 text-lg font-extrabold">아직 리뷰가 없습니다</div>
 							</c:otherwise>
 						</c:choose>
 						<span class="text-xl text-yellow-400">${ratingOptions.get(avgStarCount) }</span>
@@ -324,7 +327,7 @@
 			    				</div>
 							</div>
 							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
-							<div class="ml-20 mt-1">${review.body }</div>
+							<div class="ml-20 mt-1">${review.getForPrintBody() }</div>
 							<div class="img-box ml-20 mt-2">
 								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
 							</div>

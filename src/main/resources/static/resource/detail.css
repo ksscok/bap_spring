@@ -127,3 +127,12 @@
 	border: 1px solid rgba(0,0,0,0.2);
 	border-radius: 10px;
 }
+
+/* 드래그 금지. 근데 실질적으로 복사를 못하게 막으려면 특정 css가 아닌 반드시 body에 넣어야 복사가 막힘.  */
+/* 리뷰 작성시 별 누를 때마다 자꾸 드래그 되는게 거슬려서 사용함 <-> 복붙 방지용x */
+.writeReview-box .writeReview-rating-box {
+	-webkit-user-select:none;
+  	-moz-user-select:none;
+  	-ms-user-select:none;
+  	user-select:none
+} 

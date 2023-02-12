@@ -67,6 +67,7 @@ public interface ReviewRepository {
 				LEFT JOIN `member` AS m
 				ON r.memberId = m.id
 				WHERE r.comp_id = #{comp_id}
+				ORDER BY r.id desc
 			""")
 	List<Review> getForPrintReviews(int comp_id);
 
