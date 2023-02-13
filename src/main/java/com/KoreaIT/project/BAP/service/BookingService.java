@@ -1,11 +1,15 @@
 package com.KoreaIT.project.BAP.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.BookingRepository;
@@ -20,6 +24,34 @@ public class BookingService {
 	@Autowired
 	public BookingService(BookingRepository bookingRepository) {
 		this.bookingRepository = bookingRepository;
+	}
+
+	// 하루에 한번씩 갱신되도록
+	// 만약 예약 상태가 예약 완료(done)인데 체크아웃날짜(end_date)가 오늘 날짜보다 전 날짜가 된다면 해당 예약테이블의 예약 상태를 예약 만료(expired)로 변경
+	@Scheduled(fixedDelay = 86400000, initialDelay = 1000)
+	public void changeStatus_ifEnd_dateIsPastDate() throws ParseException {
+		
+		List<Booking> bookings = getAllBookings();
+		
+		for(Booking booking : bookings) {
+			// 현재 날짜가 해당 예약의 체크아웃 날짜를 지남
+			if(booking.getStatus().equals("done")) {
+			System.out.println("done 여기");
+				SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");
+			    Date today = new Date();
+				Date end = format.parse(booking.getEnd_date());
+				
+				if(today.compareTo(end) == 1) {
+					System.out.println("expired 여기");
+					bookingRepository.doModifyStatus(booking.getId(), "expired");
+				}
+			}
+		}
+		   
+	}
+	
+	private List<Booking> getAllBookings() {
+		return bookingRepository.getAllBookings();
 	}
 
 	public int getLastInsertId() {

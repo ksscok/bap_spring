@@ -132,4 +132,10 @@ public interface BookingRepository {
 			""")
 	void doModifyStatus(int id, String status);
 
+	@Select("""
+			SELECT *
+				FROM booking
+			""")
+	List<Booking> getAllBookings();
+
 }
