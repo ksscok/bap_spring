@@ -1396,6 +1396,156 @@ CREATE TABLE `point`
     p_point INT (10) UNSIGNED NOT NULL  COMMENT '포인트'
 );
 
+# `point` 테스트 데이터
+# 회원번호 = 5(게스트1), 결제번호 1번, (예약번호 1번), 결제 금액 10만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 1,
+p_point = 2000;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 2000
+WHERE id = 5;
+
+# 회원번호 = 5(게스트1), 결제번호 2번, (예약번호 2번), 결제 금액 10만원(서울 신라)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 2,
+p_point = 2000;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 2000
+WHERE id = 5;
+
+# 회원번호 = 6(게스트2), 결제번호 3번, (예약번호 3번), 결제 금액 7만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+payment_id = 3,
+p_point = 1400;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 1400
+WHERE id = 6;
+
+# 회원번호 = 5(게스트1), 결제번호 4번, (예약번호 4번), 결제 금액 10만원(오노마)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 4,
+p_point = 2000;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 2000
+WHERE id = 5;
+
+# 회원번호 = 6(게스트2), 결제번호 5번, (예약번호 5번), 결제 금액 10만원(제주 쉬멍)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+payment_id = 5,
+p_point = 2000;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 2000
+WHERE id = 6;
+
+# 회원번호 = 5(게스트1), 결제번호 6번, (예약번호 6번), 결제 금액 7만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 6,
+p_point = 1400;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 1400
+WHERE id = 5;
+
+# 회원번호 = 6(게스트2), 결제번호 7번, (예약번호 7번), 결제 금액 7만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+payment_id = 7,
+p_point = 1400;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 1400
+WHERE id = 6;
+
+# 회원번호 = 5(게스트1), 결제번호 8번, (예약번호 8번), 결제 금액 7만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 8,
+p_point = 1400;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 1400
+WHERE id = 5;
+
+# 회원번호 = 5(게스트1), 결제번호 9번, (예약번호 9번), 결제 금액 7만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 9,
+p_point = 1400;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 1400
+WHERE id = 5;
+
+# 회원번호 = 5(게스트1), 결제번호 10번, (예약번호 10번), 결제 금액 7만원(대전 롯데)
+INSERT INTO `point`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+payment_id = 10,
+p_point = 1400;
+# 위 테스트 데이터 결과에 대한 point 적립
+UPDATE `member`
+SET updateDate = NOW(),
+m_point = m_point + 1400
+WHERE id = 5;
+
+SELECT * FROM `point`;
+
+SELECT *
+FROM `member`
+WHERE id = 5;
+
+SELECT po.*,
+c.name AS extra__compName,
+pa.balanceAmount AS extra__balanceAmount
+FROM `point` AS po
+LEFT JOIN payment AS pa
+ON po.payment_id = pa.id
+LEFT JOIN booking AS b
+ON pa.booking_id = b.id
+LEFT JOIN company AS c
+ON b.comp_id = c.id
+WHERE po.memberId = 5
+GROUP BY po.id;
+
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
