@@ -1,6 +1,9 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +45,16 @@ public class UsrWishController {
 		
 		int wishesCount = wishService.getWishesCountByIds(memberId, searchKeywordTypeCode, searchKeyword);
 		
+		Map<Integer, String> ratingOptions = new HashMap<>();
+		ratingOptions.put(0, "☆☆☆☆☆");
+		ratingOptions.put(1, "★☆☆☆☆");
+		ratingOptions.put(2, "★★☆☆☆");
+		ratingOptions.put(3, "★★★☆☆");
+		ratingOptions.put(4, "★★★★☆");
+		ratingOptions.put(5, "★★★★★");
+		// 평점 옵션 시작 끝
+		model.addAttribute("ratingOptions", ratingOptions);
+		
 		model.addAttribute("companies", companies);
 		model.addAttribute("wishesCount", wishesCount);
 		
@@ -68,24 +81,30 @@ public class UsrWishController {
 			wishService.doDelete(memberId, comp_id);
 		}
 		
-		// 혹시 몰라서 임시로 넣어둠. 나중에 필요 없으면 공백으로 리턴.
+		// 혹시 몰라서 임시로 넣어둠. 나중에 필요 없으면 공백으로 리턴 or void 타입으로 변경.
 		return "10";
 	}
 	
 	
 	@RequestMapping("/usr/wish/doDeleteAtWishList")
 	@ResponseBody
-	public String doDeleteAtWishList(int memberId, int comp_id) {
+	public String doDeleteAtWishList(int memberId, @RequestParam(defaultValue = "") String comp_ids) {
 		
 		if(Ut.empty(memberId)) {
 			return Ut.jsHistoryBack("회원번호를 입력해주세요");
 		}
 		
-		if(Ut.empty(comp_id)) {
-			return Ut.jsHistoryBack("사업장 번호를 입력해주세요");
+		if(Ut.empty(comp_ids)) {
+			return Ut.jsHistoryBack("사업장 번호을 입력해주세요.");
 		}
 		
-		wishService.doDelete(memberId, comp_id);
+		List<Integer> companyIds = new ArrayList<>();
+		
+		for(String idStr : comp_ids.split(",")) {
+			companyIds.add(Integer.parseInt(idStr));
+		}
+		
+		wishService.doDeleteWishes(memberId, companyIds);
 		
 		return Ut.jsReplace("해당 숙소를 찜 목록에서 삭제했습니다.", Ut.f("/usr/wish/list?memberId=%d", memberId));
 	}

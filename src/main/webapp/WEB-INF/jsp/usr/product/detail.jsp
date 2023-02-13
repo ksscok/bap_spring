@@ -3,6 +3,7 @@
 
 <c:set var="pageTitle" value="숙소 방 목록" />
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jsp"%>
 
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
@@ -66,7 +67,7 @@
 					<input type="hidden" name="countOfRoom" value="${countOfRoom }" />
 					<input type="hidden" name="countOfAdult" value="${countOfAdult }" />
 					<input type="hidden" name="countOfChild" value="${countOfChild }" />
-					<!-- 			폼만 제작 / 변수 수정해야 함 -->
+
 					<div class="left side-bar-d2 mr-6 p-5 border border-gray-300">
 						<span class="text-base font-semibold">상세조건</span>
 		
@@ -134,7 +135,7 @@
 			<!-- 		오른쪽 시작 -->
 			<div class="right w-4/6">
 				<input type="hidden" name="id" value="${product.comp_id}" />
-				<div class="flex justify-between">
+				<div class="flex justify-between pl-2">
 					<div class="company-body">
 						<div class="text-3xl">${company.name}</div>
 						<div class="text-lg my-2">${company.address}</div>
@@ -145,23 +146,29 @@
 							<c:choose>
 								<c:when test="${wish.id == null }">
 		<!-- 					아래 버튼과 버튼 내의 i태그 줄바꿈하면 change_bgc();이거 첫번째 클릭때 오류나서 안 바뀜 -->
-									<button class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();"><i id="i-heart" class="fa-regular fa-heart"></i></button>
+									<button class="saving mx-2 mt-1 flex content-start text-red-600" onclick="change_bgc();"><i id="i-heart" class="fa-regular fa-heart"></i></button>
 								</c:when>
 								<c:otherwise>
 		<!-- 					아래 버튼과 버튼 내의 i태그 줄바꿈하면 change_bgc();이거 첫번째 클릭때 오류나서 안 바뀜 -->
-									<button class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();"><i id="i-heart" class="fa-solid fa-heart"></i></button>
+									<button class="saving mx-2 mt-1 flex content-start text-red-600" onclick="change_bgc();"><i id="i-heart" class="fa-solid fa-heart"></i></button>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
 						<c:if test="${!rq.isLogined()}">
-							<a href="${rq.loginUri}" class="saving mx-2 mt-1 flex content-start" onclick="alert('로그인 후 이용해주세요.');"><i id="i-heart" class="fa-regular fa-heart"></i></a>
+							<a href="${rq.loginUri}" class="saving mx-2 mt-1 flex content-start text-red-600" onclick="alert('로그인 후 이용해주세요.');"><i id="i-heart" class="fa-regular fa-heart"></i></a>
 						</c:if>
 					</div>
 				</div>
-				<div class="company-img img-box">
+				<div class="company-img img-box flex justify-center">
 					<img src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 				</div>
-				<div id="productList">
+				<div class="product-btn text-gray-400 mt-8">
+					<a href="#" class="list-btn ml-4">객실 안내/예약</a>
+					<a href="#" class="detail-btn ml-4">숙소 정보</a>
+					<a href="#" class="review-btn ml-4">리뷰</a>
+				</div>
+				
+				<div class="productList-box">
 					<c:forEach var="product" items="${products}" varStatus="status">
 						<div id="${status.count }" class="room-body flex items-center rounded-lg p-2 my-4">
 							<div>
@@ -243,12 +250,136 @@
 						</div>
 					</c:forEach>
 				</div>
+				
+				<div class="productDetail-box">
+					<div class="baseInform flex justify-between items-center">
+						<div class="m-4">기본 정보</div>
+						<a href="" class="m-4"><i class="fa-solid fa-chevron-up"></i></a>
+					</div>
+					<div class="amenities-and-services flex justify-between items-center">
+						<div class="m-4">편의시설 및 서비스</div>
+						<a href="#" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></a>
+					</div>
+					<div class="hostInform flex justify-between items-center">
+						<div class="m-4">판매자 정보</div>
+						<a href="#" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></a>
+					</div>
+				</div>
+				
+				<div class="review-box">
+					<div class="review-box-top text-center">
+						<c:choose>
+							<c:when test="${avgStarCount == 5}">
+								<div class="mt-6 text-lg font-extrabold">최고예요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 4}">
+								<div class="mt-6 text-lg font-extrabold">추천해요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 3}">
+								<div class="mt-6 text-lg font-extrabold">만족해요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 2}">
+								<div class="mt-6 text-lg font-extrabold">그저그래요</div>
+							</c:when>
+							<c:when test="${avgStarCount == 1}">
+								<div class="mt-6 text-lg font-extrabold">아쉬워요</div>
+							</c:when>
+							<c:otherwise>
+								<div class="mt-6 text-lg font-extrabold">아직 리뷰가 없습니다</div>
+							</c:otherwise>
+						</c:choose>
+						<span class="text-xl text-yellow-400">${ratingOptions.get(avgStarCount) }</span>
+						&nbsp;&nbsp;&nbsp;
+						<span>${avg }</span>
+						<div class="review-count flex justify-center item-center mt-3">
+							<div class="totalReview-count mr-8">
+								전체 리뷰
+								<span class="font-extrabold">${reviews.size() }</span>
+							</div>
+							<div class="answerReview-count">
+								제휴점 답변
+								<span class="font-extrabold">7</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="showReview mb-2">
+					<c:forEach var="review" items="${reviews}" varStatus="status">
+						<div id="review${status.count }" class="showReview-box mt-10">
+							<div class="showReview-box-top flex justify-start">
+								<div>프로필img</div>
+								<div class="flex justify-between" style="width: 505px">
+									<div class="showReview-rating-box">
+										<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
+										<span class="ml-1">${review.rating }</span>
+									</div>
+								<c:if test="${review.actorCanChangeData }">
+									<div class="dropdown">
+										<button class="btn btn-circle btn-ghost btn-sm">
+								      		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+								    	</button>
+								    	<ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-20">
+									        <li><a onclick="ReviewModify__getForm(${review.id }, ${status.count });">수정</a></li>
+									    	<li><a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../review/doDelete?id=${review.id }&comp_id=${review.comp_id}">삭제</a></li>
+									    </ul>
+					    			</div>
+					    		</c:if>
+			    				</div>
+							</div>
+							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
+							<div class="ml-20 mt-1">${review.getForPrintBody() }</div>
+							<div class="img-box ml-20 mt-2">
+								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
+							</div>
+							<c:choose>
+								<c:when test="${review.getForPrintBeforeDays() == 0}">
+									<div class="mt-5 text-gray-400 ml-20">오늘</div>
+								</c:when>
+								<c:when test="${review.getForPrintBeforeDays() == 1}">
+									<div class="mt-5 text-gray-400 ml-20">어제</div>
+								</c:when>
+								<c:otherwise>
+									<div class="mt-5 text-gray-400 ml-20">${review.getForPrintBeforeDays() }일 전</div>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:forEach>
+					</div>
+					<div class="writeReview-box mx-2">
+						<form action="../review/doWrite" onsubmit="submitFormReview(this); return false;">
+							<input type="hidden" id="memberId" name="memberId" value="${rq.getLoginedMemberId() }" />
+							<input type="hidden" id="comp_id" name="comp_id" value="${comp_id }" />
+							<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
+							<div class="text-sm text-gray-400 mb-2">${rq.getLoginedMember().getName() }</div>
+							<div class="writeReview-rating-box mb-2">
+								<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
+									<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
+								</c:forEach>
+								<input name="rating" class="writeRating ml-1" type="text" readonly/>
+							</div>
+							<input name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="      예약번호를 입력해주세요."/>
+							<div class="toast-ui-editor">
+								<script type="text/x-template"></script>
+							</div>
+							<input id="body" type="hidden" name="body" />
+							<div class="flex justify-end">
+								<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 </div>
 
 <script>
+// 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 시작
+	$(document).ready(function initialize_booking_id() {
+		$(".booking_id-box").val('');
+	});
+// 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 끝
+
 // 체크인, 체크아웃 유효성 체크 시작
 	$('#btnToApplyDate').click(function(){
 	  var dateFrom = document.getElementById('start_date');	//시작일
@@ -334,6 +465,53 @@
 	};
 // 찜하기 ajax 끝
 
+// product-btn 컨트롤 시작
+	$('.list-btn').click(function() {
+		$('.list-btn').css('color', 'red')
+		$('.list-btn').css('font-weight', '900')
+		$('.list-btn').css('border-bottom', '3px solid red')
+		$('.detail-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.detail-btn').css('font-weight', 'normal')
+		$('.detail-btn').css('border-bottom', 'none')
+		$('.review-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.review-btn').css('font-weight', 'normal')
+		$('.review-btn').css('border-bottom', 'none')
+		$('.productList-box').show(); 
+		$('.productDetail-box').hide(); 
+		$('.review-box').hide(); 
+	});
+
+	$('.detail-btn').click(function() {
+		$('.list-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.list-btn').css('font-weight', 'normal')
+		$('.list-btn').css('border-bottom', 'none')
+		$('.detail-btn').css('color', 'red')
+		$('.detail-btn').css('font-weight', '900')
+		$('.detail-btn').css('border-bottom', '3px solid red')
+		$('.review-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.review-btn').css('font-weight', 'normal')
+		$('.review-btn').css('border-bottom', 'none')
+		$('.productList-box').hide(); 
+		$('.productDetail-box').show(); 
+		$('.review-box').hide(); 
+	});
+
+	$('.review-btn').click(function() {
+		$('.list-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.list-btn').css('font-weight', 'normal')
+		$('.list-btn').css('border-bottom', 'none')
+		$('.detail-btn').css('color', 'rgba(156, 163, 175, var(--tw-text-opacity))')
+		$('.detail-btn').css('font-weight', 'normal')
+		$('.detail-btn').css('border-bottom', 'none')
+		$('.review-btn').css('color', 'red')
+		$('.review-btn').css('font-weight', '900')
+		$('.review-btn').css('border-bottom', '3px solid red')
+		$('.productList-box').hide(); 
+		$('.productDetail-box').hide(); 
+		$('.review-box').show(); 
+	});
+// product-btn 컨트롤 끝
+
 // 객실 이용 안내 modal창 시작
 	$('.dt-modal').click(function() {
 		// $('.layer').show(); 
@@ -352,10 +530,234 @@
 		$('.layer-bg').css('display', 'none');
 	});
 // 객실 이용 안내 modal창 끝
+
+// 리뷰 수정 함수 시작
+	originalForm = null;
+	originalId = null;
+	
+	function ReviewModify__getForm(reviewId, i) {	
+		
+		if(originalForm != null){
+			ReviewModify__cancel(originalId);
+		}
+		
+		$.get('../review/getReviewContent', {
+			id : reviewId,
+			ajaxMode : 'Y'
+		}, function(data){
+			let reviewContent = $('#review' + i);
+			originalId = i;
+			originalForm = reviewContent.html();
+			
+			let addHtml = `
+				<div class="writeReview-box mx-2">
+					<form action="../review/doModify" onsubmit="submitFormReviewModify(this); return false;">
+						<input type="hidden" id="id2" name="id" value="\${data.data1.id }" />
+						<input type="hidden" id="memberId2" name="memberId" value="\${data.data1.memberId }" />
+						<input type="hidden" id="comp_id2" name="comp_id" value="\${data.data1.comp_id }" />
+						<div class="text-sm text-gray-400 mb-2">리뷰를 남겨주세요.</div>
+						<div class="text-sm text-gray-400 mb-2">\${data.data1.extra__writerName }</div>
+						<div class="writeReview-rating-box mb-2">
+							<c:forEach begin="1" end="5" var="writeStar" varStatus="status">
+								<a id="star${status.count }" style="cursor: pointer;" class="text-yellow-400" onclick="change_star(${status.count });">☆</a>
+							</c:forEach>
+							<input id="rating2" name="rating" class="writeRating ml-1" type="text" readonly/>
+						</div>
+						<input id="booking_id2" name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="   예약번호 : \${data.data1.booking_id}"/>
+						<div class="toast-ui-editor2">
+							<script type="text/x-template">\${data.data1.body }<\/script>
+						</div>
+						<input id="body2" type="hidden" name="body" />
+						<div class="flex justify-end">
+							<a onclick="ReviewModify__cancel(\${i})" class="text-center btn btn-active btn-secondary mt-3 mr-3">취소</a>
+							<button class="text-center btn btn-active btn-secondary mt-3">수정</button>
+						</div>
+					</form>
+				</div>`;
+				
+			reviewContent.empty().html("");
+			reviewContent.append(addHtml);
+			
+			// 아마 클래스명이 toast-ui-editor인 태그가 두 개여서 수정 폼에서는 안먹는 것 같아서 뒤에 2 붙여서 하니까 됨 
+			$('.toast-ui-editor2').each(function(index, node) {
+			    const $node = $(node);
+			    const $initialValueEl = $node.find(' > script');
+			    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
+			    const editor = new toastui.Editor({
+			      el: node,
+			      previewStyle: 'tab',
+			      initialValue: initialValue,
+			      height:'200px',
+			      plugins: [
+			        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
+			        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
+			        toastui.Editor.plugin.colorSyntax,
+			        toastui.Editor.plugin.tableMergedCell,
+			        toastui.Editor.plugin.uml,
+			        katexPlugin,
+			        youtubePlugin,
+			        codepenPlugin,
+			        replPlugin
+			      ],
+			      customHTMLSanitizer: html => {
+			        return DOMPurify.sanitize(html, { ADD_TAGS: ["iframe"], ADD_ATTR: ['width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'scrolling', 'style', 'title', 'loading', 'allowtransparency'] }) || ''
+			      }
+			    });
+			    $node.data('data-toast-editor', editor);
+			  });
+			
+		}, 'json');
+	}
+
+	// toast-ui-editor2를 위한 함수
+	function submitFormReviewModify(form){
+		  
+		  form.memberId2.value = form.memberId2.value.trim();
+			  
+		  if(form.memberId2.value.length == 0){
+		  	alert('로그인 후 이용해주세요.');
+		    return;
+		  }
+		  
+		  form.comp_id2.value = form.comp_id2.value.trim();
+			  
+		  if(form.comp_id2.value.length == 0){
+		  	alert('사업장 번호를 입력해주세요.');
+		    return;
+		  }
+		  
+		  form.rating2.value = form.rating2.value.trim();
+			  
+		  if(form.rating2.value.length == 0){
+		  	alert('별점을 체크해주세요.');
+		    return;
+		  }
+		  
+		  if(form.booking_id2.value.length == 0){
+			  	alert('예약 번호를 입력해주세요.');
+			  	form.booking_id2.focus();
+			    return;
+		  }
+		  
+		  const editor = $(form).find('.toast-ui-editor2').data('data-toast-editor');
+		  const markdown2 = editor.getMarkdown().trim();
+		  
+		  if(markdown2.length < 2){
+		    alert('리뷰 내용을 2글자 이상 입력해주세요');
+		    editor.focus();
+		    return;
+		  }
+		  
+		  form.booking_id.value = form.booking_id.value.trim();
+		  
+		  document.getElementById('body2').value = markdown2;
+		  
+		  form.submit();
+		}
+	
+	function ReviewModify__cancel(i) {
+		let reviewContent = $('#review' + i);
+		reviewContent.html(originalForm);
+		
+		originalForm = null;
+		originalId = null;
+	}
+// 리뷰 수정 함수 끝
+
+
+// 별 클릭시 클릭한 별 위치까지 색이 채워진 별로 바뀌고 그에 해당하는 점수가 나오도록 하는 함수 시작
+	function change_star(starNo) {
+		
+		$('.writeRating').val(starNo);
+	
+		if($('a#star' + starNo).text() == "★"){
+			for(let i = starNo + 1; i <= 5; i++){
+				$('a#star' + i).text("☆");
+			}
+		} else {
+			for(let i = 1; i <= starNo; i++){
+				$('a#star' + i).text("★");
+			}
+		}
+		
+	};
+// 별 클릭시 클릭한 별 위치까지 색이 채워진 별로 바뀌고 그에 해당하는 점수가 나오도록 하는 함수 끝
+
+// writeReview toastUiEditor 커스터마이징 시작
+function ToastEditor__init() {
+	  $('.toast-ui-editor').each(function(index, node) {
+	    const $node = $(node);
+	    const $initialValueEl = $node.find(' > script');
+	    const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
+	    const editor = new toastui.Editor({
+	      el: node,
+	      previewStyle: 'tab',
+	      initialValue: initialValue,
+	      height:'200px',
+	      plugins: [
+	        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
+	        [toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
+	        toastui.Editor.plugin.colorSyntax,
+	        toastui.Editor.plugin.tableMergedCell,
+	        toastui.Editor.plugin.uml,
+	        katexPlugin,
+	        youtubePlugin,
+	        codepenPlugin,
+	        replPlugin
+	      ],
+	      customHTMLSanitizer: html => {
+	        return DOMPurify.sanitize(html, { ADD_TAGS: ["iframe"], ADD_ATTR: ['width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'scrolling', 'style', 'title', 'loading', 'allowtransparency'] }) || ''
+	      }
+	    });
+	    $node.data('data-toast-editor', editor);
+	  });
+	}
+	
+	function submitFormReview(form){
+	  
+	  form.memberId.value = form.memberId.value.trim();
+		  
+	  if(form.memberId.value.length == 0){
+	  	alert('로그인 후 이용해주세요.');
+	    return;
+	  }
+	  
+	  form.comp_id.value = form.comp_id.value.trim();
+		  
+	  if(form.comp_id.value.length == 0){
+	  	alert('사업장 번호를 입력해주세요.');
+	    return;
+	  }
+	  
+	  form.rating.value = form.rating.value.trim();
+		  
+	  if(form.rating.value.length == 0){
+	  	alert('별점을 체크해주세요.');
+	    return;
+	  }
+	  
+	  if(form.booking_id.value.length == 0){
+		  	alert('예약 번호를 입력해주세요.');
+		  	form.booking_id.focus();
+		    return;
+	  }
+	  
+	  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	  const markdown = editor.getMarkdown().trim();
+	  
+	  if(markdown.length < 2){
+	    alert('리뷰 내용을 2글자 이상 입력해주세요');
+	    editor.focus();
+	    return;
+	  }
+	  
+	  form.booking_id.value = form.booking_id.value.trim();
+	  
+	  document.getElementById('body').value = markdown;
+	  
+	  form.submit();
+	}
+//writeReview toastUiEditor 커스터마이징 끝
 </script>
-
-
-
-
 
 <%@ include file="../common/foot.jspf"%>

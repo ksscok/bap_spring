@@ -1,11 +1,15 @@
 package com.KoreaIT.project.BAP.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.BookingRepository;
@@ -22,13 +26,42 @@ public class BookingService {
 		this.bookingRepository = bookingRepository;
 	}
 
+	// 하루에 한번씩 갱신되도록
+	// 만약 예약 상태가 예약 완료(done)인데 체크아웃날짜(end_date)가 오늘 날짜보다 전 날짜가 된다면 해당 예약테이블의 예약 상태를 예약 만료(expired)로 변경
+	@Scheduled(fixedDelay = 86400000, initialDelay = 1000)
+	public void changeStatus_ifEnd_dateIsPastDate() throws ParseException {
+		
+		List<Booking> bookings = getAllBookings();
+		
+		for(Booking booking : bookings) {
+			// 현재 날짜가 해당 예약의 체크아웃 날짜를 지남
+			if(booking.getStatus().equals("done")) {
+				SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");
+			    Date today = new Date();
+				Date end = format.parse(booking.getEnd_date());
+				
+				if(today.compareTo(end) == 1) {
+					bookingRepository.doModifyStatus(booking.getId(), "expired");
+					// status 한글 번역화
+					modifyExtra__status(booking);
+				}
+			}
+		}
+		   
+	}
+	
+	private List<Booking> getAllBookings() {
+		return bookingRepository.getAllBookings();
+	}
+
 	public int getLastInsertId() {
 		return bookingRepository.getLastInsertId();
 	}
 
+	// 나중에 유틸로 옴기는게 나으려나?
 	public int getDiffBetweenChkinChkout(String start_date, String end_date) {
 		// 체크인 날짜를 localDateTime 타입화 시작
-		String[] strin = start_date.split("-");
+		String[] strin = start_date.replaceAll(" ", "-").split("-");
 		int[] chkin = {Integer.parseInt(strin[0]), Integer.parseInt(strin[1]), Integer.parseInt(strin[2])};
 		
 		LocalDate startDate = LocalDate.of(chkin[0],chkin[1],chkin[2]);
@@ -36,7 +69,7 @@ public class BookingService {
 		// 체크인 날짜를 localDateTime 타입화 끝
 		
 		// 체크아웃 날짜를 localDateTime 타입화 시작
-		String[] strout = end_date.split("-");
+		String[] strout = end_date.replaceAll(" ", "-").split("-");
 		int[] chkout = {Integer.parseInt(strout[0]), Integer.parseInt(strout[1]), Integer.parseInt(strout[2])};
 		
 		LocalDate endDate = LocalDate.of(chkout[0],chkout[1],chkout[2]);

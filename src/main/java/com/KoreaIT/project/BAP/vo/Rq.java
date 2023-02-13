@@ -162,6 +162,7 @@ public class Rq {
 		case "/usr/booking/detail":
 		case "/usr/booking/cancelWrite":
 		case "/usr/wish/list":
+		case "/usr/review/list":
 			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLogoutUri", ""));
 		}
 		

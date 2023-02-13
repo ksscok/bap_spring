@@ -1,0 +1,9 @@
+.showReview {
+	width: 700px;
+}
+
+.showReview .showReview-box {
+	border: 1px solid rgba(0,0,0,0.1);
+	border-radius: 10px;
+	padding: 15px;
+}

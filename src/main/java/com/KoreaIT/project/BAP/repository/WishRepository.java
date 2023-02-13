@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.KoreaIT.project.BAP.vo.Company;
+import com.KoreaIT.project.BAP.vo.Review;
 import com.KoreaIT.project.BAP.vo.Wish;
 
 @Mapper
@@ -68,5 +68,12 @@ public interface WishRepository {
 			</script>
 			""")
 	int getWishesCountByIds(int memberId, String searchKeywordTypeCode, String searchKeyword);
+
+	@Select("""
+			SELECT *
+				FROM wish
+				WHERE id = #{id}
+			""")
+	Wish getWishById(int id);
 
 }

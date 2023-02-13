@@ -573,6 +573,66 @@ countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel';
 
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "222", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-02-01",
+end_date = "2023-02-02",
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2222", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-02-01",
+end_date = "2023-02-10",
+diff = 9,
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22222", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-02-01",
+end_date = "2023-02-12",
+diff = 11,
+countOfAdult = 2,
+countOfChild = 0;
+
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "222222", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+start_date = "2023-02-12",
+end_date = "2023-02-13",
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0;
+
 CREATE TABLE payment
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -703,6 +763,77 @@ balanceAmount = 70000,
 suppliedAmount = 63636,
 vat = 6364;
 
+# 폰번호 010-1212-2323(게스트1), 예약번호 7번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 7,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 70000,
+balanceAmount = 70000,
+suppliedAmount = 63636,
+vat = 6364;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 8번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 8,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 70000,
+balanceAmount = 70000,
+suppliedAmount = 63636,
+vat = 6364;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 9번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 9,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 70000,
+balanceAmount = 70000,
+suppliedAmount = 63636,
+vat = 6364;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 10번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 10,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+totalAmount = 70000,
+balanceAmount = 70000,
+suppliedAmount = 63636,
+vat = 6364;
 
 SELECT *
 FROM payment;
@@ -1207,6 +1338,54 @@ memberId = 6,
 comp_id = 6;
 
 SELECT * FROM wish;
+
+CREATE TABLE review
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
+    comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호',
+    booking_id    INT UNSIGNED    NOT NULL    COMMENT '예약번호',
+    rating INT (10) UNSIGNED NOT NULL  COMMENT '점수',
+    `body`    VARCHAR(200)    NOT NULL    COMMENT '리뷰 내용'
+);
+
+# review 테스트 데이터
+# 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 1번 리뷰 작성
+INSERT INTO review
+SET regDate = '2023-01-18',
+updateDate = '2023-01-18',
+memberId = 5,
+comp_id = 2, 
+booking_id = 1,
+rating = 5,
+`body` = '깔끔하고 좋아요';
+
+# 게스트2(memberId = 6)이 롯데시티호텔(comp_id = 2)에 예약번호 3번 리뷰 작성
+INSERT INTO review
+SET regDate = SUBDATE(NOW(), 1),
+updateDate = SUBDATE(NOW(), 1),
+memberId = 6,
+comp_id = 2, 
+booking_id = 3,
+rating = 2,
+`body` = '생각보다 별로네요';
+
+# 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 6번 리뷰 작성
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 2, 
+booking_id = 6,
+rating = 5,
+`body` = '두번째 방문인데 정말 좋네요. 또 오고싶어요.';
+
+SELECT * FROM review;
+
+SELECT * FROM booking;
+
 
 SELECT * FROM company;
 SELECT * FROM product;
