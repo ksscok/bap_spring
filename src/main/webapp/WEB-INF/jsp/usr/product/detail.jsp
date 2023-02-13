@@ -565,7 +565,7 @@
 						</div>
 						<input id="booking_id2" name="booking_id" class="booking_id-box mb-3 border-gray" type="text" placeholder="   예약번호 : \${data.data1.booking_id}"/>
 						<div class="toast-ui-editor2">
-							<script type="text/x-template"><\/script>
+							<script type="text/x-template">\${data.data1.body }<\/script>
 						</div>
 						<input id="body2" type="hidden" name="body" />
 						<div class="flex justify-end">
@@ -759,9 +759,5 @@ function ToastEditor__init() {
 	}
 //writeReview toastUiEditor 커스터마이징 끝
 </script>
-
-
-
-
 
 <%@ include file="../common/foot.jspf"%>

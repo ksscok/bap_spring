@@ -41,7 +41,7 @@
 				<input name="title" type="text" class="input input-bordered w-64 mb-3" placeholder="${cancelReason.title }"/>
 				<div class="text-lg font-extrabold mb-2 ml-2">취소 상세사유</div>
 				<div class="toast-ui-editor">
-					<script type="text/x-template"></script>
+					<script type="text/x-template">${cancelReason.body }</script>
 				</div>
 			</div>
 			<div class="btns flex justify-end">
