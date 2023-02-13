@@ -15,6 +15,7 @@ CREATE TABLE `member` (
 	`name` CHAR(20) NOT NULL,
 	cellphoneNo CHAR(20) NOT NULL,
 	email CHAR(50) NOT NULL,
+	m_point INT(100) UNSIGNED DEFAULT 0 COMMENT '적립포인트 2%로 가정',
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
 	delDate DATETIME COMMENT '탈퇴날짜'
 );
@@ -650,6 +651,7 @@ CREATE TABLE payment
     lastTransactionKey VARCHAR(200) NOT NULL COMMENT '마지막 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)',
     totalAmount INT UNSIGNED NOT NULL COMMENT '총 결제 금액',
     balanceAmount INT UNSIGNED NOT NULL COMMENT '취소할 수 있는 금액(잔고)',
+	pay_point INT(100) UNSIGNED DEFAULT 0 COMMENT '결제시 사용된 포인트',
     suppliedAmount INT UNSIGNED NOT NULL COMMENT '공급가액',
     vat INT UNSIGNED NOT NULL COMMENT '부가세 {결제 금액(amount) - 면세 금액(taxFreeAmount)//11후 소수점 첫째 자리에서 반올림'
 );
@@ -1384,8 +1386,15 @@ rating = 5,
 
 SELECT * FROM review;
 
-SELECT * FROM booking;
-
+CREATE TABLE `point`
+(
+    id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
+    regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
+	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
+    memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
+    payment_id    INT UNSIGNED    NOT NULL    COMMENT '결제번호',
+    p_point INT (10) UNSIGNED NOT NULL  COMMENT '포인트'
+);
 
 SELECT * FROM company;
 SELECT * FROM product;

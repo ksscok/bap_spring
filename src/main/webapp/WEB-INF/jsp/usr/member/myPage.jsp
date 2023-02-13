@@ -19,7 +19,7 @@
 						<li><a href="../member/coupon">쿠폰함(개발 예정)</a></li>
 					</ul>
 					<ul>
-						<li><a href="../member/point">포인트(개발 예정)</a></li>
+						<li><a href="../point/list?memberId=${rq.loginedMember.id }">포인트 내역</a></li>
 					</ul>
 					<ul>
 						<li><a href="/usr/wish/list?memberId=${rq.loginedMember.id }">찜</a></li>
@@ -61,6 +61,10 @@
 					<tr>
 						<th>핸드폰 번호</th>
 						<td>${rq.loginedMember.cellphoneNo}</td>
+					</tr>
+					<tr>
+						<th>포인트</th>
+						<td class='text-green-500 font-bold text-lg'>+ ${rq.loginedMember.m_point}</td>
 					</tr>
 				</tbody>
 			</table>

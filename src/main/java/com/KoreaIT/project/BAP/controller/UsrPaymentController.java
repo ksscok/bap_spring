@@ -18,23 +18,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
 import com.KoreaIT.project.BAP.service.CancelService;
+import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.service.PaymentService;
+import com.KoreaIT.project.BAP.service.PointService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
 import com.KoreaIT.project.BAP.vo.Payment;
+import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
 public class UsrPaymentController {
 	
+	private MemberService memberService;
 	private PaymentService paymentService;
 	private BookingService bookingService;
 	private CancelService cancelService;
+	private PointService pointService;
+	private Rq rq;
 	
 	@Autowired
-	public UsrPaymentController(PaymentService paymentService, BookingService bookingService, CancelService cancelService) {
+	public UsrPaymentController(MemberService memberService, PaymentService paymentService, BookingService bookingService, CancelService cancelService, PointService pointService, Rq rq) {
+		this.memberService = memberService;
 		this.paymentService = paymentService;
 		this.bookingService = bookingService;
 		this.cancelService = cancelService;
+		this.pointService = pointService;
+		this.rq = rq;
 	}
 	
 	@RequestMapping("/usr/payment/doWrite")
@@ -119,6 +128,15 @@ public class UsrPaymentController {
 		int vatA = Integer.parseInt(vat);
 		
 		paymentService.doWrite(paymentKey, bookingId, status, method, bank, requestedAt, approvedAt, type, lastTransactionKey, totalA, balanceA, suppliedA, vatA);
+		
+		int m_point = (int) (balanceA/((double) 50)); // 결제시 적립 포인트 = 2%인 상태
+		
+		int payment_id = paymentService.getLastInsertId();
+		
+		if(rq.getLoginedMemberId() != 0) {
+			memberService.doModifyPoint(rq.getLoginedMemberId(), m_point);
+			pointService.doWrite(rq.getLoginedMemberId(), payment_id, m_point);
+		}
 		
 		model.addAttribute("paymentKey", paymentKey);
 		model.addAttribute("orderId", orderId);

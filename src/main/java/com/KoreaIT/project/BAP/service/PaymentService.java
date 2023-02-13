@@ -30,4 +30,8 @@ public class PaymentService {
 		paymentRepository.doModify(id);
 	}
 
+	public int getLastInsertId() {
+		return paymentRepository.getLastInsertId();
+	}
+
 }

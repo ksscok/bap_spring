@@ -23,6 +23,7 @@ public class Payment {
 	private String lastTransactionKey;
 	private int totalAmount;
 	private int balanceAmount;
+	private int pay_point;
 	private int suppliedAmount;
 	private int vat;
 	

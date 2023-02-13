@@ -47,4 +47,7 @@ public interface PaymentRepository {
 			""")
 	void doModify(int id);
 
+	@Select("SELECT LAST_INSERT_ID()")
+	int getLastInsertId();
+
 }

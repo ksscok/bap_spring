@@ -151,13 +151,12 @@
 					<tr>
 						<th>상품가격(${booking.diff }박)</th>
 						<td>
-							<fmt:formatNumber value="${payment.totalAmount}" pattern="#,###" />
-							원
+							<fmt:formatNumber value="${payment.totalAmount}" pattern="#,###" /> 원
 						</td>
 					</tr>
 					<tr>
 						<th>결제 시 포인트 사용</th>
-						<td>- 0P</td>
+						<td>- ${payment.pay_point }P</td>
 					</tr>
 					<tr>
 						<th>결제 시 쿠폰 사용</th>
@@ -165,7 +164,7 @@
 					</tr>
 					<tr>
 						<th>실 결제 금액</th>
-						<td>70,000원</td>
+						<td><fmt:formatNumber value="${payment.balanceAmount}" pattern="#,###" /> 원</td>
 					</tr>
 					<tr>
 						<th>결제수단</th>
