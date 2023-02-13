@@ -36,14 +36,14 @@ public class BookingService {
 		for(Booking booking : bookings) {
 			// 현재 날짜가 해당 예약의 체크아웃 날짜를 지남
 			if(booking.getStatus().equals("done")) {
-			System.out.println("done 여기");
 				SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");
 			    Date today = new Date();
 				Date end = format.parse(booking.getEnd_date());
 				
 				if(today.compareTo(end) == 1) {
-					System.out.println("expired 여기");
 					bookingRepository.doModifyStatus(booking.getId(), "expired");
+					// status 한글 번역화
+					modifyExtra__status(booking);
 				}
 			}
 		}
