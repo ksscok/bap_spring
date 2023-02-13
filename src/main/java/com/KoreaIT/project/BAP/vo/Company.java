@@ -27,6 +27,9 @@ public class Company {
 	
 	private int extra__productFee;
 	private int extra__minFee;
+	private String extra__avg;
+	private int extra__avgStarCount;
+	private int extra__reviewCount;
 	
 	public String getForPrintRegDate() {
 		return regDate.substring(2, 10);

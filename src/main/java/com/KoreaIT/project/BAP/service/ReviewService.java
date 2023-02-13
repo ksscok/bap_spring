@@ -29,8 +29,8 @@ public class ReviewService {
 	}
 
 
-	public List<Review> getReviewByComp_id(int comp_id) {
-		return reviewRepository.getReviewByComp_id(comp_id); 
+	public List<Review> getReviewsByComp_id(int comp_id) {
+		return reviewRepository.getReviewsByComp_id(comp_id); 
 	}
 
 	public List<Review> getForPrintReviews(int loginedMemberId, int comp_id) {

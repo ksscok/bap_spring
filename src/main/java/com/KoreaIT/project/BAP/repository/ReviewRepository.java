@@ -21,7 +21,7 @@ public interface ReviewRepository {
 				ON r.memberId = m.id
 				WHERE r.comp_id = #{comp_id}
 			""")
-	List<Review> getReviewByComp_id(int comp_id);
+	List<Review> getReviewsByComp_id(int comp_id);
 
 	@Select("""
 			SELECT *

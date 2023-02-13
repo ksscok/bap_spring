@@ -27,11 +27,11 @@
 					<button class="ml-2 btn btn-active btn-ghost">검색</button>
 				</form>
 			</div>
-			<button class="mr-2 ml-6 text-3xl btn-delete-selected-companies"><i class="fa-solid fa-trash-can"></i></button>
+			<button class="mr-2 ml-6 text-3xl btn-delete-selected-wishes"><i class="fa-solid fa-trash-can"></i></button>
 			
-			<form method="POST" name="do-delete-companies-form" action="doDeleteAtWishList">
+			<form method="POST" name="do-delete-wishes-form" action="doDeleteAtWishList">
 				<input type="hidden" name="memberId" value="${rq.getLoginedMemberId() }" />
-				<input type="hidden" name="comp_id" value="" />
+				<input type="hidden" name="comp_ids" value="" />
 			</form>
 		</div>
 		<c:choose>
@@ -53,7 +53,8 @@
 									<span class="companyList-top-box h-1/2">
 										<span>숙소명 : ${company.name }</span>
 										<br />
-										<span>(리뷰 칸)★★★★☆ 점수(리뷰 개수)</span>
+										<span class="text-yellow-400">${ratingOptions.get(company.getExtra__avgStarCount()) } </span>
+										<span>${company.getExtra__avg() } (${company.getExtra__reviewCount() }개)</span>
 										<br />
 									</span>
 									<br />
@@ -76,7 +77,7 @@
 </section>
 
 <script>
-	$('.btn-delete-selected-companies').click(function() {
+	$('.btn-delete-selected-wishes').click(function() {
 		const values = $('.checkbox-company-id:checked').map((index, el) => el.value).toArray();
 		if (values.length == 0) {
 			alert('선택한 숙소가 없습니다');
@@ -85,8 +86,8 @@
 		if (confirm('선택한 숙소를 찜 목록에서 삭제하시겠습니까?') == false) {
 			return;
 		}
-		$('input[name=comp_id]').val(values.join(','));
-		$('form[name=do-delete-companies-form]').submit();
+		$('input[name=comp_ids]').val(values.join(','));
+		$('form[name=do-delete-wishes-form]').submit();
 	})
 </script>
 

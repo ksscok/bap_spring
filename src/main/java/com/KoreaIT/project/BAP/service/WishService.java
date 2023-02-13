@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.WishRepository;
 import com.KoreaIT.project.BAP.vo.Company;
+import com.KoreaIT.project.BAP.vo.Review;
 import com.KoreaIT.project.BAP.vo.Wish;
 
 @Service
@@ -39,6 +40,16 @@ public class WishService {
 
 	public int getWishesCountByIds(int memberId, String searchKeywordTypeCode, String searchKeyword) {
 		return wishRepository.getWishesCountByIds(memberId, searchKeywordTypeCode, searchKeyword);
+	}
+
+	public void doDeleteWishes(int memberId, List<Integer> companyIds) {
+		for (int companyId : companyIds) {
+			Wish wish = getWishByMemberIdAndComp_id(memberId, companyId);
+			
+			if (wish != null) {
+				doDelete(memberId, companyId);
+			}
+		}
 	}
 
 }
