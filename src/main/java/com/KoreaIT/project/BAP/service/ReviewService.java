@@ -89,4 +89,21 @@ public class ReviewService {
 	}
 
 
+	public List<Review> getReviewByMemberId(int memberId, String searchKeywordTypeCode, String searchKeyword) {
+		return reviewRepository.getReviewByMemberId(memberId, searchKeywordTypeCode, searchKeyword);
+	}
+
+
+	public void doDeleteReviews(List<Integer> reviewIds) {
+		for (int reviewId : reviewIds) {
+			Review review = getReviewById(reviewId);
+			
+			if (review != null) {
+				doDelete(reviewId);
+			}
+		}
+		
+	}
+
+
 }

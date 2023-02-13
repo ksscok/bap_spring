@@ -10,7 +10,7 @@
 <section class="my-10">
 	<div class="con-3 mx-auto px-3">
 		<div class="text-2xl font-bold">찜 목록</div>
-		<div class="wish-top flex justify-between items-center">
+		<div class="searchAndDelete-box flex justify-between items-center">
 			<div class="mb-2 flex justify-between items-center flex-grow">
 				<div>
 					<span>${wishesCount } 개</span>
@@ -42,32 +42,32 @@
 				<input type="hidden" name="companies" value="${companies }"/>
 				<c:forEach var="company" items="${companies}" >
 					<div class="checkboxPlusCompanyList-box flex justify-between items-center">
-					<input type="checkbox" class="checkbox-member-id mx-4 checkbox-company-id" value="${company.id }" />
-					<a href="../product/detail?comp_id=${company.id }" class="flex-grow">
-						<span class="companyList-box flex mt-5">
-						<!-- 		추후에 product 대표 이미지로 바꾸기 -->
-							<span class="img-box">
-								 <img src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
-							</span>
-							<span class="company-infor ml-4 w-full">
-								<span class="companyList-top-box h-1/2">
-									<span>숙소명 : ${company.name }</span>
-									<br />
-									<span>(리뷰 칸)★★★★☆ 점수(리뷰 개수)</span>
-									<br />
+						<input type="checkbox" class="checkbox-member-id mx-4 checkbox-company-id" value="${company.id }" />
+						<a href="../product/detail?comp_id=${company.id }" class="flex-grow">
+							<span class="companyList-box flex mt-5">
+							<!-- 		추후에 product 대표 이미지로 바꾸기 -->
+								<span class="img-box">
+									 <img src="${rq.getCompanyProfileImgUri(company.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 								</span>
-								<br />
-								<span class="companyList-bottom-box h-1/2 flex justify-end items-end mt-5">
-									<span>체크인 : ${company.timeChkin }</span>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<span><fmt:formatNumber value="${company.extra__minFee}" pattern="#,###"/></span>
-									&nbsp;
-									<span class="text-sm" style="line-height: 25px;">원</span>
-									<span>~</span>
+								<span class="company-infor ml-4 w-full">
+									<span class="companyList-top-box h-1/2">
+										<span>숙소명 : ${company.name }</span>
+										<br />
+										<span>(리뷰 칸)★★★★☆ 점수(리뷰 개수)</span>
+										<br />
+									</span>
+									<br />
+									<span class="companyList-bottom-box h-1/2 flex justify-end items-end mt-5">
+										<span>체크인 : ${company.timeChkin }</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span><fmt:formatNumber value="${company.extra__minFee}" pattern="#,###"/></span>
+										&nbsp;
+										<span class="text-sm" style="line-height: 25px;">원</span>
+										<span>~</span>
+									</span>
 								</span>
 							</span>
-						</span>
-					</a>
+						</a>
 					</div>
 				</c:forEach>
 			</c:otherwise>

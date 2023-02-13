@@ -123,9 +123,13 @@ public class UsrProductController {
 		// 실수를 소수점 첫째자리까지 자르기 위한 함수
 		DecimalFormat df = new DecimalFormat("0.0"); 
 		
-		String avg = df.format(totalRating/ (double) reviews.size());
-		
-		int avgStarCount = (int) Math.floor(totalRating/reviews.size());
+		String avg = "";
+		int avgStarCount = 0;
+				
+		if(reviews.size() != 0) {
+			avg = df.format(totalRating/ (double) reviews.size());
+			avgStarCount = (int) Math.floor(totalRating/reviews.size());
+		}
 		//평균 평점 구하기 끝
 		
 		// 평점 옵션 시작

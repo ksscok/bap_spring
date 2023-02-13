@@ -569,7 +569,8 @@
 						</div>
 						<input id="body2" type="hidden" name="body" />
 						<div class="flex justify-end">
-							<button class="text-center btn btn-active btn-secondary mt-3">작성</button>
+							<a onclick="ReviewModify__cancel(\${i})" class="text-center btn btn-active btn-secondary mt-3 mr-3">취소</a>
+							<button class="text-center btn btn-active btn-secondary mt-3">수정</button>
 						</div>
 					</form>
 				</div>`;

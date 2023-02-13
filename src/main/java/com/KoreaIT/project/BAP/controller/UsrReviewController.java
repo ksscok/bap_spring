@@ -1,5 +1,10 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +48,19 @@ public class UsrReviewController {
 			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
 			@RequestParam(defaultValue="") String searchKeyword) {
 		
+		List<Review> reviews = reviewService.getReviewByMemberId(memberId, searchKeywordTypeCode, searchKeyword);
+		
+		Map<Integer, String> ratingOptions = new HashMap<>();
+		ratingOptions.put(0, "☆☆☆☆☆");
+		ratingOptions.put(1, "★☆☆☆☆");
+		ratingOptions.put(2, "★★☆☆☆");
+		ratingOptions.put(3, "★★★☆☆");
+		ratingOptions.put(4, "★★★★☆");
+		ratingOptions.put(5, "★★★★★");
+		// 평점 옵션 시작 끝
+		model.addAttribute("ratingOptions", ratingOptions);
+		
+		model.addAttribute("reviews", reviews);
 		
 		return "usr/review/list";
 	}
@@ -52,30 +70,30 @@ public class UsrReviewController {
 	public String doWrite(int memberId, int comp_id, int booking_id, int rating, String body, @RequestParam(required = false) MultipartRequest multipartRequest) {
 		
 		if(Ut.empty(memberId)) {
-			return rq.jsHistoryBack("회원번호를 입력해주세요.");
+			return Ut.jsHistoryBack("회원번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(comp_id)) {
-			return rq.jsHistoryBack("사업장 번호를 입력해주세요.");
+			return Ut.jsHistoryBack("사업장 번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(booking_id)) {
-			return rq.jsHistoryBack("예약번호를 입력해주세요.");
+			return Ut.jsHistoryBack("예약번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(rating)) {
-			return rq.jsHistoryBack("평점을 입력해주세요.");
+			return Ut.jsHistoryBack("평점을 입력해주세요.");
 		}
 		
 		if(Ut.empty(body)) {
-			return rq.jsHistoryBack("리뷰 내용을 입력해주세요.");
+			return Ut.jsHistoryBack("리뷰 내용을 입력해주세요.");
 		}
 		
 		// 이미 전에 작성한 예약번호가 있는지 유효성 검사 시작
 		Review review = reviewService.getReviewByBooking_id(booking_id);
 		
 		if(review != null) {
-			return rq.jsHistoryBack("이미 리뷰를 작성한 예약번호 입니다.");
+			return Ut.jsHistoryBack("이미 리뷰를 작성한 예약번호 입니다.");
 		}
 		// 이미 전에 작성한 예약번호가 있는지 유효성 검사 끝
 		
@@ -86,13 +104,13 @@ public class UsrReviewController {
 		Booking booking = bookingService.getBookingById(booking_id);
 		
 		if(!member.getCellphoneNo().equals(booking.getCellphoneNo())) {
-			return rq.jsHistoryBack("리뷰 작성을 요청한 유저와 예약한 유저의 정보가 일치하지 않습니다.");
+			return Ut.jsHistoryBack("리뷰 작성을 요청한 유저와 예약한 유저의 정보가 일치하지 않습니다.");
 		}
 		// 현재 로그인한 멤버와 입력된 예약번호에 저장되어있는 전화번호가 일치하는지(본인인증) 유효성 검사 끝
 		
 		// 리뷰를 남기려는 사업장 번호와 예약한 사업장 번호가 다를 경우 유효성 검사 시작 
 		if(comp_id != booking.getComp_id()) {
-			return rq.jsHistoryBack("리뷰를 작성하려는 사업장과 예약한 사업장의 정보가 일치하지 않습니다.");
+			return Ut.jsHistoryBack("리뷰를 작성하려는 사업장과 예약한 사업장의 정보가 일치하지 않습니다.");
 		}
 		// 리뷰를 남기려는 사업장 번호와 예약한 사업장 번호가 다를 경우 유효성 검사 끝 
 		
@@ -101,7 +119,7 @@ public class UsrReviewController {
 		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
 		
 		if(payment == null) {
-			return rq.jsHistoryBack("결제가 이루어지지 않은 예약번호 입니다. 결제 후 이용해주세요.");
+			return Ut.jsHistoryBack("결제가 이루어지지 않은 예약번호 입니다. 결제 후 이용해주세요.");
 		}
 		// 예약번호만 하고 결제는 하지 않은 경우 유효성 검사 끝
 		
@@ -121,19 +139,19 @@ public class UsrReviewController {
 	public String doModify(int id, int comp_id, int rating, String body, @RequestParam(required = false) MultipartRequest multipartRequest) {
 		
 		if(Ut.empty(id)) {
-			return rq.jsHistoryBack("리뷰번호를 입력해주세요.");
+			return Ut.jsHistoryBack("리뷰번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(comp_id)) {
-			return rq.jsHistoryBack("사업장 번호를 입력해주세요.");
+			return Ut.jsHistoryBack("사업장 번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(rating)) {
-			return rq.jsHistoryBack("평점을 입력해주세요.");
+			return Ut.jsHistoryBack("평점을 입력해주세요.");
 		}
 		
 		if(Ut.empty(body)) {
-			return rq.jsHistoryBack("리뷰 내용을 입력해주세요.");
+			return Ut.jsHistoryBack("리뷰 내용을 입력해주세요.");
 		}
 		
 		Review review = reviewService.getReviewById(id);
@@ -154,7 +172,11 @@ public class UsrReviewController {
 	public String doDelete(int id, int comp_id) {
 		
 		if(Ut.empty(id)) {
-			return rq.jsHistoryBack("리뷰번호를 입력해주세요.");
+			return Ut.jsHistoryBack("리뷰번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(comp_id)) {
+			return Ut.jsHistoryBack("사업장 번호를 입력해주세요.");
 		}
 		
 		Review review = reviewService.getReviewById(id);
@@ -168,6 +190,29 @@ public class UsrReviewController {
 		reviewService.doDelete(id);
 		
 		return Ut.jsReplace(Ut.f("%d번 리뷰가 삭제되었습니다.", id), Ut.f("/usr/product/detail?comp_id=%d", comp_id));
+	}
+	
+	@RequestMapping("/usr/review/doDeleteAtReviewList")
+	@ResponseBody
+	public String doDeleteAtReviewList(@RequestParam(defaultValue = "") String ids, int memberId) {
+		
+		if(Ut.empty(ids)) {
+			return Ut.jsHistoryBack("리뷰번호를 입력해주세요.");
+		}
+		
+		if(ids.equals("1")) {
+			return Ut.jsHistoryBack("관리자 계정은 삭제할 수 없습니다.");
+		}
+		
+		List<Integer> reviewIds = new ArrayList<>();
+		
+		for(String idStr : ids.split(",")) {
+			reviewIds.add(Integer.parseInt(idStr));
+		}
+		
+		reviewService.doDeleteReviews(reviewIds);
+		
+		return Ut.jsReplace("선택한 리뷰가 삭제되었습니다.", Ut.f("/usr/review/list?memberId=%d", memberId));
 	}
 	
 	@RequestMapping("usr/review/getReviewContent")

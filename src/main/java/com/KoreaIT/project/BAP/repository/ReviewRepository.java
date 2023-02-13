@@ -19,7 +19,7 @@ public interface ReviewRepository {
 				FROM review AS r
 				LEFT JOIN `member` AS m
 				ON r.memberId = m.id
-				WHERE comp_id = #{comp_id}
+				WHERE r.comp_id = #{comp_id}
 			""")
 	List<Review> getReviewByComp_id(int comp_id);
 
@@ -77,21 +77,31 @@ public interface ReviewRepository {
 			""")
 	void doDelete(int id);
 
-//	@Select("""
-//			<script>
-//			SELECT COUNT(*)
-//				FROM wish AS w
-//				LEFT JOIN company AS c
-//				ON w.comp_id = c.id
-//				WHERE memberId = #{memberId}
-//					<if test="searchKeyword != ''">
-//						<choose>
-//							<when test="searchKeywordTypeCode == 'name'">
-//								AND c.name LIKE CONCAT('%', #{searchKeyword}, '%')
-//							</when>
-//						</choose>
-//					</if>
-//			</script>
-//			""")
+	@Select("""
+			<script>
+			SELECT r.*,
+				m.name AS extra__writerName,
+				c.name AS extra__compName,
+				pr.roomType AS extra__prodRoomType
+				FROM review AS r
+				LEFT JOIN `member` AS m
+				ON r.memberId = m.id
+				LEFT JOIN company AS c
+				ON r.comp_id = c.id
+				LEFT JOIN product AS pr
+				ON pr.comp_id = c.id
+				WHERE r.memberId = #{memberId}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordTypeCode == 'name'">
+							AND c.name LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+					</choose>
+				</if>
+				GROUP BY r.id
+				ORDER BY r.id desc
+				</script>
+			""")
+	List<Review> getReviewByMemberId(int memberId, String searchKeywordTypeCode, String searchKeyword);
 
 }

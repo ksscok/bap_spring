@@ -25,7 +25,7 @@
 						<li><a href="/usr/wish/list?memberId=${rq.loginedMember.id }">찜</a></li>
 					</ul>
 					<ul>
-						<li><a href="../review/list">리뷰 관리</a></li>
+						<li><a href="../review/list?memberId=${rq.loginedMember.id }">리뷰 관리</a></li>
 					</ul>
 				</c:if>
 				<c:if test="${rq.loginedMember.memberType.equals('host')}">

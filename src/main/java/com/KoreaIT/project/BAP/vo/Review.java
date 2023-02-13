@@ -24,12 +24,14 @@ public class Review {
 	private String body;
 
 	private String extra__writerName;
+	private String extra__compName;
+	private String extra__prodRoomType;
 	private boolean actorCanChangeData;
 
 	public String getForPrintBody() {
 		return this.body.replaceAll("\n", "<br />");
 	}
-
+	
 	public int getForPrintBeforeDays() {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
