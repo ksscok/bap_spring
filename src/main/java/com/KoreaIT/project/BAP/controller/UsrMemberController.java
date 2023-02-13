@@ -1,12 +1,19 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KoreaIT.project.BAP.service.KakaoAPI;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.util.Ut;
+import com.KoreaIT.project.BAP.vo.KakaoLogin;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.KoreaIT.project.BAP.vo.ResultData;
 import com.KoreaIT.project.BAP.vo.Rq;
@@ -15,10 +22,12 @@ import com.KoreaIT.project.BAP.vo.Rq;
 public class UsrMemberController {
 	
 	private MemberService memberService;
+	private KakaoAPI kakaoService;
 	private Rq rq;
 	
-	UsrMemberController(MemberService memberService, Rq rq) {
+	UsrMemberController(MemberService memberService, KakaoAPI kakaoService, Rq rq) {
 		this.memberService = memberService;
+		this.kakaoService = kakaoService;
 		this.rq = rq;
 	}
 	
@@ -120,6 +129,36 @@ public class UsrMemberController {
 		
 		return ResultData.from("S-1", "사용 가능한 아이디입니다.", "loginId", loginId);
 	}
+
+	@RequestMapping("/usr/member/kakaoLogin")
+	public String kakaoLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request)
+			throws IOException {
+		// 토큰 발급 받기
+		String access_Token = kakaoService.getAccessToken(code);
+
+		// 사용자 정보 가지고 오기
+		KakaoLogin userInfo = kakaoService.userInfo(access_Token);
+
+		// 세션 형성 + request 내장 객체 가지고 오기
+		session = request.getSession();
+
+		System.out.println("accessToken: " + access_Token);
+		System.out.println("code:" + code);
+		System.out.println("Common Controller:" + userInfo);
+		System.out.println("nickname: " + userInfo.getNickname());
+		System.out.println("email: " + userInfo.getAccount_email());
+		System.out.println("gender: " + userInfo.getGender());
+
+		// 세션에 담기
+		if (userInfo.getNickname() != null) {
+			session.setAttribute("nickname", userInfo.getNickname());
+			session.setAttribute("access_Token", access_Token);
+			session.setAttribute("kakaoId", userInfo.getKakaoId());
+		}
+
+		return "usr/member/login";
+	}
+	
 	
 	@RequestMapping("/usr/member/myPage")
 	public String showMyPage() {
