@@ -179,11 +179,17 @@
 					<c:if test="${booking.getStatus() == 'done'}">
 						<a href="../booking/cancelWrite?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
 					</c:if>
+					<c:if test="${booking.getStatus() == 'expired'}">
+						<a href="../product/detail?comp_id=${company.id }" class="text-center btn btn-active btn-secondary my-5">리뷰 작성하러 가기</a>
+					</c:if>
 				</c:if>
 				<c:if test="${rq.isLogined()}">
 					<c:if test="${rq.getLoginedMember().getMemberType() == 'guest'}">
 						<c:if test="${booking.getStatus() == 'done'}">
 							<a href="../booking/cancelWrite?booking_id=${payment.booking_id }" class="text-center btn btn-active btn-secondary my-5">예약 취소 신청</a>
+						</c:if>
+						<c:if test="${booking.getStatus() == 'expired'}">
+							<a href="../product/detail?comp_id=${company.id }" class="text-center btn btn-active btn-secondary my-5">리뷰 작성하러 가기</a>
 						</c:if>
 					</c:if>
 					<c:if test="${rq.getLoginedMember().getMemberType() == 'host'}">

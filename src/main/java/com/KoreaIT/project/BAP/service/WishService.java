@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.WishRepository;
-import com.KoreaIT.project.BAP.vo.Company;
-import com.KoreaIT.project.BAP.vo.Review;
 import com.KoreaIT.project.BAP.vo.Wish;
 
 @Service

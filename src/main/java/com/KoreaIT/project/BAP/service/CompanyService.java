@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.CompanyRepository;
@@ -17,7 +16,6 @@ public class CompanyService {
 	CompanyRepository companyRepository;
 	private ReviewService reviewService;
 	
-	@Autowired
 	CompanyService(CompanyRepository companyRepository, ReviewService reviewService) {
 		this.companyRepository = companyRepository;
 		this.reviewService = reviewService;

@@ -146,16 +146,16 @@
 							<c:choose>
 								<c:when test="${wish.id == null }">
 		<!-- 					아래 버튼과 버튼 내의 i태그 줄바꿈하면 change_bgc();이거 첫번째 클릭때 오류나서 안 바뀜 -->
-									<button class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();"><i id="i-heart" class="fa-regular fa-heart"></i></button>
+									<button class="saving mx-2 mt-1 flex content-start text-red-600" onclick="change_bgc();"><i id="i-heart" class="fa-regular fa-heart"></i></button>
 								</c:when>
 								<c:otherwise>
 		<!-- 					아래 버튼과 버튼 내의 i태그 줄바꿈하면 change_bgc();이거 첫번째 클릭때 오류나서 안 바뀜 -->
-									<button class="saving mx-2 mt-1 flex content-start" onclick="change_bgc();"><i id="i-heart" class="fa-solid fa-heart"></i></button>
+									<button class="saving mx-2 mt-1 flex content-start text-red-600" onclick="change_bgc();"><i id="i-heart" class="fa-solid fa-heart"></i></button>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
 						<c:if test="${!rq.isLogined()}">
-							<a href="${rq.loginUri}" class="saving mx-2 mt-1 flex content-start" onclick="alert('로그인 후 이용해주세요.');"><i id="i-heart" class="fa-regular fa-heart"></i></a>
+							<a href="${rq.loginUri}" class="saving mx-2 mt-1 flex content-start text-red-600" onclick="alert('로그인 후 이용해주세요.');"><i id="i-heart" class="fa-regular fa-heart"></i></a>
 						</c:if>
 					</div>
 				</div>
