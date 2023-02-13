@@ -27,7 +27,10 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="submit" class="btn btn-primary w-full mt-4" value="로그인"/>
+							<button type="submit" class="btn btn-primary w-full mt-4" >로그인</button>
+							<a href="https://kauth.kakao.com/oauth/authorize?client_id=d3e1f4dc1c1bc3f9aea2cc4f0a53c27d&redirect_uri=http://localhost:8082/usr/member/kakaoLogin&response_type=code">
+								<img src ="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg">
+							</a>
 						</td>
 					</tr>
 					<tr>
@@ -64,6 +67,5 @@
 		form.submit();
 	}
 </script>
-
 
 <%@ include file="../common/foot.jspf" %>
