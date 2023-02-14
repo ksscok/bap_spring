@@ -97,18 +97,19 @@
 				<div class="payment">
 					<div class="font-extrabold mt-9">총 결제 금액</div>
 					<div class="my-4 text-xl font-extrabold text-red-600">${price }원</div>
-					<div class="showUsePoint-box flex justify-between items-center mb-2">
-						<div>포인트 차감</div>
-						<div class="text-lg">
-						<span class="text-xl font-extrabold">-</span> 
-						<input id="showUsePoint" type="text" style="text-align: right; width: 70px;" readonly/>원
+					<c:if test="${rq.isLogined() }">
+						<div class="showUsePoint-box flex justify-between items-center mb-2">
+							<div>포인트 차감</div>
+							<div class="text-lg">
+							<span class="text-xl font-extrabold">-</span> 
+							<input id="showUsePoint" type="text" style="text-align: right; width: 70px;" readonly/>원
+							</div>
 						</div>
-					</div>
-					<div class="balanceAmount-box flex justify-between items-center mb-2">
-						<div class="font-extrabold">실제 결제 금액</div>
-						<div class="text-xl font-extrabold text-red-600"><input id="balanceAmount" type="text" name="balanceAmount" value="" style="text-align: right; width: 90px;" readonly/>원</div>
-<%-- 						<div class="text-xl font-extrabold text-red-600"><input id="balanceAmount" type="text" name="balanceAmount" value="<fmt:formatNumber value="" pattern="#,###" />" style="text-align: right; width: 90px;" readonly/>원</div> --%>
-					</div>
+						<div class="balanceAmount-box flex justify-between items-center mb-2">
+							<div class="font-extrabold">실제 결제 금액</div>
+							<div class="text-xl font-extrabold text-red-600"><input id="balanceAmount" type="text" name="balanceAmount" value="" style="text-align: right; width: 90px;" readonly/>원</div>
+						</div>
+					</c:if>
 					<ul class="mt-5">
 						<li>
 							<a href="#">
@@ -150,6 +151,50 @@
 </section>
 
 <script>
+//페이지 시작 시 실제 결제 금액 = 총 결제 금액으로 설정 함수 시작
+ $(document).ready(function() {
+	 let totalAmount = parseInt($('#amount').val());
+	 
+	 let sup = parseInt($('#usepointAmount').val().replace(/,/g, ""));
+	 
+	 if(!sup){
+		// 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 시작
+		const option = {
+				  maximumFractionDigits: 0
+				};
+		
+		let bA = totalAmount.toLocaleString('ko-KR', option);
+		// 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 끝
+		$('#balanceAmount').val(bA);
+	 } else {
+		 change_balanceAmount();
+	 }
+		
+ } );
+//페이지 시작 시 실제 결제 금액 = 총 결제 금액으로 설정 함수 끝
+
+
+//실제 결제 금액 = 총 결제 금액 - pay_point 시작
+	function change_balanceAmount(){
+		let totalAmount = parseInt($('#amount').val());
+		
+		let sup = parseInt($('#usepointAmount').val().replace(/,/g, ""));
+			
+		let t_s = (totalAmount-sup);
+		
+		// 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 시작
+		const option = {
+				  maximumFractionDigits: 0
+				};
+		
+		let bA = t_s.toLocaleString('ko-KR', option);
+		// 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 끝
+		
+		$('#balanceAmount').val(bA);
+	}
+	
+// 실제 결제 금액 = 총 결제 금액 - pay_point 끝
+
 // 예약자 이름칸에 숫자, 한글, 영어, 스페이스, 백스페이스만 사용 가능하도록 하는 함수 시작(입력키 제한)
 	// 추후에 스페이스 횟수 제한 찾아보기
 	function chkCharCodeName(event) {
@@ -231,7 +276,12 @@
 	function chgValueOfPay_point(){
 		let m_point = $('#m_point').val();
 		$('#usepointAmount').val(m_point);
-		$('#pointDelete-btn').css('display', 'block')
+		$('#showUsePoint').val(m_point);
+		
+		// 실제 결제 금액 = 총 결제 금액 - pay_point 시작
+   	 	change_balanceAmount();
+   		// 실제 결제 금액 = 총 결제 금액 - pay_point 끝
+		$('#pointDelete-btn').css('display', 'block');
 	}
 // 전액사용 버튼 클릭시 사용 가능한 포인트(m_point)값을 pay_point input 값에 넣어주고 delete-btn 생기도록 하는 함수 끝
 
@@ -283,20 +333,7 @@
 		        	$('#showUsePoint').val($(this).val());
 		        	
 		        	// 실제 결제 금액 = 총 결제 금액 - pay_point 시작
-		        	 let totalAmount = parseInt($('#amount').val());
-					 
-					 let sup = parseInt($('#usepointAmount').val().replace(/,/g, ""));
-			        	
-					 let t_s = (totalAmount-sup);
-					 // 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 시작
-					 const option = {
-							  maximumFractionDigits: 0
-							};
-					 
-					 let bA = t_s.toLocaleString('ko-KR', option);
-					 // 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 끝
-					 
-			        $('#balanceAmount').val(bA);
+		        	change_balanceAmount();
 		        	// 실제 결제 금액 = 총 결제 금액 - pay_point 끝
 		        } );
 	      } );
@@ -307,6 +344,7 @@
 	function pointDelete(){
 		$('#usepointAmount').val(0);
 		$('#showUsePoint').val('');
+		change_balanceAmount();
 	}
 // close(pointDelete-btn)버튼 클릭시 pay_point 값 0으로 초기화하는 함수 끝
 		

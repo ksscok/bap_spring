@@ -18,19 +18,11 @@ import com.KoreaIT.project.BAP.vo.Rq;
 @Controller
 public class UsrPointController {
 	
-	private MemberService memberService;
-	private BookingService bookingService;
-	private PaymentService paymentService;
-	private CancelService cancelService;
 	private PointService pointService;
 	private Rq rq;
 	
 	@Autowired
-	public UsrPointController(MemberService memberService, BookingService bookingService, PaymentService paymentService, CancelService cancelService, PointService pointService, Rq rq) {
-		this.memberService = memberService;
-		this.bookingService = bookingService;
-		this.paymentService = paymentService;
-		this.cancelService = cancelService;
+	public UsrPointController(PointService pointService, Rq rq) {
 		this.pointService = pointService;
 		this.rq = rq;
 	}

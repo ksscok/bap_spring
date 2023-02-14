@@ -132,7 +132,13 @@ public class UsrBookingController {
 
 	@RequestMapping("/usr/booking/doBook")
 	public String doBook(Model model, String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, 
-			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, String orderName, int diff, String isWrite) {
+			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, @RequestParam(defaultValue="0") String pay_point, String balanceAmount, String orderName, int diff, String isWrite) {
+		
+		int p_point = Integer.parseInt(pay_point.replace(",", "").trim());
+		int balanceamount = Integer.parseInt(balanceAmount.replace(",", "").trim());
+		
+		System.out.println("==== p_point : " + p_point + " =====");
+		System.out.println("==== balanceamount : " + balanceamount + " ====");
 		
 		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기 (실패)
 		if(isWrite.trim().equals("notWrite")) {

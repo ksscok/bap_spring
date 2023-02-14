@@ -121,7 +121,7 @@
 							</ul>
 							<ul class="mt-1">
 								<li class="flex">
-									<input type="range" name="high_price" min="250000" max="500000" step="10000" class="range range-sm"
+									<input type="range" name="high_price" min="250000" max="900000000" step="10000" class="range range-sm"
 									oninput="AddCommaAtHigh_price(this.value);"
 									value="${param.high_price == null || param.high_price.equals('') ? '250000' : param.high_price}"/>
 								</li>
