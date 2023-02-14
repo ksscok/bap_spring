@@ -60,4 +60,12 @@ public interface MemberRepository {
 			""")
 	public void modify(long id, String loginPw, String email, String cellphoneNo);
 
+	@Update("""
+			UPDATE `member`
+			SET updateDate = NOW(),
+			m_point = m_point + #{m_point}
+			WHERE id = #{id}
+			""")
+	public void doModifyPoint(int id, int m_point);
+
 }

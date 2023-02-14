@@ -31,3 +31,25 @@
 .info_chkin {
 	color: rgba(0,0,0,0.56);
 }
+
+.usePointAmount-box {
+	height: 40px;
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 5px;
+}
+
+.useAllPoint-btn {
+	border-left:1px dashed rgba(0,0,0,0.4);
+}
+
+#usepointAmount {
+	outline: none;
+}
+#usepointAmount::placeholder {
+	--tw-text-opacity: 1;
+	color: rgba(16, 185, 129, var(--tw-text-opacity));
+}
+
+#pointDelete-btn {
+	display: none;
+}

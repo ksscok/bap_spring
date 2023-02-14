@@ -1,9 +1,11 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +21,14 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.KoreaIT.project.BAP.service.CompanyService;
 import com.KoreaIT.project.BAP.service.GenFileService;
 import com.KoreaIT.project.BAP.service.ProductService;
+import com.KoreaIT.project.BAP.service.ReviewService;
+import com.KoreaIT.project.BAP.service.WishService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Company;
 import com.KoreaIT.project.BAP.vo.Product;
+import com.KoreaIT.project.BAP.vo.Review;
 import com.KoreaIT.project.BAP.vo.Rq;
+import com.KoreaIT.project.BAP.vo.Wish;
 
 @Controller
 public class UsrProductController {
@@ -30,13 +36,17 @@ public class UsrProductController {
 	private ProductService productService;
 	private CompanyService companyService;
 	GenFileService genFileService;
-	Rq rq;
+	private WishService wishService;
+	private ReviewService reviewService;
+	private Rq rq;
 	
 	@Autowired
-	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, Rq rq) {
+	public UsrProductController(ProductService productService, CompanyService companyService, GenFileService genFileService, WishService wishService, ReviewService reviewService, Rq rq) {
 		this.productService = productService;
 		this.companyService = companyService;
 		this.genFileService = genFileService;
+		this.wishService = wishService;
+		this.reviewService = reviewService;
 		this.rq = rq;
 	}
 	
@@ -95,6 +105,44 @@ public class UsrProductController {
 		}
 		// 예약페이지에서 orderId를 만들 때 필요한 숙박타입 코드를 넘겨주기 위한 부분 끝
 		
+		Wish wish = null;
+		
+		if(rq.isLogined()) {
+			wish = wishService.getWishByMemberIdAndComp_id(rq.getLoginedMemberId(), comp_id);
+		}
+		
+		List<Review> reviews = reviewService.getForPrintReviews(rq.getLoginedMemberId(), comp_id);
+		
+		//평균 평점 구하기 시작
+		int totalRating = 0;
+		
+		for(Review review : reviews) {
+			totalRating += review.getRating();
+		}
+		
+		// 실수를 소수점 첫째자리까지 자르기 위한 함수
+		DecimalFormat df = new DecimalFormat("0.0"); 
+		
+		String avg = "";
+		int avgStarCount = 0;
+				
+		if(reviews.size() != 0) {
+			avg = df.format(totalRating/ (double) reviews.size());
+			avgStarCount = (int) Math.floor(totalRating/reviews.size());
+		}
+		//평균 평점 구하기 끝
+		
+		// 평점 옵션 시작
+		Map<Integer, String> ratingOptions = new HashMap<>();
+		ratingOptions.put(0, "☆☆☆☆☆");
+		ratingOptions.put(1, "★☆☆☆☆");
+		ratingOptions.put(2, "★★☆☆☆");
+		ratingOptions.put(3, "★★★☆☆");
+		ratingOptions.put(4, "★★★★☆");
+		ratingOptions.put(5, "★★★★★");
+		// 평점 옵션 시작 끝
+		model.addAttribute("ratingOptions", ratingOptions);
+		
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("countOfRoom", countOfRoom);
 		model.addAttribute("countOfAdult", countOfAdult);
@@ -111,6 +159,10 @@ public class UsrProductController {
 		model.addAttribute("accommodationTypeCode", accommodationTypeCode);
 		model.addAttribute("start_date", start_date);
 		model.addAttribute("end_date", end_date);
+		model.addAttribute("wish", wish);
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("avg", avg);
+		model.addAttribute("avgStarCount", avgStarCount);
 		
 		return "usr/product/detail";
 	}

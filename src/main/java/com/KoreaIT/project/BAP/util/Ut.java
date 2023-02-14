@@ -443,5 +443,4 @@ public class Ut {
         return dataOfChkin + " " + dayOfTheWeek;
 	}
 
-	
 }

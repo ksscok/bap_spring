@@ -13,19 +13,19 @@
 				</ul>
 				<c:if test="${rq.loginedMember.memberType.equals('guest')}">
 					<ul>
-						<li><a href="../member/reservations">예약내역(개발 예정)</a></li>
+						<li><a href="/usr/booking/list?cellphoneNo=${rq.getLoginedMember().cellphoneNo }">예약내역</a></li>
 					</ul>
 					<ul>
 						<li><a href="../member/coupon">쿠폰함(개발 예정)</a></li>
 					</ul>
 					<ul>
-						<li><a href="../member/point">포인트(개발 예정)</a></li>
+						<li><a href="../point/list?memberId=${rq.loginedMember.id }">포인트 내역</a></li>
 					</ul>
 					<ul>
-						<li><a href="../member/like">찜(개발 예정)</a></li>
+						<li><a href="/usr/wish/list?memberId=${rq.loginedMember.id }">찜</a></li>
 					</ul>
 					<ul>
-						<li><a href="../member/review">리뷰 관리(개발 예정)</a></li>
+						<li><a href="../review/list?memberId=${rq.loginedMember.id }">리뷰 관리</a></li>
 					</ul>
 				</c:if>
 				<c:if test="${rq.loginedMember.memberType.equals('host')}">
@@ -61,6 +61,10 @@
 					<tr>
 						<th>핸드폰 번호</th>
 						<td>${rq.loginedMember.cellphoneNo}</td>
+					</tr>
+					<tr>
+						<th>포인트</th>
+						<td class='text-green-500 font-bold text-lg'>+ ${rq.loginedMember.m_point}</td>
 					</tr>
 				</tbody>
 			</table>

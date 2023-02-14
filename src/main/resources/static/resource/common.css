@@ -83,6 +83,10 @@ main {
 	max-width: 930px;
 }
 
+.con-4 {
+	max-width: 990px;
+}
+
 .con-min-width {
 	min-width: 400px;
 }
@@ -139,3 +143,15 @@ main {
 ::-webkit-scrollbar-thumb:hover {background: #999;opacity: 1;}
 ::-webkit-scrollbar-track-piece {background: #fff;}
 /* 스크롤바 */
+
+ul > .list-active {
+	list-style: inside;
+}
+
+ul > li > a {
+	margin-left: -10px;
+}
+
+input:read-only{
+	outline: none;
+}

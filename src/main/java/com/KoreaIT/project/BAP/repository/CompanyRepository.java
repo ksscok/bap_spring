@@ -117,6 +117,7 @@ public interface CompanyRepository {
 			SET regDate = NOW(),
 			updateDate = NOW(),
 			`name` = #{name},
+			cellphoneNo = #{cellphoneNo},
 			address = #{address},
 			area = #{area},
 			timeChkin = #{timeChkin},
@@ -124,15 +125,18 @@ public interface CompanyRepository {
 			accommodationType = #{accommodationType},
 			host_id = #{host_id}
 			""")
-	void register(String name, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id);
+	void register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
 
 	@Select("""
-			SELECT *
-				FROM company
-				WHERE id = #{comp_id}
+			SELECT c.*,
+				MIN(fee) AS extra__minFee
+				FROM company AS c
+				LEFT JOIN product AS p
+				ON c.id = p.comp_id
+				WHERE c.id = #{comp_id}
 			""")
 	Company getCompanyByComp_id(int comp_id);
 
@@ -290,5 +294,25 @@ public interface CompanyRepository {
 			WHERE host_id = #{hostId}
 			""")
 	List<Company> getCompanyByHostId(int hostId);
+
+	@Select("""
+			<script>
+			SELECT c.*,
+			p.fee AS extra__productFee,
+			MIN(fee) AS extra__minFee
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.id = #{id}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordTypeCode == 'name'">
+						AND c.name LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+				</choose>
+			</if>
+			</script>
+			""")
+	Company getCompanyByComp_idForWish(int id, String searchKeywordTypeCode, String searchKeyword);
 
 }

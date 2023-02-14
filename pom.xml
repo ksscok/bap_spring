@@ -84,7 +84,14 @@
 	      <groupId>com.googlecode.json-simple</groupId>
 	      <artifactId>json-simple</artifactId>
 	      <version>1.1.1</version> 
-	    </dependency>
+    </dependency>
+		<!--카카오 로그인 API용 gson-->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+
 	    
 	</dependencies>
 

@@ -17,6 +17,7 @@ public class Company {
 	private String regDate;
 	private String updateDate;
 	private String name;
+	private String cellphoneNo;
 	private String address;
 	private String area;
 	private String timeChkin;
@@ -26,6 +27,9 @@ public class Company {
 	
 	private int extra__productFee;
 	private int extra__minFee;
+	private String extra__avg;
+	private int extra__avgStarCount;
+	private int extra__reviewCount;
 	
 	public String getForPrintRegDate() {
 		return regDate.substring(2, 10);

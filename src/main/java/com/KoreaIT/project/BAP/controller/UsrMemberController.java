@@ -1,23 +1,32 @@
 package com.KoreaIT.project.BAP.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.KoreaIT.project.BAP.service.KakaoLoginService;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Member;
+import com.KoreaIT.project.BAP.vo.ResultData;
 import com.KoreaIT.project.BAP.vo.Rq;
 
 @Controller
 public class UsrMemberController {
 	
 	private MemberService memberService;
+	private KakaoLoginService kakaoLoginService;
 	private Rq rq;
 	
-	UsrMemberController(MemberService memberService, Rq rq) {
+	UsrMemberController(MemberService memberService, KakaoLoginService kakaoLoginService, Rq rq) {
 		this.memberService = memberService;
+		this.kakaoLoginService = kakaoLoginService;
 		this.rq = rq;
 	}
 	
@@ -102,6 +111,52 @@ public class UsrMemberController {
 		
 		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", "/");
 	}
+	
+	@RequestMapping("/usr/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData<String> getLoginIdDup(String loginId) {
+		
+		if(Ut.empty(loginId)) {
+			return ResultData.from("F-1", "아이디를 입력해주세요.");
+		}
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member != null) {
+			return ResultData.from("F-2", "이미 사용중인 아이디입니다.", "loginId", loginId);
+		}
+		
+		return ResultData.from("S-1", "사용 가능한 아이디입니다.", "loginId", loginId);
+	}
+
+	@RequestMapping("/usr/member/kakaoLogin")
+	@ResponseBody
+	public String kakaoLogin(@RequestParam("code") String code, @RequestParam(defaultValue = "/") String afterLoginUri)
+			throws IOException {
+		// 토큰 발급 받기
+		String access_Token = kakaoLoginService.getAccessToken(code);
+
+		// 사용자 정보 가지고 오기
+		Member member = kakaoLoginService.userInfo(access_Token);
+
+		// 세션 형성 + request 내장 객체 가지고 오기
+
+		System.out.println("accessToken: " + access_Token);
+		System.out.println("code:" + code);
+		System.out.println("Common Controller:" + member);
+		System.out.println("nickname: " + member.getName());
+		System.out.println("email: " + member.getEmail());
+
+		// 세션에 담기
+		if (member.getEmail() != null) {
+			rq.login(member);
+		}
+		
+		String msg = Ut.f("%s님 환영합니다.", member.getName());
+		
+		return rq.jsReplace(msg, "/");
+	}
+	
 	
 	@RequestMapping("/usr/member/myPage")
 	public String showMyPage() {

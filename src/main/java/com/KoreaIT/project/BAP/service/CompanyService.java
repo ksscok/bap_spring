@@ -1,24 +1,28 @@
 package com.KoreaIT.project.BAP.service;
 
-import java.util.HashMap;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.repository.CompanyRepository;
 import com.KoreaIT.project.BAP.vo.Company;
+import com.KoreaIT.project.BAP.vo.Review;
 
 @Service
 public class CompanyService {
 	
 	CompanyRepository companyRepository;
+	private ReviewService reviewService;
 	
-	CompanyService(CompanyRepository companyRepository) {
+	CompanyService(CompanyRepository companyRepository, ReviewService reviewService) {
 		this.companyRepository = companyRepository;
+		this.reviewService = reviewService;
 	}
 
-	public int register(String name, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id) {
-		companyRepository.register(name, address, area, timeChkin, timeChkout, accommodationType, host_id);
+	public int register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id) {
+		companyRepository.register(name, cellphoneNo, address, area, timeChkin, timeChkout, accommodationType, host_id);
 		return companyRepository.getLastInsertId();
 	}
 	
@@ -143,4 +147,60 @@ public class CompanyService {
 	public List<Company> getCompanyByHostId(int hostId) {
 		return companyRepository.getCompanyByHostId(hostId);
 	}
+
+	// 찜 목록 불러오는 함수1
+	public List<Company> getCompaniesByIds(int[] comp_ids, String searchKeywordTypeCode, String searchKeyword) {
+		
+		List<Company> companies = new ArrayList<>();
+		
+		for(int i = 0; i < comp_ids.length; i++) {
+			// 만약 getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword)의 값이 없을 때 없는 값으로 companies에 add를 해버려서 빈칸이 나와버림
+			if(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword) != null) {
+				companies.add(getCompanyByComp_idForWish(comp_ids[i], searchKeywordTypeCode, searchKeyword));
+			}
+		}
+		
+		return companies;
+	}
+
+	// 찜 목록 불러오는 함수2
+	private Company getCompanyByComp_idForWish(int id, String searchKeywordTypeCode, String searchKeyword) {
+		Company company = companyRepository.getCompanyByComp_idForWish(id, searchKeywordTypeCode, searchKeyword);
+		
+		List<Review> reviews = reviewService.getReviewsByComp_id(id);
+		
+		//평균 평점 구하기 시작
+		int totalRating = 0;
+		
+		for(Review review : reviews) {
+			totalRating += review.getRating();
+		}
+		
+		// 실수를 소수점 첫째자리까지 자르기 위한 함수
+		DecimalFormat df = new DecimalFormat("0.0"); 
+
+		String avg = "";
+		int avgStarCount = 0;
+				
+		
+		if(reviews.size() != 0) {
+			avg = df.format(totalRating/ (double) reviews.size());
+			avgStarCount = (int) Math.floor(totalRating/reviews.size());
+		}
+		//평균 평점 구하기 끝
+		
+		// 해당 사업장에 등록되어 있는 리뷰 점수들의 평균점수
+		company.setExtra__avg(avg);
+		// 해당 사업장에 등록되어 있는 리뷰 점수들의 평균 점수 정수화(별 개수)
+		company.setExtra__avgStarCount(avgStarCount);
+		// 해당 사업장에 등록되어 있는 리뷰의 개수
+		company.setExtra__reviewCount(reviews.size());
+		System.out.println("==== company.getExtra__avgStarCount() : " + company.getExtra__avgStarCount() + "====");
+		System.out.println("==== company.getExtra__avg() : " + company.getExtra__avg() + "====");
+		System.out.println("==== company.getExtra__reviewCount() : " + company.getExtra__reviewCount() + "====");
+		
+		
+		return company;
+	}
+
 }

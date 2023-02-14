@@ -18,6 +18,7 @@ public class Member {
 	private String name;
 	private String cellphoneNo;
 	private String email;
+	private int m_point;
 	private boolean delStatus;
 	private String delDate;
 }
