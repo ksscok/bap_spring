@@ -75,11 +75,11 @@ public interface MemberRepository {
 			regDate = NOW(),
 			updateDate = NOW(),
 			memberType = 'guest',
-			loginId = 'kakao',
-			loginPw = 'kakao',
+			loginId = '-',
+			loginPw = '-',
 			name = #{name},
 			email = #{email},
-			cellphoneNo = 'kakao'
+			cellphoneNo = '-'
 			""")
 	public void kakaoJoin(long id, String name, String email);
 

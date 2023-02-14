@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Service
-public class KakaoLoginService  {
+public class KakaoAPIService  {
 
 	//컨트롤러에서 사용할 메서드 만들기 
 	//화면에서 파라미터로 넘겨준 code값을 받아오고 POST로 요청을 보내서 토큰을 발급받기 
@@ -157,5 +157,29 @@ public class KakaoLoginService  {
 	 		
 	 		return member;
 	 	}
+	 	
+	 	public void kakaoLogout(String accessToken) {
+			String reqURL = "http://kapi.kakao.com/v1/user/logout";
+			try {
+				URL url = new URL(reqURL);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+				int responseCode = conn.getResponseCode();
+				System.out.println("responseCode = " + responseCode);
+				
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				
+				String result = "";
+				String line = "";
+				
+				while((line = br.readLine()) != null) {
+					result+=line;
+				}
+				System.out.println(result);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 }
 

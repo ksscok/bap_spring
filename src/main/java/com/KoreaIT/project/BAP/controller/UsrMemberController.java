@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.KoreaIT.project.BAP.service.KakaoLoginService;
+import com.KoreaIT.project.BAP.service.KakaoAPIService;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Member;
@@ -21,12 +22,12 @@ import com.KoreaIT.project.BAP.vo.Rq;
 public class UsrMemberController {
 	
 	private MemberService memberService;
-	private KakaoLoginService kakaoLoginService;
+	private KakaoAPIService kakaoAPIService;
 	private Rq rq;
 	
-	UsrMemberController(MemberService memberService, KakaoLoginService kakaoLoginService, Rq rq) {
+	UsrMemberController(MemberService memberService, KakaoAPIService kakaoAPIService, Rq rq) {
 		this.memberService = memberService;
-		this.kakaoLoginService = kakaoLoginService;
+		this.kakaoAPIService = kakaoAPIService;
 		this.rq = rq;
 	}
 	
@@ -66,7 +67,11 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(@RequestParam(defaultValue= "/") String afterLogoutUri) {
+	public String doLogout(@RequestParam(defaultValue= "/") String afterLogoutUri, HttpSession session) {
+		
+		kakaoAPIService.kakaoLogout((String)session.getAttribute("accessToken"));
+		session.removeAttribute("accessToken");
+		session.removeAttribute("userId");
 		
 		rq.logout();
 		
@@ -134,10 +139,10 @@ public class UsrMemberController {
 	public String kakaoLogin(@RequestParam("code") String code)
 			throws IOException {
 		// 토큰 발급 받기
-		String access_Token = kakaoLoginService.getAccessToken(code);
+		String access_Token = kakaoAPIService.getAccessToken(code);
 
 		// 사용자 정보 가지고 오기
-		Member member = kakaoLoginService.userInfo(access_Token);
+		Member member = kakaoAPIService.userInfo(access_Token);
 		
 		System.out.println("accessToken: " + access_Token);
 		System.out.println("code:" + code);
