@@ -23,7 +23,7 @@ public class Company {
 	private String timeChkin;
 	private String timeChkout;
 	private String accommodationType;
-	private int host_id;
+	private long host_id;
 	
 	private int extra__productFee;
 	private int extra__minFee;

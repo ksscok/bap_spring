@@ -33,7 +33,7 @@ public class MemberService {
 		memberRepository.modify(id, loginPw, email, cellphoneNo);
 		
 	}
-	public void doModifyPoint(int id, int m_point) {
+	public void doModifyPoint(long id, int m_point) {
 		memberRepository.doModifyPoint(id, m_point);
 	}
 }

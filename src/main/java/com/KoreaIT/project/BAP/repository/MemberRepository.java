@@ -66,6 +66,6 @@ public interface MemberRepository {
 			m_point = m_point + #{m_point}
 			WHERE id = #{id}
 			""")
-	public void doModifyPoint(int id, int m_point);
+	public void doModifyPoint(long id, int m_point);
 
 }

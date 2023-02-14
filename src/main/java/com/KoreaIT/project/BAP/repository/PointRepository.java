@@ -19,7 +19,7 @@ public interface PointRepository {
 			payment_id = #{payment_id},
 			p_point = #{p_point}
 			""")
-	void doWrite(int memberId, int payment_id, int p_point);
+	void doWrite(long memberId, int payment_id, int p_point);
 
 	@Select("""
 			SELECT po.*,
@@ -34,6 +34,6 @@ public interface PointRepository {
 				GROUP BY po.id
 				ORDER BY po.id desc
 			""")
-	List<Point> getPointsByMemberId(int memberId);
+	List<Point> getPointsByMemberId(long memberId);
 
 }

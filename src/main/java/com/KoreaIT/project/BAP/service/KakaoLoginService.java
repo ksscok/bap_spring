@@ -11,7 +11,6 @@ import java.net.URL;
 
 import org.springframework.stereotype.Service;
 
-import com.KoreaIT.project.BAP.vo.KakaoLogin;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -135,7 +134,7 @@ public class KakaoLoginService  {
 	           	//응답데이터(JSON)
 	            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 	            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-//	            Long id = element.getAsJsonObject().get("id").getAsLong();
+	            Long id = element.getAsJsonObject().get("id").getAsLong();
 	            
 	            //파싱된 json데이터를 string에 담기
 	            //properties
@@ -143,11 +142,11 @@ public class KakaoLoginService  {
 	          
 	            //kakao_account
 	            String email = kakao_account.getAsJsonObject().get("email").getAsString();
-//	            System.out.println("id: "+ id);
+	            System.out.println("id: "+ id);
 	            System.out.println("nickname: "+name);
 	            
 	            //setter이용하여 member에 담기 
-//	            member.setId(id);
+	            member.setId(id);
 	            member.setName(name);
 	            member.setEmail(email);
 

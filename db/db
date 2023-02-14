@@ -5,7 +5,7 @@ SHOW TABLES;
 
 #host 테이블 생성
 CREATE TABLE `member` (
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	memberType CHAR(20) NOT NULL,
@@ -84,7 +84,7 @@ email = 'guest2@gmail.com';
 
 # company 테이블 생성
 CREATE TABLE company (
-	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	`name` CHAR(50) NOT NULL,
@@ -1529,22 +1529,22 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-select *
-from `member`
-where id = 5;
+SELECT *
+FROM `member`
+WHERE id = 5;
 
-SELECT po.*,
-c.name as extra__compName,
-pa.balanceAmount As extra__balanceAmount
-FROM `point` as po
-left join payment as pa
-on po.payment_id = pa.id
-LEFT JOIN booking AS b
-ON pa.booking_id = b.id
-LEFT JOIN company AS c
-ON b.comp_id = c.id
-WHERE po.memberId = 5
-GROUP BY po.id;
+-- SELECT po.*,
+-- c.name as extra__compName,
+-- pa.balanceAmount As extra__balanceAmount
+-- FROM `point` as po
+-- left join payment as pa
+-- on po.payment_id = pa.id
+-- LEFT JOIN booking AS b
+-- ON pa.booking_id = b.id
+-- LEFT JOIN company AS c
+-- ON b.comp_id = c.id
+-- WHERE po.memberId = 5
+-- GROUP BY po.id;
 
 SELECT * FROM company;
 SELECT * FROM product;

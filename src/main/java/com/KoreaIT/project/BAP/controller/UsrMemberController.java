@@ -144,6 +144,7 @@ public class UsrMemberController {
 		System.out.println("accessToken: " + access_Token);
 		System.out.println("code:" + code);
 		System.out.println("Common Controller:" + member);
+		System.out.println("id: " + member.getId());
 		System.out.println("nickname: " + member.getName());
 		System.out.println("email: " + member.getEmail());
 

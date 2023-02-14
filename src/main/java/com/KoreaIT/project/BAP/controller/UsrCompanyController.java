@@ -43,7 +43,7 @@ public class UsrCompanyController {
 	@RequestMapping("/usr/company/doRegister")
 	@ResponseBody
 	public String doRegister(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, 
-			int host_id, MultipartRequest multipartRequest) {
+			long host_id, MultipartRequest multipartRequest) {
 		
 		if(Ut.empty(name)) {
 			return rq.jsHistoryBack("상호를 등록해주세요.");
