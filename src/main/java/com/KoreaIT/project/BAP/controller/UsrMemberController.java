@@ -71,7 +71,6 @@ public class UsrMemberController {
 		
 		kakaoAPIService.kakaoLogout((String)session.getAttribute("accessToken"));
 		session.removeAttribute("accessToken");
-		session.removeAttribute("userId");
 		
 		rq.logout();
 		
@@ -136,15 +135,15 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/kakaoLogin")
 	@ResponseBody
-	public String kakaoLogin(@RequestParam("code") String code)
+	public String kakaoLogin(@RequestParam("code") String code, HttpSession session)
 			throws IOException {
 		// 토큰 발급 받기
-		String access_Token = kakaoAPIService.getAccessToken(code);
+		String accessToken = kakaoAPIService.getAccessToken(code);
 
 		// 사용자 정보 가지고 오기
-		Member member = kakaoAPIService.userInfo(access_Token);
+		Member member = kakaoAPIService.userInfo(accessToken);
 		
-		System.out.println("accessToken: " + access_Token);
+		System.out.println("accessToken: " + accessToken);
 		System.out.println("code:" + code);
 		System.out.println("Common Controller:" + member);
 		System.out.println("id: " + member.getId());
@@ -161,6 +160,7 @@ public class UsrMemberController {
 		// 세션에 담기
 		if (member.getEmail() != null) {
 			rq.login(member);
+			session.setAttribute("accessToken", accessToken);
 		}
 		
 		String msg = Ut.f("%s님 환영합니다.", member.getName());

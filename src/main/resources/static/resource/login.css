@@ -1,0 +1,26 @@
+.input-form {
+	display: flex;
+	align-items: center;
+}
+
+.input-focus {
+	outline: 2px solid #dbd9d3;
+	outline-offset: 2px;
+}
+
+.input-form > div {
+	margin-right: 5px;
+}
+
+.input-form > input:focus {
+	outline: none;
+}
+
+#kakaoImg:hover {
+	filter: brightness(90%);
+}
+
+.logo {
+	width: 150px;
+}
+
