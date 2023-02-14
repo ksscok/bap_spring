@@ -15,7 +15,7 @@ public class Payment {
 	private int booking_id;
 	private String status;
 	private String method;
-	private int payMBId;
+	private int payMBId; // 은행 번호인데 은행 부분 어떻게 해야할 지 아직 몰라서 고민중
 	private String requestedAt;
 	private String approvedAt;
 	private String type;
@@ -23,7 +23,6 @@ public class Payment {
 	private String lastTransactionKey;
 	private int totalAmount;
 	private int balanceAmount;
-	private int pay_point;
 	private int suppliedAmount;
 	private int vat;
 	
