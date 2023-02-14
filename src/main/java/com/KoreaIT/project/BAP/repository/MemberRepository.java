@@ -68,4 +68,19 @@ public interface MemberRepository {
 			""")
 	public void doModifyPoint(long id, int m_point);
 
+
+	@Insert("""
+			INSERT INTO `member`
+			SET id = #{id},
+			regDate = NOW(),
+			updateDate = NOW(),
+			memberType = 'guest',
+			loginId = 'kakao',
+			loginPw = 'kakao',
+			name = #{name},
+			email = #{email},
+			cellphoneNo = 'kakao'
+			""")
+	public void kakaoJoin(long id, String name, String email);
+
 }

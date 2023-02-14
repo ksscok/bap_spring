@@ -131,22 +131,27 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/kakaoLogin")
 	@ResponseBody
-	public String kakaoLogin(@RequestParam("code") String code, @RequestParam(defaultValue = "/") String afterLoginUri)
+	public String kakaoLogin(@RequestParam("code") String code)
 			throws IOException {
 		// 토큰 발급 받기
 		String access_Token = kakaoLoginService.getAccessToken(code);
 
 		// 사용자 정보 가지고 오기
 		Member member = kakaoLoginService.userInfo(access_Token);
-
-		// 세션 형성 + request 내장 객체 가지고 오기
-
+		
 		System.out.println("accessToken: " + access_Token);
 		System.out.println("code:" + code);
 		System.out.println("Common Controller:" + member);
 		System.out.println("id: " + member.getId());
 		System.out.println("nickname: " + member.getName());
 		System.out.println("email: " + member.getEmail());
+		
+		// DB에 회원 정보가 없을 경우 DB에 회원 정보 저장
+		Member oldMember = memberService.getMemberById(member.getId());
+
+		if (oldMember == null) {
+			memberService.kakaoJoin(member.getId(), member.getName(), member.getEmail());
+		}
 
 		// 세션에 담기
 		if (member.getEmail() != null) {
@@ -157,7 +162,6 @@ public class UsrMemberController {
 		
 		return rq.jsReplace(msg, "/");
 	}
-	
 	
 	@RequestMapping("/usr/member/myPage")
 	public String showMyPage() {
