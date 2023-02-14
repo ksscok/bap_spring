@@ -134,7 +134,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(int id, String loginPw, String loginPwConfirm, String email, String cellphoneNo) {
+	public String doModify(long id, String loginPw, String loginPwConfirm, String email, String cellphoneNo) {
 		
 		if(Ut.empty(loginPw)) {
 			loginPw = null;

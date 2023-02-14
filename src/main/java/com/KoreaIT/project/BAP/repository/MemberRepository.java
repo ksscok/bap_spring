@@ -37,7 +37,7 @@ public interface MemberRepository {
 			FROM `member`
 			WHERE id = #{id}
 			""")
-	public Member getMemberById(int id);
+	public Member getMemberById(long id);
 
 
 	@Update("""
@@ -58,6 +58,6 @@ public interface MemberRepository {
 			WHERE id = #{id}
 			</script>
 			""")
-	public void modify(int id, String loginPw, String email, String cellphoneNo);
+	public void modify(long id, String loginPw, String email, String cellphoneNo);
 
 }

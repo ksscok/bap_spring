@@ -23,10 +23,10 @@ public class MemberService {
 		memberRepository.join(memberType, loginId, loginPw, name, email, cellphoneNo);
 		
 	}
-	public Member getMemberById(int id) {
+	public Member getMemberById(long id) {
 		return memberRepository.getMemberById(id);
 	}
-	public void modify(int id, String loginPw, String email, String cellphoneNo) {
+	public void modify(long id, String loginPw, String email, String cellphoneNo) {
 		
 		loginPw = Ut.sha256(loginPw);
 		
