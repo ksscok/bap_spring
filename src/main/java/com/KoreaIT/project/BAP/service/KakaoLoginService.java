@@ -12,12 +12,13 @@ import java.net.URL;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.project.BAP.vo.KakaoLogin;
+import com.KoreaIT.project.BAP.vo.Member;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Service
-public class KakaoAPI  {
+public class KakaoLoginService  {
 
 	//컨트롤러에서 사용할 메서드 만들기 
 	//화면에서 파라미터로 넘겨준 code값을 받아오고 POST로 요청을 보내서 토큰을 발급받기 
@@ -87,10 +88,10 @@ public class KakaoAPI  {
 	    }
 	 
 	 //회원정보 요청, 사용자 정보 보기 
-	 	public KakaoLogin userInfo(String access_Token) throws IOException {
+	 	public Member userInfo(String access_Token) throws IOException {
 	 		System.out.println("-------------------------사용자 정보 보기---------------------------");	 		
 	 		
-	 		KakaoLogin userInfo = new KakaoLogin();
+	 		Member member = new Member();
 	 		
 	 		//토큰을 이용하여 카카오에 회원의 정보를 요청한다. 
          // v1을 통한 '사용자 정보 요청'은 만료되었다. 
@@ -134,35 +135,28 @@ public class KakaoAPI  {
 	           	//응답데이터(JSON)
 	            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 	            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-	            Long id = element.getAsJsonObject().get("id").getAsLong();
+//	            Long id = element.getAsJsonObject().get("id").getAsLong();
 	            
 	            //파싱된 json데이터를 string에 담기
 	            //properties
-	            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+	            String name = properties.getAsJsonObject().get("nickname").getAsString();
 	          
 	            //kakao_account
 	            String email = kakao_account.getAsJsonObject().get("email").getAsString();
-	            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
-	            String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
-	            String age_range = kakao_account.getAsJsonObject().get("age_range").getAsString();
+//	            System.out.println("id: "+ id);
+	            System.out.println("nickname: "+name);
 	            
-	            System.out.println("id: "+ id);
-	            System.out.println("nickname: "+nickname);
-	            
-	            //setter이용하여 KakaoVO에 담기 
-	            userInfo.setKakaoId(id);
-	            userInfo.setNickname(nickname);
-	            userInfo.setAccount_email(email);
-	            userInfo.setAge_range(age_range);
-	            userInfo.setGender(gender);
-	            userInfo.setBirthday(birthday);
+	            //setter이용하여 member에 담기 
+//	            member.setId(id);
+	            member.setName(name);
+	            member.setEmail(email);
 
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	 		
-	 		return userInfo;
+	 		return member;
 	 	}
 }
 
