@@ -1392,7 +1392,7 @@ CREATE TABLE `point`
     regDate 	DATETIME DEFAULT NULL COMMENT '작성날짜', 
 	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
     memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
-    payment_id    INT UNSIGNED    NOT NULL    COMMENT '결제번호',
+    booking_id    INT UNSIGNED    NOT NULL    COMMENT '결제번호',
     p_point INT (10) UNSIGNED NOT NULL  COMMENT '포인트'
 );
 
@@ -1529,9 +1529,9 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-SELECT *
-FROM `member`
-WHERE id = 5;
+select *
+from `member`
+where id = 5;
 
 SELECT po.*,
 c.name as extra__compName,

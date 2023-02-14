@@ -26,10 +26,8 @@ public interface PointRepository {
 				c.name AS extra__compName,
 				pa.balanceAmount AS extra__balanceAmount
 				FROM `point` AS po
-				LEFT JOIN payment AS pa
-				ON po.payment_id = pa.id
 				LEFT JOIN booking AS b
-				ON pa.booking_id = b.id
+				ON pa.booking_id = po.booking_id
 				LEFT JOIN company AS c
 				ON b.comp_id = c.id
 				WHERE po.memberId = #{memberId}
