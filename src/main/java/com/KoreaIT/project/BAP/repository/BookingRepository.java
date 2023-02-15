@@ -2,6 +2,7 @@ package com.KoreaIT.project.BAP.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -140,5 +141,11 @@ public interface BookingRepository {
 				FROM booking
 			""")
 	List<Booking> getAllBookings();
+
+	@Delete("""
+			DELETE FROM booking 
+				WHERE id = #{id}
+			""")
+	void doDelete(int id);
 
 }

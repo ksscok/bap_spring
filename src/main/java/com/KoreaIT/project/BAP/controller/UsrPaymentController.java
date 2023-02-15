@@ -113,14 +113,17 @@ public class UsrPaymentController {
 		
 		int payment_id = paymentService.getLastInsertId();
 		
-		String PointStatus = "done";
+		String Status = "done";
+		
+		bookingService.doModifyStatus(bookingId, Status);
+		booking.setExtra__status("예약(결제) 완료");
 		
 		if(rq.getLoginedMemberId() != 0) {
 			
 			pay_point = -pay_point;
 			memberService.doModifyPoint(rq.getLoginedMemberId(), pay_point, savePoint);
-			pointService.doWrite(rq.getLoginedMemberId(), payment_id, pay_point, PointStatus); // 결제에 사용한 포인트
-			pointService.doWrite(rq.getLoginedMemberId(), payment_id, savePoint, PointStatus); // 결제로 인해 적립된 포인트
+			pointService.doWrite(rq.getLoginedMemberId(), payment_id, pay_point, Status); // 결제에 사용한 포인트
+			pointService.doWrite(rq.getLoginedMemberId(), payment_id, savePoint, Status); // 결제로 인해 적립된 포인트
 		}
 	    
 		model.addAttribute("paymentKey", paymentKey);

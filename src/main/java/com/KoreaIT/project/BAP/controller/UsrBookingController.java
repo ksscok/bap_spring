@@ -196,6 +196,9 @@ public class UsrBookingController {
 		// 예약번호 확인 시켜주기 위해서
 		int bookingId = bookingService.getLastInsertId();
 		
+		Booking booking = bookingService.getBookingById(bookingId);
+		booking.setExtra__status("결제 대기중");
+		
 		String book_id = ("" + bookingId).trim();
 		
 		return book_id;

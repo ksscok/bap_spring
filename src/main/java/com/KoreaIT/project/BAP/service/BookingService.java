@@ -45,6 +45,9 @@ public class BookingService {
 					// status 한글 번역화
 					modifyExtra__status(booking);
 				}
+			// 예약 페이지에서 결제하기 버튼 누르고 결제 취소했을 때 생긴 예약테이블 지우기 위한 로직
+			}else if(booking.getStatus().equals("await")) {
+				bookingRepository.doDelete(booking.getId());
 			}
 		}
 		   

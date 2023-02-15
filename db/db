@@ -469,7 +469,7 @@ CREATE TABLE booking
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수',
-    `status`  VARCHAR(45)    NOT NULL DEFAULT 'done'   COMMENT '예약상태 (done : 예약 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
+    `status`  VARCHAR(45)    NOT NULL DEFAULT 'await'   COMMENT '예약상태 (await : 결제 대기중, done : 예약(결제) 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
 );
 
 SELECT COUNT(*)
@@ -516,7 +516,8 @@ start_date = "2023-03-01",
 end_date = "2023-04-28",
 diff = 58,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
 
 # 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -533,7 +534,8 @@ start_date = "2023-04-13",
 end_date = "2023-04-20",
 diff = 7,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
 INSERT INTO booking
@@ -604,7 +606,8 @@ start_date = "2023-02-01",
 end_date = "2023-02-02",
 diff = 1,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -621,7 +624,8 @@ start_date = "2023-02-01",
 end_date = "2023-02-10",
 diff = 9,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -638,7 +642,8 @@ start_date = "2023-02-01",
 end_date = "2023-02-12",
 diff = 11,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
 
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -653,6 +658,25 @@ lastTotalAmount = '70000',
 paidRealAmount = '70000',
 start_date = "2023-02-12",
 end_date = "2023-02-13",
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# 얘는 예약만 작성하고 결제는 안함
+# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2222222", "2"),
+comp_id = 2,
+prod_id = 2,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = "2023-03-12",
+end_date = "2023-03-13",
 diff = 1,
 countOfAdult = 2,
 countOfChild = 0;
