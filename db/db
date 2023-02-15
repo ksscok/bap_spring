@@ -900,11 +900,9 @@ CREATE TABLE cancel
     title  VARCHAR(45)    NOT NULL    COMMENT '취소 사유', 
     `body`    VARCHAR(45)    NOT NULL    COMMENT '취소 상세 사유', 
     transactionKey VARCHAR(200) NOT NULL COMMENT '거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)',
-    taxExemptionAmount INT UNSIGNED NOT NULL COMMENT '결제 금액 중 과세 제외 금액(컵 보증금 등)',
-    easyPayDiscountAmount INT UNSIGNED NOT NULL COMMENT '간편결제 서비스의 포인트, 쿠폰, 즉시할인과 같은 적립식 결제 수단에서 취소된 금액',
-    cancelAmount INT UNSIGNED NOT NULL COMMENT '취소할 금액',
-    taxFreeAmount INT UNSIGNED NOT NULL COMMENT '결제 금액 중 면세 금액',
-    refundableAmount INT UNSIGNED NOT NULL COMMENT '현재 환불 가능한 금액'
+	lastTotalAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '총 결제 금액',
+    pay_point INT(100) UNSIGNED DEFAULT 0 COMMENT '결제시 사용된 포인트',
+    paidRealAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '실제 결제 금액(lastTotalAmount - p_point)'
 );
 
 SELECT *
@@ -1416,7 +1414,8 @@ CREATE TABLE `point`
 	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
     memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
     booking_id    INT UNSIGNED    NOT NULL    COMMENT '결제번호',
-    p_point INT (10) NOT NULL  COMMENT '포인트'
+    p_point INT (10) NOT NULL  COMMENT '포인트',
+    `status`  VARCHAR(45)    NOT NULL DEFAULT 'done' COMMENT '예약상태 (done : 결제 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel : 결제 취소 완료)'
 );
 
 # `point` 테스트 데이터

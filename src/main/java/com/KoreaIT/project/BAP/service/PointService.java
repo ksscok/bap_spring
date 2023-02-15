@@ -18,8 +18,8 @@ public class PointService {
 		this.pointRepository = pointRepository;
 	}
 
-	public void doWrite(int memberId, int payment_id, int p_point) {
-		pointRepository.doWrite(memberId, payment_id, p_point);
+	public void doWrite(int memberId, int payment_id, int p_point, String status) {
+		pointRepository.doWrite(memberId, payment_id, p_point, status);
 	}
 
 	public List<Point> getPointsByMemberId(int memberId) {

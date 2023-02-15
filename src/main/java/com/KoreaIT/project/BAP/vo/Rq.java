@@ -160,6 +160,9 @@ public class Rq {
 		case "/usr/booking/list":
 		case "/usr/booking/detail":
 		case "/usr/booking/cancelWrite":
+		case "/usr/booking/cancelDetail":
+		case "/usr/booking/cancelModify":
+		case "/usr/management/bookingList":
 		case "/usr/wish/list":
 		case "/usr/review/list":
 		case "/usr/point/list":

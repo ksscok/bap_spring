@@ -32,9 +32,9 @@
 			<div class="mt-6 ml-2">
 				<span class="text-lg font-extrabold mb-4">간략정보</span>
 				<div class="my-2">예약번호 : ${booking.id }</div>
-				<div>결제 금액 : <fmt:formatNumber value="${payment.totalAmount}" pattern="#,###"/> 원</div>
+				<div>결제 금액 : <fmt:formatNumber value="${payment.lastTotalAmount}" pattern="#,###"/> 원</div>
 <!-- 				추후에 포인트, 쿠폰 등으로 인한 금액을 총 결제 금액에서 뺀 금액으로 넣을 예정 -->
-				<div class="my-2">취소 가능 금액 : <fmt:formatNumber value="${payment.balanceAmount}" pattern="#,###"/> 원</div>
+				<div class="my-2">취소 가능 금액 : <fmt:formatNumber value="${payment.paidRealAmount}" pattern="#,###"/> 원</div>
 			</div>
 			<div class="mt-6">
 				<div class="text-lg font-extrabold mb-2 ml-2">취소 사유</div>

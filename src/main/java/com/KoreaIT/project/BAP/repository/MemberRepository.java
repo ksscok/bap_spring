@@ -68,4 +68,11 @@ public interface MemberRepository {
 			""")
 	public void doModifyPoint(int id, int pay_point, int savePoint);
 
+	@Select("""
+			SELECT * 
+			FROM `member`
+			WHERE cellphoneNo = #{cellphoneNo}
+			""")
+	public Member getMemberByCellphoneNo(String cellphoneNo);
+
 }

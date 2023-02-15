@@ -340,7 +340,7 @@ public class UsrBookingController {
 		
 		Booking booking = bookingService.getBookingById(booking_id);
 		
-		cancelReasonService.doWrite(booking_id, memberType, title, body, booking.getExtra__prodFee());
+		cancelReasonService.doWrite(booking_id, memberType, title, body, booking.getPaidRealAmount());
 		
 		bookingService.doModifyStatus(booking.getId(), status);
 		

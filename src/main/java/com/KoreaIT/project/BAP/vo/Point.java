@@ -14,6 +14,7 @@ public class Point {
 	private int memberId;
 	private int payment_id;
 	private int p_point;
+	private String status;
 	
 	private String extra__compName;
 	private int extra__paidRealAmount;

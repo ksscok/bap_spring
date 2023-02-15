@@ -15,10 +15,10 @@ public class CancelService {
 		this.cancelRepository = cancelRepository;
 	}
 	
-	public void doWrite(int booking_id, String title, String body, String transactionKey, Object taxExemptionAmount,
-			Object easyPayDiscountAmount, Object cancelAmount, Object taxFreeAmount, Object refundableAmount) {
+	public void doWrite(int booking_id, String title, String body, String transactionKey, int lastTotalAmount,
+			int pay_point, int paidRealAmount) {
 		
-		cancelRepository.doWrite(booking_id, title, body, transactionKey, taxExemptionAmount, easyPayDiscountAmount, cancelAmount, taxFreeAmount, refundableAmount);
+		cancelRepository.doWrite(booking_id, title, body, transactionKey, lastTotalAmount, pay_point, paidRealAmount);
 	}
 
 }

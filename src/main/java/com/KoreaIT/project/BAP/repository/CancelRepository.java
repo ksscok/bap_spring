@@ -14,13 +14,11 @@ public interface CancelRepository {
 					title = #{title},
 					`body` = #{body},
 					transactionKey = #{transactionKey},
-					taxExemptionAmount = #{taxExemptionAmount},
-					easyPayDiscountAmount = #{easyPayDiscountAmount},
-					cancelAmount = #{cancelAmount},
-					taxFreeAmount = #{taxFreeAmount},
-					refundableAmount = #{refundableAmount}
+					lastTotalAmount = #{lastTotalAmount},
+					pay_point = #{pay_point},
+					paidRealAmount = #{paidRealAmount}
 			""")
-	void doWrite(int booking_id, String title, String body, String transactionKey, Object taxExemptionAmount,
-			Object easyPayDiscountAmount, Object cancelAmount, Object taxFreeAmount, Object refundableAmount);
-
+	void doWrite(int booking_id, String title, String body, String transactionKey, int lastTotalAmount,
+			int pay_point, int paidRealAmount);
+	
 }

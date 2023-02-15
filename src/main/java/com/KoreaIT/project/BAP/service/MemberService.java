@@ -36,4 +36,7 @@ public class MemberService {
 	public void doModifyPoint(int id, int pay_point, int savePoint) {
 		memberRepository.doModifyPoint(id, pay_point, savePoint);
 	}
+	public Member getMemberByCellphoneNo(String cellphoneNo) {
+		return memberRepository.getMemberByCellphoneNo(cellphoneNo);
+	}
 }

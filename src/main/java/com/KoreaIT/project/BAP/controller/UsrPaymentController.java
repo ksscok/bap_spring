@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.project.BAP.service.BookingService;
@@ -24,6 +23,7 @@ import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.service.PointService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Booking;
+import com.KoreaIT.project.BAP.vo.Member;
 import com.KoreaIT.project.BAP.vo.Payment;
 import com.KoreaIT.project.BAP.vo.Rq;
 
@@ -89,16 +89,21 @@ public class UsrPaymentController {
 	    String type = (String) jsonObj.get("type"); // "NORMAL", 결제 타입 정보 (NORMAL : 일반결제, BILLING : 자동결제, BRANDPAY : 브랜드페이)
 	    String cancels = (String) jsonObj.get("cancels"); // "null", 결제 취소 상태
 	    String lastTransactionKey = (String) jsonObj.get("lastTransactionKey"); // 마지막 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)
+	    // 카드사에 관련된 금액들 시작
 	    Object totalAmount =  (Object) jsonObj.get("totalAmount"); // 총 결제 금액
 	    Object balanceAmount = (Object) jsonObj.get("balanceAmount"); // 취소할 수 있는 금액(잔고)
 	    Object suppliedAmount = (Object) jsonObj.get("suppliedAmount"); // 공급가액
 	    Object vat = (Object) jsonObj.get("vat"); // 부가세 {결제 금액(amount) - 면세 금액(taxFreeAmount)//11후 소수점 첫째 자리에서 반올림
+	    // 카드사에 관련된 금액들 끝
 		
+	    
 	    Booking booking = bookingService.getBookingByOrderId(orderId);
 		int bookingId = booking.getId();
-		int lastTotalAmount = booking.getLastTotalAmount();
-		int pay_point = booking.getPay_point();
-		int paidRealAmount = booking.getPaidRealAmount();
+		// 실제 이 프로젝트에 관련된 금액들 시작
+		int lastTotalAmount = booking.getLastTotalAmount(); // 총 결제 금액
+		int pay_point = booking.getPay_point(); // 사용한 포인트
+		int paidRealAmount = booking.getPaidRealAmount(); // 실제 결제 금액(취소할 수 있는 금액) = 총 결제 금액 - 사용한 포인트
+		// 실제 이 프로젝트에 관련된 금액들 끝
 		
 		String bank = "토스페이";
 		
@@ -108,12 +113,14 @@ public class UsrPaymentController {
 		
 		int payment_id = paymentService.getLastInsertId();
 		
+		String PointStatus = "done";
+		
 		if(rq.getLoginedMemberId() != 0) {
 			memberService.doModifyPoint(rq.getLoginedMemberId(), pay_point, savePoint);
 			
 			pay_point = -pay_point;
-			pointService.doWrite(rq.getLoginedMemberId(), payment_id, pay_point); // 결제에 사용한 포인트
-			pointService.doWrite(rq.getLoginedMemberId(), payment_id, savePoint); // 결제로 인해 적립된 포인트
+			pointService.doWrite(rq.getLoginedMemberId(), payment_id, pay_point, PointStatus); // 결제에 사용한 포인트
+			pointService.doWrite(rq.getLoginedMemberId(), payment_id, savePoint, PointStatus); // 결제로 인해 적립된 포인트
 		}
 	    
 		model.addAttribute("paymentKey", paymentKey);
@@ -197,19 +204,36 @@ public class UsrPaymentController {
 		JSONObject cancelsObject = (JSONObject) cancels.get(0);
 		
 		String transactionKey = (String) cancelsObject.get("transactionKey"); // 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)
+		// 카드사에 관련된 금액들 시작
 		Object taxExemptionAmount = (Object) cancelsObject.get("taxExemptionAmount"); // 결제 금액 중 과세 제외 금액(컵 보증금 등)
 		Object easyPayDiscountAmount = (Object) cancelsObject.get("easyPayDiscountAmount"); // 간편결제 서비스의 포인트, 쿠폰, 즉시할인과 같은 적립식 결제 수단에서 취소된 금액
 		Object cancelAmount = (Object) cancelsObject.get("cancelAmount"); // 취소할 금액
 		Object taxFreeAmount = (Object) cancelsObject.get("taxFreeAmount"); // 결제 금액 중 면세 금액
 		Object refundableAmount = (Object) cancelsObject.get("refundableAmount"); // 현재 환불 가능한 금액
+		// 카드사에 관련된 금액들 끝
 		
-		cancelService.doWrite(booking_id, title, body, transactionKey, taxExemptionAmount, easyPayDiscountAmount, cancelAmount, taxFreeAmount, refundableAmount);
+		// 실제 이 프로젝트에 관련된 금액들 시작
+		int lastTotalAmount = booking.getLastTotalAmount(); // 총 결제 금액
+		int pay_point = booking.getPay_point(); // 사용한 포인트
+		int paidRealAmount = booking.getPaidRealAmount(); // 실제 결제 금액(취소할 수 있는 금액) = 총 결제 금액 - 사용한 포인트
+		// 실제 이 프로젝트에 관련된 금액들 끝
+		
+		cancelService.doWrite(booking_id, title, body, transactionKey, lastTotalAmount, pay_point, paidRealAmount);
 		
 		paymentService.doModify(payment.getId());
 		
 		String status = "cancel";
 		
 		bookingService.doModifyStatus(booking.getId(), status);
+		
+		Member member = memberService.getMemberByCellphoneNo(booking.getCellphoneNo());
+		
+		if(member != null) {
+			int savePoint = (int) (paidRealAmount/((double) 50)); // 결제시 적립 포인트 = 2%인 상태
+			savePoint = -savePoint;
+			pointService.doWrite(member.getId(), payment.getId(), pay_point, status); // 결제에 사용한 포인트
+			pointService.doWrite(member.getId(), payment.getId(), savePoint, status); // 결제로 인해 적립된 포인트
+		}
 		
 		return Ut.jsReplace(Ut.f("예약번호 %d번 결제가 취소 되었습니다.", booking_id), Ut.f("/usr/booking/detail?orderId=%s", booking.getOrderId()));
 	}

@@ -17,9 +17,10 @@ public interface PointRepository {
 			updateDate = NOW(),
 			memberId = #{memberId},
 			booking_id = #{payment_id},
-			p_point = #{p_point}
+			p_point = #{p_point},
+			`status` = #{status}
 			""")
-	void doWrite(int memberId, int payment_id, int p_point);
+	void doWrite(int memberId, int payment_id, int p_point, String status);
 
 	@Select("""
 			SELECT po.*,
@@ -34,6 +35,7 @@ public interface PointRepository {
 				LEFT JOIN company AS c
 				ON b.comp_id = c.id
 				WHERE po.memberId = #{memberId}
+				AND p_point != 0
 				GROUP BY po.id
 				ORDER BY po.id desc
 			""")

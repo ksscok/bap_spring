@@ -16,11 +16,9 @@ public CancelReasonRepository cancelReasonRepository;
 		this.cancelReasonRepository = cancelReasonRepository;
 	}
 
-	public void doWrite(int booking_id, String memberType, String title, String body, String extra__prodFee) {
+	public void doWrite(int booking_id, String memberType, String title, String body, int lastTotalAmount) {
 		
-		int cancelAmount = Integer.parseInt(extra__prodFee);
-		
-		cancelReasonRepository.doWrite(booking_id, memberType, title, body, cancelAmount);
+		cancelReasonRepository.doWrite(booking_id, memberType, title, body, lastTotalAmount);
 	}
 
 	public CancelReason getCancelReasonByBooking_id(int Booking_id) {
