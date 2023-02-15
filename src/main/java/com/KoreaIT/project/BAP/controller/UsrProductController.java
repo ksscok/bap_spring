@@ -65,6 +65,10 @@ public class UsrProductController {
 			@RequestParam(defaultValue="1") int low_price,
 			@RequestParam(defaultValue="999999999") int high_price) {
 		
+		if(Ut.empty(comp_id)) {
+			return rq.historyBackJsOnView("사업장번호를 입력해주세요.");
+		}
+		
 		// 파라미터 입력용 테스트 데이터 - 나중에 리스트에서부터 받아오거나 리스트에서 안할 경우를 생각해서 디폴트 값으로 그냥 넣어도 될듯(대신 이때는 Ut클래스에 생성해야 할 듯)
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();

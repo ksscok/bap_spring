@@ -840,6 +840,10 @@ vat = 6364;
 SELECT *
 FROM payment;
 
+SELECT *
+FROM booking;
+
+
 CREATE TABLE cancelReason
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -1287,6 +1291,23 @@ countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
 
+#결제용 추가 데이터 (추후 삭제 예정)
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+comp_id = 2,
+roomType = '스탠다드',
+numberOfRooms = 7,
+fee = 10000000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '조식, 석식',
+smokingType = 'noSmoking';
+
+SELECT * FROM product
+WHERE comp_id = 2;
+
 CREATE TABLE wish
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -1529,22 +1550,9 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-select *
-from `member`
-where id = 5;
-
-SELECT po.*,
-c.name as extra__compName,
-pa.balanceAmount As extra__balanceAmount
-FROM `point` as po
-left join payment as pa
-on po.payment_id = pa.id
-LEFT JOIN booking AS b
-ON pa.booking_id = b.id
-LEFT JOIN company AS c
-ON b.comp_id = c.id
-WHERE po.memberId = 5
-GROUP BY po.id;
+SELECT *
+FROM `member`
+WHERE id = 5;
 
 SELECT * FROM company;
 SELECT * FROM product;

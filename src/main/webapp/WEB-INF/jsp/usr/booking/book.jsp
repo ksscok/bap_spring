@@ -95,8 +95,10 @@
 					</div>
 				</div>
 				<div class="payment">
-					<div class="font-extrabold mt-9">총 결제 금액</div>
-					<div class="my-4 text-xl font-extrabold text-red-600">${price }원</div>
+					<div class="flex justify-between items-center my-4">
+						<div class="font-extrabold">총 결제 금액</div>
+						<div class="text-xl font-extrabold text-red-600">${price }원</div>
+					</div>
 					<c:if test="${rq.isLogined() }">
 						<div class="showUsePoint-box flex justify-between items-center mb-2">
 							<div>포인트 차감</div>
@@ -166,6 +168,8 @@
 		let bA = totalAmount.toLocaleString('ko-KR', option);
 		// 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 끝
 		$('#balanceAmount').val(bA);
+		
+		// 만약 포인트 항상 전액사용 버튼이 눌린 상태라면 이 함수가 실행되도록
 	 } else {
 		 change_balanceAmount();
 	 }
@@ -191,7 +195,7 @@
 		// 실제 결제 금액을 3자리마다 콤마 찍어주기 위한 작업 끝
 		
 		$('#balanceAmount').val(bA);
-	}
+	};
 	
 // 실제 결제 금액 = 총 결제 금액 - pay_point 끝
 
@@ -242,7 +246,7 @@
 	 target.value = target.value
 	   .replace(/[^0-9]/g, '')
 	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-	}
+	};
 // 전화번호칸에 숫자를 적어 나아가면 자동으로 하이픈 붙여주는 함수 끝
 
 // pay_point칸에 숫자를 적어 나아가면 자동으로 콤마 붙여주는 함수 시작
@@ -256,10 +260,8 @@
 	    const formatValue = value.toLocaleString('ko-KR');
 	    input.value = formatValue;
 	  }
-	})
+	});
 // pay_point칸에 숫자를 적어 나아가면 자동으로 콤마 붙여주는 함수 끝
-
-	  
 
 // 휴대폰 번호 미입력 or 8자리 이하일 때 입력하라는 말 뜨도록하는 함수 시작
 	function requiredData(el) {
@@ -282,16 +284,23 @@
    	 	change_balanceAmount();
    		// 실제 결제 금액 = 총 결제 금액 - pay_point 끝
 		$('#pointDelete-btn').css('display', 'block');
-	}
+	};
 // 전액사용 버튼 클릭시 사용 가능한 포인트(m_point)값을 pay_point input 값에 넣어주고 delete-btn 생기도록 하는 함수 끝
 
 // 포인트 사용 입력칸에 value = 0일 경우 close버튼 사라지고 아닐경우 버튼 나타나는 함수 시작		
 		 $(document).ready(function() {
-	        $('#usepointAmount').keydown(function(e) {
+	        $('#usepointAmount').keyup(function(e) {
 	        	var usepointAmount = $('#usepointAmount').val();
+	        	
+	        	let intUsePointAmount = parseInt(e.target.value);
+	        	
 	       	 	$('#showUsePoint').val($(this).val());
-	          
-	          if(usepointAmount != 0){
+	       	 	
+	       		// 실제 결제 금액 = 총 결제 금액 - pay_point 시작
+	        	change_balanceAmount();
+	        	// 실제 결제 금액 = 총 결제 금액 - pay_point 끝
+	       	 	
+	          if(intUsePointAmount != 0){
 	        	  $('#pointDelete-btn').css('display', 'block');
 	        	  
 	        	  // pay_point 입력값이 m_point 값보다 큰 값을 입력할 경우를 막으려는 로직 시작
@@ -306,6 +315,9 @@
 	        	  if(p_length >= m_length){
 	        		  $(".required-msg2").html('사용 가능한 포인트를 넘어설 수 없습니다.');
 	        		  $('#usepointAmount').val(mPointValue);
+		        		// 실제 결제 금액 = 총 결제 금액 - pay_point 시작
+		  	        	change_balanceAmount();
+		  	       		 // 실제 결제 금액 = 총 결제 금액 - pay_point 끝
 	        		  if (!isValidKey4) {
 	        		    e.preventDefault();
 	        		    return false;
@@ -315,37 +327,21 @@
 	        	  // pay_point 입력값이 m_point 값보다 큰 값을 입력할 경우를 막으려는 로직 시작
 	        	  
 	          } else {
-	        	  $('#pointDelete-btn').css('display', 'none')
+	        	  $('#pointDelete-btn').css('display', 'none');
 	        	  $('#showUsePoint').val('');
 	          }
 	          
 	        } );
 	      } );
-	      
-	     // pay_point를 입력하고 나서 마우스로 다른 곳을 클릭할 때라도 showUsePoint가 바뀌도록 하는 함수 시작
-		 $(document).ready(function() {
-		        $('#usepointAmount').keydown(function() {
-		        	$('#showUsePoint').val($(this).val());
-		        } );
-	      } );
-		 $(document).ready(function() {
-		        $('#usepointAmount').change(function() {
-		        	$('#showUsePoint').val($(this).val());
-		        	
-		        	// 실제 결제 금액 = 총 결제 금액 - pay_point 시작
-		        	change_balanceAmount();
-		        	// 실제 결제 금액 = 총 결제 금액 - pay_point 끝
-		        } );
-	      } );
-	     // pay_point를 입력하고 나서 마우스로 다른 곳을 클릭할 때라도 showUsePoint가 바뀌도록 하는 함수 끝
 // 포인트 사용 입력칸에 value = 0일 경우 close버튼 사라지고 아닐경우 버튼 나타나는 함수 시작		
-		
+	      
 // close(pointDelete-btn)버튼 클릭시 pay_point 값 0으로 초기화하는 함수 시작
 	function pointDelete(){
 		$('#usepointAmount').val(0);
 		$('#showUsePoint').val('');
+		$('#pointDelete-btn').css('display', 'none');
 		change_balanceAmount();
-	}
+	};
 // close(pointDelete-btn)버튼 클릭시 pay_point 값 0으로 초기화하는 함수 끝
 		
 // 항상 전액사용 버튼 클릭시 작동 함수 시작
@@ -362,9 +358,10 @@
 			localStorage.removeItem("memberId");
 			
 			$('#i-alwaysUseAllAmount-btn').removeClass('fa-solid').addClass('fa-regular');
-			pointDelete()
+			pointDelete();
+			$('#pointDelete-btn').css('display', 'none');
 		}
-	}
+	};
 // 항상 전액사용 버튼 클릭시 작동 함수 끝
 		
 // 항상 전액 사용 버튼을 눌렀는지 여부에 따른 페이지 시작시 포인트 사용 관련 ui 변환 함수 시작
@@ -377,38 +374,32 @@
 				chgValueOfPay_point();
 				$('#i-alwaysUseAllAmount-btn').removeClass('fa-regular').addClass('fa-solid');
 			}
-		}
+		};
 // 항상 전액 사용 버튼을 눌렀는지 여부에 따른 페이지 시작시 포인트 사용 관련 ui 변환 함수 끝
 		
 // write에 보내기전에 입력 내용 체크하고, localStorage에 customerName 저장하기 위한 함수
 	function chkNull(event){
 		
-		// pay_point의 값이 변할 때 showUsePoint의 값이 바로바로 변하지 않아서 결제로 넘어가기 전에 교정 시작
-		let inputPP = $('#usepointAmount').val().trim();
+// 		if(document.getElementById('customerName').value.trim().length == 0){
+// 		    alert('예약자 이름을 입력해주세요');
+// 		    event.preventDefault(); // return false와 같은 역할
+// 	    }
 		
-		$('#showUsePoint').val(inputMP);
-		// pay_point의 값이 변할 때 showUsePoint의 값이 바로바로 변하지 않아서 결제로 넘어가기 전에 교정 끝
-	
-		if(document.getElementById('customerName').value.trim().length == 0){
-		    alert('예약자 이름을 입력해주세요');
-		    event.preventDefault(); // return false와 같은 역할
-	    }
+// 		if(document.getElementById('cellphoneNo').value.trim().length == 0){
+// 		    alert('전화번호를 입력해주세요');
+// 		    event.preventDefault(); // return false와 같은 역할
+// 	    }
 		
-		if(document.getElementById('cellphoneNo').value.trim().length == 0){
-		    alert('전화번호를 입력해주세요');
-		    event.preventDefault(); // return false와 같은 역할
-	    }
+// 		if(document.getElementById('cellphoneNo').value.trim().length <= 10 && document.getElementById('cellphoneNo').value.trim().length != 0){
+// 		    alert('전화번호를 정확히 입력해주세요');
+// 		    event.preventDefault(); // return false와 같은 역할
+// 	    }
 		
-		if(document.getElementById('cellphoneNo').value.trim().length <= 10 && document.getElementById('cellphoneNo').value.trim().length != 0){
-		    alert('전화번호를 정확히 입력해주세요');
-		    event.preventDefault(); // return false와 같은 역할
-	    }
-		
-		// 결제성공창에서 customerName을 확인시켜주기 위한 작업
-	    if(document.getElementById('customerName').value.trim().length != 0){
-		    sessionStorage.setItem('customerName', document.getElementById('customerName').value);
-	    }
-	}
+// 		// 결제성공창에서 customerName을 확인시켜주기 위한 작업
+// 	    if(document.getElementById('customerName').value.trim().length != 0){
+// 		    sessionStorage.setItem('customerName', document.getElementById('customerName').value);
+// 	    }
+	};
 	
 </script>
 

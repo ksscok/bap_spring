@@ -68,9 +68,10 @@ public class UsrPaymentController {
 			return Ut.jsHistoryBack("주문명을 입력해주세요");
 		}
 		
-		if(Ut.empty(customerName)) {
-			return Ut.jsHistoryBack("예약자 이름을 입력해주세요");
-		}
+		// 이게 있으면 안되네. 실질적으로 데이터 자체는 넘어오는거같은데
+//		if(Ut.empty(customerName)) {
+//			return Ut.jsHistoryBack("예약자 이름을 입력해주세요");
+//		}
 		
 		if(Ut.empty(status)) {
 			return Ut.jsHistoryBack("결제 처리 상태를 입력해주세요");
@@ -211,6 +212,18 @@ public class UsrPaymentController {
 	@RequestMapping("/success")
 	public String showPaymentSuccess(Model model, String paymentKey, String orderId, String amount) throws IOException, InterruptedException, ParseException {
 		
+		if(Ut.empty(paymentKey)) {
+			return rq.historyBackJsOnView("결제 키를 입력해주세요");
+		}
+		
+		if(Ut.empty(orderId)) {
+			return rq.historyBackJsOnView("주문 번호를 입력해주세요");
+		}
+		
+		if(Ut.empty(amount)) {
+			return rq.historyBackJsOnView("실제 결제 금액을 입력해주세요");
+		}
+		
 		HttpRequest request = HttpRequest.newBuilder()
 			    .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
 			    .header("Authorization", "Basic dGVzdF9za19xTGxESmFZbmdyb0xqZ0Q5R214OGV6R2RScFh4Og==")
@@ -263,8 +276,45 @@ public class UsrPaymentController {
 	}
 	
 	@RequestMapping("/fail")
-	public String showPaymentFail(Model model, String code, String message, String orderId) {
+	public String showPaymentFail(Model model, String code, String message) {
+		
+		if(Ut.empty(code)) {
+			return rq.historyBackJsOnView("에러 코드를 입력해주세요");
+		}
+		
+		if(Ut.empty(message)) {
+			return rq.historyBackJsOnView("에러 메세지를 입력해주세요");
+		}
+		
 		return "/usr/payment/fail";
+	}
+	
+	@RequestMapping("/usr/payment/detail")
+	public String showdetail(Model model, String orderId) throws IOException, InterruptedException, ParseException {
+		
+		if(Ut.empty(orderId)) {
+			return rq.historyBackJsOnView("주문 번호를 입력해주세요");
+		}
+		
+		HttpRequest request = HttpRequest.newBuilder()
+			    .uri(URI.create("https://api.tosspayments.com/v1/payments/orders/" + orderId))
+			    .header("Authorization", "Basic dGVzdF9za19xTGxESmFZbmdyb0xqZ0Q5R214OGV6R2RScFh4Og==")
+			    .method("GET", HttpRequest.BodyPublishers.noBody())
+			    .build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+		
+			JSONParser jsonParser = new JSONParser();
+		      
+		    JSONObject jsonObj = (JSONObject) jsonParser.parse(response.body());
+		    System.out.println("=====================" + jsonObj);
+		      
+		    String mId = (String) jsonObj.get("mId"); // "tosspayments", 가맹점 ID (쓸 지 안쓸 지 모르겠지만 일단 해놓음)
+		    System.out.println("=====================" + mId);
+			
+		    model.addAttribute("mId", mId);
+		    
+		return "/usr/payment/detail";
 	}
 	
 }

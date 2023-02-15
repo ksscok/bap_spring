@@ -39,6 +39,10 @@ public class UsrWishController {
 			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
 			@RequestParam(defaultValue="") String searchKeyword) {
 		
+		if(Ut.empty(memberId)) {
+			return rq.historyBackJsOnView("회원번호를 입력해주세요");
+		}
+		
 		int[] comp_ids = wishService.getComp_idByMemberId(memberId);
 		
 		List<Company> companies = companyService.getCompaniesByIds(comp_ids, searchKeywordTypeCode, searchKeyword);
@@ -66,7 +70,7 @@ public class UsrWishController {
 	public String doWriteOrDelete(int memberId, int comp_id) {
 		
 		if(Ut.empty(memberId)) {
-			return rq.jsHistoryBack("사업장 번호를 입력해주세요.");
+			return rq.jsHistoryBack("회원번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(comp_id)) {
@@ -95,7 +99,7 @@ public class UsrWishController {
 		}
 		
 		if(Ut.empty(comp_ids)) {
-			return Ut.jsHistoryBack("사업장 번호을 입력해주세요.");
+			return Ut.jsHistoryBack("사업장 번호를 입력해주세요.");
 		}
 		
 		List<Integer> companyIds = new ArrayList<>();

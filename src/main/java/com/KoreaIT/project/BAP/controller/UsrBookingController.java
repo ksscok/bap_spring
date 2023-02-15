@@ -60,19 +60,19 @@ public class UsrBookingController {
 			@RequestParam(defaultValue="-1") String accommodationTypeCode) {
 		
 		if(Ut.empty(comp_id)) {
-			return rq.jsHistoryBack("사업장번호를 입력해주세요.");
+			return rq.historyBackJsOnView("사업장번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(prod_id)) {
-			return rq.jsHistoryBack("상품번호를 입력해주세요.");
+			return rq.historyBackJsOnView("상품번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(start_date)) {
-			return rq.jsHistoryBack("체크인 날짜를 선택해주세요.");
+			return rq.historyBackJsOnView("체크인 날짜를 선택해주세요.");
 		}
 		
 		if(Ut.empty(end_date)) {
-			return rq.jsHistoryBack("체크아웃 날짜를 선택해주세요.");
+			return rq.historyBackJsOnView("체크아웃 날짜를 선택해주세요.");
 		}
 		
 		// 오늘 날짜(예약을 실행한 날짜) - 주문번호를 위한 날짜정보
@@ -132,13 +132,64 @@ public class UsrBookingController {
 
 	@RequestMapping("/usr/booking/doBook")
 	public String doBook(Model model, String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, 
-			int countOfAdult, int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, @RequestParam(defaultValue="0") String pay_point, String balanceAmount, String orderName, int diff, String isWrite) {
+			int countOfAdult, @RequestParam(defaultValue="0") int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, @RequestParam(defaultValue="0") String pay_point, String balanceAmount, String orderName, int diff, String isWrite) {
+		
+		if(Ut.empty(comp_id)) {
+			return rq.historyBackJsOnView("사업장번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(prod_id)) {
+			return rq.historyBackJsOnView("상품번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(customerName)) {
+			return rq.historyBackJsOnView("예약자 이름을 입력해주세요.");
+		}
+		
+		if(Ut.empty(cellphoneNo)) {
+			return rq.historyBackJsOnView("전화번호를 입력해주세요.");
+		}
+		
+		if(Ut.empty(start_date)) {
+			return rq.historyBackJsOnView("체크인 날짜를 입력해주세요.");
+		}
+		
+		if(Ut.empty(end_date)) {
+			return rq.historyBackJsOnView("체크아웃 날짜를 입력해주세요.");
+		}
+		
+		if(Ut.empty(countOfAdult)) {
+			return rq.historyBackJsOnView("성인 인원 수를 입력해주세요.");
+		}
+		
+		if(Ut.empty(DateAndDayOfTheWeekOfChkin)) {
+			return rq.historyBackJsOnView("체크인 요일을 입력해주세요.");
+		}
+		
+		if(Ut.empty(DateAndDayOfTheWeekOfChkout)) {
+			return rq.historyBackJsOnView("체크아웃 요일을 입력해주세요.");
+		}
+		
+		if(Ut.empty(amount)) {
+			return rq.historyBackJsOnView("총 결제 금액을 입력해주세요.");
+		}
+		
+		if(Ut.empty(balanceAmount)) {
+			return rq.historyBackJsOnView("실제 결제 금액을 입력해주세요.");
+		}
+		
+		if(Ut.empty(orderName)) {
+			return rq.historyBackJsOnView("숙소명과 방 타입을 입력해주세요.");
+		}
+		
+		if(Ut.empty(diff)) {
+			return rq.historyBackJsOnView("숙박 일수를 입력해주세요.");
+		}
 		
 		int p_point = Integer.parseInt(pay_point.replace(",", "").trim());
 		int balanceamount = Integer.parseInt(balanceAmount.replace(",", "").trim());
 		
-		System.out.println("==== p_point : " + p_point + " =====");
-		System.out.println("==== balanceamount : " + balanceamount + " ====");
+		System.out.println("====customerName : " + customerName + " ====");
 		
 		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기 (실패)
 		if(isWrite.trim().equals("notWrite")) {
@@ -170,7 +221,7 @@ public class UsrBookingController {
 			@RequestParam(defaultValue = "") String searchKeyword) {
 		
 		if(Ut.empty(cellphoneNo)) {
-			return rq.jsHistoryBack("전화번호를 입력해주세요.");
+			return rq.historyBackJsOnView("전화번호를 입력해주세요.");
 		}
 		
 		List<Booking> bookings = bookingService.getForPrintBookingsByCellphoneNo(cellphoneNo, searchKeywordTypeCode, searchKeyword);
@@ -195,13 +246,13 @@ public class UsrBookingController {
 	@ResponseBody
 	public String doDetailComfirm(Model model, String cellphoneNo, String searchKeyword) {
 		
+		if(Ut.empty(cellphoneNo)) {
+			return Ut.jsHistoryBack("전화번호를 입력해주세요");
+		}
+		
 		// booking/detail에서 bookingId를 searchKeyword로 받기 때문에
 		if(Ut.empty(searchKeyword)) {
 			return Ut.jsHistoryBack("예약번호를 입력해주세요");
-		}
-		
-		if(Ut.empty(cellphoneNo)) {
-			return Ut.jsHistoryBack("전화번호를 입력해주세요");
 		}
 		
 		int id = Integer.parseInt(searchKeyword);
@@ -218,6 +269,10 @@ public class UsrBookingController {
 	
 	@RequestMapping("/usr/booking/detail")
 	public String showDetail(Model model, String orderId) {
+		
+		if(Ut.empty(orderId)) {
+			return rq.historyBackJsOnView("주문번호를 입력해주세요.");
+		}
 		
 		Booking booking = bookingService.getBookingByOrderId(orderId);
 		String start_date = booking.getStart_date();
@@ -257,7 +312,7 @@ public class UsrBookingController {
 	public String showCancelWrite(Model model, int booking_id) {
 		
 		if(Ut.empty(booking_id)) {
-			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+			return rq.historyBackJsOnView("예약번호를 입력해주세요");
 		}
 		
 		Booking booking = bookingService.getBookingById(booking_id);
@@ -314,7 +369,7 @@ public class UsrBookingController {
 	public String showCancelDetail(Model model, int booking_id) {
 		
 		if(Ut.empty(booking_id)) {
-			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+			return rq.historyBackJsOnView("예약번호를 입력해주세요");
 		}
 		
 		Booking booking = bookingService.getBookingById(booking_id);
@@ -334,7 +389,7 @@ public class UsrBookingController {
 	public String showCancelModify(Model model, int booking_id) {
 		
 		if(Ut.empty(booking_id)) {
-			return Ut.jsHistoryBack("예약번호를 입력해주세요");
+			return rq.historyBackJsOnView("예약번호를 입력해주세요");
 		}
 		
 		Booking booking = bookingService.getBookingById(booking_id);

@@ -31,7 +31,7 @@ public class UsrPointController {
 	public String showList(Model model) {
 		
 		if(!rq.isLogined()) {
-			return rq.jsHistoryBack("로그인 후 이용해주세요.");
+			return rq.historyBackJsOnView("로그인 후 이용해주세요.");
 		}
 		
 		List<Point> points = pointService.getPointsByMemberId(rq.getLoginedMemberId());

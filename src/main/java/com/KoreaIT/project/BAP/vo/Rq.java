@@ -63,13 +63,13 @@ public class Rq {
 	public String historyBackJsOnView(String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
-		return "common/js";
+		return "/usr/common/js";
 	}
 	
 	public String historyBackJsOnView(String resultCode, String msg) {
 		req.setAttribute("msg", String.format("[%s] %s", resultCode, msg));
 		req.setAttribute("historyBack", true);
-		return "common/js";
+		return "/usr/common/js";
 	}
 	
 	public String jsHistoryBack(String msg) {
@@ -163,6 +163,7 @@ public class Rq {
 		case "/usr/booking/cancelWrite":
 		case "/usr/wish/list":
 		case "/usr/review/list":
+		case "/usr/point/list":
 			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLogoutUri", ""));
 		}
 		

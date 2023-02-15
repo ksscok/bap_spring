@@ -156,7 +156,7 @@
 					</tr>
 					<tr>
 						<th>결제 시 포인트 사용</th>
-						<td>- ${payment.pay_point }P</td>
+<%-- 						<td>- ${payment.pay_point }P</td> --%>
 					</tr>
 					<tr>
 						<th>결제 시 쿠폰 사용</th>

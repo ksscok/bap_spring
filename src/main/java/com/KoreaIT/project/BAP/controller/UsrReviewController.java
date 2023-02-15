@@ -48,6 +48,10 @@ public class UsrReviewController {
 			@RequestParam(defaultValue = "name") String searchKeywordTypeCode,
 			@RequestParam(defaultValue="") String searchKeyword) {
 		
+		if(Ut.empty(memberId)) {
+			return rq.historyBackJsOnView("회원번호를 입력해주세요");
+		}
+		
 		List<Review> reviews = reviewService.getReviewByMemberId(memberId, searchKeywordTypeCode, searchKeyword);
 		
 		Map<Integer, String> ratingOptions = new HashMap<>();
