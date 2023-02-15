@@ -21,10 +21,9 @@ public class Payment {
 	private String type;
 	private String cancels;
 	private String lastTransactionKey;
-	private int totalAmount;
-	private int balanceAmount;
-	private int suppliedAmount;
-	private int vat;
+	private int lastTotalAmount;
+	private int pay_point;
+	private int paidRealAmount;
 	
 	
 }

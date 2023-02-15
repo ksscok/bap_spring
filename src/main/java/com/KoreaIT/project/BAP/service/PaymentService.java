@@ -17,9 +17,8 @@ public class PaymentService {
 	}
 
 	public void doWrite(String paymentKey, int bookingId, String status, String method, String bank, String requestedAt,
-			String approvedAt, String type, String lastTransactionKey, int totalA, int balanceA, int suppliedA,
-			int vatA) {
-		paymentRepository.doWrite(paymentKey, bookingId, status, method, bank, requestedAt, approvedAt, type, lastTransactionKey, totalA, balanceA, suppliedA, vatA);
+			String approvedAt, String type, String lastTransactionKey, int lastTotalAmount, int pay_point, int paidRealAmount) {
+		paymentRepository.doWrite(paymentKey, bookingId, status, method, bank, requestedAt, approvedAt, type, lastTransactionKey, lastTotalAmount, pay_point, paidRealAmount);
 	}
 
 	public Payment getPaymentByBooking_id(int booking_id) {

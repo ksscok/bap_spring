@@ -16,7 +16,9 @@ public class Booking {
 	private int prod_id;
 	private String customerName;
 	private String cellphoneNo;
+	private int lastTotalAmount;
 	private int pay_point;
+	private int paidRealAmount;
 	private String start_date;
 	private String end_date;
 	private int diff;

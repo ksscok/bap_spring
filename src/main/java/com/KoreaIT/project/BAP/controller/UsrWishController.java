@@ -66,7 +66,7 @@ public class UsrWishController {
 	}
 	
 	@RequestMapping("usr/wish/doWriteOrDelete")
-	@ResponseBody()
+	@ResponseBody
 	public String doWriteOrDelete(int memberId, int comp_id) {
 		
 		if(Ut.empty(memberId)) {

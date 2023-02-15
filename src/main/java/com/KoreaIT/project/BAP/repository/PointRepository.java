@@ -24,7 +24,8 @@ public interface PointRepository {
 	@Select("""
 			SELECT po.*,
 				c.name AS extra__compName,
-				pa.balanceAmount AS extra__balanceAmount
+				pa.paidRealAmount AS extra__paidRealAmount,
+				pa.lastTotalAmount AS extra__lastTotalAmount
 				FROM `point` AS po
 				LEFT JOIN booking AS b
 				ON b.id = po.booking_id

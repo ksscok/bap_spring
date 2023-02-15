@@ -461,7 +461,9 @@ CREATE TABLE booking
     prod_id    INT UNSIGNED    NOT NULL    COMMENT '객실번호', 
     customerName  VARCHAR(100)    NOT NULL    COMMENT '예약자 이름', 
     cellphoneNo  VARCHAR(100)    NOT NULL    COMMENT '예약자 번호',
+    lastTotalAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '총 결제 금액',
     pay_point INT(100) UNSIGNED DEFAULT 0 COMMENT '결제시 사용된 포인트',
+    paidRealAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '실제 결제 금액(lastTotalAmount - p_point)',
     start_date      VARCHAR(100)        NOT NULL    COMMENT '체크인', 
     end_date     VARCHAR(100)       NOT NULL    COMMENT '체크아웃',
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
@@ -490,6 +492,8 @@ comp_id = 2,
 prod_id = 1,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '100000',
+paidRealAmount = '100000',
 start_date = "2023-02-13",
 end_date = "2023-02-15",
 diff = 2,
@@ -506,6 +510,8 @@ comp_id = 1,
 prod_id = 1,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '100000',
+paidRealAmount = '100000',
 start_date = "2023-03-01",
 end_date = "2023-04-28",
 diff = 58,
@@ -521,6 +527,8 @@ comp_id = 2,
 prod_id = 2,
 customerName = 'test2',
 cellphoneNo = '010-3434-4545',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
 start_date = "2023-04-13",
 end_date = "2023-04-20",
 diff = 7,
@@ -536,6 +544,8 @@ comp_id = 3,
 prod_id = 1,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '100000',
+paidRealAmount = '100000',
 start_date = "2023-05-01",
 end_date = "2023-05-02",
 diff = 1,
@@ -552,6 +562,8 @@ comp_id = 6,
 prod_id = 1,
 customerName = 'test2',
 cellphoneNo = '010-3434-4545',
+lastTotalAmount = '100000',
+paidRealAmount = '100000',
 start_date = "2023-04-13",
 end_date = "2023-04-20",
 diff = 7,
@@ -568,6 +580,8 @@ comp_id = 2,
 prod_id = 2,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
 start_date = "2023-05-13",
 end_date = "2023-05-20",
 diff = 7,
@@ -584,6 +598,8 @@ comp_id = 2,
 prod_id = 2,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
 start_date = "2023-02-01",
 end_date = "2023-02-02",
 diff = 1,
@@ -599,6 +615,8 @@ comp_id = 2,
 prod_id = 2,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
 start_date = "2023-02-01",
 end_date = "2023-02-10",
 diff = 9,
@@ -614,6 +632,8 @@ comp_id = 2,
 prod_id = 2,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
 start_date = "2023-02-01",
 end_date = "2023-02-12",
 diff = 11,
@@ -629,6 +649,8 @@ comp_id = 2,
 prod_id = 2,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
 start_date = "2023-02-12",
 end_date = "2023-02-13",
 diff = 1,
@@ -650,10 +672,10 @@ CREATE TABLE payment
     `type` VARCHAR(100) NOT NULL COMMENT '결제 타입 정보 (NORMAL : 일반결제, BILLING : 자동결제, BRANDPAY : 브랜드페이)',
     cancels VARCHAR(100) COMMENT '결제 취소 상태',
     lastTransactionKey VARCHAR(200) NOT NULL COMMENT '마지막 거래의 키 값 (결제 승인 거래와 취소 거래 구분하는 데 사용)',
-    totalAmount INT UNSIGNED NOT NULL COMMENT '총 결제 금액',
-    balanceAmount INT UNSIGNED NOT NULL COMMENT '취소할 수 있는 금액(잔고)',
-    suppliedAmount INT UNSIGNED NOT NULL COMMENT '공급가액',
-    vat INT UNSIGNED NOT NULL COMMENT '부가세 {결제 금액(amount) - 면세 금액(taxFreeAmount)//11후 소수점 첫째 자리에서 반올림'
+	lastTotalAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '총 결제 금액',
+    pay_point INT(100) UNSIGNED DEFAULT 0 COMMENT '결제시 사용된 포인트',
+    paidRealAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '실제 결제 금액(lastTotalAmount - p_point)'
+    
 );
 
 # payment 테스트 데이터
@@ -670,10 +692,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 100000,
-balanceAmount = 100000,
-suppliedAmount = 90909,
-vat = 9091;
+lastTotalAmount = 100000,
+paidRealAmount = 100000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 2번, 결제 금액 10만원(서울 신라)
 INSERT INTO payment
@@ -688,10 +708,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 100000,
-balanceAmount = 100000,
-suppliedAmount = 90909,
-vat = 9091;
+lastTotalAmount = 100000,
+paidRealAmount = 100000;
 
 # 폰번호 010-3434-4545(게스트2), 예약번호 3번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
@@ -706,10 +724,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 70000,
-balanceAmount = 70000,
-suppliedAmount = 63636,
-vat = 6364;
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 4번, 결제 금액 10만원(오노마)
 INSERT INTO payment
@@ -724,10 +740,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 100000,
-balanceAmount = 100000,
-suppliedAmount = 90909,
-vat = 9091;
+lastTotalAmount = 100000,
+paidRealAmount = 100000;
 
 # 폰번호 010-3434-4545(게스트2), 예약번호 5번, 결제 금액 10만원(제주 쉬멍)
 INSERT INTO payment
@@ -742,10 +756,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 100000,
-balanceAmount = 100000,
-suppliedAmount = 90909,
-vat = 9091;
+lastTotalAmount = 100000,
+paidRealAmount = 100000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 6번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
@@ -760,10 +772,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 70000,
-balanceAmount = 70000,
-suppliedAmount = 63636,
-vat = 6364;
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 7번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
@@ -778,10 +788,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 70000,
-balanceAmount = 70000,
-suppliedAmount = 63636,
-vat = 6364;
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 8번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
@@ -796,10 +804,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 70000,
-balanceAmount = 70000,
-suppliedAmount = 63636,
-vat = 6364;
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 9번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
@@ -814,10 +820,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 70000,
-balanceAmount = 70000,
-suppliedAmount = 63636,
-vat = 6364;
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
 
 # 폰번호 010-1212-2323(게스트1), 예약번호 10번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
@@ -832,10 +836,8 @@ requestedAt = '2023-01-30T22:20:38+09:00',
 approvedAt = '2023-01-30T22:20:56+09:00',
 `type` = 'NORMAL',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
-totalAmount = 70000,
-balanceAmount = 70000,
-suppliedAmount = 63636,
-vat = 6364;
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
 
 SELECT *
 FROM payment;
@@ -1414,7 +1416,7 @@ CREATE TABLE `point`
 	updateDate DATETIME DEFAULT NULL COMMENT '갱신날짜',
     memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호',
     booking_id    INT UNSIGNED    NOT NULL    COMMENT '결제번호',
-    p_point INT (10) UNSIGNED NOT NULL  COMMENT '포인트'
+    p_point INT (10) NOT NULL  COMMENT '포인트'
 );
 
 # `point` 테스트 데이터
@@ -1554,6 +1556,7 @@ SELECT *
 FROM `member`
 WHERE id = 5;
 
+SELECT * FROM booking;
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;

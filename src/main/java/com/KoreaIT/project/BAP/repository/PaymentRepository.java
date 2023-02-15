@@ -23,15 +23,13 @@ public interface PaymentRepository {
 					approvedAt = #{approvedAt},
 					`type` = #{type},
 					lastTransactionKey = #{lastTransactionKey},
-					totalAmount = #{totalA},
-					balanceAmount = #{balanceA},
-					suppliedAmount = #{suppliedA},
-					vat = #{vatA}
+					lastTotalAmount = #{lastTotalAmount},
+					pay_point = #{pay_point},
+					paidRealAmount = #{paidRealAmount}
 			""")
 	void doWrite(String paymentKey, int bookingId, String status, String method, String bank, String requestedAt,
-			String approvedAt, String type, String lastTransactionKey, int totalA, int balanceA, int suppliedA,
-			int vatA);
-
+			String approvedAt, String type, String lastTransactionKey, int lastTotalAmount, int pay_point, int paidRealAmount);
+	
 	@Select("""
 			SELECT *
 				FROM payment

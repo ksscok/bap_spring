@@ -16,7 +16,11 @@ public class Point {
 	private int p_point;
 	
 	private String extra__compName;
-	private int extra__balanceAmount;
+	private int extra__paidRealAmount;
+	private int extra__lastTotalAmount;
 	
+	public String getForPrintRegDate() {
+		return regDate.substring(0, 15);
+	}
 }
 

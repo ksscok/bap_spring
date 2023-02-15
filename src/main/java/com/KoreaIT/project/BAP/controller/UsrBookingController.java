@@ -108,8 +108,6 @@ public class UsrBookingController {
 		// 예약페이지에서 몇박인지 보여주기 위한 (체크인-체크아웃)값 불러오는 코드
 		int diff = bookingService.getDiffBetweenChkinChkout(start_date, end_date);
 		
-		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기위한 코드 (실패)
-		String isWrite = "notWrite";
         
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("prod_id", prod_id);
@@ -125,94 +123,82 @@ public class UsrBookingController {
 		model.addAttribute("DateAndDayOfTheWeekOfChkin", DateAndDayOfTheWeekOfChkin);
 		model.addAttribute("DateAndDayOfTheWeekOfChkout", DateAndDayOfTheWeekOfChkout);
 		model.addAttribute("diff", diff);
-		model.addAttribute("isWrite", isWrite);
 		
 		return "usr/booking/book";
 	}
 
 	@RequestMapping("/usr/booking/doBook")
-	public String doBook(Model model, String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, 
-			int countOfAdult, @RequestParam(defaultValue="0") int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, @RequestParam(defaultValue="0") String pay_point, String balanceAmount, String orderName, int diff, String isWrite) {
+	@ResponseBody
+	public String doBook(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, 
+			int countOfAdult, @RequestParam(defaultValue="0") int countOfChild, String DateAndDayOfTheWeekOfChkin, String DateAndDayOfTheWeekOfChkout, String amount, @RequestParam(defaultValue="0") String pay_point, String realAmount, String orderName, int diff) {
 		
 		if(Ut.empty(comp_id)) {
-			return rq.historyBackJsOnView("사업장번호를 입력해주세요.");
+			return Ut.jsHistoryBack("사업장번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(prod_id)) {
-			return rq.historyBackJsOnView("상품번호를 입력해주세요.");
+			return Ut.jsHistoryBack("상품번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(customerName)) {
-			return rq.historyBackJsOnView("예약자 이름을 입력해주세요.");
+			return Ut.jsHistoryBack("예약자 이름을 입력해주세요.");
 		}
 		
 		if(Ut.empty(cellphoneNo)) {
-			return rq.historyBackJsOnView("전화번호를 입력해주세요.");
+			return Ut.jsHistoryBack("전화번호를 입력해주세요.");
 		}
 		
 		if(Ut.empty(start_date)) {
-			return rq.historyBackJsOnView("체크인 날짜를 입력해주세요.");
+			return Ut.jsHistoryBack("체크인 날짜를 입력해주세요.");
 		}
 		
 		if(Ut.empty(end_date)) {
-			return rq.historyBackJsOnView("체크아웃 날짜를 입력해주세요.");
+			return Ut.jsHistoryBack("체크아웃 날짜를 입력해주세요.");
 		}
 		
 		if(Ut.empty(countOfAdult)) {
-			return rq.historyBackJsOnView("성인 인원 수를 입력해주세요.");
+			return Ut.jsHistoryBack("성인 인원 수를 입력해주세요.");
 		}
 		
 		if(Ut.empty(DateAndDayOfTheWeekOfChkin)) {
-			return rq.historyBackJsOnView("체크인 요일을 입력해주세요.");
+			return Ut.jsHistoryBack("체크인 요일을 입력해주세요.");
 		}
 		
 		if(Ut.empty(DateAndDayOfTheWeekOfChkout)) {
-			return rq.historyBackJsOnView("체크아웃 요일을 입력해주세요.");
+			return Ut.jsHistoryBack("체크아웃 요일을 입력해주세요.");
 		}
 		
 		if(Ut.empty(amount)) {
-			return rq.historyBackJsOnView("총 결제 금액을 입력해주세요.");
+			return Ut.jsHistoryBack("총 결제 금액을 입력해주세요.");
 		}
 		
-		if(Ut.empty(balanceAmount)) {
-			return rq.historyBackJsOnView("실제 결제 금액을 입력해주세요.");
+		if(Ut.empty(realAmount)) {
+			return Ut.jsHistoryBack("실제 결제 금액을 입력해주세요.");
 		}
 		
 		if(Ut.empty(orderName)) {
-			return rq.historyBackJsOnView("숙소명과 방 타입을 입력해주세요.");
+			return Ut.jsHistoryBack("숙소명과 방 타입을 입력해주세요.");
 		}
 		
 		if(Ut.empty(diff)) {
-			return rq.historyBackJsOnView("숙박 일수를 입력해주세요.");
+			return Ut.jsHistoryBack("숙박 일수를 입력해주세요.");
 		}
 		
+		int lastTotalAmount = Integer.parseInt(amount);
 		int p_point = Integer.parseInt(pay_point.replace(",", "").trim());
-		int balanceamount = Integer.parseInt(balanceAmount.replace(",", "").trim());
+		int paidRealAmount = Integer.parseInt(realAmount.replace(",", "").trim());
 		
 		System.out.println("====customerName : " + customerName + " ====");
 		
 		// 예약 내역(pay.jsp)페이지에서 새로고침 할 때마다 doWrite 일어나는거 막기 (실패)
-		if(isWrite.trim().equals("notWrite")) {
-			bookingService.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, diff, countOfAdult, countOfChild);
-			isWrite = "";
-		}
+		bookingService.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, diff, countOfAdult, countOfChild, lastTotalAmount, p_point, paidRealAmount);
 		
 		// 예약번호 확인 시켜주기 위해서
 		int bookingId = bookingService.getLastInsertId();
 		
-		model.addAttribute("orderId", orderId);
-		model.addAttribute("customerName", customerName);
-		model.addAttribute("start_date", start_date);
-		model.addAttribute("end_date", end_date);
-		model.addAttribute("countOfAdult", countOfAdult);
-		model.addAttribute("countOfChild", countOfChild);
-		model.addAttribute("DateAndDayOfTheWeekOfChkin", DateAndDayOfTheWeekOfChkin);
-		model.addAttribute("DateAndDayOfTheWeekOfChkout", DateAndDayOfTheWeekOfChkout);
-		model.addAttribute("amount", amount);
-		model.addAttribute("orderName", orderName);
-		model.addAttribute("bookingId", bookingId);
+		String book_id = ("" + bookingId).trim();
 		
-		return "/usr/payment/pay";
+		return book_id;
 	}
 	
 	@RequestMapping("/usr/booking/list")

@@ -81,8 +81,8 @@ public class BookingService {
 		return betweenDays;
 	}
 
-	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int diff, int countOfAdult, int countOfChild) {
-		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, diff, countOfAdult, countOfChild);
+	public void doWrite(String orderId, int comp_id, int prod_id, String customerName, String cellphoneNo, String start_date, String end_date, int diff, int countOfAdult, int countOfChild, int lastTotalAmount, int p_point, int paidRealAmount) {
+		bookingRepository.doWrite(orderId, comp_id, prod_id, customerName, cellphoneNo, start_date, end_date, diff, countOfAdult, countOfChild, lastTotalAmount, p_point, paidRealAmount);
 	}
 
 	public Booking getBookingByOrderId(String orderId) {
