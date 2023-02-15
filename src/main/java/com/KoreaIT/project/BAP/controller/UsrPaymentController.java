@@ -116,9 +116,9 @@ public class UsrPaymentController {
 		String PointStatus = "done";
 		
 		if(rq.getLoginedMemberId() != 0) {
-			memberService.doModifyPoint(rq.getLoginedMemberId(), pay_point, savePoint);
 			
 			pay_point = -pay_point;
+			memberService.doModifyPoint(rq.getLoginedMemberId(), pay_point, savePoint);
 			pointService.doWrite(rq.getLoginedMemberId(), payment_id, pay_point, PointStatus); // 결제에 사용한 포인트
 			pointService.doWrite(rq.getLoginedMemberId(), payment_id, savePoint, PointStatus); // 결제로 인해 적립된 포인트
 		}
@@ -231,6 +231,9 @@ public class UsrPaymentController {
 		if(member != null) {
 			int savePoint = (int) (paidRealAmount/((double) 50)); // 결제시 적립 포인트 = 2%인 상태
 			savePoint = -savePoint;
+			
+			// 여기서 login한 회원은 예약(결제)를 행한 게스트가 아니라 호스트이고 그 호스트가 예약(결제)를 취소하기 때문에 해당 memberId를 가지고 write를 하는 것
+			memberService.doModifyPoint(member.getId(), pay_point, savePoint);
 			pointService.doWrite(member.getId(), payment.getId(), pay_point, status); // 결제에 사용한 포인트
 			pointService.doWrite(member.getId(), payment.getId(), savePoint, status); // 결제로 인해 적립된 포인트
 		}
