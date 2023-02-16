@@ -7,6 +7,8 @@
 
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
+<!-- services 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5cfbc84cabfd59358618e0e4eec5096f&libraries=services"></script>
 
 <div class="back-ground-page">
 	<section class="py-20">
@@ -21,6 +23,8 @@
 					<input type="hidden" name="smokingType" value="${smokingType }" />
 					<input type="hidden" name="low_price" value="${low_price }" />
 					<input type="hidden" name="high_price" value="${high_price }" />
+					<input type="hidden" id="address" name="address" value="${company.address }" />
+					<input type="hidden" id="comp_name" name="comp_name" value="${company.name }" />
 					<div class="side-bar-d1 mr-6 p-5 border border-gray-300 mb-2">
 						<div class="text-base font-semibold mb-4">날짜 변경</div>
 						
@@ -252,17 +256,28 @@
 				</div>
 				
 				<div class="productDetail-box">
-					<div class="baseInform flex justify-between items-center">
-						<div class="m-4">기본 정보</div>
-						<a href="" class="m-4"><i class="fa-solid fa-chevron-up"></i></a>
+					<div class="baseInform">
+						<div class="baseInform-btn flex justify-between items-center">
+							<div class="m-4">기본 정보</div>
+							<button type="button" class="m-4"><i class="fa-solid fa-chevron-up"></i></button>
+						</div>
+						<div class="baseInfor-box">
+						<div class="container mx-auto px-3">
+							<div id="map" style="width:600px;height:200px;"></div>
+							<p>
+							    <button onclick="setCenter()">지도 중심좌표 이동시키기</button> 
+							    <button onclick="panTo()">지도 중심좌표 부드럽게 이동시키기</button> 
+							</p>
+						</div>
+						</div>
 					</div>
 					<div class="amenities-and-services flex justify-between items-center">
 						<div class="m-4">편의시설 및 서비스</div>
-						<a href="#" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></a>
+						<button type="button" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></button>
 					</div>
 					<div class="hostInform flex justify-between items-center">
 						<div class="m-4">판매자 정보</div>
-						<a href="#" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></a>
+						<button type="button" class="m-4"><i class="fa-sharp fa-solid fa-chevron-down"></i></button>
 					</div>
 				</div>
 				
@@ -758,6 +773,48 @@ function ToastEditor__init() {
 	  form.submit();
 	}
 //writeReview toastUiEditor 커스터마이징 끝
+
+
+	let comp_address = $('#address').val();
+	let comp_name = $('#comp_name').val();
+
+// 카카오맵 시작
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+// 	주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch(comp_address, function(result, status) {
+
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;margin-top:-7px;">' + comp_name + '</div>'
+	        });
+	        infowindow.open(map, marker);
+
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+	
+// 카카오맵 끝
 </script>
 
 <%@ include file="../common/foot.jspf"%>
