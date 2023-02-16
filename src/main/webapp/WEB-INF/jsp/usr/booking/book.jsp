@@ -13,7 +13,7 @@
 	<input id=memberId type="hidden" name="memberId" value="${rq.getLoginedMemberId() }" />
 	<input id=comp_id type="hidden" name="comp_id" value="${comp_id }" />
 	<input id=prod_id type="hidden" name="prod_id" value="${prod_id }" />
-	<input id=amount type="hidden" name="amount" value="${product.fee }" />
+	<input id=amount type="hidden" name="amount" value="${product.fee * diff}" />
 	<input id="orderId" type="hidden" name="orderId" value="${orderId }" />
 	<input id="start_date" type="hidden" name="start_date" value="${start_date }" />
 	<input id="end_date" type="hidden" name="end_date" value="${end_date }" />
@@ -425,6 +425,13 @@
  		let $orderName = $('#orderName').val();
  		let $diff = $('#diff').val();
 		// ajax함수에 넣기 위한 변수 설정 끝
+		
+		// 비로그인시 예약 가능 하도록 하는 로직 시작
+		if(!$pay_point){
+			$realAmount = $('#amount').val();
+			alert($realAmount);
+		}
+		// 비로그인시 예약 가능 하도록 하는 로직 끝
 		
 		var clientKey = 'test_ck_Lex6BJGQOVDyvaadL5nrW4w2zNbg';
 		var tossPayments = TossPayments(clientKey);

@@ -47,7 +47,10 @@
 				<tbody>
 					<tr>
 						<th>예약번호</th>
-						<td>${booking.id }</td>
+						<td>
+						<div class="mt-5">${booking.id }</div>
+						<div class="text-red-400 text-sm">예약 확인 시 반드시 필요한 번호 입니다.</div>
+						</td>
 					</tr>
 					<tr>
 						<th>예약자 이름</th>

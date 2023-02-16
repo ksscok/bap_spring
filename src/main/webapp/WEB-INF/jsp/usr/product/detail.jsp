@@ -178,7 +178,7 @@
 								<div class="text-xl font-bold mb-10">${product.roomType }</div>
 								<div class="price flex justify-between w-full border-bt-gray pb-4">
 									<div class="text-base font-bold">가격</div>
-									<div class="text-lg">${product.fee}</div>
+									<div class="text-lg">(${diff}박) ${product.extra__showTotalFee}</div>
 								</div>
 								<button class="dt-modal flex justify-between w-full my-4">
 									<div>객실 이용 안내</div>

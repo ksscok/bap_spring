@@ -24,5 +24,6 @@ public class Product {
 	private String comName;
 	private String comAddr;
 	private int extra__minFee;
+	private String extra__showTotalFee;
 }
 

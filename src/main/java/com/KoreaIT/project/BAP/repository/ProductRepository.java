@@ -20,7 +20,7 @@ public interface ProductRepository {
 
 	@Select("""
 			<script>
-			SELECT *
+			SELECT PC.*
 				FROM (
 					SELECT id, includeMeals
 						FROM product

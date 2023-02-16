@@ -90,11 +90,6 @@ public class UsrBookingController {
 		
 		Product product = productService.getForPrintproduct(prod_id);
 		
-		// 금액 3자리마다 콤마(,) 붙여주기 위한 코드 시작
-		DecimalFormat formatter = new DecimalFormat("###,###");
-		String price = formatter.format(product.getFee());
-		// 금액 3자리마다 콤마(,) 붙여주기 위한 코드 끝
-		
 		Member member = null;
 		
 		if(rq.getLoginedMemberId() != 0) {
@@ -107,6 +102,12 @@ public class UsrBookingController {
 		
 		// 예약페이지에서 몇박인지 보여주기 위한 (체크인-체크아웃)값 불러오는 코드
 		int diff = Ut.getDiffBetweenDate1AndDate2(start_date, end_date);
+		
+		// 금액 3자리마다 콤마(,) 붙여주기 위한 코드 시작
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		String price = formatter.format(product.getFee() * diff);
+		// 금액 3자리마다 콤마(,) 붙여주기 위한 코드 끝
+				
         
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("prod_id", prod_id);

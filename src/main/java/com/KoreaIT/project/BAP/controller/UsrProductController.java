@@ -92,9 +92,12 @@ public class UsrProductController {
 		}
 		// 여기까지
 		
+		// 예약페이지에서 몇박인지 보여주기 위한 (체크인-체크아웃)값 불러오는 코드
+		int diff = Ut.getDiffBetweenDate1AndDate2(start_date, end_date);
+		
 		Company company = companyService.getCompanyByComp_id(comp_id);
 		
-		List<Product> products = productService.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType, low_price, high_price);
+		List<Product> products = productService.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType, low_price, high_price, diff);
 		
 		// 예약페이지에서 orderId를 만들 때 필요한 숙박타입 코드를 넘겨주기 위한 부분 시작
 		String accommodationTypeCode = "-1";
@@ -163,6 +166,7 @@ public class UsrProductController {
 		model.addAttribute("accommodationTypeCode", accommodationTypeCode);
 		model.addAttribute("start_date", start_date);
 		model.addAttribute("end_date", end_date);
+		model.addAttribute("diff", diff);
 		model.addAttribute("wish", wish);
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("avg", avg);
