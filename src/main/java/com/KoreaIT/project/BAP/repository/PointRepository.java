@@ -24,7 +24,7 @@ public interface PointRepository {
 
 	@Select("""
 			<script>
-			SELECT po.*,
+			SELECT po.*, 
 				c.name AS extra__compName,
 				pa.paidRealAmount AS extra__paidRealAmount,
 				pa.lastTotalAmount AS extra__lastTotalAmount
@@ -51,7 +51,7 @@ public interface PointRepository {
 					</if>
 					<if test="start_date != '' and end_date != ''">
 					<![CDATA[
-						AND DATE(po.regDate) >= #{start_date} AND DATE(po.regDate) <= #{end_date}
+						AND DATE_FORMAT(po.regDate, '%Y-%m') >= #{start_date} AND  DATE_FORMAT(po.regDate, '%Y-%m') <= #{end_date}
 					]]>
 					</if>
 				GROUP BY po.id

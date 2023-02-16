@@ -37,11 +37,11 @@
 				</div>
 				<div class="searchDate-box flex items-center -mr-4">
 					<div>
-						<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
+						<input id="start_date" name="start_date" type="month" class="mx-2 input input-bordered" value="${start_date }" />
 					</div>
 					~
 					<div class="">
-						<input id="end_date" name="end_date" type="date" class="mx-2 input input-bordered" value="${end_date }" />
+						<input id="end_date" name="end_date" type="month" class="mx-2 input input-bordered" value="${end_date }" />
 					</div>
 				</div>
 				<button class="text-center btn btn-active btn-secondary ml-1">검색</button>
