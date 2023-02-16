@@ -11,13 +11,17 @@
 	<div class="con-3 mx-auto px-3">
 		<div class="text-2xl font-bold">포인트 내역</div>
 		<div class="table-box-type-2 company-list mt-0 flex flex-col text-sm">
+			<div class="text-xl ml-1 mt-4">
+				<span class="text-gray-400">현재 총 포인트 : </span>
+				<span class="text-green-500 font-bold text-xl">+ ${rq.getLoginedMember().getM_point() }</span>
+			</div>
 			<form>
-			<div class="pointList-top-box flex justify-between items-center mt-4">
-				<div class="text-xl ml-1">
-					<span class="text-gray-400">현재 총 포인트 : </span>
-					<span class="text-green-500 font-bold text-xl">+ ${rq.getLoginedMember().getM_point() }</span>
+			<div class="pointList-top-box flex justify-between items-center mt-2 ml-2">
+				<div>
+					<span>${pointsCount } 개</span>
 				</div>
-				<div class="point-list-orderby flex items-center ml-2">
+				<div class="grow-3"></div>
+				<div class="point-list-orderby flex items-center mr-2">
 					<a href="../point/list?start_date=${start_date}&end_date=${end_date }&searchKeywordTypeCode=plusPoint" class="${searchKeywordTypeCode.equals('plusPoint') ? 'searchKeywordTypeCode-btn-active' : '' }" >
 						<span>✔</span>
 						<span>+포인트</span>
@@ -35,7 +39,7 @@
 						<span>전체 기간</span>
 					</a>
 				</div>
-				<div class="searchDate-box flex items-center -mr-4">
+				<div class="searchDate-box flex items-center -mr-2">
 					<div>
 						<input id="start_date" name="start_date" type="month" class="mx-2 input input-bordered" value="${start_date }" />
 					</div>
@@ -44,7 +48,7 @@
 						<input id="end_date" name="end_date" type="month" class="mx-2 input input-bordered" value="${end_date }" />
 					</div>
 				</div>
-				<button class="text-center btn btn-active btn-secondary ml-1">검색</button>
+				<button class="text-center btn btn-active btn-secondary ml-2">검색</button>
 			</div>
 			</form>
 			<table class="mt-5">
@@ -115,6 +119,37 @@
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		
+		<div class="page-menu mt-2 flex justify-center">
+			<div class="btn-group">
+				<c:set var="pageMenuLen" value="5" />
+				<c:set var="startPage" value="${page - pageMenuLen >= 1 ? page - pageMenuLen : 1}" />
+				<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount}" />
+				
+				<c:set var="pageBaseUri" value="?start_date=${start_date }&end_date=${end_date }&searchKeywordTypeCode=${searchKeywordTypeCode }" />
+				<c:if test="${pointsCount != 0 }">
+					<c:if test="${page == 1 }">
+						<a class="btn btn-sm btn-disabled">«</a>
+						<a class="btn btn-sm btn-disabled">&lt;</a>
+					</c:if>
+					<c:if test="${page > 1 }">
+						<a class="btn btn-sm" href="${pageBaseUri }&page=1">«</a>
+						<a class="btn btn-sm" href="${pageBaseUri }&page=${page - 1 }">&lt;</a>
+					</c:if>
+					<c:forEach begin="${startPage }" end="${endPage }" var="i">
+						<a class="btn btn-sm ${page == i ? 'btn-active' : ''}" href="${pageBaseUri }&page=${i }">${i }</a>
+					</c:forEach>
+					<c:if test="${page < pagesCount }">
+						<a class="btn btn-sm" href="${pageBaseUri }&page=${page + 1 }">&gt;</a>
+						<a class="btn btn-sm" href="${pageBaseUri }&page=${pagesCount }">»</a>
+					</c:if>
+					<c:if test="${page == pagesCount }">
+						<a class="btn btn-sm btn-disabled">&gt;</a>
+						<a class="btn btn-sm btn-disabled">»</a>
+					</c:if>
+				</c:if>
+			</div>
 		</div>
 	</div>
 </section>

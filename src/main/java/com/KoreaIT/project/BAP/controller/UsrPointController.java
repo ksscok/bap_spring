@@ -8,10 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.KoreaIT.project.BAP.service.BookingService;
-import com.KoreaIT.project.BAP.service.CancelService;
-import com.KoreaIT.project.BAP.service.MemberService;
-import com.KoreaIT.project.BAP.service.PaymentService;
 import com.KoreaIT.project.BAP.service.PointService;
 import com.KoreaIT.project.BAP.vo.Point;
 import com.KoreaIT.project.BAP.vo.Rq;
@@ -32,18 +28,33 @@ public class UsrPointController {
 	public String showList(Model model, 
 			@RequestParam(defaultValue="") String start_date,
 			@RequestParam(defaultValue="") String end_date, 
-			@RequestParam(defaultValue = "allPoint") String searchKeywordTypeCode) {
+			@RequestParam(defaultValue = "allPoint") String searchKeywordTypeCode,
+			@RequestParam(defaultValue = "1") int page) {
 		
 		if(!rq.isLogined()) {
 			return rq.historyBackJsOnView("로그인 후 이용해주세요.");
 		}
 		
-		List<Point> points = pointService.getPointsByMemberId(rq.getLoginedMemberId(), start_date, end_date, searchKeywordTypeCode);
+		if (page <= 0) {
+			return rq.historyBackJsOnView("페이지번호가 올바르지 않습니다");
+		}
+		
+		int pointsCount = pointService.getPointsCount(rq.getLoginedMemberId(), start_date, end_date, searchKeywordTypeCode);
+		
+		int itemsInAPage = 10;
+		
+		int pagesCount = (int) Math.ceil((double) pointsCount / itemsInAPage);
+		
+		List<Point> points = pointService.getPointsByMemberId(rq.getLoginedMemberId(), start_date, end_date, searchKeywordTypeCode, itemsInAPage, page);
 		
 		model.addAttribute("points", points);
 		model.addAttribute("start_date", start_date);
 		model.addAttribute("end_date", end_date);
 		model.addAttribute("searchKeywordTypeCode", searchKeywordTypeCode);
+		model.addAttribute("pointsCount", pointsCount);
+		model.addAttribute("page", page);
+		model.addAttribute("itemsInAPage", itemsInAPage);
+		model.addAttribute("pagesCount", pagesCount);
 		
 		return "usr/point/list";
 	}

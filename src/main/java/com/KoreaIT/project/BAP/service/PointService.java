@@ -22,7 +22,14 @@ public class PointService {
 		pointRepository.doWrite(memberId, payment_id, p_point, status);
 	}
 
-	public List<Point> getPointsByMemberId(int memberId, String start_date, String end_date, String searchKeywordTypeCode) {
-		return pointRepository.getPointsByMemberId(memberId, start_date, end_date, searchKeywordTypeCode);
+	public List<Point> getPointsByMemberId(int memberId, String start_date, String end_date, String searchKeywordTypeCode, int itemsInAPage, int page) {
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return pointRepository.getPointsByMemberId(memberId, start_date, end_date, searchKeywordTypeCode, limitStart, itemsInAPage);
+	}
+
+	public int getPointsCount(int memberId, String start_date, String end_date, String searchKeywordTypeCode) {
+		return pointRepository.getPointsCount(memberId, start_date, end_date, searchKeywordTypeCode);
 	}
 }
