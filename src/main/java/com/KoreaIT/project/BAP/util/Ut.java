@@ -6,7 +6,9 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -441,6 +443,28 @@ public class Ut {
         String dayOfTheWeek = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN);		
         
         return dataOfChkin + " " + dayOfTheWeek;
+	}
+	
+	public static int getDiffBetweenDate1AndDate2(String start_date, String end_date) {
+		// 체크인 날짜를 localDateTime 타입화 시작
+		String[] strin = start_date.replaceAll(" ", "-").split("-");
+		int[] chkin = {Integer.parseInt(strin[0]), Integer.parseInt(strin[1]), Integer.parseInt(strin[2])};
+		
+		LocalDate startDate = LocalDate.of(chkin[0],chkin[1],chkin[2]);
+		LocalDateTime date1 = startDate.atStartOfDay();
+		// 체크인 날짜를 localDateTime 타입화 끝
+		
+		// 체크아웃 날짜를 localDateTime 타입화 시작
+		String[] strout = end_date.replaceAll(" ", "-").split("-");
+		int[] chkout = {Integer.parseInt(strout[0]), Integer.parseInt(strout[1]), Integer.parseInt(strout[2])};
+		
+		LocalDate endDate = LocalDate.of(chkout[0],chkout[1],chkout[2]);
+		LocalDateTime date2 = endDate.atStartOfDay();
+		// 체크아웃 날짜를 localDateTime 타입화 끝
+		
+		int betweenDays = (int) Duration.between(date1, date2).toDays();
+		  
+		return betweenDays;
 	}
 
 }

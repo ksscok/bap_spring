@@ -11,15 +11,47 @@
 	<div class="con-3 mx-auto px-3">
 		<div class="text-2xl font-bold">포인트 내역</div>
 		<div class="table-box-type-2 company-list mt-0 flex flex-col text-sm">
-			<div class="text-xl mt-4 ml-1">
-			<span class="text-gray-400">현재 총 포인트 : </span>
-			<span class="text-green-500 font-bold text-xl">+ ${rq.getLoginedMember().getM_point() }</span>
+			<form>
+			<div class="pointList-top-box flex justify-between items-center mt-4">
+				<div class="text-xl ml-1">
+					<span class="text-gray-400">현재 총 포인트 : </span>
+					<span class="text-green-500 font-bold text-xl">+ ${rq.getLoginedMember().getM_point() }</span>
+				</div>
+				<div class="point-list-orderby flex items-center ml-2">
+					<a href="../point/list?start_date=${start_date}&end_date=${end_date }&searchKeywordTypeCode=plusPoint" class="${searchKeywordTypeCode.equals('plusPoint') ? 'searchKeywordTypeCode-btn-active' : '' }" >
+						<span>✔</span>
+						<span>+포인트</span>
+					</a>
+					<a href="../point/list?start_date=${start_date}&end_date=${end_date }&searchKeywordTypeCode=minusPoint" class="${searchKeywordTypeCode.equals('minusPoint') ? 'searchKeywordTypeCode-btn-active' : '' }"  >
+						<span>✔</span>
+						<span>-포인트</span>
+					</a>
+					<a href="../point/list?start_date=${start_date}&end_date=${end_date }&searchKeywordTypeCode=allPoint" class="${searchKeywordTypeCode.equals('allPoint') ? 'searchKeywordTypeCode-btn-active' : '' }"  >
+						<span>✔</span>
+						<span>모든 포인트</span>
+					</a>
+					<a href="../point/list?start_date=&end_date=&searchKeywordTypeCode=${searchKeywordTypeCode}" class="${start_date.equals('') and end_date.equals('') ? 'searchKeywordTypeCode-btn-active' : '' }" >
+						<span>✔</span>
+						<span>전체 기간</span>
+					</a>
+				</div>
+				<div class="searchDate-box flex items-center -mr-4">
+					<div>
+						<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
+					</div>
+					~
+					<div class="">
+						<input id="end_date" name="end_date" type="date" class="mx-2 input input-bordered" value="${end_date }" />
+					</div>
+				</div>
+				<button class="text-center btn btn-active btn-secondary ml-1">검색</button>
 			</div>
+			</form>
 			<table class="mt-5">
 				<colgroup>
 					<col width="70" />
 					<col width="80" />
-					<col width="110" />
+					<col width="130" />
 					<col width="200" />
 					<col width="100" />
 					<col width="100" />
@@ -88,7 +120,10 @@
 </section>
 
 <script>
-	
+	function searchAllDate(){
+		$('#start_date').val('');
+		$('#end_date').val('');
+	};
 </script>
 
 <%@ include file="../common/foot.jspf"%>

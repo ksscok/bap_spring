@@ -106,8 +106,7 @@ public class UsrBookingController {
 		String DateAndDayOfTheWeekOfChkout = Ut.getDateAndDayOfTheWeek(end_date);
 		
 		// 예약페이지에서 몇박인지 보여주기 위한 (체크인-체크아웃)값 불러오는 코드
-		int diff = bookingService.getDiffBetweenChkinChkout(start_date, end_date);
-		
+		int diff = Ut.getDiffBetweenDate1AndDate2(start_date, end_date);
         
 		model.addAttribute("comp_id", comp_id);
 		model.addAttribute("prod_id", prod_id);

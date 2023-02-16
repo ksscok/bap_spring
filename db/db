@@ -1445,8 +1445,8 @@ CREATE TABLE `point`
 # `point` 테스트 데이터
 # 회원번호 = 5(게스트1), 결제번호 1번, (예약번호 1번), 결제 금액 10만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-01 12:12:12',
+updateDate = '2023-01-01 12:12:12',
 memberId = 5,
 booking_id = 1,
 p_point = 2000;
@@ -1458,8 +1458,8 @@ WHERE id = 5;
 
 # 회원번호 = 5(게스트1), 결제번호 2번, (예약번호 2번), 결제 금액 10만원(서울 신라)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-01 12:12:12',
+updateDate = '2023-01-01 12:12:12',
 memberId = 5,
 booking_id = 2,
 p_point = 2000;
@@ -1471,8 +1471,8 @@ WHERE id = 5;
 
 # 회원번호 = 6(게스트2), 결제번호 3번, (예약번호 3번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-10 16:16:16',
+updateDate = '2023-01-10 16:16:16',
 memberId = 6,
 booking_id = 3,
 p_point = 1400;
@@ -1484,8 +1484,8 @@ WHERE id = 6;
 
 # 회원번호 = 5(게스트1), 결제번호 4번, (예약번호 4번), 결제 금액 10만원(오노마)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-12 12:12:12',
+updateDate = '2023-01-12 12:12:12',
 memberId = 5,
 booking_id = 4,
 p_point = 2000;
@@ -1497,8 +1497,8 @@ WHERE id = 5;
 
 # 회원번호 = 6(게스트2), 결제번호 5번, (예약번호 5번), 결제 금액 10만원(제주 쉬멍)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-23 13:13:13',
+updateDate = '2023-01-23 13:13:13',
 memberId = 6,
 booking_id = 5,
 p_point = 2000;
@@ -1510,8 +1510,8 @@ WHERE id = 6;
 
 # 회원번호 = 5(게스트1), 결제번호 6번, (예약번호 6번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-24 14:14:14',
+updateDate = '2023-01-24 14:14:14',
 memberId = 5,
 booking_id = 6,
 p_point = 1400;
@@ -1523,8 +1523,8 @@ WHERE id = 5;
 
 # 회원번호 = 6(게스트2), 결제번호 7번, (예약번호 7번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-01-25 15:15:15',
+updateDate = '2023-01-25 15:15:15',
 memberId = 6,
 booking_id = 7,
 p_point = 1400;
@@ -1536,8 +1536,8 @@ WHERE id = 6;
 
 # 회원번호 = 5(게스트1), 결제번호 8번, (예약번호 8번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-02-01 12:12:12',
+updateDate = '2023-02-01 12:12:12',
 memberId = 5,
 booking_id = 8,
 p_point = 1400;
@@ -1549,8 +1549,8 @@ WHERE id = 5;
 
 # 회원번호 = 5(게스트1), 결제번호 9번, (예약번호 9번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-02-03 13:13:13',
+updateDate = '2023-02-03 13:13:13',
 memberId = 5,
 booking_id = 9,
 p_point = 1400;
@@ -1562,8 +1562,8 @@ WHERE id = 5;
 
 # 회원번호 = 5(게스트1), 결제번호 10번, (예약번호 10번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
-SET regDate = NOW(),
-updateDate = NOW(),
+SET regDate = '2023-02-04 14:14:14',
+updateDate = '2023-02-04 14:14:14',
 memberId = 5,
 booking_id = 10,
 p_point = 1400;

@@ -44,7 +44,7 @@
 				<div>
 					<span>아동</span>
 					<div>
-						<select class="select select-bordered" name="countOfChild"">
+						<select class="select select-bordered" name="countOfChild">
 							<c:forEach begin="0" end="10" var="i">
 								<option value="${i}" <c:if test="${i == param.countOfChild}">selected</c:if> >${i}</option>
 							</c:forEach>

@@ -23,6 +23,7 @@ public interface PointRepository {
 	void doWrite(int memberId, int payment_id, int p_point, String status);
 
 	@Select("""
+			<script>
 			SELECT po.*,
 				c.name AS extra__compName,
 				pa.paidRealAmount AS extra__paidRealAmount,
@@ -35,10 +36,28 @@ public interface PointRepository {
 				LEFT JOIN company AS c
 				ON b.comp_id = c.id
 				WHERE po.memberId = #{memberId}
-				AND p_point != 0
+					<if test="searchKeywordTypeCode == 'allPoint'">
+						AND po.p_point != 0
+					</if>
+					<if test="searchKeywordTypeCode == 'plusPoint'">
+					<![CDATA[
+						AND po.p_point > 0
+					]]>
+					</if>
+					<if test="searchKeywordTypeCode == 'minusPoint'">
+					<![CDATA[
+						AND po.p_point < 0
+					]]>
+					</if>
+					<if test="start_date != '' and end_date != ''">
+					<![CDATA[
+						AND DATE(po.regDate) >= #{start_date} AND DATE(po.regDate) <= #{end_date}
+					]]>
+					</if>
 				GROUP BY po.id
 				ORDER BY po.id desc
+			</script>
 			""")
-	List<Point> getPointsByMemberId(int memberId);
+	List<Point> getPointsByMemberId(int memberId, String start_date, String end_date, String searchKeywordTypeCode);
 
 }

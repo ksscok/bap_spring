@@ -21,7 +21,7 @@ public class Point {
 	private int extra__lastTotalAmount;
 	
 	public String getForPrintRegDate() {
-		return regDate.substring(0, 15);
+		return regDate.substring(0, 16);
 	}
 }
 

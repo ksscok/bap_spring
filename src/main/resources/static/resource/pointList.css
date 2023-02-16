@@ -7,3 +7,37 @@
 	border-radius: 10px;
 	padding: 15px;
 }
+
+input[type=date] {
+}
+
+.point-list-orderby {
+	height: 28px;
+	display: flex;
+	justify-content: flex-center;
+}
+
+.point-list-orderby > a {
+	padding: 3px 5px;
+	display: flex;
+	margin-left: -1px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1F2937;
+	border: 1px solid #1F2937;
+}
+
+.point-list-orderby > a:first-child {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.point-list-orderby > a:last-child {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.point-list-orderby > .searchKeywordTypeCode-btn-active {
+	color: #C20095;
+	border: 1px solid #C20095;
+}

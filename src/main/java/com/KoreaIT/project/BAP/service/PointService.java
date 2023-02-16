@@ -22,7 +22,7 @@ public class PointService {
 		pointRepository.doWrite(memberId, payment_id, p_point, status);
 	}
 
-	public List<Point> getPointsByMemberId(int memberId) {
-		return pointRepository.getPointsByMemberId(memberId);
+	public List<Point> getPointsByMemberId(int memberId, String start_date, String end_date, String searchKeywordTypeCode) {
+		return pointRepository.getPointsByMemberId(memberId, start_date, end_date, searchKeywordTypeCode);
 	}
 }
