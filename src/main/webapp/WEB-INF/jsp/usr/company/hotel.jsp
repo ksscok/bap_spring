@@ -260,11 +260,11 @@
 							<div>✔</div>
 							<span>높은 가격순</span>
 						</button>
-						<button onclick="location.href='${pageBaseUri}&order_by=a'" class="${order_by.equals('a') ? 'orderby-btn-active' : '' }" >
+						<button onclick="location.href='${pageBaseUri}&order_by=review'" class="${order_by.equals('review') ? 'orderby-btn-active' : '' }" >
 							<div>✔</div>
 							<span>후기 많은순</span>
 						</button>
-						<button onclick="location.href='${pageBaseUri}&order_by=b'" class="${order_by.equals('b') ? 'orderby-btn-active' : '' }">
+						<button onclick="location.href='${pageBaseUri}&order_by=rating'" class="${order_by.equals('rating') ? 'orderby-btn-active' : '' }">
 							<div>✔</div>
 							<span>평점 높은순</span>
 						</button>
