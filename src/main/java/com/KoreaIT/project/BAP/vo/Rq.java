@@ -109,6 +109,10 @@ public class Rq {
 	public String getCompanyProfileImgUri(int companyId) {
 		return "/common/genFile/file/company/" + companyId + "/extra/profileImg/1";
 	}
+	
+	public String getProductProfileImgUri(int productId) {
+		return "/common/genFile/file/product/" + productId + "/extra/profileImg/1";
+	}
 
 	public String getProfileFallbackImgUri() {
 //		return "https://via.placeholder.com/300/?text=*^_^*";
