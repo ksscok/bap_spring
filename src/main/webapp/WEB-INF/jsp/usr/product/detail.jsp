@@ -175,8 +175,9 @@
 				<div class="productList-box">
 					<c:forEach var="product" items="${products}" varStatus="status">
 						<div id="${status.count }" class="room-body flex items-center rounded-lg p-2 my-4">
-							<div>
-								<img class="w-80" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" alt="" />
+							<div class="w-80 h-60 product-img img-box flex justify-center">
+<%-- 								<img class="w-full" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" /> --%>
+								<img class="w-full" src="${rq.getProductProfileImgUri(product.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 							</div>
 							<div class="ml-4 w-6/12">
 								<div class="text-xl font-bold mb-10">${product.roomType }</div>
@@ -266,7 +267,7 @@
 							<div id="map" style="width:100%;height:200px;"></div>
 							<p class="my-2">
 								<button type="button" onclick="relayout()">지도 새로고침</button>
-							    <button type="button" onclick="panTo()">호텔 위치로</button> 
+							    <button type="button" onclick="panTo()">숙소 위치로</button> 
 							</p>
 						</div>
 						</div>
@@ -774,7 +775,6 @@ function ToastEditor__init() {
 	}
 //writeReview toastUiEditor 커스터마이징 끝
 	
-
 	let comp_address = $('#address').val();
 	let comp_name = $('#comp_name').val();
 	let x = "";
@@ -800,35 +800,42 @@ function ToastEditor__init() {
 // 	주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
 
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch(comp_address, function(result, status) {
-
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	        y = result[0].x;
-	        x = result[0].y;
-	        
-	        mCenter = coords;
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	       	});
-
-
-	     // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;margin-top:-7px;">' + comp_name + '</div>'
-	        });
-	        infowindow.open(map, marker);
-
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});    
-	
+	function getData(callback) {
+		  // new Promise() 추가
+		  return new Promise(function(resolve, reject) {
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch(comp_address, async function(result, status) {
+		
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+		
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        y = await result[0].x;
+			        x = await result[0].y;
+			        
+			        mCenter = coords;
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: coords
+			       	});
+		
+			     // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:200px;text-align:center;padding:6px 0;margin-top:-7px;">' + comp_name + '</div>'
+			        });
+			        infowindow.open(map, marker);
+		
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        map.setCenter(coords);
+			    } 
+			    
+			    let z = [x, y]
+			     resolve(z);
+				reject(new Error("Request is failed"));
+			});    
+		});
+	}
 	function panTo() {
 	    // 이동할 위도 경도 위치를 생성합니다 
 	    var moveLatLon = mCenter;
@@ -838,15 +845,17 @@ function ToastEditor__init() {
 	    map.panTo(moveLatLon);            
 	}       
 	
-	$(document).ready(function(){
+	getData().then(function(z) {
 			
-			alert("x : " + x);
-			alert(typeof x);
-			alert("y : " + y);
-			alert(typeof y);
-			var html = '<button type="button" onclick="window.open(\'https://map.kakao.com/link/map/' + comp_name + ',' + x + ',' + y + '\')" >큰 지도로 보기</button>';
+			let x1 = z[0];
+			let y1 = z[1];
+					
+			var html = '<button type="button" onclick="window.open(\'https://map.kakao.com/link/map/' + comp_name + ',' + x1 + ',' + y1 + '\')" >큰 지도로 보기</button>';
 			$('p').append(html);
+	}).catch(function(err) {
+		  console.error(err); // Error 출력
 	});
+	
 // 카카오맵 끝
 </script>
 
