@@ -8,7 +8,7 @@
 <!-- detail css -->
 <link rel="stylesheet" href="/resource/detail.css" />
 <!-- services 라이브러리 불러오기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5cfbc84cabfd59358618e0e4eec5096f&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5cfbc84cabfd59358618e0e4eec5096f&libraries=services,clusterer"></script>
 
 <div class="back-ground-page">
 	<section class="py-20">
@@ -263,10 +263,10 @@
 						</div>
 						<div class="baseInfor-box">
 						<div class="container mx-auto px-3">
-							<div id="map" style="width:600px;height:200px;"></div>
-							<p>
-							    <button onclick="setCenter()">지도 중심좌표 이동시키기</button> 
-							    <button onclick="panTo()">지도 중심좌표 부드럽게 이동시키기</button> 
+							<div id="map" style="width:100%;height:200px;"></div>
+							<p class="my-2">
+								<button type="button" onclick="relayout()">지도 새로고침</button>
+							    <button type="button" onclick="panTo()">호텔 위치로</button> 
 							</p>
 						</div>
 						</div>
@@ -773,11 +773,12 @@ function ToastEditor__init() {
 	  form.submit();
 	}
 //writeReview toastUiEditor 커스터마이징 끝
-
+	
 
 	let comp_address = $('#address').val();
 	let comp_name = $('#comp_name').val();
-
+	let x = "";
+	let y = "";
 // 카카오맵 시작
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
@@ -785,6 +786,16 @@ function ToastEditor__init() {
         level: 3 // 지도의 확대 레벨
     };
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	function relayout() {    
+	    
+	    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+	    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+	    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+	    map.relayout();
+	}
+	
+	let mCenter = '';
 	
 // 	주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
@@ -796,14 +807,18 @@ function ToastEditor__init() {
 	     if (status === kakao.maps.services.Status.OK) {
 
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+	        y = result[0].x;
+	        x = result[0].y;
+	        
+	        mCenter = coords;
 	        // 결과값으로 받은 위치를 마커로 표시합니다
 	        var marker = new kakao.maps.Marker({
 	            map: map,
 	            position: coords
-	        });
+	       	});
 
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+
+	     // 인포윈도우로 장소에 대한 설명을 표시합니다
 	        var infowindow = new kakao.maps.InfoWindow({
 	            content: '<div style="width:150px;text-align:center;padding:6px 0;margin-top:-7px;">' + comp_name + '</div>'
 	        });
@@ -814,6 +829,24 @@ function ToastEditor__init() {
 	    } 
 	});    
 	
+	function panTo() {
+	    // 이동할 위도 경도 위치를 생성합니다 
+	    var moveLatLon = mCenter;
+	    
+	    // 지도 중심을 부드럽게 이동시킵니다
+	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+	    map.panTo(moveLatLon);            
+	}       
+	
+	$(document).ready(function(){
+			
+			alert("x : " + x);
+			alert(typeof x);
+			alert("y : " + y);
+			alert(typeof y);
+			var html = '<button type="button" onclick="window.open(\'https://map.kakao.com/link/map/' + comp_name + ',' + x + ',' + y + '\')" >큰 지도로 보기</button>';
+			$('p').append(html);
+	});
 // 카카오맵 끝
 </script>
 

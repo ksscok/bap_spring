@@ -117,6 +117,32 @@
 	z-index: 50;
 }
 
+p {
+	height: 28px;
+	display: flex;
+	justify-content: flex-center;
+}
+
+p button {
+	padding: 3px 5px;
+	display: flex;
+	margin-left: -1px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1F2937;
+	border: 1px solid #1F2937;
+}
+
+p > button:first-child {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+p > button:last-child {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
 .writeReview-box {
 	border: 1px solid rgba(0,0,0,0.1);
 	border-radius: 10px;
