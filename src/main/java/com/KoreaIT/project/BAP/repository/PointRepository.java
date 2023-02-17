@@ -20,7 +20,7 @@ public interface PointRepository {
 			p_point = #{p_point},
 			`status` = #{status}
 			""")
-	void doWrite(int memberId, int payment_id, int p_point, String status);
+	void doWrite(long memberId, int payment_id, int p_point, String status);
 
 	@Select("""
 			<script>
@@ -64,7 +64,7 @@ public interface PointRepository {
 				LIMIT #{limitStart}, #{itemsInAPage}
 			</script>
 			""")
-	List<Point> getPointsByMemberId(int memberId, String start_date, String end_date, String searchKeywordTypeCode, int limitStart, int itemsInAPage);
+	List<Point> getPointsByMemberId(long memberId, String start_date, String end_date, String searchKeywordTypeCode, int limitStart, int itemsInAPage);
 
 	@Select("""
 			<script>
@@ -91,6 +91,5 @@ public interface PointRepository {
 					</if>
 			</script>
 			""")
-	int getPointsCount(int memberId, String start_date, String end_date, String searchKeywordTypeCode);
-
+	int getPointsCount(long memberId, String start_date, String end_date, String searchKeywordTypeCode);
 }

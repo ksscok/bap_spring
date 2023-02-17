@@ -40,7 +40,7 @@ public class UsrManagementController {
 	@RequestMapping("/usr/management/companyList")
 	public String showCompanyList(Model model) {
 		
-		int hostId = rq.getLoginedMemberId();
+		long hostId = rq.getLoginedMemberId();
 		
 		List<Company> companies = companyService.getCompanyByHostId(hostId);
 		

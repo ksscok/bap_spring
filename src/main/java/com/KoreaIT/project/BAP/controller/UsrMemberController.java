@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.KoreaIT.project.BAP.service.KakaoLoginService;
+import com.KoreaIT.project.BAP.service.KakaoAPIService;
 import com.KoreaIT.project.BAP.service.MemberService;
 import com.KoreaIT.project.BAP.util.Ut;
 import com.KoreaIT.project.BAP.vo.Member;
@@ -21,12 +22,12 @@ import com.KoreaIT.project.BAP.vo.Rq;
 public class UsrMemberController {
 	
 	private MemberService memberService;
-	private KakaoLoginService kakaoLoginService;
+	private KakaoAPIService kakaoAPIService;
 	private Rq rq;
 	
-	UsrMemberController(MemberService memberService, KakaoLoginService kakaoLoginService, Rq rq) {
+	UsrMemberController(MemberService memberService, KakaoAPIService kakaoAPIService, Rq rq) {
 		this.memberService = memberService;
-		this.kakaoLoginService = kakaoLoginService;
+		this.kakaoAPIService = kakaoAPIService;
 		this.rq = rq;
 	}
 	
@@ -66,7 +67,10 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(@RequestParam(defaultValue= "/") String afterLogoutUri) {
+	public String doLogout(@RequestParam(defaultValue= "/") String afterLogoutUri, HttpSession session) {
+		
+		kakaoAPIService.kakaoLogout((String)session.getAttribute("accessToken"));
+		session.removeAttribute("accessToken");
 		
 		rq.logout();
 		
@@ -131,32 +135,38 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/kakaoLogin")
 	@ResponseBody
-	public String kakaoLogin(@RequestParam("code") String code, @RequestParam(defaultValue = "/") String afterLoginUri)
+	public String kakaoLogin(@RequestParam("code") String code, HttpSession session)
 			throws IOException {
 		// 토큰 발급 받기
-		String access_Token = kakaoLoginService.getAccessToken(code);
+		String accessToken = kakaoAPIService.getAccessToken(code);
 
 		// 사용자 정보 가지고 오기
-		Member member = kakaoLoginService.userInfo(access_Token);
-
-		// 세션 형성 + request 내장 객체 가지고 오기
-
-		System.out.println("accessToken: " + access_Token);
+		Member member = kakaoAPIService.userInfo(accessToken);
+		
+		System.out.println("accessToken: " + accessToken);
 		System.out.println("code:" + code);
 		System.out.println("Common Controller:" + member);
+		System.out.println("id: " + member.getId());
 		System.out.println("nickname: " + member.getName());
 		System.out.println("email: " + member.getEmail());
+		
+		// DB에 회원 정보가 없을 경우 DB에 회원 정보 저장
+		Member oldMember = memberService.getMemberById(member.getId());
+
+		if (oldMember == null) {
+			memberService.kakaoJoin(member.getId(), member.getName(), member.getEmail());
+		}
 
 		// 세션에 담기
 		if (member.getEmail() != null) {
 			rq.login(member);
+			session.setAttribute("accessToken", accessToken);
 		}
 		
 		String msg = Ut.f("%s님 환영합니다.", member.getName());
 		
 		return rq.jsReplace(msg, "/");
 	}
-	
 	
 	@RequestMapping("/usr/member/myPage")
 	public String showMyPage() {
@@ -189,7 +199,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(int id, String loginPw, String loginPwConfirm, String email, String cellphoneNo) {
+	public String doModify(long id, String loginPw, String loginPwConfirm, String email, String cellphoneNo) {
 		
 		if(Ut.empty(loginPw)) {
 			loginPw = null;

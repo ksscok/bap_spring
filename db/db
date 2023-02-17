@@ -5,7 +5,7 @@ SHOW TABLES;
 
 #host 테이블 생성
 CREATE TABLE `member` (
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	memberType CHAR(20) NOT NULL,
@@ -1575,7 +1575,6 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-SELECT * FROM `point`
 WHERE DATE(regDate) >= '2023-01-02' AND DATE(regDate) <= '2023-02-03'
 AND memberId = 5;
 
@@ -1587,3 +1586,6 @@ SELECT * FROM booking;
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
+
+SELECT * FROM MEMBER;
+

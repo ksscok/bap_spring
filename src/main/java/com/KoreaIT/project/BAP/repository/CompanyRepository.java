@@ -125,7 +125,7 @@ public interface CompanyRepository {
 			accommodationType = #{accommodationType},
 			host_id = #{host_id}
 			""")
-	void register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id);
+	void register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, long host_id);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
@@ -293,7 +293,7 @@ public interface CompanyRepository {
 			FROM company
 			WHERE host_id = #{hostId}
 			""")
-	List<Company> getCompanyByHostId(int hostId);
+	List<Company> getCompanyByHostId(long hostId);
 
 	@Select("""
 			<script>

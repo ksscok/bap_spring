@@ -33,7 +33,7 @@ public class ReviewService {
 		return reviewRepository.getReviewsByComp_id(comp_id); 
 	}
 
-	public List<Review> getForPrintReviews(int loginedMemberId, int comp_id) {
+	public List<Review> getForPrintReviews(long loginedMemberId, int comp_id) {
 		
 		List<Review> reviews = reviewRepository.getForPrintReviews(comp_id);
 		
@@ -44,7 +44,7 @@ public class ReviewService {
 		return reviews;
 	}
 	
-	private void actorCanChangeData(int loginedMemberId, Review review) {
+	private void actorCanChangeData(long loginedMemberId, Review review) {
 		
 		if(review == null) {
 			return;
@@ -63,7 +63,7 @@ public class ReviewService {
 		return reviewRepository.getReviewById(id);
 	}
 
-	public ResultData actorCanMD(int loginedMemberId, Review review) {
+	public ResultData actorCanMD(long loginedMemberId, Review review) {
 		
 		if(review == null) {
 			return ResultData.from("F-1", Ut.f("해당 리뷰는 존재하지 않습니다"));

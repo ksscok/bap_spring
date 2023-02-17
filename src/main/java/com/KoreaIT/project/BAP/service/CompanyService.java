@@ -21,7 +21,7 @@ public class CompanyService {
 		this.reviewService = reviewService;
 	}
 
-	public int register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, int host_id) {
+	public int register(String name, String cellphoneNo, String address, String area, String timeChkin, String timeChkout, String accommodationType, long host_id) {
 		companyRepository.register(name, cellphoneNo, address, area, timeChkin, timeChkout, accommodationType, host_id);
 		return companyRepository.getLastInsertId();
 	}
@@ -144,7 +144,7 @@ public class CompanyService {
 		return companyRepository.getHotelsCount(area, low_price, high_price);
 	}
 	
-	public List<Company> getCompanyByHostId(int hostId) {
+	public List<Company> getCompanyByHostId(long hostId) {
 		return companyRepository.getCompanyByHostId(hostId);
 	}
 

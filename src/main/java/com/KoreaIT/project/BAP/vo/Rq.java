@@ -24,7 +24,7 @@ public class Rq {
 	@Getter
 	private boolean isLogined;
 	@Getter
-	private int loginedMemberId;
+	private long loginedMemberId;
 	@Getter
 	private Member loginedMember;
 	
@@ -41,11 +41,11 @@ public class Rq {
 		paramMap = Ut.getParamMap(req);
 		
 		boolean isLogined = false;
-		int loginedMemberId = 0;
+		long loginedMemberId = 0;
 		
 		if(session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
-			loginedMemberId = (int)session.getAttribute("loginedMemberId");
+			loginedMemberId = (long)session.getAttribute("loginedMemberId");
 			loginedMember = memberService.getMemberById(loginedMemberId);
 		}
 		

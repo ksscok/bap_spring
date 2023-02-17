@@ -19,7 +19,7 @@ public interface WishRepository {
 				WHERE memberId = #{memberId}
 				AND comp_id = #{comp_id}
 			""")
-	Wish getWishByMemberIdAndComp_id(int memberId, int comp_id);
+	Wish getWishByMemberIdAndComp_id(long memberId, int comp_id);
 	
 	@Insert("""
 			INSERT INTO wish

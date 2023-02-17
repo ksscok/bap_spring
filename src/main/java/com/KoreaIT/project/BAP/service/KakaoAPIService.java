@@ -11,14 +11,13 @@ import java.net.URL;
 
 import org.springframework.stereotype.Service;
 
-import com.KoreaIT.project.BAP.vo.KakaoLogin;
 import com.KoreaIT.project.BAP.vo.Member;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Service
-public class KakaoLoginService  {
+public class KakaoAPIService  {
 
 	//컨트롤러에서 사용할 메서드 만들기 
 	//화면에서 파라미터로 넘겨준 code값을 받아오고 POST로 요청을 보내서 토큰을 발급받기 
@@ -135,7 +134,7 @@ public class KakaoLoginService  {
 	           	//응답데이터(JSON)
 	            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 	            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-//	            Long id = element.getAsJsonObject().get("id").getAsLong();
+	            Long id = element.getAsJsonObject().get("id").getAsLong();
 	            
 	            //파싱된 json데이터를 string에 담기
 	            //properties
@@ -143,11 +142,11 @@ public class KakaoLoginService  {
 	          
 	            //kakao_account
 	            String email = kakao_account.getAsJsonObject().get("email").getAsString();
-//	            System.out.println("id: "+ id);
+	            System.out.println("id: "+ id);
 	            System.out.println("nickname: "+name);
 	            
 	            //setter이용하여 member에 담기 
-//	            member.setId(id);
+	            member.setId(id);
 	            member.setName(name);
 	            member.setEmail(email);
 
@@ -158,5 +157,29 @@ public class KakaoLoginService  {
 	 		
 	 		return member;
 	 	}
+	 	
+	 	public void kakaoLogout(String accessToken) {
+			String reqURL = "http://kapi.kakao.com/v1/user/logout";
+			try {
+				URL url = new URL(reqURL);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+				int responseCode = conn.getResponseCode();
+				System.out.println("responseCode = " + responseCode);
+				
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				
+				String result = "";
+				String line = "";
+				
+				while((line = br.readLine()) != null) {
+					result+=line;
+				}
+				System.out.println(result);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 }
 

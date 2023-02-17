@@ -19,7 +19,7 @@ public class WishService {
 		this.wishRepository = wishRepository;
 	}
 
-	public Wish getWishByMemberIdAndComp_id(int memberId, int comp_id) {
+	public Wish getWishByMemberIdAndComp_id(long memberId, int comp_id) {
 		return wishRepository.getWishByMemberIdAndComp_id(memberId, comp_id);
 	}
 	
