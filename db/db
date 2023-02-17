@@ -2002,6 +2002,24 @@ INSERT INTO review
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 6,
+comp_id = 3, 
+booking_id = 6,
+rating = 5,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 3, 
+booking_id = 6,
+rating = 5,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
 comp_id = 6, 
 booking_id = 6,
 rating = 1,

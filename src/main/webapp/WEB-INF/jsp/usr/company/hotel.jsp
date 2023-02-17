@@ -282,8 +282,8 @@
 								</div>
 								<div class="score">
 									<span>★</span>
-									<div class="font-semibold">4.9&nbsp;</div>
-									<span>(2,645) </span>
+									<div class="font-semibold">${company.getForPrintReviewRating()}&nbsp;</div>
+									<span>(${company.extra__reviewCount})</span>
 								</div> 
 								<div class="mt-1">${company.address}</div>
 								<div class="flex flex-grow"></div>

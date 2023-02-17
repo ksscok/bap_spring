@@ -248,10 +248,20 @@ public interface CompanyRepository {
 			<script>
 			SELECT c.*,
 			p.fee AS extra__productFee,
-			MIN(fee) AS extra__minFee
+			MIN(fee) AS extra__minFee,
+			review_info.r_count AS extra__reviewCount,
+			review_info.r_rating AS extra__reviewRating
 			FROM company AS c
 			LEFT JOIN product AS p
 			ON c.id = p.comp_id
+			LEFT JOIN (
+				SELECT r.comp_id,
+				COUNT(*) AS r_count,
+				AVG(rating) AS r_rating
+				FROM review AS r
+				GROUP BY r.comp_id
+			) AS review_info
+			ON c.id = review_info.comp_id
 			WHERE c.accommodationType = 'hotel'
 			<if test="area != ''">
 				AND `area` = #{area}
@@ -273,6 +283,12 @@ public interface CompanyRepository {
 					</when>
 					<when test="order_by == 'highPrice'">
 						ORDER BY extra__minFee DESC
+					</when>
+					<when test="order_by == 'review'">
+						ORDER BY extra__reviewCount DESC
+					</when>
+					<when test="order_by == 'rating'">
+						ORDER BY extra__reviewRating DESC
 					</when>
 				</choose>
 			</if>
