@@ -33,6 +33,11 @@ html> body {
 
 /* ----커스텀---- */
 
+/* 스크롤떄문에 영역 밀리는 현상 방지 */
+html> body {
+	overflow-y:scroll;
+}
+
 main {
 	padding-top: 64px;
 }
@@ -87,8 +92,12 @@ main {
 	max-width: 990px;
 }
 
-.con-min-width {
-	min-width: 400px;
+.con-1024px {
+	width: 1024px;
+}
+
+.com-min-width-1024px {
+	min-width: 1024px;
 }
 
 .product-link-box {

@@ -9,7 +9,7 @@
 	<div class="con-1 mx-auto px-3">
 		<div class="flex justify-center mb-5">
 			<a href="../home/main">
-				<img class="logo" src="/img/gabojaGo_logo2.png" alt="gabojaGo" />
+				<img class="logo" src="/img/GABOJAGO_logo5.png" alt="gabojaGo" />
 			</a>
 		</div>
 		<form class="flex justify-center" method="POST" action="../member/doLogin" onsubmit="memberLogin__form(this); return false;">
