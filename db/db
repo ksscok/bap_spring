@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS BAP_spring;
 CREATE DATABASE BAP_spring;
 USE BAP_spring;
 SHOW TABLES;
+
 #host 테이블 생성
 CREATE TABLE `member` (
 	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -18,6 +19,7 @@ CREATE TABLE `member` (
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
 	delDate DATETIME COMMENT '탈퇴날짜'
 );
+
 # host 테스트 데이터 생성
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -28,6 +30,7 @@ loginPw = 'host1',
 `name` = '호스트1',
 cellphoneNo = '010-1111-2222',
 email = 'host1@gmail.com';
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -37,6 +40,7 @@ loginPw = 'host2',
 `name` = '호스트2',
 cellphoneNo = '010-1234-5678',
 email = 'host2@gmail.com';
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -46,6 +50,7 @@ loginPw = 'host3',
 `name` = '호스트3',
 cellphoneNo = '010-1234-5678',
 email = 'host3@gmail.com';
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -56,6 +61,7 @@ loginPw = 'admin',
 `name` = '관리자',
 cellphoneNo = '010-1234-5678',
 email = 'admin@gmail.com';
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -65,6 +71,7 @@ loginPw = 'guest1',
 `name` = '게스트1',
 cellphoneNo = '010-1212-2323',
 email = 'guest1@gmail.com';
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -74,6 +81,7 @@ loginPw = 'guest2',
 `name` = '게스트2',
 cellphoneNo = '010-3434-4545',
 email = 'guest2@gmail.com';
+
 # company 테이블 생성
 CREATE TABLE company (
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -87,6 +95,7 @@ CREATE TABLE company (
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
 	delDate DATETIME COMMENT '탈퇴날짜'
 );
+
 # company 테스트 데이터 생성
 INSERT INTO company
 SET regDate = NOW(),
@@ -96,6 +105,7 @@ cellphoneNo = '010-0101-9898',
 address = '서울시 중구 동호로249',
 timeChkin = '14:00',
 timeChkout = '11:00';
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -104,6 +114,7 @@ cellphoneNo = '010-0202-9898',
 address = '대전 유성구 엑스포로123번길',
 timeChkin = '17:00',
 timeChkout = '11:00';
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -112,6 +123,7 @@ cellphoneNo = '010-0303-9898',
 address = '대전 유성구 도룡동 3-1',
 timeChkin = '18:00',
 timeChkout = '10:00';
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -120,6 +132,7 @@ cellphoneNo = '010-0404-9898',
 address = '경기 양평군 단월면 명성리 162',
 timeChkin = '15:00',
 timeChkout = '10:00';
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -128,6 +141,7 @@ cellphoneNo = '010-0505-9898',
 address = '충북 청주시 상당구 북문로2가 106-1',
 timeChkin = '17:00',
 timeChkout = '12:00';
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -136,6 +150,7 @@ cellphoneNo = '010-0606-9898',
 address = '제주특별자치도 제주시 한림읍 협재리 2557-1',
 timeChkin = '20:00',
 timeChkout = '08:00';
+
 # product 테이블 생성
 CREATE TABLE product (
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -154,126 +169,259 @@ CREATE TABLE product (
 	includeMeals CHAR(20) NOT NULL,
 	smokingType CHAR(20) NOT NULL
 );
+
 # product 테스트 데이터 생성
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '1',
+companyId = 1,
 accommodationType = '호텔',
-roomType = '스탠다드',
+roomType = '디럭스 트윈',
 numberOfRooms = 7,
 hostId = 1,
-fee = 100000,
+fee = 190000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
 includeMeals = '조식, 석식',
 smokingType = 'noSmoking';
+
+# product 테스트 데이터 생성
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '2',
+companyId = 1,
 accommodationType = '호텔',
-roomType = '디럭스',
-numberOfRooms = 4,
-hostId = 2,
-fee = 70000,
+roomType = '디럭스 더블',
+numberOfRooms = 7,
+hostId = 1,
+fee = 180000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
 includeMeals = '조식',
 smokingType = 'noSmoking';
+
+# product 테스트 데이터 생성
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '2',
+companyId = 1,
 accommodationType = '호텔',
-roomType = '스탠다드',
-numberOfRooms = 1,
+roomType = '비즈니스 디럭스 킹',
+numberOfRooms = 7,
+hostId = 1,
+fee = 230000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '조식',
+smokingType = 'noSmoking';
+
+# product 테스트 데이터 생성
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 1,
+accommodationType = '호텔',
+roomType = '비즈니스 디럭스 트윈',
+numberOfRooms = 7,
+hostId = 1,
+fee = 230000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '조식',
+smokingType = 'noSmoking';
+
+# product 테스트 데이터 생성
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 1,
+accommodationType = '호텔',
+roomType = '그랜드 코너 디럭스',
+numberOfRooms = 7,
+hostId = 1,
+fee = 280000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '조식',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 1,
+accommodationType = '호텔',
+roomType = '체크인시 배정',
+numberOfRooms = 4,
 hostId = 2,
 fee = 50000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 2,
+accommodationType = '호텔',
+roomType = '스탠다드 더블',
+numberOfRooms = 1,
+hostId = 2,
+fee = 60000,
+countOfRoom = 1,
+countOfAdult = 4,
+countOfChild = 1,
+includeMeals = '석식',
+smokingType = 'smoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 2,
+accommodationType = '호텔',
+roomType = '스탠다드 트윈',
+numberOfRooms = 3,
+hostId = 2,
+fee = 60000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '식사불포함',
+smokingType = 'smoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 2,
+accommodationType = '호텔',
+roomType = '헐리우드 더블',
+numberOfRooms = 3,
+hostId = 2,
+fee = 60000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 2,
+accommodationType = '호텔',
+roomType = '[2인 석식 패키지] 스탠다드 더블',
+numberOfRooms = 1,
+hostId = 2,
+fee = 80000,
 countOfRoom = 1,
 countOfAdult = 4,
 countOfChild = 1,
 includeMeals = '석식',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '2',
+companyId = 2,
 accommodationType = '호텔',
-roomType = '스위트',
+roomType = '디럭스 더블 리버뷰',
 numberOfRooms = 3,
 hostId = 2,
-fee = 90000,
+fee = 75000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
 includeMeals = '식사불포함',
-smokingType = 'smoking';
+smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '3',
+companyId = 2,
 accommodationType = '호텔',
-roomType = '디럭스',
-numberOfRooms = 2,
-hostId = 3,
-fee = 239000,
+roomType = '트리플',
+numberOfRooms = 3,
+hostId = 2,
+fee = 85000,
+countOfRoom = 1,
+countOfAdult = 3,
+countOfChild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 2,
+accommodationType = '호텔',
+roomType = '[B&B In the City-조식 2인 포함] 스탠다드 더블',
+numberOfRooms = 3,
+hostId = 2,
+fee = 100000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '조식',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 2,
+roomType = '그랜드 코너 디럭스',
+numberOfRooms = 7,
+fee = 10000000,
 countOfRoom = 1,
 countOfAdult = 2,
 countOfChild = 1,
 includeMeals = '조식, 석식',
-smokingType = 'smoking';
+smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '4',
+companyId = 3,
+accommodationType = '호텔',
+roomType = '[조식 2인 패키지] 디럭스 더블',
+numberOfRooms = 2,
+hostId = 3,
+fee = 267000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '조식',
+smokingType = 'smoking';
+
+SELECT * FROM company;
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 4,
 accommodationType = '펜션',
 roomType = '산토리니',
 numberOfRooms = 1,
 hostId = 4,
-fee = 125000,
+fee = 165000,
 countOfRoom = 1,
 countOfAdult = 4,
 countOfChild = 4,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '5',
+companyId = 5,
 accommodationType = '모텔',
-roomType = '스위트',
+roomType = '준특실*2PC는 프런트문의[소독살균-2PC,욕조,스타일러,공기청정기]',
 numberOfRooms = 4,
-hostId = 5,
-fee = 65000,
-countOfRoom = 1,
-countOfAdult = 2,
-countOfChild = 1,
-includeMeals = '식사불포함',
-smokingType = 'smoking';
-INSERT INTO product
-SET regDate = NOW(),
-updateDate = NOW(),
-companyId = '5',
-accommodationType = '모텔',
-roomType = '디럭스',
-numberOfRooms = 6,
-hostId = 5,
-fee = 50000,
-countOfRoom = 1,
-countOfAdult = 2,
-countOfChild = 1,
-includeMeals = '식사불포함',
-smokingType = 'noSmoking';
-INSERT INTO product
-SET regDate = NOW(),
-updateDate = NOW(),
-companyId = '5',
-accommodationType = '모텔',
-roomType = '스탠다드',
-numberOfRooms = 2,
 hostId = 5,
 fee = 35000,
 countOfRoom = 1,
@@ -281,10 +429,41 @@ countOfAdult = 2,
 countOfChild = 1,
 includeMeals = '식사불포함',
 smokingType = 'smoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
-companyId = '6',
+companyId = 5,
+accommodationType = '모텔',
+roomType = '힐링룸[소독살균-안마의자,스타일러,공기청정기]',
+numberOfRooms = 6,
+hostId = 5,
+fee = 40000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '식사불포함',
+smokingType = 'noSmoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 5,
+accommodationType = '모텔',
+roomType = '트윈[소독살균-더블+싱글,스타일러,욕조,에어제닉] ',
+numberOfRooms = 2,
+hostId = 5,
+fee = 45000,
+countOfRoom = 1,
+countOfAdult = 2,
+countOfChild = 1,
+includeMeals = '식사불포함',
+smokingType = 'smoking';
+
+INSERT INTO product
+SET regDate = NOW(),
+updateDate = NOW(),
+companyId = 6,
 accommodationType = '게스트하우스',
 roomType = '트윈룸(3인타입)',
 numberOfRooms = 2,
@@ -294,7 +473,9 @@ countOfAdult = 3,
 countOfChild = 0,
 includeMeals = '조식',
 smokingType = 'noSmoking';
+
 SELECT * FROM product;
+
 # 쿼리 테스트(jh)
 SELECT P.*,
 C.name AS comName, 
@@ -303,9 +484,11 @@ FROM product AS P
 INNER JOIN company AS C
 ON P.companyId = C.id
 GROUP BY P.companyId;
+
 SELECT *
 FROM product
 WHERE companyId = 2;
+
 # 쿼리 테스트(ss)
 -- SELECT count(c.id) as cnt
 -- from(
@@ -323,6 +506,7 @@ WHERE companyId = 2;
 -- LEFT JOIN product AS p
 -- ON c.id = p.comp_id
 -- GROUP BY c.id;
+
 -- 
 -- SELECT p.*,
 -- MIN(fee) AS extra__minFee
@@ -331,9 +515,11 @@ WHERE companyId = 2;
 -- AND accommodationType = '호텔' OR accommodationType = '모텔'
 -- GROUP BY NAME, address
 -- ORDER BY extra__minFee ASC;
+
 SHOW TABLES;
 SELECT * FROM product;
 SELECT * FROM company;
+
 # genFile 테이블 추가
 CREATE TABLE genFile (
   id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
@@ -355,55 +541,70 @@ CREATE TABLE genFile (
   PRIMARY KEY (id),
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
+
 # company 테이블 수정
 ALTER TABLE company ADD COLUMN accommodationType CHAR(10) NOT NULL;
 ALTER TABLE company ADD COLUMN host_id INT(10) UNSIGNED NOT NULL;
+
 UPDATE company
 SET accommodationType = 'hotel',
 host_id = 1
 WHERE id = 1;
+
 UPDATE company
 SET accommodationType = 'hotel',
 host_id = 1
 WHERE id = 2;
+
 UPDATE company
 SET accommodationType = 'hotel',
 host_id = 2
 WHERE id = 3;
+
 UPDATE company
 SET accommodationType = 'pension',
 host_id = 2
 WHERE id = 4;
+
 UPDATE company
 SET accommodationType = 'motel',
 host_id = 3
 WHERE id = 5;
+
 UPDATE company
 SET accommodationType = 'guesthouse',
 host_id = 3,
 `name` = '제주 쉬멍놀멍 게스트하우스',
 address = '제주특별자치도 제주시 한림읍 협재리 2557-1'
 WHERE id = 6;
+
 SELECT * FROM company;
+
 # product 테이블 수정
 ALTER TABLE product DROP COLUMN accommodationType;
 ALTER TABLE product DROP COLUMN hostId;
 ALTER TABLE product CHANGE COLUMN companyId comp_id INT(10) UNSIGNED NOT NULL;
 SELECT * FROM product;
+
 SELECT c.*,
 MIN(fee) AS extra_minFee
 FROM company AS c
 LEFT JOIN product AS p
 ON c.id = p.comp_id
 GROUP BY c.id;
+
 SELECT * FROM MEMBER;
 SELECT * FROM company;
+
 # 로그인비밀번호 컬럼의 길이를 100으로 늘림
 ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
+
 # 기존 회원의 비밀번호를 암호화하여 저장
 UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
+
 SELECT * FROM `member`;
+
 CREATE TABLE booking
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -424,14 +625,17 @@ CREATE TABLE booking
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수',
     `status`  VARCHAR(45)    NOT NULL DEFAULT 'await'   COMMENT '예약상태 (await : 결제 대기중, done : 예약(결제) 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
 );
+
 SELECT COUNT(*)
 				FROM booking
 				WHERE cellphoneNo = '010-1212-2323'
 				AND id = 3;
 			
 					
+
 SELECT * FROM booking;
 SELECT LAST_INSERT_ID();
+
 # booking 테스트 데이터 생성
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 1번방을 예약
 INSERT INTO booking
@@ -450,6 +654,7 @@ diff = 2,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'expired';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 서울 신라호텔 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -467,6 +672,7 @@ diff = 58,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
+
 # 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -484,6 +690,7 @@ diff = 7,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -501,6 +708,7 @@ diff = 1,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel_apply';
+
 # 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -518,6 +726,7 @@ diff = 7,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel_apply';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -535,6 +744,7 @@ diff = 7,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -552,6 +762,7 @@ diff = 1,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -569,6 +780,7 @@ diff = 9,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -586,6 +798,7 @@ diff = 11,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
+
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
@@ -603,6 +816,7 @@ diff = 1,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
+
 # 얘는 예약만 작성하고 결제는 안함
 # 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO booking
@@ -620,6 +834,7 @@ end_date = "2023-03-13",
 diff = 1,
 countOfAdult = 2,
 countOfChild = 0;
+
 CREATE TABLE payment
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -640,6 +855,7 @@ CREATE TABLE payment
     paidRealAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '실제 결제 금액(lastTotalAmount - p_point)'
     
 );
+
 # payment 테스트 데이터
 # 폰번호 010-1212-2323(게스트1), 예약번호 1번, 결제 금액 10만원(대전 롯데)
 INSERT INTO payment
@@ -656,6 +872,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 100000,
 paidRealAmount = 100000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 2번, 결제 금액 10만원(서울 신라)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -671,6 +888,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 100000,
 paidRealAmount = 100000;
+
 # 폰번호 010-3434-4545(게스트2), 예약번호 3번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -686,6 +904,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 70000,
 paidRealAmount = 70000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 4번, 결제 금액 10만원(오노마)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -701,6 +920,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 100000,
 paidRealAmount = 100000;
+
 # 폰번호 010-3434-4545(게스트2), 예약번호 5번, 결제 금액 10만원(제주 쉬멍)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -716,6 +936,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 100000,
 paidRealAmount = 100000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 6번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -731,6 +952,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 70000,
 paidRealAmount = 70000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 7번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -746,6 +968,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 70000,
 paidRealAmount = 70000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 8번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -761,6 +984,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 70000,
 paidRealAmount = 70000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 9번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -776,6 +1000,7 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 70000,
 paidRealAmount = 70000;
+
 # 폰번호 010-1212-2323(게스트1), 예약번호 10번, 결제 금액 7만원(대전 롯데)
 INSERT INTO payment
 SET regDate = NOW(),
@@ -791,10 +1016,14 @@ approvedAt = '2023-01-30T22:20:56+09:00',
 lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
 lastTotalAmount = 70000,
 paidRealAmount = 70000;
+
 SELECT *
 FROM payment;
+
 SELECT *
 FROM booking;
+
+
 CREATE TABLE cancelReason
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -806,6 +1035,7 @@ CREATE TABLE cancelReason
     `body`    VARCHAR(200)    NOT NULL    COMMENT '취소 상세 사유', 
     cancelAmount INT UNSIGNED NOT NULL COMMENT '취소할 금액'
 );
+
 # booking_id = 4를 guest가 예약 취소 - 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
 INSERT INTO cancelReason
 SET regDate = NOW(),
@@ -815,6 +1045,7 @@ memberType = 'guest',
 title = '변심',
 `body` = '여행 안가고 싶어짐',
 cancelAmount = 100000;
+
 # booking_id = 5를 guest가 예약 취소 - 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
 INSERT INTO cancelReason
 SET regDate = NOW(),
@@ -824,6 +1055,7 @@ memberType = 'guest',
 title = '인원 변경으로 인해',
 `body` = '인원이 추가되어 더 큰 방을 예약하려고',
 cancelAmount = 100000;
+
 # booking_id = 6를 host가 예약 취소 - 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
 INSERT INTO cancelReason
 SET regDate = NOW(),
@@ -833,8 +1065,10 @@ memberType = 'host',
 title = '내부 공사',
 `body` = '방의 내부 공사 기간이여서 host측에서 취소 하게 되었습니다. 양해 부탁드립니다.',
 cancelAmount = 70000;
+
 SELECT *
 FROM cancelReason;
+
 CREATE TABLE cancel
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -848,12 +1082,17 @@ CREATE TABLE cancel
     pay_point INT(100) UNSIGNED DEFAULT 0 COMMENT '결제시 사용된 포인트',
     paidRealAmount INT(100) UNSIGNED NOT NULL DEFAULT 0 COMMENT '실제 결제 금액(lastTotalAmount - p_point)'
 );
+
 SELECT *
 FROM cancel;
+
+
 # 현재날짜(today)를 "-" 제외한 값 구하기
 SELECT  REPLACE(CURRENT_DATE(), "-", "");
+
 # "-"를 제외한 현재날짜 + 숙박타입코드 + 예약번호 합친 값 예시
 SELECT CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1");
+
 # 사업장 대표 이미지 테스트 데이터
 INSERT INTO genFile
 SET regDate = NOW(),
@@ -869,6 +1108,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -883,6 +1123,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -897,6 +1138,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -911,6 +1153,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -925,6 +1168,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -939,26 +1183,34 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 # company 테이블에 area 컬럼 추가
 ALTER TABLE company ADD COLUMN `area` CHAR(20) NOT NULL AFTER address;
+
 UPDATE company
 SET `area` = '5'
 WHERE id = 1;
+
 UPDATE company
 SET `area` = '51'
 WHERE id = 2;
+
 UPDATE company
 SET `area` = '51'
 WHERE id = 3;
+
 UPDATE company
 SET `area` = '28'
 WHERE id = 4;
+
 UPDATE company
 SET `area` = '55'
 WHERE id = 5;
+
 UPDATE company
 SET `area` = '16'
 WHERE id = 6;
+
 # company 테이블 테스트데이터 추가 생성
 INSERT INTO company
 SET regDate = NOW(),
@@ -971,6 +1223,7 @@ timeChkin = '18:00',
 timeChkout = '12:00',
 accommodationType = 'motel',
 host_id = 1;
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -982,6 +1235,7 @@ timeChkin = '15:00',
 timeChkout = '11:00',
 accommodationType = 'guesthouse',
 host_id = 1;
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -993,6 +1247,7 @@ timeChkin = '15:00',
 timeChkout = '11:00',
 accommodationType = 'hotel',
 host_id = 1;
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1004,6 +1259,7 @@ timeChkin = '15:00',
 timeChkout = '12:00',
 accommodationType = 'hotel',
 host_id = 1;
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1015,6 +1271,7 @@ timeChkin = '14:00',
 timeChkout = '11:00',
 accommodationType = 'pension',
 host_id = 1;
+
 INSERT INTO company
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1026,6 +1283,7 @@ timeChkin = '18:00',
 timeChkout = '13:00',
 accommodationType = 'motel',
 host_id = 1;
+
 # 사업장 대표이미지 테스트데이터 추가 생성
 INSERT INTO genFile
 SET regDate = NOW(),
@@ -1041,6 +1299,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jfif',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1055,6 +1314,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1069,6 +1329,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1083,6 +1344,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1097,6 +1359,7 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -1111,12 +1374,405 @@ fileExtTypeCode = 'img',
 fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_01';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 1,
+originFileName = '13.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 2,
+originFileName = '14.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 3,
+originFileName = '15.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 4,
+originFileName = '16.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 5,
+originFileName = '17.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 6,
+originFileName = '18.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 7,
+originFileName = '19.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 8,
+originFileName = '20.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 9,
+originFileName = '21.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 10,
+originFileName = '22.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 11,
+originFileName = '23.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 12,
+originFileName = '24.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 13,
+originFileName = '25.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 14,
+originFileName = '26.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 15,
+originFileName = '27.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 16,
+originFileName = '28.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 17,
+originFileName = '29.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 18,
+originFileName = '30.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 19,
+originFileName = '31.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 20,
+originFileName = '32.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 21,
+originFileName = '33.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 22,
+originFileName = '34.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 23,
+originFileName = '35.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 24,
+originFileName = '36.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 25,
+originFileName = '37.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'product',
+relId = 26,
+originFileName = '38.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+SELECT * FROM product;
+
 # product 테스트데이터 추가 생성
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
 comp_id = 7,
-roomType = '스탠다드',
+roomType = '금연실(1PC,욕조,넷플릭스,티빙)',
 numberOfRooms = 3,
 fee = 55000,
 countOfRoom = 1,
@@ -1124,59 +1780,64 @@ countOfAdult = 2,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
 comp_id = 8,
-roomType = '스탠다드',
+roomType = '남성4인실(8인욕실)',
 numberOfRooms = 3,
 fee = 25000,
 countOfRoom = 1,
-countOfAdult = 2,
+countOfAdult = 4,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
 comp_id = 9,
-roomType = '스탠다드',
+roomType = '[3객실 한정! 룸UP] 스탠다드 + 디럭스 트윈',
 numberOfRooms = 3,
 fee = 89000,
 countOfRoom = 1,
-countOfAdult = 2,
+countOfAdult = 3,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
 comp_id = 10,
-roomType = '스탠다드',
+roomType = '디럭스 트윈',
 numberOfRooms = 3,
-fee = 155000,
+fee = 255000,
 countOfRoom = 1,
-countOfAdult = 2,
+countOfAdult = 4,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
 comp_id = 11,
-roomType = '스탠다드',
+roomType = '민들레',
 numberOfRooms = 3,
-fee = 100000,
+fee = 177000,
 countOfRoom = 1,
-countOfAdult = 2,
+countOfAdult = 6,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
+
 INSERT INTO product
 SET regDate = NOW(),
 updateDate = NOW(),
 comp_id = 12,
-roomType = '스탠다드',
+roomType = '특가룸/랜덤배정',
 numberOfRooms = 3,
 fee = 50000,
 countOfRoom = 1,
@@ -1184,34 +1845,7 @@ countOfAdult = 2,
 countOfchild = 1,
 includeMeals = '식사불포함',
 smokingType = 'noSmoking';
-SELECT * FROM company;
-INSERT INTO product
-SET regDate = NOW(),
-updateDate = NOW(),
-comp_id = 13,
-roomType = '스탠다드',
-numberOfRooms = 3,
-fee = 50000,
-countOfRoom = 1,
-countOfAdult = 2,
-countOfchild = 1,
-includeMeals = '식사불포함',
-smokingType = 'noSmoking';
-#결제용 추가 데이터 (추후 삭제 예정)
-INSERT INTO product
-SET regDate = NOW(),
-updateDate = NOW(),
-comp_id = 2,
-roomType = '스탠다드',
-numberOfRooms = 7,
-fee = 10000000,
-countOfRoom = 1,
-countOfAdult = 2,
-countOfChild = 1,
-includeMeals = '조식, 석식',
-smokingType = 'noSmoking';
-SELECT * FROM product
-WHERE comp_id = 2;
+
 CREATE TABLE wish
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -1220,6 +1854,7 @@ CREATE TABLE wish
     memberId  INT(10) UNSIGNED NOT NULL  COMMENT '회원번호', 
     comp_id    INT UNSIGNED    NOT NULL    COMMENT '사업장번호'
 );
+
 # wish 테스트 데이터
 # 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)를 찜
 INSERT INTO wish
@@ -1227,37 +1862,44 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 5,
 comp_id = 2;
+
 # 게스트1(memberId = 5)이 대전 하늘정원 게스트하우스(comp_id = 8)를 찜
 INSERT INTO wish
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 5,
 comp_id = 8;
+
 # 게스트1(memberId = 5)이 라마다 바이 윈덤 대전(comp_id = 10)를 찜
 INSERT INTO wish
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 5,
 comp_id = 10;
+
 # 게스트1(memberId = 5)이 양평 로즈데일(comp_id = 4)를 찜
 INSERT INTO wish
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 5,
 comp_id = 4;
+
 # 게스트2(memberId = 6)이 롯데시티호텔(comp_id = 2)를 찜
 INSERT INTO wish
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 6,
 comp_id = 2;
+
 # 게스트1(memberId = 6)이 제주 쉬멍놀멍 게스트하우스(comp_id = 6)를 찜
 INSERT INTO wish
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 6,
 comp_id = 6;
+
 SELECT * FROM wish;
+
 CREATE TABLE review
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -1269,6 +1911,7 @@ CREATE TABLE review
     rating INT (10) UNSIGNED NOT NULL  COMMENT '점수',
     `body`    VARCHAR(200)    NOT NULL    COMMENT '리뷰 내용'
 );
+
 # review 테스트 데이터
 # 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 1번 리뷰 작성
 INSERT INTO review
@@ -1279,6 +1922,7 @@ comp_id = 2,
 booking_id = 1,
 rating = 5,
 `body` = '깔끔하고 좋아요';
+
 # 게스트2(memberId = 6)이 롯데시티호텔(comp_id = 2)에 예약번호 3번 리뷰 작성
 INSERT INTO review
 SET regDate = SUBDATE(NOW(), 1),
@@ -1288,6 +1932,7 @@ comp_id = 2,
 booking_id = 3,
 rating = 2,
 `body` = '생각보다 별로네요';
+
 # 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 6번 리뷰 작성
 INSERT INTO review
 SET regDate = NOW(),
@@ -1297,7 +1942,9 @@ comp_id = 2,
 booking_id = 6,
 rating = 5,
 `body` = '두번째 방문인데 정말 좋네요. 또 오고싶어요.';
+
 SELECT * FROM review;
+
 CREATE TABLE `point`
 (
     id   INT UNSIGNED  PRIMARY KEY  NOT NULL    AUTO_INCREMENT COMMENT '예약번호', 
@@ -1308,6 +1955,7 @@ CREATE TABLE `point`
     p_point INT (10) NOT NULL  COMMENT '포인트',
     `status`  VARCHAR(45)    NOT NULL DEFAULT 'done' COMMENT '예약상태 (done : 결제 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel : 결제 취소 완료)'
 );
+
 # `point` 테스트 데이터
 # 회원번호 = 5(게스트1), 결제번호 1번, (예약번호 1번), 결제 금액 10만원(대전 롯데)
 INSERT INTO `point`
@@ -1321,6 +1969,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 2000
 WHERE id = 5;
+
 # 회원번호 = 5(게스트1), 결제번호 2번, (예약번호 2번), 결제 금액 10만원(서울 신라)
 INSERT INTO `point`
 SET regDate = '2023-01-01 12:12:12',
@@ -1333,6 +1982,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 2000
 WHERE id = 5;
+
 # 회원번호 = 6(게스트2), 결제번호 3번, (예약번호 3번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
 SET regDate = '2023-01-10 16:16:16',
@@ -1345,6 +1995,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 1400
 WHERE id = 6;
+
 # 회원번호 = 5(게스트1), 결제번호 4번, (예약번호 4번), 결제 금액 10만원(오노마)
 INSERT INTO `point`
 SET regDate = '2023-01-12 12:12:12',
@@ -1357,6 +2008,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 2000
 WHERE id = 5;
+
 # 회원번호 = 6(게스트2), 결제번호 5번, (예약번호 5번), 결제 금액 10만원(제주 쉬멍)
 INSERT INTO `point`
 SET regDate = '2023-01-23 13:13:13',
@@ -1369,6 +2021,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 2000
 WHERE id = 6;
+
 # 회원번호 = 5(게스트1), 결제번호 6번, (예약번호 6번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
 SET regDate = '2023-01-24 14:14:14',
@@ -1381,6 +2034,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 1400
 WHERE id = 5;
+
 # 회원번호 = 6(게스트2), 결제번호 7번, (예약번호 7번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
 SET regDate = '2023-01-25 15:15:15',
@@ -1393,6 +2047,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 1400
 WHERE id = 6;
+
 # 회원번호 = 5(게스트1), 결제번호 8번, (예약번호 8번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
 SET regDate = '2023-02-01 12:12:12',
@@ -1405,6 +2060,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 1400
 WHERE id = 5;
+
 # 회원번호 = 5(게스트1), 결제번호 9번, (예약번호 9번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
 SET regDate = '2023-02-03 13:13:13',
@@ -1417,6 +2073,7 @@ UPDATE `member`
 SET updateDate = NOW(),
 m_point = m_point + 1400
 WHERE id = 5;
+
 # 회원번호 = 5(게스트1), 결제번호 10번, (예약번호 10번), 결제 금액 7만원(대전 롯데)
 INSERT INTO `point`
 SET regDate = '2023-02-04 14:14:14',
@@ -1432,14 +2089,9 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-SELECT * FROM `point`
-WHERE DATE(regDate) >= '2023-01-02' AND DATE(regDate) <= '2023-02-03'
-AND memberId = 5;
-
-SELECT *
-FROM `member`
-WHERE id = 5;
+SELECT * FROM product;
 SELECT * FROM booking;
+SELECT * FROM payment;
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
