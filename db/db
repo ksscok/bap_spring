@@ -1549,3 +1549,6 @@ WHERE id = 5;
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
+
+SELECT * FROM MEMBER;
+
