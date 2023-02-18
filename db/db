@@ -2233,6 +2233,88 @@ booking_id = 6,
 rating = 5,
 `body` = '두번째 방문인데 정말 좋네요. 또 오고싶어요.';
 
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 9, 
+booking_id = 6,
+rating = 5,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 9, 
+booking_id = 6,
+rating = 4,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 9, 
+booking_id = 6,
+rating = 4,
+`body` = '좋아요.';
+
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 5,
+comp_id = 9, 
+booking_id = 6,
+rating = 4,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 8, 
+booking_id = 6,
+rating = 3,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 7, 
+booking_id = 6,
+rating = 2,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 3, 
+booking_id = 6,
+rating = 5,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 3, 
+booking_id = 6,
+rating = 5,
+`body` = '좋아요.';
+
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 6,
+comp_id = 6, 
+booking_id = 6,
+rating = 1,
+`body` = '싫어요.';
+
 SELECT * FROM review;
 
 CREATE TABLE `point`

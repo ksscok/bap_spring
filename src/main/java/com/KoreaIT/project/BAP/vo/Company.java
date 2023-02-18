@@ -1,8 +1,6 @@
 package com.KoreaIT.project.BAP.vo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.KoreaIT.project.BAP.service.CompanyService;
+import java.text.DecimalFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +28,7 @@ public class Company {
 	private String extra__avg;
 	private int extra__avgStarCount;
 	private int extra__reviewCount;
+	private double extra__reviewRating;
 	
 	public String getForPrintRegDate() {
 		return regDate.substring(2, 10);
@@ -37,6 +36,12 @@ public class Company {
 
 	public String getForPrintUpdateDate() {
 		return regDate.substring(2, 8);
+	}
+	
+	public String getForPrintReviewRating() {
+		double value = extra__reviewRating;
+		DecimalFormat df = new DecimalFormat("0.0");
+		return df.format(value);
 	}
 	
 	public String getForPrintAccommodationType() {
