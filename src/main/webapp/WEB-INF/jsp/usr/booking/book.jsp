@@ -429,7 +429,6 @@
 		// 비로그인시 예약 가능 하도록 하는 로직 시작
 		if(!$pay_point){
 			$realAmount = $('#amount').val();
-			alert($realAmount);
 		}
 		// 비로그인시 예약 가능 하도록 하는 로직 끝
 		

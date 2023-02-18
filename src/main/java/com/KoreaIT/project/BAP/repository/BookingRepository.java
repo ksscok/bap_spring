@@ -148,4 +148,12 @@ public interface BookingRepository {
 			""")
 	void doDelete(int id);
 
+	@Select("""
+			SELECT *
+				FROM booking
+				WHERE comp_id = #{comp_id}
+				AND prod_id = #{prod_id}
+			""")
+	List<Booking> getBookingCountByComp_idAndProd_id(int comp_id, int prod_id);
+
 }

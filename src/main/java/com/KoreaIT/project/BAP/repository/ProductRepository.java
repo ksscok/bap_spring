@@ -51,6 +51,8 @@ public interface ProductRepository {
 					) AS `PI`
 				INNER JOIN product AS PC
 				ON `PI`.id = PC.id
+				LEFT JOIN booking AS b
+				ON b.prod_id = PC.id
 				WHERE 1 = 1
 				AND PC.comp_id = #{comp_id}
 				<if test="countOfRoom != '' and countOfRoom != 0">
@@ -72,6 +74,7 @@ public interface ProductRepository {
 					AND PC.fee <![CDATA[<=]]> #{high_price}
 				</if>
 				GROUP BY `PI`.id
+				ORDER BY PC.fee
 			</script>
 			""")
 	List<Product> getProductsByCompanyId(int comp_id, String countOfRoom, String countOfAdult, String countOfChild, String withoutMealsType, String withBreakfastType, String withDinnerType, String withBreakfastAndDinnerType, String smokingType, int low_price, int high_price);

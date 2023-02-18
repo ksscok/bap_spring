@@ -176,7 +176,6 @@
 					<c:forEach var="product" items="${products}" varStatus="status">
 						<div id="${status.count }" class="room-body flex items-center rounded-lg p-2 my-4">
 							<div class="w-80 h-60 product-img img-box flex justify-center">
-<%-- 								<img class="w-full" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" /> --%>
 								<img class="w-full" src="${rq.getProductProfileImgUri(product.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 							</div>
 							<div class="ml-4 w-6/12">
@@ -198,7 +197,7 @@
 												<li>
 													<div class="mt-4 mb-2 font-bold text-sm">기본정보</div>
 													<ul>
-														<li><a href="#">2인 기준 최대 4인 (유료)</a></li>
+														<li><a href="#">${product.countOfAdult }인 기준</a></li>
 														<li><a href="#">인원 추가시 비용이 발생되며, 현장에서 결제 바랍니다.</a></li>
 														<li><a href="#">객실+욕실/10.00평</a></li>
 													</ul>
@@ -321,9 +320,20 @@
 					
 					<div class="showReview mb-2">
 					<c:forEach var="review" items="${reviews}" varStatus="status">
-						<div id="review${status.count }" class="showReview-box mt-10">
-							<div class="showReview-box-top flex justify-start">
-								<div>프로필img</div>
+						<div id="review${status.count }" class="showReview-box mt-8">
+							<div class="showReview-box-top flex justify-start items-center">
+								<c:choose>
+									<c:when test="${review.memberId != 0}">
+										<div class="member-img img-box flex justify-center w-16 h-14 border rounded-xl border-gray-400">
+											<img class="w-full rounded-xl" src="${rq.getMemberProfileImgUri(review.memberId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="member-img img-box flex justify-center w-16 h-14">
+											<img class="w-full" src="https://image.goodchoice.kr/profile/ico/ico_21.png" alt="" />
+										</div>
+									</c:otherwise>
+								</c:choose>
 								<div class="flex justify-between" style="width: 505px">
 									<div class="showReview-rating-box">
 										<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
@@ -342,10 +352,10 @@
 					    		</c:if>
 			    				</div>
 							</div>
-							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
+							<div class="ml-20 text-gray-400">${review.extra__writerName }</div>
 							<div class="ml-20 mt-1">${review.getForPrintBody() }</div>
-							<div class="img-box ml-20 mt-2">
-								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
+							<div class="ml-1 mt-3 review-img img-box flex justify-center">
+								<img class="w-9/12" src="${rq.getReviewProfileImgUri(review.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 							</div>
 							<c:choose>
 								<c:when test="${review.getForPrintBeforeDays() == 0}">

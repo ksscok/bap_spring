@@ -55,15 +55,15 @@ public class UsrProductController {
 			@RequestParam(defaultValue="") String start_date,
 			@RequestParam(defaultValue="") String end_date,
 			@RequestParam(defaultValue="1") String countOfRoom,
-			@RequestParam(defaultValue="2") String countOfAdult,
-			@RequestParam(defaultValue="0") String countOfChild,
+			@RequestParam(defaultValue="") String countOfAdult,
+			@RequestParam(defaultValue="") String countOfChild,
 			@RequestParam(defaultValue="") String withoutMealsType,
 			@RequestParam(defaultValue="") String withBreakfastType,
 			@RequestParam(defaultValue="") String withDinnerType,
 			@RequestParam(defaultValue="") String withBreakfastAndDinnerType,
 			@RequestParam(defaultValue="") String smokingType,
 			@RequestParam(defaultValue="1") int low_price,
-			@RequestParam(defaultValue="999999999") int high_price) {
+			@RequestParam(defaultValue="999999999") int high_price) throws ParseException {
 		
 		if(Ut.empty(comp_id)) {
 			return rq.historyBackJsOnView("사업장번호를 입력해주세요.");
@@ -97,7 +97,7 @@ public class UsrProductController {
 		
 		Company company = companyService.getCompanyByComp_id(comp_id);
 		
-		List<Product> products = productService.getProductsByCompanyId(comp_id, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType, low_price, high_price, diff);
+		List<Product> products = productService.getProductsByCompanyId(comp_id, start_date, end_date, countOfRoom, countOfAdult, countOfChild, withoutMealsType, withBreakfastType, withDinnerType, withBreakfastAndDinnerType, smokingType, low_price, high_price, diff);
 		
 		// 예약페이지에서 orderId를 만들 때 필요한 숙박타입 코드를 넘겨주기 위한 부분 시작
 		String accommodationTypeCode = "-1";
