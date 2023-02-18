@@ -112,7 +112,7 @@
 							<li class="flex">
 								<input type="range" name="high_price" min="250000" max="500000" step="10000" class="range range-sm"
 								oninput="document.getElementById('high_price').innerHTML=this.value;"
-								value="${param.high_price == null || param.high_price.equals('') ? '250000' : param.high_price}"/>
+								value="${param.high_price == null || param.high_price.equals('') ? '100000' : param.high_price}"/>
 							</li>
 						</ul>
 					</div>

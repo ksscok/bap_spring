@@ -1,34 +1,12 @@
-/* 폰트 */
-/* @font-face { */
-/*   font-family: 'S-CoreDream-3Light'; */
-/*   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); */
-/*   font-weight: normal; */
-/*   font-style: normal; */
-/* } */
 @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
+	font-family: 'Pretendard-Regular';
+	src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
 }
-/* @font-face { */
-/*     font-family: 'ChosunGu'; */
-/*     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff'); */
-/*     font-weight: normal; */
-/*     font-style: normal; */
-/* } */
-/* @font-face { */
-/*     font-family: 'KOTRA_GOTHIC'; */
-/*     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_GOTHIC.woff') format('woff'); */
-/*     font-weight: normal; */
-/*     font-style: normal; */
-/* } */
 
 html> body {
-/* 	font-family: 'S-CoreDream-3Light'; */
-    font-family: 'Pretendard-Regular';
-/* font-family: 'ChosunGu'; */
-/*     font-family: 'KOTRA_GOTHIC'; */
+	font-family: 'Pretendard-Regular';	
 }
 
 /* ----커스텀---- */
@@ -40,6 +18,7 @@ html> body {
 
 main {
 	padding-top: 64px;
+	min-height: 740px;
 }
 
 .table-box-type-1 > table th,

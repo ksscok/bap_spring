@@ -7,7 +7,7 @@
 <!-- main css -->
 <link rel="stylesheet" href="/resource/main.css" />
 
-<div class="main-page">
+<div class="main-page mb-10">
 
 	<section class="main-product-search">
 		<h1 class="title">전국 숙박업소 실시간 예약</h1>

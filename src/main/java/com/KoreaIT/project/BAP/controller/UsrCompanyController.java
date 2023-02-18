@@ -150,5 +150,11 @@ public class UsrCompanyController {
 		
 		return "usr/company/hotel";
 	}
+	
+	@RequestMapping("/usr/company/slider")
+	public String slider() {
+		
+		return "usr/company/slider";
+	}
 }
 
