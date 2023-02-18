@@ -106,6 +106,10 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 	}
 	
+	public String getMemberProfileImgUri(int memberId) {
+		return "/common/genFile/file/member/" + memberId + "/extra/profileImg/1";
+	}
+	
 	public String getCompanyProfileImgUri(int companyId) {
 		return "/common/genFile/file/company/" + companyId + "/extra/profileImg/1";
 	}

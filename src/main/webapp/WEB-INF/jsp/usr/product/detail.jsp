@@ -320,9 +320,20 @@
 					
 					<div class="showReview mb-2">
 					<c:forEach var="review" items="${reviews}" varStatus="status">
-						<div id="review${status.count }" class="showReview-box mt-10">
-							<div class="showReview-box-top flex justify-start">
-								<div>프로필img</div>
+						<div id="review${status.count }" class="showReview-box mt-8">
+							<div class="showReview-box-top flex justify-start items-center">
+								<c:choose>
+									<c:when test="${review.memberId != 0}">
+										<div class="member-img img-box flex justify-center w-16 h-14 border rounded-xl border-gray-400">
+											<img class="w-full rounded-xl" src="${rq.getMemberProfileImgUri(review.memberId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="member-img img-box flex justify-center w-16 h-14">
+											<img class="w-full" src="https://image.goodchoice.kr/profile/ico/ico_21.png" alt="" />
+										</div>
+									</c:otherwise>
+								</c:choose>
 								<div class="flex justify-between" style="width: 505px">
 									<div class="showReview-rating-box">
 										<span class="ml-3 text-yellow-400">${ratingOptions.get(review.rating) }</span>
@@ -341,7 +352,7 @@
 					    		</c:if>
 			    				</div>
 							</div>
-							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
+							<div class="ml-20 text-gray-400">${review.extra__writerName }</div>
 							<div class="ml-20 mt-1">${review.getForPrintBody() }</div>
 							<div class="ml-1 mt-3 review-img img-box flex justify-center">
 								<img class="w-9/12" src="${rq.getReviewProfileImgUri(review.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />

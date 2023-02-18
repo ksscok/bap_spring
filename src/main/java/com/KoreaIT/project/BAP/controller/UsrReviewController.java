@@ -71,11 +71,12 @@ public class UsrReviewController {
 	
 	@RequestMapping("/usr/review/doWrite")
 	@ResponseBody
-	public String doWrite(int memberId, int comp_id, int booking_id, int rating, String body, @RequestParam(required = false) MultipartRequest multipartRequest) {
+	public String doWrite(@RequestParam(defaultValue="0") int memberId, int comp_id, int booking_id, int rating, String body, @RequestParam(required = false) MultipartRequest multipartRequest) {
 		
-		if(Ut.empty(memberId)) {
-			return Ut.jsHistoryBack("회원번호를 입력해주세요.");
-		}
+		// 비로그인으로 결제한 경우 이걸 사용하면 막히게 됨
+//		if(Ut.empty(memberId)) {
+//			return Ut.jsHistoryBack("회원번호를 입력해주세요.");
+//		}
 		
 		if(Ut.empty(comp_id)) {
 			return Ut.jsHistoryBack("사업장 번호를 입력해주세요.");
@@ -103,7 +104,10 @@ public class UsrReviewController {
 		
 		// 이거는 고민중(사실 비로그인상태에서의 예약이나 아이디를 빌려서 회원가입한 사람과는 다른 사람이 자기 번호로 예약하는 경우에는 이 방법은 쓰면 안됨)
 		// 현재 로그인한 멤버와 입력된 예약번호에 저장되어있는 전화번호가 일치하는지(본인인증) 유효성 검사 시작
-		Member member = memberService.getMemberById(memberId);
+		Member member = null;
+		if(rq.getLoginedMemberId() != 0) {
+			memberService.getMemberById(rq.getLoginedMemberId());
+		}
 		
 		Booking booking = bookingService.getBookingById(booking_id);
 		

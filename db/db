@@ -2055,6 +2055,81 @@ fileExtType2Code = 'jpg',
 fileNo = 1,
 fileDir = '2023_02';
 
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'review',
+relId = 1,
+originFileName = '39.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'review',
+relId = 2,
+originFileName = '40.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'review',
+relId = 3,
+originFileName = '41.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'member',
+relId = 5,
+originFileName = '42.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = 'member',
+relId = 6,
+originFileName = '43.jpg',
+fileExt = 'jpg',
+typeCode = 'extra',
+type2Code = 'profileImg',
+fileSize = 61536,
+fileExtTypeCode = 'img',
+fileExtType2Code = 'jpg',
+fileNo = 1,
+fileDir = '2023_02';
+
 SELECT * FROM product;
 
 # product 테스트데이터 추가 생성
@@ -2221,7 +2296,7 @@ memberId = 6,
 comp_id = 2, 
 booking_id = 3,
 rating = 2,
-`body` = '생각보다 별로네요';
+`body` = '생각보다 별로네요. 청결이 아쉬워요.';
 
 # 게스트1(memberId = 5)이 롯데시티호텔(comp_id = 2)에 예약번호 6번 리뷰 작성
 INSERT INTO review
@@ -2259,7 +2334,6 @@ comp_id = 9,
 booking_id = 6,
 rating = 4,
 `body` = '좋아요.';
-
 
 INSERT INTO review
 SET regDate = NOW(),
@@ -2314,6 +2388,16 @@ comp_id = 6,
 booking_id = 6,
 rating = 1,
 `body` = '싫어요.';
+
+# 게스트1 전화번호지만 (memberId = 0)(비로그인)이 롯데시티호텔(comp_id = 2)에 예약번호 6번 리뷰 작성
+INSERT INTO review
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 0,
+comp_id = 2, 
+booking_id = 11,
+rating = 3,
+`body` = '그저그래요.';
 
 SELECT * FROM review;
 
@@ -2461,8 +2545,7 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-SELECT * FROM booking
-WHERE comp_id = 2;
+SELECT * FROM booking;
 SELECT * FROM payment;
 SELECT * FROM company;
 SELECT * FROM product;
