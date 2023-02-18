@@ -201,3 +201,93 @@
 	align-items: end;
 }
 
+/* 양방향 슬라이더 시작*/
+pricing-box {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e5e5e5;
+}
+
+.middle {
+  position: relative;
+  max-width: 500px;
+}
+
+.slider {
+  position: relative;
+  z-index: 1;
+  height: 7px;
+  margin: 0 15px;
+}
+
+.slider > .track {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 5px;
+  background-color: #c6aee7;
+}
+
+.slider > .range1 {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 5px;
+  background-color: #570DF8;
+}
+
+.slider > .thumb {
+  position: absolute;
+  z-index: 3;
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border: 2px solid #570DF8;
+  border-radius: 50%;
+}
+
+.slider > .thumb.left {
+/*   left: 25%; */
+  transform: translate(-15px, -9px);
+}
+.slider > .thumb.right {
+  right: 0;
+  transform: translate(15px, -9px);
+}
+
+input[type="range"] {
+  position: absolute;
+  /* opacity로 가린 것을 이벤트도 비활성화하기 위해 */
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 2;
+  height: 10px;
+  width: 100%;
+  opacity: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  /* 겹쳐진 두 thumb를 모두 활성화 */
+  pointer-events: all;
+  width: 30px;
+  height: 30px;
+  border-radius: 0;
+  border: 0 none;
+  background-color: red;
+  cursor: pointer;
+  /* appearance를 해야 위의 스타일들을 볼 수 있음 */
+  -webkit-appearance: none;
+}
+/* 양방향 슬라이더 끝*/
+

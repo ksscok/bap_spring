@@ -368,6 +368,7 @@ inputLeft.addEventListener("input", setLeftValue);
 inputRight.addEventListener("input", setRightValue);
 //양방향 슬라이더 끝
 
+//pricing box 시작
 let lowValue = document.getElementById('input-left').value;
 let displayLowPrice1 = lowValue/10000 + "만원";
 document.getElementById('low_price').innerHTML = displayLowPrice1;
@@ -385,6 +386,7 @@ function displayHighPrice(value) {
 	let displayLowPrice = value/10000 + "만원";
 	document.getElementById('high_price').innerHTML = displayLowPrice;
 }
+//pricing box 끝
 </script>
 
 

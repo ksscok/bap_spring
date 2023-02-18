@@ -94,28 +94,37 @@
 					  </label>
 			  	</div>
 					
-					<div class="pricing-box flex flex-col mt-5">
-						<div class="mb-2">
-								<span class="text-base font-semibold text-gray-500 mb-2">가격</span>
-								<span id="low_price">10000</span>
+					<div class="pricing-box mt-5">
+							<div class="mb-3">
+								<span class="text-base font-semibold text-gray-500">가격</span>
+								<span id="low_price">1만원</span>
 								<span>~</span>
 								<span id="high_price"></span>
+							</div>
+							<div class="middle">
+							  <div class="multi-range-slider">
+							    <!-- 진짜 슬라이더 -->
+							    <input name="low_price" type="range" id="input-left" min="10000" max="500000" step="10000"
+							    value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}" 
+							    oninput="displayLowPrice(value)"/>
+							    <input name="high_price" type="range" id="input-right" min="10000" max="500000" step="10000"
+							    value="${param.high_price == null || param.high_price.equals('') ? '500000' : param.high_price}" 
+							    oninput="displayHighPrice(value)"/>
+							
+							    <!-- 커스텀 슬라이더 -->
+							    <div class="slider">
+							      <div class="track"></div>
+							      <div class="range1"></div>
+							      <div class="thumb left"></div>
+							      <div class="thumb right"></div>
+							    </div>
+							  </div>
+							  <div class="flex justify-between mt-2">
+							  	<div>1만원</div>
+							  	<div>50만원</div>
+							  </div>
+							</div>
 						</div>
-						<ul>
-							<li class="flex">
-								<input type="range" name="low_price" min="10000" max="250000" step="10000" class="range range-sm"
-								oninput="document.getElementById('low_price').innerHTML=this.value;"
-								value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}"/>
-							</li>
-						</ul>
-						<ul class="mt-1">
-							<li class="flex">
-								<input type="range" name="high_price" min="250000" max="500000" step="10000" class="range range-sm"
-								oninput="document.getElementById('high_price').innerHTML=this.value;"
-								value="${param.high_price == null || param.high_price.equals('') ? '100000' : param.high_price}"/>
-							</li>
-						</ul>
-					</div>
 					
 					<div class="flex justify-between mt-5">
 						<a href="../company/list?start_date=${param.start_date}&end_date=${param.end_date}&countOfAdult=${param.countOfAdult}&countOfChild=${param.countOfChild}&searchKeyword=${param.searchKeyword}&order_by=${param.order_by}" class="btn btn-primary btn-outline w-28">초기화</a>
@@ -180,4 +189,86 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+// 양방향 슬라이더 시작
+const inputLeft = document.getElementById("input-left");
+const inputRight = document.getElementById("input-right");
+
+const thumbLeft = document.querySelector(".slider > .thumb.left");
+const thumbRight = document.querySelector(".slider > .thumb.right");
+const range = document.querySelector(".slider > .range1");
+
+const [min1, max1] = [parseInt(inputLeft.min), parseInt(inputLeft.max)];
+
+// 교차되지 않게, 20000을 빼준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 20000);
+
+// input, thumb 같이 움직이도록
+const percent1 = ((inputLeft.value - min1) / (max1 - min1)) * 100;
+thumbLeft.style.left = percent1 + "%";
+range.style.left = percent1 + "%";
+
+const [min2, max2] = [parseInt(inputRight.min), parseInt(inputRight.max)];
+
+// 교차되지 않게, 20000을 더해준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 20000);
+
+// input, thumb 같이 움직이도록
+const percent2 = ((inputRight.value - min2) / (max2 - min2)) * 100;
+thumbRight.style.right = 100 - percent2 + "%";
+range.style.right = 100 - percent2 + "%";
+
+
+const setLeftValue = () => {
+  const _this = inputLeft;
+  const [min, max] = [parseInt(_this.min), parseInt(_this.max)];
+  
+  // 교차되지 않게, 20000을 빼준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+  _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 20000);
+  
+  // input, thumb 같이 움직이도록
+  const percent = ((_this.value - min) / (max - min)) * 100;
+  thumbLeft.style.left = percent + "%";
+  range.style.left = percent + "%";
+};
+
+const setRightValue = () => {
+  const _this = inputRight;
+  const [min, max] = [parseInt(_this.min), parseInt(_this.max)];
+  
+  // 교차되지 않게, 20000을 더해준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+  _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 20000);
+  
+  // input, thumb 같이 움직이도록
+  const percent = ((_this.value - min) / (max - min)) * 100;
+  thumbRight.style.right = 100 - percent + "%";
+  range.style.right = 100 - percent + "%";
+};
+
+inputLeft.addEventListener("input", setLeftValue);
+inputRight.addEventListener("input", setRightValue);
+//양방향 슬라이더 끝
+
+//pricing box 시작
+let lowValue = document.getElementById('input-left').value;
+let displayLowPrice1 = lowValue/10000 + "만원";
+document.getElementById('low_price').innerHTML = displayLowPrice1;
+
+function displayLowPrice(value) {
+	let displayLowPrice = value/10000 + "만원";
+	document.getElementById('low_price').innerHTML = displayLowPrice;
+}
+
+let highValue = document.getElementById('input-right').value;
+let displayLowPrice2 = highValue/10000 + "만원";
+document.getElementById('high_price').innerHTML = displayLowPrice2;
+
+function displayHighPrice(value) {
+	let displayLowPrice = value/10000 + "만원";
+	document.getElementById('high_price').innerHTML = displayLowPrice;
+}
+//pricing box 끝
+</script>
 <%@ include file="../common/foot.jspf" %>
