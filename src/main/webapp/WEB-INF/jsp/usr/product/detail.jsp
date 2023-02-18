@@ -198,7 +198,7 @@
 												<li>
 													<div class="mt-4 mb-2 font-bold text-sm">기본정보</div>
 													<ul>
-														<li><a href="#">2인 기준 최대 4인 (유료)</a></li>
+														<li><a href="#">${product.countOfAdult }인 기준</a></li>
 														<li><a href="#">인원 추가시 비용이 발생되며, 현장에서 결제 바랍니다.</a></li>
 														<li><a href="#">객실+욕실/10.00평</a></li>
 													</ul>

@@ -158,7 +158,7 @@ CREATE TABLE product (
 	updateDate DATETIME NOT NULL,
 	companyId INT(10) UNSIGNED NOT NULL,
 	accommodationType CHAR(20) NOT NULL,
-	roomType CHAR(20) NOT NULL,
+	roomType CHAR(100) NOT NULL,
 	image_path VARCHAR (255) NOT NULL DEFAULT 0,
 	numberOfRooms INT(10) NOT NULL,
 	hostId INT(10) NOT NULL,
@@ -271,7 +271,7 @@ updateDate = NOW(),
 companyId = 2,
 accommodationType = '호텔',
 roomType = '스탠다드 더블',
-numberOfRooms = 1,
+numberOfRooms = 5,
 hostId = 2,
 fee = 60000,
 countOfRoom = 1,
@@ -316,7 +316,7 @@ updateDate = NOW(),
 companyId = 2,
 accommodationType = '호텔',
 roomType = '[2인 석식 패키지] 스탠다드 더블',
-numberOfRooms = 1,
+numberOfRooms = 2,
 hostId = 2,
 fee = 80000,
 countOfRoom = 1,
@@ -623,7 +623,7 @@ CREATE TABLE booking
     diff INT UNSIGNED NOT NULL COMMENT '숙박일수',
     countOfAdult  INT UNSIGNED    NOT NULL    COMMENT '성인수',
     countOfChild  INT UNSIGNED  NOT NULL COMMENT '아동수',
-    `status`  VARCHAR(45)    NOT NULL DEFAULT 'await'   COMMENT '예약상태 (await : 결제 대기중, done : 예약(결제) 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
+    `status`  VARCHAR(45)    NOT NULL DEFAULT 'await'   COMMENT '예약상태 (await : 결제 누락, done : 예약(결제) 완료, expired : 예약 만료(이미 왔다 간 것을 표시), cancel_apply : 예약 취소 신청, cancel : 예약 취소 완료)'
 );
 
 SELECT COUNT(*)
@@ -637,25 +637,25 @@ SELECT * FROM booking;
 SELECT LAST_INSERT_ID();
 
 # booking 테스트 데이터 생성
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 1번방을 예약
+# (id = 1) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "1"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "7"),
 comp_id = 2,
-prod_id = 1,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '100000',
 paidRealAmount = '100000',
 start_date = "2023-02-13",
-end_date = "2023-02-15",
+end_date = "2023-02-25",
 diff = 2,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'expired';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 서울 신라호텔 1번방을 예약
+# (id = 2) 호텔타입으로 게스트1(cellphoneNo)이 서울 신라호텔 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -673,13 +673,13 @@ countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
 
-# 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 3) 호텔타입으로 게스트2(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test2',
 cellphoneNo = '010-3434-4545',
 lastTotalAmount = '70000',
@@ -691,7 +691,7 @@ countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
+# (id = 4) 호텔타입으로 게스트1(cellphoneNo)이 오노마 대전 오토그래프 컬렉션 호텔 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -709,7 +709,7 @@ countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel_apply';
 
-# 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
+# (id = 5) 호텔타입으로 게스트2(cellphoneNo)이 제주 쉬멍놀멍 게스트하우스 1번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -727,113 +727,259 @@ countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel_apply';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 6) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "222", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '70000',
 paidRealAmount = '70000',
-start_date = "2023-05-13",
-end_date = "2023-05-20",
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 4 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 5 DAY), 1, 10),
 diff = 7,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'cancel';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 7) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "222", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2222", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '70000',
 paidRealAmount = '70000',
-start_date = "2023-02-01",
-end_date = "2023-02-02",
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -2 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -1 DAY), 1, 10),
 diff = 1,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 8) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2222", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22222", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '70000',
 paidRealAmount = '70000',
-start_date = "2023-02-01",
-end_date = "2023-02-10",
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -1 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 4 DAY), 1, 10),
 diff = 9,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 9) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22222", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "222222", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '70000',
 paidRealAmount = '70000',
-start_date = "2023-02-01",
-end_date = "2023-02-12",
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 2 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 4 DAY), 1, 10),
 diff = 11,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
 
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 10) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "222222", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2222222", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '70000',
 paidRealAmount = '70000',
-start_date = "2023-02-12",
-end_date = "2023-02-13",
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -1 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 1 DAY), 1, 10),
 diff = 1,
 countOfAdult = 2,
 countOfChild = 0,
 `status` = 'done';
 
-# 얘는 예약만 작성하고 결제는 안함
-# 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 2번방을 예약
+# (id = 11)  호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
 INSERT INTO booking
 SET regDate = NOW(),
 updateDate = NOW(),
-orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2222222", "2"),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22222222", "7"),
 comp_id = 2,
-prod_id = 2,
+prod_id = 7,
 customerName = 'test1',
 cellphoneNo = '010-1212-2323',
 lastTotalAmount = '70000',
 paidRealAmount = '70000',
-start_date = "2023-03-12",
-end_date = "2023-03-13",
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 1 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 2 DAY), 1, 10),
 diff = 1,
 countOfAdult = 2,
-countOfChild = 0;
+countOfChild = 0,
+`status` = 'done';
+
+# comp_id = 2인 product roomType을 입력받은 체크인, 아웃 날짜에 따라 필터용 목적인 테스트 데이터 시작
+# (id = 12) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 7번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "22222222", "77"),
+comp_id = 2,
+prod_id = 7,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(NOW(), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 3 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 13)  호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "77"),
+comp_id = 2,
+prod_id = 8,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 1 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 2 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 14) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "777"),
+comp_id = 2,
+prod_id = 9,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -1 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 1 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 15) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "7777"),
+comp_id = 2,
+prod_id = 10,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 2 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 4 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 16) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "77777"),
+comp_id = 2,
+prod_id = 11,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -1 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 4 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 17) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "777777"),
+comp_id = 2,
+prod_id = 12,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -2 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -1 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 18) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "7777777"),
+comp_id = 2,
+prod_id = 13,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 4 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL 5 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+
+# (id = 19) 호텔타입으로 게스트1(cellphoneNo)이 대전 롯데시티호텔 8번방을 예약
+INSERT INTO booking
+SET regDate = NOW(),
+updateDate = NOW(),
+orderId = CONCAT(REPLACE(CURRENT_DATE(), "-", ""), "2", "77777777"),
+comp_id = 2,
+prod_id = 14,
+customerName = 'test1',
+cellphoneNo = '010-1212-2323',
+lastTotalAmount = '70000',
+paidRealAmount = '70000',
+start_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -8 DAY), 1, 10),
+end_date = SUBSTRING(DATE_ADD(NOW(),INTERVAL -5 DAY), 1, 10),
+diff = 1,
+countOfAdult = 2,
+countOfChild = 0,
+`status` = 'done';
+# comp_id = 2인 product roomType을 입력받은 체크인, 아웃 날짜에 따라 필터용 목적인 테스트 데이터 끝
 
 CREATE TABLE payment
 (
@@ -1007,6 +1153,150 @@ SET regDate = NOW(),
 updateDate = NOW(),
 paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
 booking_id = 10,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 11번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 11,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 12번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 12,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 13번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 13,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 14번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 14,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 15번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 15,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 16번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 16,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 17번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 17,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 18번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 18,
+`status` = 'DONE',
+method = '간편결제',
+bank = '토스페이',
+requestedAt = '2023-01-30T22:20:38+09:00',
+approvedAt = '2023-01-30T22:20:56+09:00',
+`type` = 'NORMAL',
+lastTransactionKey = '4B0350246CD1730706AF359B10851FF9',
+lastTotalAmount = 70000,
+paidRealAmount = 70000;
+
+# 폰번호 010-1212-2323(게스트1), 예약번호 19번, 결제 금액 7만원(대전 롯데)
+INSERT INTO payment
+SET regDate = NOW(),
+updateDate = NOW(),
+paymentKey = 'zJ4xY7m0kODnyRpQWGrNlJXzBbwO9L3Kwv1M9ENjbeoPaZdL',
+booking_id = 19,
 `status` = 'DONE',
 method = '간편결제',
 bank = '토스페이',
@@ -2089,8 +2379,8 @@ WHERE id = 5;
 
 SELECT * FROM `point`;
 
-SELECT * FROM product;
-SELECT * FROM booking;
+SELECT * FROM booking
+WHERE comp_id = 2;
 SELECT * FROM payment;
 SELECT * FROM company;
 SELECT * FROM product;
