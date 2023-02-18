@@ -144,8 +144,7 @@ public class BookingService {
 		}
 	}
 
-	public int getBookingCountByComp_idAndProd_id(int comp_id, int prod_id, String start_date, String end_date)
-			throws ParseException {
+	public int getBookingCountByComp_idAndProd_id(int comp_id, int prod_id, String start_date, String end_date) throws ParseException {
 		List<Booking> bookings = bookingRepository.getBookingCountByComp_idAndProd_id(comp_id, prod_id);
 
 		int bookingCount = 0;

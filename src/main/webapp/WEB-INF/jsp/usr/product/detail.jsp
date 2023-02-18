@@ -176,7 +176,6 @@
 					<c:forEach var="product" items="${products}" varStatus="status">
 						<div id="${status.count }" class="room-body flex items-center rounded-lg p-2 my-4">
 							<div class="w-80 h-60 product-img img-box flex justify-center">
-<%-- 								<img class="w-full" src="https://image.goodchoice.kr/resize_370x220/affiliate/2016/06/22/5769f8523df2b.jpg" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" /> --%>
 								<img class="w-full" src="${rq.getProductProfileImgUri(product.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 							</div>
 							<div class="ml-4 w-6/12">
@@ -344,8 +343,8 @@
 							</div>
 							<div class="ml-20 mt-4 text-gray-400">${review.extra__writerName }</div>
 							<div class="ml-20 mt-1">${review.getForPrintBody() }</div>
-							<div class="img-box ml-20 mt-2">
-								<img src="https://image.goodchoice.kr/resize_490x348/affiliate/2019/07/16/5d2d61e24506b.jpg" alt="" />
+							<div class="ml-1 mt-3 review-img img-box flex justify-center">
+								<img class="w-9/12" src="${rq.getReviewProfileImgUri(review.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 							</div>
 							<c:choose>
 								<c:when test="${review.getForPrintBeforeDays() == 0}">

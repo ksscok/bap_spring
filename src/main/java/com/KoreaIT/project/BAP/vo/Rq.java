@@ -113,6 +113,10 @@ public class Rq {
 	public String getProductProfileImgUri(int productId) {
 		return "/common/genFile/file/product/" + productId + "/extra/profileImg/1";
 	}
+	
+	public String getReviewProfileImgUri(int reviewId) {
+		return "/common/genFile/file/review/" + reviewId + "/extra/profileImg/1";
+	}
 
 	public String getProfileFallbackImgUri() {
 //		return "https://via.placeholder.com/300/?text=*^_^*";

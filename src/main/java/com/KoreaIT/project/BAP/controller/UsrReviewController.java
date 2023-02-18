@@ -107,9 +107,9 @@ public class UsrReviewController {
 		
 		Booking booking = bookingService.getBookingById(booking_id);
 		
-		if(!member.getCellphoneNo().equals(booking.getCellphoneNo())) {
-			return Ut.jsHistoryBack("리뷰 작성을 요청한 유저와 예약한 유저의 정보가 일치하지 않습니다.");
-		}
+//		if(!member.getCellphoneNo().equals(booking.getCellphoneNo())) {
+//			return Ut.jsHistoryBack("리뷰 작성을 요청한 유저와 예약한 유저의 정보가 일치하지 않습니다.");
+//		}
 		// 현재 로그인한 멤버와 입력된 예약번호에 저장되어있는 전화번호가 일치하는지(본인인증) 유효성 검사 끝
 		
 		// 리뷰를 남기려는 사업장 번호와 예약한 사업장 번호가 다를 경우 유효성 검사 시작 
@@ -118,7 +118,6 @@ public class UsrReviewController {
 		}
 		// 리뷰를 남기려는 사업장 번호와 예약한 사업장 번호가 다를 경우 유효성 검사 끝 
 		
-		// 이 부분은 추후에 예약테이블과 결제테이블이 동시에 작성되도록 조절 할 생각이긴 함. 그러나 그렇게 해도 혹시 모르니 냅두는게 나을지도?
 		// 예약번호만 하고 결제는 하지 않은 경우 유효성 검사 시작
 		Payment payment = paymentService.getPaymentByBooking_id(booking_id);
 		
@@ -128,9 +127,9 @@ public class UsrReviewController {
 		// 예약번호만 하고 결제는 하지 않은 경우 유효성 검사 끝
 		
 		// 예약이 만료된 경우에만 리뷰 작성이 가능하도록 유효성 검사 시작
-//		if(!booking.getStatus().equals("expired")) {
-//			return rq.jsHistoryBack("예약된 방이 아직 이용되지 않았습니다.");
-//		}
+		if(!booking.getStatus().equals("expired")) {
+			return rq.jsHistoryBack("예약된 방이 아직 이용되지 않았습니다.");
+		}
 		// 예약이 만료된 경우에만 리뷰 작성이 가능하도록 유효성 검사 끝
 		
 		reviewService.doWrite(memberId, comp_id, booking_id, rating, body);
