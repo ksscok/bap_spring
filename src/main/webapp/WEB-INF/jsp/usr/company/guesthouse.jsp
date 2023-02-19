@@ -20,7 +20,7 @@
 
 			<section class="side-bar">
 				<div class="side-bar-1">
-					<span class="text-3xl font-semibold mb-4">펜션</span>
+					<span class="text-3xl font-semibold mb-4">게스트하우스</span>
 					<div>
 						<label>지역</label>
 						<input value="${areaInput}" type="text" class="select select-bordered"/>

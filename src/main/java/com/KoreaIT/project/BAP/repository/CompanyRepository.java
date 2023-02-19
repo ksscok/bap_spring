@@ -319,6 +319,234 @@ public interface CompanyRepository {
 			</script>
 			""")
 	int getHotelsCount(String area, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT c.*,
+			p.fee AS extra__productFee,
+			MIN(fee) AS extra__minFee,
+			review_info.r_count AS extra__reviewCount,
+			review_info.r_rating AS extra__reviewRating
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			LEFT JOIN (
+				SELECT r.comp_id,
+				COUNT(*) AS r_count,
+				AVG(rating) AS r_rating
+				FROM review AS r
+				GROUP BY r.comp_id
+			) AS review_info
+			ON c.id = review_info.comp_id
+			WHERE c.accommodationType = 'motel'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			<if test="order_by == ''">
+				ORDER BY extra__minFee ASC
+			</if>
+			<if test="order_by != ''">
+				<choose>
+					<when test="order_by == 'lowPrice'">
+						ORDER BY extra__minFee ASC
+					</when>
+					<when test="order_by == 'highPrice'">
+						ORDER BY extra__minFee DESC
+					</when>
+					<when test="order_by == 'review'">
+						ORDER BY extra__reviewCount DESC
+					</when>
+					<when test="order_by == 'rating'">
+						ORDER BY extra__reviewRating DESC
+					</when>
+				</choose>
+			</if>
+			</script>
+			""")
+	List<Company> getForPrintMotels(String area, String order_by, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT COUNT(c.id) AS cnt
+			FROM (
+			SELECT c.id, COUNT(c.id)
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.accommodationType = 'motel'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			) AS c;
+			</script>
+			""")
+	int getMotelsCount(String area, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT c.*,
+			p.fee AS extra__productFee,
+			MIN(fee) AS extra__minFee,
+			review_info.r_count AS extra__reviewCount,
+			review_info.r_rating AS extra__reviewRating
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			LEFT JOIN (
+				SELECT r.comp_id,
+				COUNT(*) AS r_count,
+				AVG(rating) AS r_rating
+				FROM review AS r
+				GROUP BY r.comp_id
+			) AS review_info
+			ON c.id = review_info.comp_id
+			WHERE c.accommodationType = 'pension'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			<if test="order_by == ''">
+				ORDER BY extra__minFee ASC
+			</if>
+			<if test="order_by != ''">
+				<choose>
+					<when test="order_by == 'lowPrice'">
+						ORDER BY extra__minFee ASC
+					</when>
+					<when test="order_by == 'highPrice'">
+						ORDER BY extra__minFee DESC
+					</when>
+					<when test="order_by == 'review'">
+						ORDER BY extra__reviewCount DESC
+					</when>
+					<when test="order_by == 'rating'">
+						ORDER BY extra__reviewRating DESC
+					</when>
+				</choose>
+			</if>
+			</script>
+			""")
+	List<Company> getForPrintPensions(String area, String order_by, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT COUNT(c.id) AS cnt
+			FROM (
+			SELECT c.id, COUNT(c.id)
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.accommodationType = 'pension'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			) AS c;
+			</script>
+			""")
+	int getPensionsCount(String area, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT c.*,
+			p.fee AS extra__productFee,
+			MIN(fee) AS extra__minFee,
+			review_info.r_count AS extra__reviewCount,
+			review_info.r_rating AS extra__reviewRating
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			LEFT JOIN (
+				SELECT r.comp_id,
+				COUNT(*) AS r_count,
+				AVG(rating) AS r_rating
+				FROM review AS r
+				GROUP BY r.comp_id
+			) AS review_info
+			ON c.id = review_info.comp_id
+			WHERE c.accommodationType = 'guesthouse'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			<if test="order_by == ''">
+				ORDER BY extra__minFee ASC
+			</if>
+			<if test="order_by != ''">
+				<choose>
+					<when test="order_by == 'lowPrice'">
+						ORDER BY extra__minFee ASC
+					</when>
+					<when test="order_by == 'highPrice'">
+						ORDER BY extra__minFee DESC
+					</when>
+					<when test="order_by == 'review'">
+						ORDER BY extra__reviewCount DESC
+					</when>
+					<when test="order_by == 'rating'">
+						ORDER BY extra__reviewRating DESC
+					</when>
+				</choose>
+			</if>
+			</script>
+			""")
+	List<Company> getForPrintGuesthouses(String area, String order_by, int low_price, int high_price);
+	
+	@Select("""
+			<script>
+			SELECT COUNT(c.id) AS cnt
+			FROM (
+			SELECT c.id, COUNT(c.id)
+			FROM company AS c
+			LEFT JOIN product AS p
+			ON c.id = p.comp_id
+			WHERE c.accommodationType = 'guesthouse'
+			<if test="area != ''">
+				AND `area` = #{area}
+			</if>
+			<if test="low_price != 1">
+				AND p.fee <![CDATA[>=]]> #{low_price}
+			</if>
+			<if test="high_price != 999999999">
+				AND p.fee <![CDATA[<=]]> #{high_price}
+			</if>
+			GROUP BY c.id
+			) AS c;
+			</script>
+			""")
+	int getGuesthousesCount(String area, int low_price, int high_price);
 
 	@Select("""
 			SELECT *

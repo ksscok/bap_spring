@@ -2,6 +2,10 @@ package com.KoreaIT.project.BAP.vo;
 
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -256,4 +260,37 @@ public class Rq {
 		
 		return map.get(area);
 	}
+
+	public String setDefaultStartDate(String start_date) {
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+
+		if (start_date.equals("")) {
+			start_date = format.format(now);
+		}
+
+		return start_date;
+	}
+	
+	public String setDefaultEndDate(String start_date, String end_date) {
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if(end_date.equals("")) {
+			try {
+				Date date = format.parse(start_date);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				
+				cal.add(Calendar.DATE, 1); // 다음날(1일 후)
+				
+				end_date = format.format(cal.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		return end_date;
+	}
 }
+

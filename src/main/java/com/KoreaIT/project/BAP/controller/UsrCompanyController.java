@@ -115,26 +115,8 @@ public class UsrCompanyController {
 		
 		String areaInput = rq.getAreaMap(area);
 		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date now = new Date();
-		
-		if(start_date.equals("")) {
-			start_date = format.format(now);
-		}
-		
-		if(end_date.equals("")) {
-			try {
-				Date date = format.parse(start_date);
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				
-				cal.add(Calendar.DATE, 1); // 다음날(1일 후)
-				
-				end_date = format.format(cal.getTime());
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
+		start_date = rq.setDefaultStartDate(start_date);
+		end_date = rq.setDefaultEndDate(start_date, end_date);
 		
 		List<Company> hotels = companyService.getForPrintHotels(area, order_by, low_price, high_price);
 		int hotelsCount = companyService.getHotelsCount(area, low_price, high_price);
@@ -151,10 +133,100 @@ public class UsrCompanyController {
 		return "usr/company/hotel";
 	}
 	
-	@RequestMapping("/usr/company/slider")
-	public String slider() {
+	@RequestMapping("/usr/company/motel")
+	public String showMotel(Model model,
+			@RequestParam(defaultValue="51") String area,
+			@RequestParam(defaultValue="") String start_date,
+			@RequestParam(defaultValue="") String end_date,
+			@RequestParam(defaultValue="1") String countOfRooms,
+			@RequestParam(defaultValue="2") String countOfAdult,
+			@RequestParam(defaultValue="0") String countOfChild,
+			@RequestParam(defaultValue="") String order_by,
+			@RequestParam(defaultValue="0") int low_price,
+			@RequestParam(defaultValue="999999999") int high_price) {
 		
-		return "usr/company/slider";
+		String areaInput = rq.getAreaMap(area);
+		
+		start_date = rq.setDefaultStartDate(start_date);
+		end_date = rq.setDefaultEndDate(start_date, end_date);
+		
+		List<Company> hotels = companyService.getForPrintMotels(area, order_by, low_price, high_price);
+		int hotelsCount = companyService.getMotelsCount(area, low_price, high_price);
+		
+		model.addAttribute("areaInput", areaInput);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
+		model.addAttribute("countOfRooms", countOfRooms);
+		model.addAttribute("countOfAdult", countOfAdult);
+		model.addAttribute("countOfChild", countOfChild);
+		model.addAttribute("hotelsCount", hotelsCount);
+		model.addAttribute("hotels", hotels);
+		
+		return "usr/company/motel";
+	}
+	
+	@RequestMapping("/usr/company/pension")
+	public String showPension(Model model,
+			@RequestParam(defaultValue="51") String area,
+			@RequestParam(defaultValue="") String start_date,
+			@RequestParam(defaultValue="") String end_date,
+			@RequestParam(defaultValue="1") String countOfRooms,
+			@RequestParam(defaultValue="2") String countOfAdult,
+			@RequestParam(defaultValue="0") String countOfChild,
+			@RequestParam(defaultValue="") String order_by,
+			@RequestParam(defaultValue="0") int low_price,
+			@RequestParam(defaultValue="999999999") int high_price) {
+		
+		String areaInput = rq.getAreaMap(area);
+		
+		start_date = rq.setDefaultStartDate(start_date);
+		end_date = rq.setDefaultEndDate(start_date, end_date);
+		
+		List<Company> hotels = companyService.getForPrintPensions(area, order_by, low_price, high_price);
+		int hotelsCount = companyService.getPensionsCount(area, low_price, high_price);
+		
+		model.addAttribute("areaInput", areaInput);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
+		model.addAttribute("countOfRooms", countOfRooms);
+		model.addAttribute("countOfAdult", countOfAdult);
+		model.addAttribute("countOfChild", countOfChild);
+		model.addAttribute("hotelsCount", hotelsCount);
+		model.addAttribute("hotels", hotels);
+		
+		return "usr/company/pension";
+	}
+	
+	@RequestMapping("/usr/company/guesthouse")
+	public String showGuesthouse(Model model,
+			@RequestParam(defaultValue="51") String area,
+			@RequestParam(defaultValue="") String start_date,
+			@RequestParam(defaultValue="") String end_date,
+			@RequestParam(defaultValue="1") String countOfRooms,
+			@RequestParam(defaultValue="2") String countOfAdult,
+			@RequestParam(defaultValue="0") String countOfChild,
+			@RequestParam(defaultValue="") String order_by,
+			@RequestParam(defaultValue="0") int low_price,
+			@RequestParam(defaultValue="999999999") int high_price) {
+		
+		String areaInput = rq.getAreaMap(area);
+		
+		start_date = rq.setDefaultStartDate(start_date);
+		end_date = rq.setDefaultEndDate(start_date, end_date);
+		
+		List<Company> hotels = companyService.getForPrintGuesthouses(area, order_by, low_price, high_price);
+		int hotelsCount = companyService.getGuesthousesCount(area, low_price, high_price);
+		
+		model.addAttribute("areaInput", areaInput);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
+		model.addAttribute("countOfRooms", countOfRooms);
+		model.addAttribute("countOfAdult", countOfAdult);
+		model.addAttribute("countOfChild", countOfChild);
+		model.addAttribute("hotelsCount", hotelsCount);
+		model.addAttribute("hotels", hotels);
+		
+		return "usr/company/guesthouse";
 	}
 }
 

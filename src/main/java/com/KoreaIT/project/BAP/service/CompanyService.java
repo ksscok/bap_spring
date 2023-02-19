@@ -144,6 +144,30 @@ public class CompanyService {
 		return companyRepository.getHotelsCount(area, low_price, high_price);
 	}
 	
+	public List<Company> getForPrintMotels(String area, String order_by, int low_price, int high_price) {
+		return companyRepository.getForPrintMotels(area, order_by, low_price, high_price);
+	}
+	
+	public int getMotelsCount(String area, int low_price, int high_price) {
+		return companyRepository.getMotelsCount(area, low_price, high_price);
+	}
+	
+	public List<Company> getForPrintPensions(String area, String order_by, int low_price, int high_price) {
+		return companyRepository.getForPrintPensions(area, order_by, low_price, high_price);
+	}
+	
+	public int getPensionsCount(String area, int low_price, int high_price) {
+		return companyRepository.getPensionsCount(area, low_price, high_price);
+	}
+	
+	public List<Company> getForPrintGuesthouses(String area, String order_by, int low_price, int high_price) {
+		return companyRepository.getForPrintGuesthouses(area, order_by, low_price, high_price);
+	}
+	
+	public int getGuesthousesCount(String area, int low_price, int high_price) {
+		return companyRepository.getGuesthousesCount(area, low_price, high_price);
+	}
+	
 	public List<Company> getCompanyByHostId(long hostId) {
 		return companyRepository.getCompanyByHostId(hostId);
 	}

@@ -91,7 +91,7 @@
 			<li>
 				<div class="img-box">
 					<img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/107183120.jpg?k=5f5c8fff1abdb68a79c8a8e89260427e5699d4e05190f41bb89229cdfc34ab0d&o=&hp=1" alt="" />
-					<a href="../company/geusthouse">게스트하우스</a>
+					<a href="../company/guesthouse">게스트하우스</a>
 				</div>
 			</li>
 		</ul>
