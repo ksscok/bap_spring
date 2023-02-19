@@ -97,8 +97,8 @@
 					<div class="pricing-box mt-5">
 							<div class="mb-3">
 								<span class="text-base font-semibold text-gray-500">가격</span>
-								<span id="low_price">1만원</span>
-								<span>~</span>
+								<span id="low_price"></span>
+								<span id="inter_value"></span>
 								<span id="high_price"></span>
 							</div>
 							<div class="middle">
@@ -191,6 +191,13 @@
 </div>
 
 <script>
+//URI 파라미터 받는 메서드
+function getParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 // 양방향 슬라이더 시작
 const inputLeft = document.getElementById("input-left");
@@ -252,22 +259,34 @@ inputRight.addEventListener("input", setRightValue);
 //양방향 슬라이더 끝
 
 //pricing box 시작
-let lowValue = document.getElementById('input-left').value;
-let displayLowPrice1 = lowValue/10000 + "만원";
-document.getElementById('low_price').innerHTML = displayLowPrice1;
+
+let low_price = getParameter("low_price")
+let high_price = getParameter("high_price")
+
+if(low_price != null && low_price != "") {
+	let lowValue = document.getElementById('input-left').value;
+	let displayLowPrice1 = lowValue/10000 + "만원";
+	document.getElementById('low_price').innerHTML = displayLowPrice1;
+	document.getElementById('inter_value').innerHTML = "~";
+}
+
+if(high_price != null && high_price != "") {
+	let highValue = document.getElementById('input-right').value;
+	let displayLowPrice2 = highValue/10000 + "만원";
+	document.getElementById('high_price').innerHTML = displayLowPrice2;
+	document.getElementById('inter_value').innerHTML = "~";
+}
 
 function displayLowPrice(value) {
 	let displayLowPrice = value/10000 + "만원";
 	document.getElementById('low_price').innerHTML = displayLowPrice;
+	document.getElementById('inter_value').innerHTML = "~";
 }
-
-let highValue = document.getElementById('input-right').value;
-let displayLowPrice2 = highValue/10000 + "만원";
-document.getElementById('high_price').innerHTML = displayLowPrice2;
 
 function displayHighPrice(value) {
 	let displayLowPrice = value/10000 + "만원";
 	document.getElementById('high_price').innerHTML = displayLowPrice;
+	document.getElementById('inter_value').innerHTML = "~";
 }
 //pricing box 끝
 </script>

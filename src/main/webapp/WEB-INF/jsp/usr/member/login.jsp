@@ -23,7 +23,7 @@
 						<td>
 							<div class="input-form input input-bordered">
 								<div>🤵</div>
-								<input id="input-id" name="loginId" type="text" placeholder="아이디"/>
+								<input id="input-id" name="loginId" type="text" autocomplete="off" placeholder="아이디"/>
 							</div>
 						</td>
 					</tr>

@@ -30,12 +30,12 @@
 			<div class="text-xl">객실 관리</div>
 			<table class="mt-5">
 				<colgroup>
+					<col width="350"/>
+					<col width="100"/>
 					<col width="150"/>
-					<col width="150"/>
-					<col width="150"/>
-					<col width="150"/>
-					<col width="150"/>
-					<col width="150"/>
+					<col width="100"/>
+					<col width="100"/>
+					<col width="200"/>
 					<col width="150"/>
 				</colgroup>
 				<thead>

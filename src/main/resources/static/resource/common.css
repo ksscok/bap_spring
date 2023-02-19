@@ -21,6 +21,12 @@ main {
 	min-height: 740px;
 }
 
+.back-ground-page {
+	background-color: #f0f0f0;	
+	padding-bottom: 20px;
+	min-height: 740px;
+}
+
 .table-box-type-1 > table th,
 .table-box-type-1 > table td {
 	border: 1px solid black;
