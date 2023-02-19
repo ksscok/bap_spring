@@ -42,3 +42,9 @@
 	color: #C20095;
 	border: 1px solid #C20095;
 }
+
+.input {
+	width: 90%;
+	text-align: left;
+	padding: 0 5px;
+}
