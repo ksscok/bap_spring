@@ -74,7 +74,14 @@
 				</thead>
 
 				<tbody>
-					<c:forEach var="point" items="${points}">
+					<c:choose>
+						<c:when test="${pointsCount == 0}">
+							<td colspan="7" class="text-center">
+								<span>검색 결과에 해당하는 포인트가 존재하지 않습니다.</span>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="point" items="${points}">
 						<tr class="hover">
 							<c:if test="${point.p_point > 0}">
 								<td>
@@ -117,6 +124,8 @@
 							</c:choose>
 						</tr>
 					</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</div>

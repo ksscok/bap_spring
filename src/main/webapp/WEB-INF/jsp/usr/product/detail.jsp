@@ -28,15 +28,17 @@
 					<div class="side-bar-d1 mr-6 p-5 border border-gray-300 mb-2">
 						<div class="text-base font-semibold mb-4">날짜 변경</div>
 						
-						<div>
-							<span class="mr-3">체크인</span>
-							<input id="start_date" name="start_date" type="date" class="mx-2 input input-bordered" value="${start_date }" />
+						<div class="flex items-center">
+							<div>
+								<div class="">체크인</div>
+								<input id="start_date" name="start_date" type="date" class="input input-bordered" value="${start_date }" />
+							</div>
+							<div class="">
+								<div>체크아웃</div>
+								<input id="end_date" name="end_date" type="date" class="input input-bordered" value="${end_date }" />
+							</div>
 						</div>
-						<div class="my-1">
-							<span>체크아웃</span>
-							<input id="end_date" name="end_date" type="date" class="mx-2 input input-bordered" value="${end_date }" />
-						</div>
-						<div class="">
+						<div class="mt-2">
 							<span>객실</span>
 							<span class="mx-14">성인</span>
 							<span>아동</span>
@@ -116,23 +118,34 @@
 									<span>~</span>
 									<span id="high_price"><fmt:formatNumber value="${param.high_price}" pattern="#,###"/> 원</span>
 							</div>
-							<ul>
-								<li class="flex">
-									<input type="range" name="low_price" min="10000" max="250000" step="10000" class="range range-sm"
-									oninput="AddCommaAtLow_price(this.value);"
-									value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}"/>
-								</li>
-							</ul>
-							<ul class="mt-1">
-								<li class="flex">
-									<input type="range" name="high_price" min="250000" max="900000000" step="10000" class="range range-sm"
-									oninput="AddCommaAtHigh_price(this.value);"
-									value="${param.high_price == null || param.high_price.equals('') ? '250000' : param.high_price}"/>
-								</li>
-							</ul>
+							<div class="middle">
+							  <div class="multi-range-slider">
+							    <!-- 진짜 슬라이더 -->
+							    <input name="low_price" type="range" id="input-left" min="10000" max="500000" step="10000"
+							    value="${param.low_price == null || param.low_price.equals('') ? '10000' : param.low_price}" 
+							    oninput="AddCommaAtLow_price(value)"/>
+							    <input name="high_price" type="range" id="input-right" min="10000" max="900000000" step="10000"
+							    value="${param.high_price == null || param.high_price.equals('') ? '900000000' : param.high_price}" 
+							    oninput="AddCommaAtHigh_price(value)"/>
+							
+							    <!-- 커스텀 슬라이더 -->
+							    <div class="slider">
+							      <div class="track"></div>
+							      <div class="range1"></div>
+							      <div class="thumb left"></div>
+							      <div class="thumb right"></div>
+							    </div>
+							  </div>
+							  <div class="flex justify-between mt-2">
+							  	<div>10,000원</div>
+							  	<div>900,000,000원</div>
+							  </div>
+							</div>
 						</div>
-		
-						<button type="submit" class="btn btn-primary w-full mt-5">적용</button>
+						<div class="flex justify-between mt-5">
+							<a href="../product/detail?comp_id=${comp_id }&start_date=${param.start_date}&end_date=${param.end_date}&countOfRoom=${countOfRoom }&countOfAdult=${param.countOfAdult}&countOfChild=${param.countOfChild}" class="btn btn-primary btn-outline w-32">초기화</a>
+							<button type="submit" class="btn btn-primary w-32">적용</button>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -403,6 +416,8 @@
 // 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 시작
 	$(document).ready(function initialize_booking_id() {
 		$(".booking_id-box").val('');
+		
+		
 	});
 // 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 끝
 
@@ -455,6 +470,65 @@
 	  }
 	});//click() end
 // 체크인, 체크아웃 유효성 체크 끝
+
+// 양방향 슬라이더 시작
+const inputLeft = document.getElementById("input-left");
+const inputRight = document.getElementById("input-right");
+
+const thumbLeft = document.querySelector(".slider > .thumb.left");
+const thumbRight = document.querySelector(".slider > .thumb.right");
+const range = document.querySelector(".slider > .range1");
+
+const [min1, max1] = [parseInt(inputLeft.min), parseInt(inputLeft.max)];
+
+// 교차되지 않게, 20000을 빼준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+inputLeft.value = Math.min(parseInt(inputLeft.value), parseInt(inputRight.value) - 20000);
+
+// input, thumb 같이 움직이도록
+const percent1 = ((inputLeft.value - min1) / (max1 - min1)) * 100;
+thumbLeft.style.left = percent1 + "%";
+range.style.left = percent1 + "%";
+
+const [min2, max2] = [parseInt(inputRight.min), parseInt(inputRight.max)];
+
+// 교차되지 않게, 20000을 더해준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+inputRight.value = Math.max(parseInt(inputRight.value), parseInt(inputLeft.value) + 20000);
+
+// input, thumb 같이 움직이도록
+const percent2 = ((inputRight.value - min2) / (max2 - min2)) * 100;
+thumbRight.style.right = 100 - percent2 + "%";
+range.style.right = 100 - percent2 + "%";
+
+
+const setLeftValue = () => {
+  const _this = inputLeft;
+  const [min, max] = [parseInt(_this.min), parseInt(_this.max)];
+  
+  // 교차되지 않게, 20000을 빼준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+  _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 20000);
+  
+  // input, thumb 같이 움직이도록
+  const percent = ((_this.value - min) / (max - min)) * 100;
+  thumbLeft.style.left = percent + "%";
+  range.style.left = percent + "%";
+};
+
+const setRightValue = () => {
+  const _this = inputRight;
+  const [min, max] = [parseInt(_this.min), parseInt(_this.max)];
+  
+  // 교차되지 않게, 20000을 더해준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+  _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 20000);
+  
+  // input, thumb 같이 움직이도록
+  const percent = ((_this.value - min) / (max - min)) * 100;
+  thumbRight.style.right = 100 - percent + "%";
+  range.style.right = 100 - percent + "%";
+};
+
+inputLeft.addEventListener("input", setLeftValue);
+inputRight.addEventListener("input", setRightValue);
+//양방향 슬라이더 끝
 
 // 가격 콤마 붙여서 나오는 함수 시작
 	function AddCommaAtLow_price(num) {

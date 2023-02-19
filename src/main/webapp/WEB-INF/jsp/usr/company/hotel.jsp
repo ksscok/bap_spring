@@ -285,7 +285,7 @@
 							</div>
 							<div class="item-info">
 								<div>
-									<a href="../product/detail?comp_id=${company.id}" class="text-2xl font-bold">${company.name}</a>
+									<a href="../product/detail?comp_id=${company.id}&start_date=${param.start_date}&end_date=${param.end_date}&countOfAdult=${param.countOfAdult}&countOfChild=${param.countOfChild}&low_price=${param.low_price}&high_price=${param.high_price}" class="text-2xl font-bold">${company.name}</a>
 								</div>
 								<div class="score">
 									<span>★</span>
