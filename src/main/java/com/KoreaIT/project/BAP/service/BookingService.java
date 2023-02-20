@@ -161,10 +161,11 @@ public class BookingService {
 
 			// 만약 예약 status가 취소 완료(cancel)이라면 리스트에 나올 수 있도록
 			if(booking.getStatus().equals("cancel")) {
-				bookingCount++;
+				
 				// 테스트 확인용 출력문
-				System.out.println("!!! ↓ 밑에 카운트는 booking의 status가 cancel(취소 완료 상태)일 때 리스트에 보여주도록 하기 위한 수 추가 !!!");
-				System.out.println("==== bookingCount : " + bookingCount);
+				System.out.println("!!! ↓ 이 예약번호는 booking의 status가 cancel(취소 완료 상태)일 때 리스트에 보여주도록 하기 위해 카운트에 미포함 !!!");
+				System.out.println("==== booking_id : " + booking.getId() + " ====");
+				System.out.println("==== 해당 예약 번호는 cancel 상태입니다 ====");
 				System.out.println("");
 				
 				// 예약 status가 cancel 이외에는 아래의 조건을 타서 나오는지 거르도록
@@ -190,17 +191,7 @@ public class BookingService {
 					System.out.println("==== bookingCount : " + bookingCount);
 					System.out.println("");
 					
-					// bs < is and be > ie (prod_id = 9 제외)
-				} else if (bStart.compareTo(inputStart) == -1 && bEnd.compareTo(inputEnd) == 1) {
-					bookingCount++;
-					
-					// 테스트 확인용 출력문
-					System.out.println("==== prod_id : " + prod_id + " ====");
-					System.out.println("==== bs < is : " + bStart.compareTo(inputStart) + " ==== or ==== be > ie : " + bEnd.compareTo(inputEnd) + " ====");
-					System.out.println("==== bookingCount : " + bookingCount);
-					System.out.println("");
-					
-					// bs < is and be < ie and be > is (prod_id = 10 제외)
+					// bs < is and be < ie and be > is (prod_id = 9 제외)
 				} else if (bStart.compareTo(inputStart) == -1 && bEnd.compareTo(inputEnd) == -1 && bEnd.compareTo(inputStart) == 1) {
 					bookingCount++;
 					
@@ -210,14 +201,23 @@ public class BookingService {
 					System.out.println("==== bookingCount : " + bookingCount);
 					System.out.println("");
 					
-					// bs > is and be > ie and bs < ie (prod_id = 11 제외)
+					// bs > is and be > ie and bs < ie (prod_id = 10 제외)
 				} else if (bStart.compareTo(inputStart) == 1 && bEnd.compareTo(inputEnd) == 1 && bStart.compareTo(inputEnd) == -1) {
 					bookingCount++;
 					
 					// 테스트 확인용 출력문
 					System.out.println("==== prod_id : " + prod_id + " ====");
-					System.out.println("==== bs > is : " + bStart.compareTo(inputStart) + " ==== or ==== be > ie : "
-							+ bEnd.compareTo(inputEnd) + " ==== or ==== be < is : " + bStart.compareTo(inputEnd) + " ====");
+					System.out.println("==== bs > is : " + bStart.compareTo(inputStart) + " ==== or ==== be > ie : " + bEnd.compareTo(inputEnd) + " ==== or ==== be < is : " + bStart.compareTo(inputEnd) + " ====");
+					System.out.println("==== bookingCount : " + bookingCount);
+					System.out.println("");
+					
+					// bs < is and be > ie (prod_id = 11 제외)
+				} else if (bStart.compareTo(inputStart) == -1 && bEnd.compareTo(inputEnd) == 1) {
+					bookingCount++;
+					
+					// 테스트 확인용 출력문
+					System.out.println("==== prod_id : " + prod_id + " ====");
+					System.out.println("==== bs < is : " + bStart.compareTo(inputStart) + " ==== or ==== be > ie : " + bEnd.compareTo(inputEnd) + " ====");
 					System.out.println("==== bookingCount : " + bookingCount);
 					System.out.println("");
 					

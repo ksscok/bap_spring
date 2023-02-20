@@ -55,7 +55,7 @@ public class UsrProductController {
 			@RequestParam(defaultValue="") String start_date,
 			@RequestParam(defaultValue="") String end_date,
 			@RequestParam(defaultValue="1") String countOfRoom,
-			@RequestParam(defaultValue="") String countOfAdult,
+			@RequestParam(defaultValue="2") String countOfAdult,
 			@RequestParam(defaultValue="") String countOfChild,
 			@RequestParam(defaultValue="") String withoutMealsType,
 			@RequestParam(defaultValue="") String withBreakfastType,

@@ -416,8 +416,6 @@
 // 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 시작
 	$(document).ready(function initialize_booking_id() {
 		$(".booking_id-box").val('');
-		
-		
 	});
 // 리뷰 작성시 이미 리뷰를 작성한 예약번호를 적어서 보냈다면 다시 detail로 넘어와서 예약번호가 그대로 남아있는 것을 초기화하는 함수 끝
 
@@ -920,6 +918,7 @@ function ToastEditor__init() {
 			});    
 		});
 	}
+	
 	function panTo() {
 	    // 이동할 위도 경도 위치를 생성합니다 
 	    var moveLatLon = mCenter;
@@ -929,6 +928,7 @@ function ToastEditor__init() {
 	    map.panTo(moveLatLon);            
 	}       
 	
+	// 큰 지도로 보기 시작
 	getData().then(function(z) {
 			
 			let x1 = z[0];
@@ -939,7 +939,7 @@ function ToastEditor__init() {
 	}).catch(function(err) {
 		  console.error(err); // Error 출력
 	});
-	
+	// 큰 지도로 보기 끝
 // 카카오맵 끝
 </script>
 
