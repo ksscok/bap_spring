@@ -37,7 +37,6 @@
 				</div>
 				<div class="flex-grow"></div>
 				<ul class="flex">
-					<li><a href="/" class="h-full flex items-center mx-2 px-2"><i class="fa-solid fa-magnifying-glass"></i></a></li>
 					<c:if test="${!rq.isLogined()}">
 						<li><a href="${rq.loginUri}" class="h-full flex items-center mx-2 px-2"><span>로그인</span></a></li>
 						<li><a href="/usr/booking/detailConfirm" class="h-full flex items-center mx-2 px-2"><span>예약관리</span></a></li>
