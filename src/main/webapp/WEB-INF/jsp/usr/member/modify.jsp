@@ -23,12 +23,6 @@
 						<th>비밀번호</th>
 						<td>
 							<input name="loginPw" type="text" class="input input-bordered w-64" placeholder="변경할 비밀번호를 입력해주세요."/>
-							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 8~16자의 영문, 숫자, 특수문자를 조합하시거나 10~16자의 영문, 숫자를 조합해서 입력해주세요.</div>
-							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 특수문자는 !@#$%^&*-= 만 사용 가능합니다.</div>
-							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 한글과 여백은 입력이 불가합니다.</div>
-							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 동일한 문자/숫자는 연속하여 3자리 이상 입력이 불가합니다.</div>
-							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 아이디 및 이메일과 같거나 포함할 수 없습니다.</div>
-							<div class="text-xs ml-1 mt-3 text-gray-600">▪ 기타 일반정보 등으로부터 추측이 용이한 비밀번호는 피해주십시오.</div>
 						</td>
 					</tr>
 					<tr>

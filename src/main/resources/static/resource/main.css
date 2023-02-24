@@ -9,10 +9,10 @@
 	align-items: center;
 	justify-content: center;
 	height: 450px;
-	background-image:url(https://www.flyingandtravel.com/wp-content/uploads/2017/11/what-to-do-in-budapest-hungary.jpg);
 	/* 이미지 후보 
 	https://www.swr3.de/aktuell/magazin/1642074317571,wohnmobil-reise-100~_v-7x2@2dXL_-af48df89fc49bdf44040dbdbfd4c3186dde02694.jpg
 	https://cdn.pixabay.com/photo/2018/01/13/20/42/panoramic-3080774__340.jpg */
+	background-image:url(https://www.flyingandtravel.com/wp-content/uploads/2017/11/what-to-do-in-budapest-hungary.jpg);
 	background-size: cover;
 }
 

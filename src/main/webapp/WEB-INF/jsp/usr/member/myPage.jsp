@@ -9,7 +9,7 @@
 		<div class="side-bar-myPage mr-6">
 			<div class="p-5 pt-0">
 				<ul>
-					<li><a href="../member/myPage">개인정보수정</a></li>
+					<li><a href="../member/myPage">개인정보</a></li>
 				</ul>
 				<c:if test="${rq.loginedMember.memberType.equals('guest')}">
 					<ul>
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 		<div class="table-box-type-2 company-list mt-0 flex flex-col text-sm">
-			<div class="text-xl">개인정보수정</div>
+			<div class="text-xl">개인정보</div>
 			<table class="mt-5">
 				<colgroup>
 					<col width="200"/>

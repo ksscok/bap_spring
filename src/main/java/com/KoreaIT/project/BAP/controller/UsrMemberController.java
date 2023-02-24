@@ -98,7 +98,7 @@ public class UsrMemberController {
 		if(Ut.empty(loginPwConfirm)) {
 			return rq.jsHistoryBack("비밀번호 확인을 입력해주세요.");
 		}
-		if(loginPw != loginPwConfirm) {
+		if(!loginPw.equals(loginPwConfirm)) {
 			return rq.jsHistoryBack("비밀번호를 다시 확인해주세요.");
 		}
 		if(Ut.empty(name)) {
