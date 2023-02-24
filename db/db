@@ -2550,3 +2550,33 @@ SELECT * FROM payment;
 SELECT * FROM company;
 SELECT * FROM product;
 SELECT * FROM genFile;
+
+# 방 리스트 불러오는거 확인하는 쿼리 시작
+SELECT p.id AS prod_id,
+p.roomType AS NAME, 
+p.numberOfRooms AS '방 개수',
+p.countOfAdult AS '성인 수',
+b.id AS booking_id,
+b.start_date AS '체크인',
+b.end_date AS '체크아웃',
+b.`status` AS `status` 
+FROM product AS p
+LEFT JOIN booking AS b
+ON p.id = b.prod_id
+WHERE p.comp_id = 2
+ORDER BY p.fee;
+
+SELECT p.id AS prod_id,
+p.roomType AS NAME, 
+p.numberOfRooms AS '방 개수',
+p.countOfAdult AS '성인 수',
+b.id AS booking_id,
+b.start_date AS '체크인',
+b.end_date AS '체크아웃',
+b.`status` AS `status` 
+FROM product AS p
+LEFT JOIN booking AS b
+ON p.id = b.prod_id
+WHERE p.comp_id = 2
+AND p.id = 7;
+# 방 리스트 불러오는거 확인하는 쿼리 끝

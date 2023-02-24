@@ -199,7 +199,7 @@ public class UsrBookingController {
 		Booking booking = bookingService.getBookingById(bookingId);
 		booking.setExtra__status("결제 대기중");
 		
-		String book_id = ("" + bookingId).trim();
+		String book_id = ("" + bookingId).trim(); // int 타입을 string 타입으로 변환
 		
 		return book_id;
 	}
